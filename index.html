@@ -3,14 +3,21 @@
   <head>
     <meta charset="utf-8">
     <title>IdleOn Cooking Planner</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" href="https://idleon.wiki/wiki/images/b/b9/Turkey_a_la_Thank.png">
+    <link rel="stylesheet" href="styles.css">
+    <script src="./index.js" ></script>
   </head>
   <body>
-    <h1 class="text-4xl text-blue-500">IdleOn Cooking Planner</h1>
-    <p class="text-lg text-green-500">In progress</p>
-    <label for="name">Enter IdleonEfficiency save data</label>
-    <input type="text" id="name" name="name"/>
+    <h1>IdleOn Cooking Planner</h1>
+    <label for="name">Enter IdleonEfficiency save data:</label>
+    <input type="text" id="raw_data" name="name" />
+    <button id="enter data" onclick="parseSaveData()">Enter</button>
+    
+<!--
+    <box><img src="https://idleon.wiki/wiki/images/b/b9/Turkey_a_la_Thank.png"></box>
+-->
+    <p id="meal_levels"></p>
   </body>
 </html>
 
-    
+
