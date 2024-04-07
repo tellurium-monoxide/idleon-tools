@@ -7,31 +7,6 @@
   <link rel="icon" href="https://idleon.wiki/wiki/images/b/b9/Turkey_a_la_Thank.png">
   <link rel="stylesheet" href="styles.css">
   <script src="./source.js"></script>
-  <style>
-    .collapsible {
-      background-color: #777;
-      color: white;
-      cursor: pointer;
-      padding: 18px;
-      width: 100%;
-      border: none;
-      text-align: left;
-      outline: none;
-      font-size: 15px;
-    }
-
-    .active,
-    .collapsible:hover {
-      background-color: #555;
-    }
-
-    .content {
-      padding: 0 18px;
-      display: none;
-      overflow: hidden;
-      background-color: #f1f1f1;
-    }
-  </style>
 </head>
 
 <body>
@@ -42,13 +17,34 @@
   <label for="name">Enter IdleonEfficiency save data:</label>
   <input type="text" id="raw_data" name="name" />
   <button id="enter data" onclick="parseSaveData()">Enter</button>
-  
-  <button type="button" class="collapsible">Open Collapsible</button>
+
+  <button type="button" class="collapsible">Input Data</button>
   <div class="content">
-    <p>
-    <table id="meal_levels"></table>
-    </p>
+
+    <label for="name">Total cooking speed:</label><input type="text" id="total_cooking_speed" />
+
+    <button type="button" class="collapsible">Meal levels</button>
+    <div class="content">
+
+      <table id="meal_levels">
+      </table>
+      <script type="text/javascript">
+        createMealTable();
+      </script>
+
+    </div>
+
   </div>
+
+  <button type="button" class="collapsible">Upgrade order</button>
+  <div class="content">
+
+    <table id="meal_upgrade_order">
+    </table>
+
+  </div>
+
+
 
   <script>
     var coll = document.getElementsByClassName("collapsible");
