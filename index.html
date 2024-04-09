@@ -6,6 +6,8 @@
   <title>IdleOn Cooking Planner</title>
   <link rel="icon" href="https://idleon.wiki/wiki/images/b/b9/Turkey_a_la_Thank.png">
   <link rel="stylesheet" href="styles.css">
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
   <script src="./source.js"></script>
 </head>
 
@@ -16,8 +18,8 @@
   <h1>IdleOn Cooking Planner</h1>
   <label for="name">Enter IdleonEfficiency save data:</label>
   <input type="text" id="raw_data" name="name" />
-  <button id="enter data" onclick="parseSaveData()">Enter</button>
-
+  <button id="enter data" onclick="onSubmit()">Enter</button>
+  <div id="temp_ie_save_data" hidden></div>
   <button type="button" class="collapsible">Input Data</button>
   <div class="content">
 

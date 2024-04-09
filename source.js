@@ -71,7 +71,7 @@ class CookingData {
       }
     }
 
-    this.apocalypse_bonus = this.apocalypse_active * Math.pow(1.1, this.blood_berserker_chow_count)
+    this.apocalypse_bonus = Math.pow(1.1, this.apocalypse_active * this.blood_berserker_chow_count)
     // find boosts from atoms
     let atom_data = save_data["Atoms"]
     this.void_plate_chef_lvl = atom_data[8]
@@ -81,7 +81,9 @@ class CookingData {
     // find boosts from farming
     let farming_crop_data = JSON.parse(save_data["FarmCrop"])
     this.crop_acquired = Object.keys(farming_crop_data).length
+    this.crop_depot_bonus = Math.pow(1.1, this.crop_acquired)
     this.farming_lvl = save_data["Lv0_0"][16]
+    this.summoning_lvl = save_data["Lv0_0"][18]
     // console.log(this.farming_lvl)
 
     // find lab boosts
@@ -122,11 +124,11 @@ class CookingData {
     // console.log(this.MSA_mealing_unlocked)
     // console.log(this.total_waves)
 
-    // TODO
+    // TODO : for now this assumes everything is active in lab
     // find lab active jewels / bonuses
     let lab_info = JSON.parse(save_data["Lab"])
-    console.log("lab_info:")
-    console.log(lab_info)
+    // console.log("lab_info:")
+    // console.log(lab_info)
     this.lab_black_diamond_rhinestone_active = 1
 
     this.lab_amethyst_rhinestone = 1
@@ -182,11 +184,11 @@ class CookingData {
     // console.log(sailing_info)
     // console.log(this.triangulon_lvl)
 
+    // find card infos
+    let card0 = JSON.parse(save_data["Cards0"])
+    console.log(card0)
 
-
-
-    console.log("cooking speed:")
-    console.log(this.getCookingSpeed().toExponential(2))
+    this.getCookingSpeed()
 
   }
 
@@ -194,7 +196,7 @@ class CookingData {
 
     const total_meal_levels = (this.meal_levels.reduce((a, b) => a + b))
 
-
+    // console.log(total_meal_levels)
 
 
     const diamond_plate_meals = [...this.meal_levels].filter(x => x >= 10).length
@@ -205,24 +207,24 @@ class CookingData {
       * Math.log10(this.meal_quantities[0])
 
     const cooking_speed_meals_bonus = this.meal_efficiency * (
-      this.meal_levels[1] * 5 //egg
-      + this.meal_levels[12] * 12 //corndog
-      + this.meal_levels[43] * 20 //soda
-      + this.meal_levels[52] * 30 // cherry
-    ) / 100
+      this.meal_levels[1] * 0.05 //egg
+      + this.meal_levels[12] * 0.12 //corndog
+      + this.meal_levels[43] * 0.2 //soda
+      + this.meal_levels[52] * 0.3 // cherry
+    )
 
-    const marshmallow_meal_bonus = 40 / 100
+    const marshmallow_meal_bonus = 0.4
       * this.meal_efficiency
       * this.meal_levels[63]
       * Math.ceil((this.farming_lvl + 1) / 50)
 
-    let global_meal_speed_mult = 10
+    let global_meal_speed_mult = 10 / 3600
       * Math.pow(1 + this.blood_marrow_bonus, total_meal_levels)
-      * Math.pow(1.1, this.crop_acquired)
-      * (1 + this.apocalypse_bonus)
+      * (this.crop_depot_bonus)
+      * (this.apocalypse_bonus)
       * (1 + marshmallow_meal_bonus)
       * Math.pow(1 + this.diamond_chef_bonus, diamond_plate_meals)
-      * Math.pow(1 + this.void_plate_chef_lvl / 100, void_plate_meals)
+      * Math.pow(1 + 0.01 * this.void_plate_chef_lvl, void_plate_meals)
       * (1 + this.MSA_mealing_unlocked * 0.1 * this.total_waves / 10) //msa mealing superbit bonus
       * (1 + triangulon_bonus)
       * (1 + this.arcade_cooking_bonus)
@@ -240,17 +242,23 @@ class CookingData {
 
     let total_cooking_speed = 0
 
+    const cabbage_bonus = this.meal_efficiency * this.meal_levels[13] * 0.05
+
+    let kitchen_speeds = []
     for (let i = 0; i < 10; i++) {
       const kitchen = this.kitchen_stats[i]
       const kitchen_total_lvl = kitchen.speedLv + kitchen.fireLv + kitchen.luckLv
-      const cabbage_bonus = this.meal_levels[13] * 0.05 * kitchen_total_lvl / 10
 
       const kitchen_speed = global_meal_speed_mult
         * (1 + kitchen.speedLv / 10)
         * (1 + 2 * kitchen.isRichelin)
-        * (1 + this.meal_efficiency * cabbage_bonus)
+        * (1 + cabbage_bonus * kitchen_total_lvl / 10)
       total_cooking_speed += kitchen_speed
     }
+
+    console.log("cooking speed:")
+    console.log(total_cooking_speed.toExponential(2))
+
     return total_cooking_speed
   }
 
@@ -274,12 +282,38 @@ class CookingData {
 
   }
 }
+const tryToParse = str => {
+  try {
+    return JSON.parse(str);
+  } catch (e) {
+    return null;
+  }
+};
+async function onSubmit() {
+
+  input_data = document.querySelector("#raw_data").value
+
+  let raw_data = ""
+  if (tryToParse(input_data) && "Meals" in tryToParse(input_data)) {
+    console.log("found raw data")
+    raw_data = input_data
+    parseSaveData(raw_data)
+
+  } else if (0 == 1) {
+    console.log("found IT data")
+    raw_data = JSON.parse(input_data)["save_data"]
+    parseSaveData(raw_data)
+  } else {
+    console.log("assuming character name")
+    url = `https://${input_data}.idleonefficiency.com`
 
 
+  }
+}
 
-function parseSaveData() {
+function parseSaveData(raw_data) {
 
-  raw_data = document.querySelector("#raw_data").value
+
 
   save_data = JSON.parse(raw_data)
 
