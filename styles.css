@@ -23,6 +23,19 @@ td {
   border: 1px solid;
 }
 
+td {
+  text-align: center;
+  vertical-align: middle;
+}
+
+tr.completed_meal {
+  background-color: rgba(6, 119, 6, 0.482);
+}
+
+tr.NMLB {
+  background-color: rgba(238, 17, 17, 0.366);
+}
+
 /* use with  <div class="loader"></div> */
 .loader {
   border: 16px solid #f3f3f3;

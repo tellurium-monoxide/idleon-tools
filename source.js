@@ -1,28 +1,82 @@
 class CookingData {
-  constructor() { }
+  constructor() {
+
+    // init order is organized like this:
+
+    // world 1
+    // stamps
+
+    // world 2
+    // alchemy
+
+    // world 3
+    // construction
+    // worship
+
+    // world 4
+    // cooking
+    // breeding
+    // lab
+
+    // world 5
+    // sailing
+    // gaming
+
+    // world 6
+    // farming
+    // sneaking
+    // summoning
+
+    // general
+    // classes
+    // cards
+    // star sign
+    // achieve
+    // arcade
+
+
+  }
   initFromSaveData(save_data) {
 
+    this.max_ladles_per_meal = 10000
 
-    // find current meal data
+    // world 1
+    // stamps
+    let stamp_info = save_data["StampLv"]
+    this.stamp_cooked_meal_lvl = stamp_info[1][36]
+
+    // world 2
+    // alchemy
+    this.diamond_chef_lvl = save_data["CauldronInfo"][3]["17"]
+
+    let vial_levels = []
+    for (let i = 0; i < save_data["CauldronInfo"][4].length; i++) {
+      vial_levels.push(save_data["CauldronInfo"][4][i])
+    }
+
+    this.max_level_vials = [...vial_levels].filter(x => x >= 13).length
+    this.vial_level_turtle = vial_levels[74]
+    this.vial_level_firefly = vial_levels[68]
+    this.vial_level_sand_shark = vial_levels[44]
+    this.vial_level_dreadlo = vial_levels[55]
+
+
+    // world 3
+    // construction
+    let atom_data = save_data["Atoms"]
+    this.void_plate_chef_lvl = atom_data[8]
+    // worship
+    let totem_info = JSON.parse(save_data["TotemInfo"])
+    this.total_waves = totem_info[0].reduce((a, b) => a + b)
+    // world 4
+    // cooking
     let meal_data = JSON.parse(save_data["Meals"])
-    // console.log(meal_data)
 
     this.meal_levels = meal_data[0]
-    this.meal_quantities = meal_data[2]
+    this.meal_quantities = meal_data[2].map(Number)
 
-
-    // TODO : check achiev id
-    // find achievments data
-    let achieve_data = JSON.parse(save_data["AchieveReg"])
-    this.achiev_cabbage_patch = achieve_data[224]
-    this.achiev_pretzel_bleu = achieve_data[225]
-    this.achiev_best_plate = achieve_data[233]
-
-
-    // find kitchen data
     this.kitchen_stats = []
     let kitchen_data = JSON.parse(save_data["Cooking"])
-
     for (let i = 0; i < 10; i++) {
       this.kitchen_stats.push({
         "isRichelin": kitchen_data[i][0] == 2,
@@ -31,8 +85,58 @@ class CookingData {
         "luckLv": kitchen_data[i][8]
       })
     }
-    // console.log("kitchen_data:")
-    // console.log(this.kitchen_stats)
+
+    // breeding
+    let breeding_info = JSON.parse(save_data["Breeding"])
+    let shiny_time_red_mush = breeding_info[22][4]
+    let shiny_time_sheepie = breeding_info[24][0]
+    this.shiny_lvl_red_mush = getShinyLevel(shiny_time_red_mush)
+    this.shiny_lvl_sheepie = getShinyLevel(shiny_time_sheepie)
+
+    // lab
+    this.lab_amethyst_rhinestone = 1
+    this.lab_purple_rhombol = 1
+    this.lab_purple_navette = 1
+
+    this.lab_emerald_pyramite = 1
+
+    this.lab_black_diamond_rhinestone_active = 1
+
+    this.lab_certified_stamp_book = 1
+    this.lab_spelunkerobol_active = 1
+    this.lab_depot_studies_phd = 1
+    this.lab_vial_doubling = 1
+
+    // world 5
+    // sailing
+    let sailing_info = JSON.parse(save_data["Sailing"])
+    this.artifact_triangulon_lvl = sailing_info[3][13]
+    this.artifact_winz_lantern_lvl = sailing_info[3][32]
+
+    // gaming
+    let gaming_info = save_data[`Gaming`]
+    let superbits = gaming_info[12]
+    this.MSA_mealing_unlocked = (superbits.includes("m"))
+
+    // world 6
+    // farming
+    let farming_crop_data = JSON.parse(save_data["FarmCrop"])
+    this.crop_acquired = Object.keys(farming_crop_data).length
+    this.farming_lvl = save_data["Lv0_0"][16]
+
+    // sneaking
+    let sneaking_data = JSON.parse(save_data["Ninja"])
+    this.pristine_crystal_comb_obtained = sneaking_data[107][8]
+    this.pristine_liquorice_rolle_obtained = sneaking_data[107][17]
+
+    // summoning
+    this.summoning_lvl = save_data["Lv0_0"][18]
+    let summoning_data = JSON.parse(save_data["Summon"])
+    this.summon_battle_mushP = (summoning_data[1].includes("mushP"))
+
+
+    // general
+
     // find voidWalker blood marrow and eclipse lvl
     this.voidwalker_blood_marrow_lvl = 0;
     this.voidwalker_eclipse_lvl = 0;
@@ -43,168 +147,349 @@ class CookingData {
 
         this.voidwalker_blood_marrow_lvl = Math.max(skill_max_levels[59], this.voidwalker_blood_marrow_lvl);
         this.voidwalker_eclipse_lvl = Math.max(skill_max_levels[49], this.voidwalker_eclipse_lvl);
-        this.apocalypse_active = this.voidwalker_eclipse_lvl >= 125 ? 1 : 0;
-        // console.log(this.voidwalker_eclipse_lvl)
-        // console.log("apocalypse_active:")
-        // console.log(this.apocalypse_active)
+
+
       }
     }
-    this.blood_marrow_bonus = (this.voidwalker_blood_marrow_lvl * 2.1) / (this.voidwalker_blood_marrow_lvl + 220) / 100;
-
 
     // find apocalypse count on BB
     this.blood_berserker_chow_count = 0
+    this.blood_berserker_overflowing_ladles_lvl = 0
     for (let i = 0; i < 10; i++) {
       if (save_data[`CharacterClass_${i}`] == 10) {
         // console.log(`char ${i} is blood berserker`)
-        let skill_max_levels = save_data[`SM_${i}`] // SM for max; SL and SLpre for currents
-        let KLA = JSON.parse(save_data[`KLA_${i}`])
-        // console.log(KLA)
 
+        let skill_max_levels = JSON.parse(save_data[`SM_${i}`]) // SM for max; SL and SLpre for currents
+
+        this.blood_berserker_overflowing_ladles_lvl = Math.max(skill_max_levels[148], this.blood_berserker_overflowing_ladles_lvl)
+        this.blood_berserker_chow_count = 0
+        let KLA = JSON.parse(save_data[`KLA_${i}`])
         for (let k = 0; k < KLA.length; k++) {
           if ((KLA[k][0] - KILL_REQ[k]) < -100e6) {
             this.blood_berserker_chow_count += 1
           }
         }
-        // console.log("chow count:")
-        // console.log(this.blood_berserker_chow_count)
       }
     }
 
-    this.apocalypse_bonus = Math.pow(1.1, this.apocalypse_active * this.blood_berserker_chow_count)
-    // find boosts from atoms
-    let atom_data = save_data["Atoms"]
-    this.void_plate_chef_lvl = atom_data[8]
-    // console.log(`void plate chef is lv ${this.void_plate_chef_lvl}`)
+    // cards
+    let card0 = JSON.parse(save_data["Cards0"])
+    let card_troll1 = card0["Boss4A"] //req: 2/6/10/32/918 
+    let card_ceramic_spirit = card0["w6c1"] //req: 400/1200/2000/6400/183600
+    this.card_troll1_level = getCardLevel("Boss4A", card_troll1)
+    this.card_ceramic_spirit_level = getCardLevel("w6c1", card_ceramic_spirit)
+
+    // star sign
+    this.star_sign_gordonius_major = 1
+    this.star_sign_seraph_cosmos = 1
+    this.star_sign_chip_doubler_active = 0
+
+    // achieve
+    let achieve_data = JSON.parse(save_data["AchieveReg"]) // TODO : verify achiev id but how ?
+    this.achiev_cabbage_patch = - achieve_data[224]
+    this.achiev_pretzel_bleu = -achieve_data[225]
+    this.achiev_best_plate = -achieve_data[233]
+
+    // arcade
+    let arcade_levels = JSON.parse(save_data["ArcadeUpg"])
+    this.arcade_cooking_bonus_lvl = arcade_levels[28]
 
 
-    // find boosts from farming
-    let farming_crop_data = JSON.parse(save_data["FarmCrop"])
-    this.crop_acquired = Object.keys(farming_crop_data).length
-    this.crop_depot_bonus = Math.pow(1.1, this.crop_acquired)
-    this.farming_lvl = save_data["Lv0_0"][16]
-    this.summoning_lvl = save_data["Lv0_0"][18]
-    // console.log(this.farming_lvl)
+    this.initCalculatedBonus()
 
-    // find lab boosts
-    this.lab_vial_doubling = 1
+    console.log("cooking speed:")
+    console.log(this.getCookingSpeed().toExponential(2))
+  }
 
-    // find alchemy bonuses
-    this.diamond_chef_lvl = save_data["CauldronInfo"][3]["17"]
-    this.diamond_chef_bonus = (this.diamond_chef_lvl * 0.3) / (this.diamond_chef_lvl + 13)
-    // console.log(this.diamond_chef_lvl)
+  initFromInputForm() {
 
-    let vial_levels = []
-    for (let i = 0; i < save_data["CauldronInfo"][4].length; i++) {
-      vial_levels.push(save_data["CauldronInfo"][4][i])
+    this.max_ladles_per_meal = Number(document.getElementById(`max_ladles_per_meal`).value)
+
+    // world 1 
+    // stamps
+    this.stamp_cooked_meal_lvl = Number(document.getElementById(`stamp_cooked_meal_lvl`).value)
+
+    // world 2
+    // alchemy
+    this.diamond_chef_lvl = Number(document.getElementById(`diamond_chef_lvl`).value)
+    this.max_level_vials = Number(document.getElementById(`max_level_vials`).value)
+    this.vial_level_turtle = Number(document.getElementById(`vial_level_turtle`).value)
+    this.vial_level_firefly = Number(document.getElementById(`vial_level_firefly`).value)
+    this.vial_level_sand_shark = Number(document.getElementById(`vial_level_sand_shark`).value)
+    this.vial_level_dreadlo = Number(document.getElementById(`vial_level_dreadlo`).value)
+
+    // world 3
+    // construction
+    this.void_plate_chef_lvl = Number(document.getElementById(`void_plate_chef_lvl`).value)
+    // worship
+    this.total_waves = Number(document.getElementById(`total_waves`).value)
+
+    // world 4
+    // cooking
+    this.meal_levels = Array(meal_count).fill(0)
+    this.meal_quantities = Array(meal_count).fill(0)
+    for (let i = 0; i < meal_count; i++) {
+      this.meal_levels[i] = Number(document.getElementById(`meal${i}_level`).value)
+      this.meal_quantities[i] = Number(document.getElementById(`meal${i}_qtt`).value)
     }
-    this.max_level_vials = [...vial_levels].filter(x => x >= 13).length
+    this.kitchen_stats = Array(10).fill(0)
+    for (let i = 0; i < 10; i++) {
+      let kitchen = {}
+      kitchen.speedLv = Number(document.getElementById(`kitchen${i}_speed_level`).value)
+      kitchen.fireLv = Number(document.getElementById(`kitchen${i}_fire_level`).value)
+      kitchen.luckLv = Number(document.getElementById(`kitchen${i}_luck_level`).value)
+      kitchen.isRichelin = document.getElementById(`kitchen${i}_is_richelin`).checked
 
-    this.vial_turtle_bonus = (1 + 0.02 * this.max_level_vials) * vial_levels[74] * 0.04 * (1 + this.lab_vial_doubling)
-    this.vial_firefly_bonus = (1 + 0.02 * this.max_level_vials) * vial_levels[68] * 0.05 * (1 + this.lab_vial_doubling)
-    this.vial_cooking_bonus = (1 + 0.02 * this.max_level_vials) * (1 + this.lab_vial_doubling) * (
-      vial_levels[44] * 0.06
-      + vial_levels[55] * 0.02
-    )
+      this.kitchen_stats[i] = kitchen
+    }
+
+    // breeding
+    this.shiny_lvl_red_mush = Number(document.getElementById(`shiny_lvl_red_mush`).value)
+    this.shiny_lvl_sheepie = Number(document.getElementById(`shiny_lvl_sheepie`).value)
+    // lab
+    this.lab_amethyst_rhinestone = document.getElementById(`lab_amethyst_rhinestone`).checked
+    this.lab_purple_rhombol = document.getElementById(`lab_purple_rhombol`).checked
+    this.lab_purple_navette = document.getElementById(`lab_purple_navette`).checked
+    this.lab_emerald_pyramite = document.getElementById(`lab_emerald_pyramite`).checked
+    this.lab_black_diamond_rhinestone_active = document.getElementById(`lab_black_diamond_rhinestone_active`).checked
+    this.lab_certified_stamp_book = document.getElementById(`lab_certified_stamp_book`).checked
+    this.lab_spelunkerobol_active = document.getElementById(`lab_spelunkerobol_active`).checked
+    this.lab_depot_studies_phd = document.getElementById(`lab_depot_studies_phd`).checked
+    this.lab_vial_doubling = document.getElementById(`lab_vial_doubling`).checked
+
+    // world 5
+    // sailing
+    this.artifact_triangulon_lvl = Number(document.getElementById(`artifact_triangulon_lvl`).value)
+    this.artifact_winz_lantern_lvl = Number(document.getElementById(`artifact_winz_lantern_lvl`).value)
+    // gaming
+    this.MSA_mealing_unlocked = document.getElementById(`MSA_mealing_unlocked`).checked
+    // world 6
+    // farming
+    this.farming_lvl = Number(document.getElementById(`farming_lvl`).value)
+    this.crop_acquired = Number(document.getElementById(`crop_acquired`).value)
+    // sneaking
+    this.pristine_liquorice_rolle_obtained = document.getElementById(`pristine_liquorice_rolle_obtained`).checked
+    this.pristine_crystal_comb_obtained = document.getElementById(`pristine_crystal_comb_obtained`).checked
+    // summoning
+    this.summon_battle_mushP = document.getElementById(`summon_battle_mushP`).checked
+    this.summoning_lvl = Number(document.getElementById(`summoning_lvl`).value)
+
+    // general
+    // classes
+    this.voidwalker_blood_marrow_lvl = Number(document.getElementById(`voidwalker_blood_marrow_lvl`).value)
+    this.voidwalker_eclipse_lvl = Number(document.getElementById(`voidwalker_eclipse_lvl`).value)
+    this.blood_berserker_chow_count = Number(document.getElementById(`blood_berserker_chow_count`).value)
+    this.blood_berserker_overflowing_ladles_lvl = Number(document.getElementById(`blood_berserker_overflowing_ladles_lvl`).value)
+    // cards
+    this.card_troll1_level = Number(document.getElementById(`card_troll1_level`).value)
+    this.card_ceramic_spirit_level = Number(document.getElementById(`card_ceramic_spirit_level`).value)
+    // star sign
+    this.star_sign_gordonius_major = document.getElementById(`star_sign_gordonius_major`).checked
+    this.star_sign_seraph_cosmos = document.getElementById(`star_sign_seraph_cosmos`).checked
+    this.star_sign_chip_doubler_active = document.getElementById(`star_sign_chip_doubler_active`).checked
+    // achieve
+    this.achiev_cabbage_patch = document.getElementById(`achiev_cabbage_patch`).checked
+    this.achiev_pretzel_bleu = document.getElementById(`achiev_pretzel_bleu`).checked
+    this.achiev_best_plate = document.getElementById(`achiev_best_plate`).checked
+    // arcade
+    this.arcade_cooking_bonus_lvl = Number(document.getElementById(`arcade_cooking_bonus_lvl`).value)
+
+    this.initCalculatedBonus()
+
+    console.log("cooking speed:")
+    console.log(this.getCookingSpeed().toExponential(2))
+  }
+
+  initCalculatedBonus() {
+
+    if (!this.equinox_event_count) {
+      this.equinox_event_count = 0
+    }
+
+    this.apocalypse_active = this.voidwalker_eclipse_lvl >= 125 ? 1 : 0;
+
+    this.computeMealCosts()
+
+    this.diamond_chef_bonus = (this.diamond_chef_lvl * 0.3) / (this.diamond_chef_lvl + 13)
 
 
-    // console.log(this.max_level_vials)
-    // console.log(this.vial_turtle_bonus)
-    // console.log(this.vial_firefly_bonus)
-    // console.log(this.vial_cooking_bonus)
+    this.blood_marrow_bonus = (this.voidwalker_blood_marrow_lvl * 2.1 / 100) / (this.voidwalker_blood_marrow_lvl + 220);
+    this.overflowing_ladles_bonus = (this.blood_berserker_overflowing_ladles_lvl) / (this.blood_berserker_overflowing_ladles_lvl + 80);
 
 
-    // find gaming bonus (MSA mealing)
+    this.apocalypse_bonus = Math.pow(1.1, this.apocalypse_active * this.blood_berserker_chow_count)
 
-    let gaming_info = save_data[`Gaming`]
-    let superbits = gaming_info[12]
-    this.MSA_mealing_unlocked = (superbits.includes("m"))
-    let totem_info = JSON.parse(save_data["TotemInfo"])
-    this.total_waves = totem_info[0].reduce((a, b) => a + b)
-    // console.log(this.MSA_mealing_unlocked)
-    // console.log(this.total_waves)
 
-    // TODO : for now this assumes everything is active in lab
-    // find lab active jewels / bonuses
-    let lab_info = JSON.parse(save_data["Lab"])
-    // console.log("lab_info:")
-    // console.log(lab_info)
-    this.lab_black_diamond_rhinestone_active = 1
-
-    this.lab_amethyst_rhinestone = 1
-    this.lab_purple_rhombol = 1
-    this.lab_purple_navette = 1
-
-    this.lab_certified_stamp_book = 1
-    this.lab_spelunkerobol_active = 1
-    this.lab_depot_stidies_phd = 1 // TODO : this impacts crop depot bonus
-
+    // init jewel bonus
     this.lab_amethyst_rhinestone_mult =
       (1 + this.lab_amethyst_rhinestone * (1 + (this.lab_purple_rhombol && this.lab_purple_navette))) // amethystRhinestone   
       * (1 + 0.5 * this.lab_spelunkerobol_active)
 
-    // find meal efficiency
-    let breeding_info = JSON.parse(save_data["Breeding"])
-    let shiny_time_red_mush = breeding_info[22][4]
-    let shiny_time_sheepie = breeding_info[24][0]
-    this.shiny_lvl_red_mush = getShinyLevel(shiny_time_red_mush)
-    this.shiny_lvl_sheepie = getShinyLevel(shiny_time_sheepie)
-    // console.log(breeding_info)
-    // console.log(shiny_time_red_mush)
-    // console.log(shiny_time_sheepie)
+    let kitchen_total_levels = this.kitchen_stats.reduce((acc, kitchen) => acc + kitchen.speedLv + kitchen.fireLv + kitchen.luckLv, 0)
+
+    this.emerald_pyramite_bonus = this.lab_emerald_pyramite
+      * 0.01
+      * (1 + 0.5 * this.lab_spelunkerobol_active)
+      * (kitchen_total_levels / 25)
+
+
+
+    // init vials bonus
+    this.vial_turtle_bonus = (1 + 0.02 * this.max_level_vials) * this.vial_level_turtle * 0.04 * (1 + this.lab_vial_doubling)
+    this.vial_firefly_bonus = (1 + 0.02 * this.max_level_vials) * this.vial_level_firefly * 0.05 * (1 + this.lab_vial_doubling)
+    this.vial_cooking_bonus =
+      (1 + 0.02 * this.max_level_vials)
+      * (1 + this.lab_vial_doubling)
+      * (
+        this.vial_level_sand_shark * 0.06 +
+        this.vial_level_dreadlo * 0.02
+      )
+
 
     this.meal_efficiency = 1
-      + 0.6 * this.lab_black_diamond_rhinestone_active * (1 + 0.5 * this.lab_spelunkerobol_active)
+      + 0.16 * this.lab_black_diamond_rhinestone_active * (1 + 0.5 * this.lab_spelunkerobol_active)
       + 0.01 * (this.shiny_lvl_red_mush + this.shiny_lvl_sheepie)
 
-
-    // find stamp bonuses
-    let stamp_info = save_data["StampLv"]
-    this.stamp_cooked_meal_lvl = stamp_info[1][36]
     this.stamp_cooked_meal_bonus = 0.01
       * this.stamp_cooked_meal_lvl
       * (1 + this.lab_certified_stamp_book)
-      * (1 + 0.25 * 0) // TODO : take sneaking into account
-    // console.log("stamp_info:")
-    // console.log(stamp_info)
-    // console.log(this.stamp_cooked_meal_bonus)
-    // TODO
-    // find arcade bonus
-    let arcade_levels = JSON.parse(save_data["ArcadeUpg"])
-    this.arcade_cooking_bonus_lvl = arcade_levels[28]
-    this.arcade_cooking_bonus = (this.arcade_cooking_bonus_lvl * 40) / (this.arcade_cooking_bonus_lvl + 100)
-    // console.log(this.arcade_cooking_bonus_lvl)
-    // console.log(this.arcade_cooking_bonus)
+      * (1 + 0.25 * this.pristine_liquorice_rolle_obtained)
 
 
-    // find sailing boost (triangulon)
-    let sailing_info = JSON.parse(save_data["Sailing"])
-    this.triangulon_lvl = sailing_info[3][13]
 
-    // console.log(sailing_info)
-    // console.log(this.triangulon_lvl)
+    // init boosts from arcade
+    this.arcade_cooking_bonus = (this.arcade_cooking_bonus_lvl * 0.4) / (this.arcade_cooking_bonus_lvl + 100)
 
-    // find card infos
-    let card0 = JSON.parse(save_data["Cards0"])
-    console.log(card0)
+    // init boosts from farming
+    this.crop_depot_bonus = Math.pow(1.1, this.crop_acquired) * (1 + this.lab_depot_studies_phd * 0.3)
 
-    this.getCookingSpeed()
+    // init boosts from summoning
+    this.summon_cooking_bonus = (1 + 0.25 * this.artifact_winz_lantern_lvl)
+      * (1 + 0.3 * this.pristine_crystal_comb_obtained)
+      * (1 + this.summon_battle_mushP * 1.75)
+
+
+    // init star sign boost
+    this.star_sign_cooking_bonus = 0.15
+      * Math.pow(1.1, Math.ceil((this.summoning_lvl + 1) / 20))
+      * (1 + this.star_sign_chip_doubler_active)
+
+
 
   }
+  fillDocumentInputForm() {
+
+    document.getElementById(`max_ladles_per_meal`).value = this.max_ladles_per_meal
+
+
+    // world 1 
+    // stamps
+    document.getElementById(`stamp_cooked_meal_lvl`).value = this.stamp_cooked_meal_lvl
+
+
+    // world 2
+    // alchemy
+    document.getElementById(`diamond_chef_lvl`).value = this.diamond_chef_lvl
+    document.getElementById(`max_level_vials`).value = this.max_level_vials
+    document.getElementById(`vial_level_turtle`).value = this.vial_level_turtle
+    document.getElementById(`vial_level_firefly`).value = this.vial_level_firefly
+    document.getElementById(`vial_level_sand_shark`).value = this.vial_level_sand_shark
+    document.getElementById(`vial_level_dreadlo`).value = this.vial_level_dreadlo
+
+    // world 3
+    // construction
+    document.getElementById(`void_plate_chef_lvl`).value = this.void_plate_chef_lvl
+    // worship
+    document.getElementById(`total_waves`).value = this.total_waves
+
+    // world 4
+    // cooking
+
+    for (let i = 0; i < meal_count; i++) {
+      document.getElementById(`meal${i}_level`).value = this.meal_levels[i]
+      document.getElementById(`meal${i}_qtt`).value = this.meal_quantities[i].toExponential(2)
+    }
+
+    for (let i = 0; i < 10; i++) {
+      let kitchen = this.kitchen_stats[i]
+      document.getElementById(`kitchen${i}_speed_level`).value = kitchen.speedLv
+      document.getElementById(`kitchen${i}_fire_level`).value = kitchen.fireLv
+      document.getElementById(`kitchen${i}_luck_level`).value = kitchen.luckLv
+      document.getElementById(`kitchen${i}_is_richelin`).checked = kitchen.isRichelin
+    }
+
+    // breeding
+    document.getElementById(`shiny_lvl_red_mush`).value = this.shiny_lvl_red_mush
+    document.getElementById(`shiny_lvl_sheepie`).value = this.shiny_lvl_sheepie
+    // lab
+    document.getElementById(`lab_amethyst_rhinestone`).checked = this.lab_amethyst_rhinestone
+    document.getElementById(`lab_purple_rhombol`).checked = this.lab_purple_rhombol
+    document.getElementById(`lab_purple_navette`).checked = this.lab_purple_navette
+    document.getElementById(`lab_emerald_pyramite`).checked = this.lab_emerald_pyramite
+    document.getElementById(`lab_black_diamond_rhinestone_active`).checked = this.lab_black_diamond_rhinestone_active
+    document.getElementById(`lab_certified_stamp_book`).checked = this.lab_certified_stamp_book
+    document.getElementById(`lab_spelunkerobol_active`).checked = this.lab_spelunkerobol_active
+    document.getElementById(`lab_depot_studies_phd`).checked = this.lab_depot_studies_phd
+    document.getElementById(`lab_vial_doubling`).checked = this.lab_vial_doubling
+
+    // world 5
+    // sailing
+    document.getElementById(`artifact_triangulon_lvl`).value = this.artifact_triangulon_lvl
+    document.getElementById(`artifact_winz_lantern_lvl`).value = this.artifact_winz_lantern_lvl
+    // gaming
+    document.getElementById(`MSA_mealing_unlocked`).checked = this.MSA_mealing_unlocked
+    // world 6
+    // farming
+    document.getElementById(`farming_lvl`).value = this.farming_lvl
+    document.getElementById(`crop_acquired`).value = this.crop_acquired
+    // sneaking
+    document.getElementById(`pristine_crystal_comb_obtained`).checked = this.pristine_crystal_comb_obtained
+    document.getElementById(`pristine_liquorice_rolle_obtained`).checked = this.pristine_liquorice_rolle_obtained
+    // summoning
+    document.getElementById(`summon_battle_mushP`).checked = this.summon_battle_mushP
+    document.getElementById(`summoning_lvl`).value = this.summoning_lvl
+
+    // general
+    // classes
+    document.getElementById(`voidwalker_blood_marrow_lvl`).value = this.voidwalker_blood_marrow_lvl
+    document.getElementById(`voidwalker_eclipse_lvl`).value = this.voidwalker_eclipse_lvl
+    document.getElementById(`blood_berserker_chow_count`).value = this.blood_berserker_chow_count
+    document.getElementById(`blood_berserker_overflowing_ladles_lvl`).value = this.blood_berserker_overflowing_ladles_lvl
+    // cards
+    document.getElementById(`card_troll1_level`).value = this.card_troll1_level
+    document.getElementById(`card_ceramic_spirit_level`).value = this.card_ceramic_spirit_level
+    // star sign
+    document.getElementById(`star_sign_gordonius_major`).checked = this.star_sign_gordonius_major
+    document.getElementById(`star_sign_seraph_cosmos`).checked = this.star_sign_seraph_cosmos
+    document.getElementById(`star_sign_chip_doubler_active`).checked = this.star_sign_chip_doubler_active
+    // achieve
+    document.getElementById(`achiev_cabbage_patch`).checked = this.achiev_cabbage_patch
+    document.getElementById(`achiev_pretzel_bleu`).checked = this.achiev_pretzel_bleu
+    document.getElementById(`achiev_best_plate`).checked = this.achiev_best_plate
+    // arcade
+    document.getElementById(`arcade_cooking_bonus_lvl`).value = this.arcade_cooking_bonus_lvl
+
+
+
+
+
+
+
+  }
+
 
   getCookingSpeed() {
 
     const total_meal_levels = (this.meal_levels.reduce((a, b) => a + b))
 
-    // console.log(total_meal_levels)
-
 
     const diamond_plate_meals = [...this.meal_levels].filter(x => x >= 10).length
     const void_plate_meals = [...this.meal_levels].filter(x => x >= 30).length
 
-    let triangulon_bonus = 0.15
-      * this.triangulon_lvl
-      * Math.log10(this.meal_quantities[0])
+    const triangulon_bonus = 0.15
+      * this.artifact_triangulon_lvl
+      * Math.log10(Math.max(1, this.meal_quantities[0]))
+
 
     const cooking_speed_meals_bonus = this.meal_efficiency * (
       this.meal_levels[1] * 0.05 //egg
@@ -218,26 +503,26 @@ class CookingData {
       * this.meal_levels[63]
       * Math.ceil((this.farming_lvl + 1) / 50)
 
-    let global_meal_speed_mult = 10 / 3600
+    let global_meal_speed_mult = 10 / 60
       * Math.pow(1 + this.blood_marrow_bonus, total_meal_levels)
       * (this.crop_depot_bonus)
       * (this.apocalypse_bonus)
       * (1 + marshmallow_meal_bonus)
-      * Math.pow(1 + this.diamond_chef_bonus, diamond_plate_meals)
-      * Math.pow(1 + 0.01 * this.void_plate_chef_lvl, void_plate_meals)
+      * (Math.pow(1 + this.diamond_chef_bonus, diamond_plate_meals))
+      * (Math.pow(1 + 0.01 * this.void_plate_chef_lvl, void_plate_meals))
       * (1 + this.MSA_mealing_unlocked * 0.1 * this.total_waves / 10) //msa mealing superbit bonus
       * (1 + triangulon_bonus)
       * (1 + this.arcade_cooking_bonus)
       * (1 + this.vial_turtle_bonus)
       * (1 + this.vial_cooking_bonus)
-      * (1 + this.stamp_cooked_meal_bonus)
+      * (1 + this.stamp_cooked_meal_bonus + this.emerald_pyramite_bonus)
       * (1 + cooking_speed_meals_bonus)
-      * (1) // starSignBonus  
-      * (1) // winnerBonus
-      * (1) // cardCookingMulti
+      * (1 + this.star_sign_cooking_bonus)
+      * (this.summon_cooking_bonus)
+      * (1 + this.card_ceramic_spirit_level * 0.05)
       * (1 + this.vial_firefly_bonus)
       * (this.lab_amethyst_rhinestone_mult)
-      * (1 + 0 + this.achiev_cabbage_patch * 0.1 + this.achiev_pretzel_bleu * 0.2) // TODO : troll card + achievs    
+      * (1 + this.card_troll1_level * 0.06 + this.achiev_cabbage_patch * 0.1 + this.achiev_pretzel_bleu * 0.2)
 
 
     let total_cooking_speed = 0
@@ -254,33 +539,61 @@ class CookingData {
         * (1 + 2 * kitchen.isRichelin)
         * (1 + cabbage_bonus * kitchen_total_lvl / 10)
       total_cooking_speed += kitchen_speed
+      kitchen_speeds.push(kitchen_speed)
     }
 
-    console.log("cooking speed:")
-    console.log(total_cooking_speed.toExponential(2))
+
+    // console.log(kitchen_speeds)
 
     return total_cooking_speed
   }
 
 
 
-  fillDocumentInputForm() {
+  computeMealCosts() {
+    if (!this.meal_costs) {
+      this.meal_costs = Array(meal_count).fill(0)
+    }
     for (let i = 0; i < meal_count; i++) {
-      let lvl = this.meal_levels[i]
-
-      document.getElementById(`meal${i}_level`).value = lvl
-
+      this.updateMealCost(i)
     }
-    for (let i = 0; i < 10; i++) {
-      let kitchen = this.kitchen_stats[i]
-      document.getElementById(`kitchen${i}_speed_level`).value = kitchen.speedLv
-      document.getElementById(`kitchen${i}_fire_level`).value = kitchen.fireLv
-      document.getElementById(`kitchen${i}_luck_level`).value = kitchen.luckLv
-      document.getElementById(`kitchen${i}_is_richelin`).checked = kitchen.isRichelin
+  }
+  updateMealCost(meal_id) {
+    const mdata = meal_info[meal_id]
+    const current_lvl = this.meal_levels[meal_id]
+    this.meal_costs[meal_id] = this.getMealCost(current_lvl) * mdata.cookReq;
+  }
+  updateMealQtt(meal_id, current_lvl) {
+    this.meal_quantities[meal_id] = this.getMealCost(current_lvl - 1);
+  }
 
+  getMealCost(current_lvl,) {
+    if (current_lvl >= meal_max_lvl) {
+      return Infinity
     }
+    else {
+      let level = current_lvl
+      // achiev 4-24 "best plate" gives 10% lower cost, actually cost efficiency 
+      // like most other badly worded cost reductions in this game
+      const achiev_cost_reduction = 1 / (1 + 0.1 * this.achiev_best_plate)
+
+      // equinox gives reduced cost per daily event done, up to 14 (depends on equinox upgrade level actually)
+      const equinox = Math.max(0.01, Math.pow(0.8, Math.min(this.equinox_event_count, 14)))
+
+      const base_mult1 = (10 + (level + Math.pow(level, 2)));
+      const base_mult2 = Math.pow(1.2 + 0.05 * level, level);
+      return achiev_cost_reduction * base_mult1 * base_mult2 * equinox;
+    }
+
 
   }
+  getLadlesNeeded(meal_time_in_hours) {
+
+    return Math.ceil(meal_time_in_hours / (1 + this.overflowing_ladles_bonus))
+  }
+
+
+
 }
 const tryToParse = str => {
   try {
@@ -295,170 +608,140 @@ async function onSubmit() {
 
   let raw_data = ""
   if (tryToParse(input_data) && "Meals" in tryToParse(input_data)) {
-    console.log("found raw data")
+    console.log("found raw IE data")
     raw_data = input_data
     parseSaveData(raw_data)
 
-  } else if (0 == 1) {
+  } else if (tryToParse(input_data) && "serverVars" in tryToParse(input_data)) {
     console.log("found IT data")
-    raw_data = JSON.parse(input_data)["save_data"]
-    parseSaveData(raw_data)
+    save_data = JSON.parse(input_data)["data"]
+    parseSaveData(save_data)
   } else {
     console.log("assuming character name")
     url = `https://${input_data}.idleonefficiency.com`
-
-
   }
 }
 
+function lookIntoLocalStorage() {
+  const raw_data = localStorage.getItem("IEsaveData");
+
+  if (raw_data) {
+    console.log("Found save data in local storage")
+    document.querySelector("#raw_data").value = raw_data
+    parseSaveData(raw_data)
+  }
+
+}
 function parseSaveData(raw_data) {
 
 
 
   save_data = JSON.parse(raw_data)
 
+  localStorage.setItem("IEsaveData", raw_data);
+
   let cooking_data = new CookingData()
   cooking_data.initFromSaveData(save_data)
   cooking_data.fillDocumentInputForm()
-  parseCooking(save_data);
-
-  //console.log(raw_data);
-
-}
 
 
-
-function parseCooking(save_data) {
-
-  meal_data = JSON.parse(save_data["Meals"])
-  // console.log("meal_data:");
-  // console.log(meal_data);
-
-  cooking_data = {}
-  cooking_data.meal_levels = meal_data[0]
-
-  displayCookingData(cooking_data)
-
-}
-function displayCookingData(cooking_data) {
-
-  getMealOptimalOrder(cooking_data.meal_levels)
+  computeMealOptimalOrder(cooking_data)
 
 }
 
 
-function getMealOptimalOrder(meal_levels) {
+function computeFromInputForm() {
+  let cooking_data = new CookingData()
+  cooking_data.initFromInputForm()
+
+  computeMealOptimalOrder(cooking_data)
+}
+
+
+
+function computeMealOptimalOrder(cooking_data) {
 
   content = ""
-
-  cooking_speed = Number(document.querySelector("#total_cooking_speed").value)
-
-
-  temp_meal_lvls = [...meal_levels]
-
-  meal_costs = getMealCurrentCosts(temp_meal_lvls);
-
+  document.getElementById(`total_cooking_speed`).innerHTML = cooking_data.getCookingSpeed().toExponential(2)
   var cumulative_ladles = 0
   var days_NMLB = 0
-  ladles_per_day = 10000
-  while (temp_meal_lvls.reduce((a, b) => a + b) < (meal_count * meal_max_lvl)) {
+  while (cooking_data.meal_levels.reduce((a, b) => a + b) < (meal_count * meal_max_lvl)) {
+    cooking_speed = cooking_data.getCookingSpeed()
 
 
-    best_meal = meal_costs.reduce((acc, currentVal, currentId) => (currentId < meal_count && currentVal < acc.val) ? { "val": currentVal, "id": currentId } : acc, { "val": Infinity, "id": 0 }).id;
+    best_meal = cooking_data.meal_costs.reduce((acc, currentVal, currentId) => (currentId < meal_count && currentVal < acc.val) ? { "val": currentVal, "id": currentId } : acc, { "val": Infinity, "id": 0 }).id;
+    new_lvl = cooking_data.meal_levels[best_meal] + 1
 
 
-    new_lvl = temp_meal_lvls[best_meal] + 1
-    temp_meal_lvls[best_meal] = new_lvl
 
+    meal_time = cooking_data.meal_costs[best_meal] / cooking_speed
+    ladles = cooking_data.getLadlesNeeded(meal_time)
 
-    meal_time = meal_costs[best_meal] / cooking_speed
-    ladles = getLadlesNeeded(meal_time)
+    if (ladles <= cooking_data.max_ladles_per_meal) {
 
-    if (ladles < ladles_per_day) {
       cumulative_ladles += ladles
-      content += addMealUpgradeDisplay(best_meal, temp_meal_lvls[best_meal], ladles, cumulative_ladles)
+      content += addMealUpgradeDisplay(cooking_data, best_meal, new_lvl, ladles, cumulative_ladles, days_NMLB)
+      cooking_data.updateMealQtt(best_meal, new_lvl)
+      cooking_data.equinox_event_count = 0
     } else {
+      cooking_data.equinox_event_count += 1
+      // NMLB upgrades lowest level meal starting with last ones
+      best_meal = cooking_data.meal_levels.reduce((acc, currentVal, currentId) => (currentId < meal_count && currentVal <= acc.val) ? { "val": currentVal, "id": currentId } : acc, { "val": Infinity, "id": 0 }).id;
+      new_lvl = cooking_data.meal_levels[best_meal] + 1
       days_NMLB += 1
-      content += addMealUpgradeDisplay(best_meal, temp_meal_lvls[best_meal], 0, cumulative_ladles)
+      content += addMealUpgradeDisplay(cooking_data, best_meal, new_lvl, 0, cumulative_ladles, days_NMLB)
+
     }
 
+    cooking_data.meal_levels[best_meal] = new_lvl
+    cooking_data.computeMealCosts()
 
-
-
-
-
-
-    updateMealCost(meal_costs, best_meal, new_lvl + 1)
-    cooking_speed *= (1 + 1.18 / 100);
   }
 
   document.getElementById("meal_upgrade_order").innerHTML = content;
   document.getElementById("ladles_needed").innerHTML = cumulative_ladles;
   document.getElementById("NMLB_needed").innerHTML = days_NMLB;
 
-
+  // document.getElementById('result_collapsible').click();
+  let coll = document.getElementById('result_collapsible');
+  let content_coll = coll.nextElementSibling;
+  content_coll.style.display = "block";
 }
 
-function addMealUpgradeDisplay(meal_id, new_meal_lvl, ladles, cumulative_ladles) {
+function addMealUpgradeDisplay(cooking_data, meal_id, new_meal_lvl, ladles, cumulative_ladles, days_NMLB) {
   const mdata = meal_info[meal_id];
   // display_time = FormatCookingTime(meal_time)
   // display_cumulative_time = FormatCookingTime(cumulative_time)
 
-  content = `<tr>`
+  let trclass = ""
+  if (new_meal_lvl == 90) {
+    trclass = "completed_meal"
+  } else if (ladles == 0) {
+    trclass = "NMLB"
+  }
+
+  content = `<tr class=${trclass}>`
   content += `<td><img src="${mdata.img}"></td>`
   content += `<td> ${mdata.name} </td>`
   content += `<td>to lvl ${new_meal_lvl}</td>`
-  content += `<td>Amount: ${getMealCost(new_meal_lvl, 0).toExponential(3)}</td>`
+  // content += `<td>Amount: ${getMealCost(new_meal_lvl, 0).toExponential(3)}</td>`
   // content += `<td>Time: ${display_time}</td>`
   content += `<td>Ladles: ${ladles}</td>`
   // content += `<td>Cumulative Time: ${display_cumulative_time}</td>`
   content += `<td>Cumulative Ladles: ${cumulative_ladles}</td>`
+  content += `<td>NMLB: ${days_NMLB}</td>`
+  content += `<td>equinox: ${cooking_data.equinox_event_count}</td>`
+  // content += `<td>speed: ${cooking_data.getCookingSpeed().toExponential(3)}</td>`
   content += `</tr>`
 
   return content;
 
 }
 
-function getLadlesNeeded(meal_time_in_hours) {
+function remove_meal_upgrade() {
 
-  return Math.ceil(meal_time_in_hours)
+  document.getElementById("meal_upgrade_order").firstChild.firstChild.remove()
 }
-
-function getMealCurrentCosts(meal_levels) {
-  meal_costs = [...meal_levels]
-  for (let i = 0; i < meal_count; i++) {
-    lvl = meal_levels[i]
-    updateMealCost(meal_costs, i, lvl + 1)
-  }
-  return meal_costs;
-}
-
-function updateMealCost(meal_costs, meal_id, lvl) {
-  mdata = meal_info[meal_id]
-  meal_costs[meal_id] = getMealCost(lvl, 0) * mdata.cookReq;
-}
-function getMealCost(level_after_upgrade, equinox_event_count) {
-  if (level_after_upgrade > meal_max_lvl) {
-    return Infinity
-  }
-  else {
-    level = level_after_upgrade - 1
-    // achiev 4-24 "best plate" gives 10% lower cost, actually cost efficiency 
-    // like most other badly worded cost reductions in this game
-    //const achievBonus = 1 / Math.max(1, 1 + (10 * getAchievementStatus(achievements, 233))
-    const achiev_cost_reduction = 1 / 1.1
-
-    // equinox gives reduced cost per daily event done, up to 14 (depends on equinox upgrade level actually
-    const equinox = Math.max(0.01, Math.pow(0.8, Math.min(equinox_event_count, 14)))
-
-    const base_mult1 = (10 + (level + Math.pow(level, 2)));
-    const base_mult2 = Math.pow(1.2 + 0.05 * level, level);
-    return achiev_cost_reduction * base_mult1 * base_mult2 * equinox;
-  }
-
-
-}
-
 
 function createMealTable() {
   let content = "<tr>"
@@ -466,15 +749,32 @@ function createMealTable() {
 
     mdata = meal_info[i]
 
-    if (i % 5 == 0) {
+    if (i % 1 == 0) {
       content += "</tr><tr>"
     }
     content += `<td><img src="${mdata.img}"></td>`
-    content += `<td>Meal ${i}:${mdata.name}</td>`
-    content += `<td><input type="text" id="meal${i}_level"/></td>`
+    content += `<td>${mdata.name}</td>`
+    content += `<td><input type="number" id="meal${i}_level"/></td>`
   }
   content += "</tr>"
   document.getElementById("meal_levels").innerHTML = content;
+
+}
+function createMealQttTable() {
+  let content = "<tr>"
+  for (let i = 0; i < meal_count; i++) {
+
+    mdata = meal_info[i]
+
+    if (i % 1 == 0) {
+      content += "</tr><tr>"
+    }
+    content += `<td><img src="${mdata.img}"></td>`
+    content += `<td>${mdata.name}</td>`
+    content += `<td><input type="text" id="meal${i}_qtt"/></td>`
+  }
+  content += "</tr>"
+  document.getElementById("meal_qtts").innerHTML = content;
 
 }
 function createKitchenTable() {
@@ -493,9 +793,9 @@ function createKitchenTable() {
     }
     // content += `<td><img src="${mdata.img}"></td>`
     content += `<td>Kitchen n°${i}</td>`
-    content += `<td><input type="text" id="kitchen${i}_speed_level"/></td>`
-    content += `<td><input type="text" id="kitchen${i}_fire_level"/></td>`
-    content += `<td><input type="text" id="kitchen${i}_luck_level"/></td>`
+    content += `<td><input type="number" id="kitchen${i}_speed_level"/></td>`
+    content += `<td><input type="number" id="kitchen${i}_fire_level"/></td>`
+    content += `<td><input type="number" id="kitchen${i}_luck_level"/></td>`
     content += `<td><input type="checkbox" id="kitchen${i}_is_richelin"/></td>`
   }
   content += "</tr>"
@@ -669,3 +969,18 @@ const DAYS_FOR_SHINY_LEVELS = [
 
 
 ]
+
+
+
+const CARD_REQUIREMENTS = {
+  "Boss4A": [2, 6, 10, 32, 918],
+  "w6c1": [400, 1200, 2000, 6400, 183600],
+}
+
+
+function getCardLevel(card_id, card_count) {
+  let card_req = CARD_REQUIREMENTS[card_id]
+
+  let card_level = (card_count > 0) + card_req.filter((a) => (a < card_count)).length
+  return card_level;
+}

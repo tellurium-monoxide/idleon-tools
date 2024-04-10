@@ -6,8 +6,7 @@
   <title>IdleOn Cooking Planner</title>
   <link rel="icon" href="https://idleon.wiki/wiki/images/b/b9/Turkey_a_la_Thank.png">
   <link rel="stylesheet" href="styles.css">
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
   <script src="./source.js"></script>
 </head>
 
@@ -16,39 +15,226 @@
 
 
   <h1>IdleOn Cooking Planner</h1>
-  <label for="name">Enter IdleonEfficiency save data:</label>
+  <div>
+  </div>
+  <label for="name">Enter your <a href="https://www.idleonefficiency.com/raw-data" target="_blank">IE save data</a>
+    here:</label>
   <input type="text" id="raw_data" name="name" />
   <button id="enter data" onclick="onSubmit()">Enter</button>
-  <div id="temp_ie_save_data" hidden></div>
+
   <button type="button" class="collapsible">Input Data</button>
   <div class="content">
 
-    <label for="name">Total cooking speed:</label><input type="text" id="total_cooking_speed" />
+    <label for="max_ladles_per_meal">max_ladles_per_meal</label>
+    <input type="number" id="max_ladles_per_meal" />
 
-    <button type="button" class="collapsible">Meal levels</button>
+
+    <button type="button" class="collapsible">World 1</button>
     <div class="content">
-
-      <table id="meal_levels">
-      </table>
-      <script type="text/javascript">
-        createMealTable();
-      </script>
-
-    </div> <button type="button" class="collapsible">Kitchen levels</button>
+      <button type="button" class="collapsible">Stamps</button>
+      <div class="content">
+        <label for="stamp_cooked_meal_lvl">stamp_cooked_meal_lvl:</label>
+        <input type="number" id="stamp_cooked_meal_lvl" />
+      </div>
+    </div>
+    <button type="button" class="collapsible">World 2</button>
     <div class="content">
+      <button type="button" class="collapsible">Alchemy</button>
+      <div class="content">
+        <label for="diamond_chef_lvl">diamond_chef_lvl:</label>
+        <input type="number" id="diamond_chef_lvl" />
+        <label for="max_level_vials">max_level_vials:</label>
+        <input type="number" id="max_level_vials" />
+        <label for="vial_level_turtle">vial_level_turtle:</label>
+        <input type="number" id="vial_level_turtle" />
+        <label for="vial_level_firefly">vial_level_firefly:</label>
+        <input type="number" id="vial_level_firefly" />
+        <label for="vial_level_sand_shark">vial_level_sand_shark:</label>
+        <input type="number" id="vial_level_sand_shark" />
+        <label for="vial_level_dreadlo">vial_level_dreadlo:</label>
+        <input type="number" id="vial_level_dreadlo" />
 
-      <table id="kitchen_levels">
-      </table>
-      <script type="text/javascript">
-        createKitchenTable();
-      </script>
 
+      </div>
+    </div>
+    <button type="button" class="collapsible">World 3</button>
+    <div class="content">
+      <button type="button" class="collapsible">Construction - Atoms</button>
+      <div class="content">
+        <label for="void_plate_chef_lvl">void_plate_chef_lvl:</label>
+        <input type="number" id="void_plate_chef_lvl" />
+      </div>
+      <button type="button" class="collapsible">Worship</button>
+      <div class="content">
+        <label for="total_waves">total_waves:</label>
+        <input type="number" id="total_waves" />
+      </div>
     </div>
 
+
+    <button type="button" class="collapsible">World 4</button>
+    <div class="content">
+      <button type="button" class="collapsible">Cooking</button>
+      <div class="content">
+        <button type="button" class="collapsible">Meal levels</button>
+        <div class="content">
+
+          <table id="meal_levels">
+          </table>
+
+        </div>
+        <button type="button" class="collapsible">Meal qtts</button>
+        <div class="content">
+
+          <table id="meal_qtts">
+          </table>
+
+
+        </div>
+        <button type="button" class="collapsible">Kitchen levels</button>
+        <div class="content">
+
+          <table id="kitchen_levels">
+          </table>
+
+
+        </div>
+      </div>
+
+      <button type="button" class="collapsible">Breeding</button>
+      <div class="content">
+        <label for="shiny_lvl_red_mush">Shiny red mushroom lvl:</label><input type="number" id="shiny_lvl_red_mush" />
+        <label for="shiny_lvl_sheepie">Shiny sheepie lvl:</label><input type="number" id="shiny_lvl_sheepie" />
+      </div>
+      <button type="button" class="collapsible">Lab</button>
+      <div class="content">
+
+        <label for="lab_certified_stamp_book">lab_certified_stamp_book</label>
+        <input type="checkbox" id="lab_certified_stamp_book" />
+
+        <label for="lab_spelunkerobol_active">lab_spelunkerobol_active</label>
+        <input type="checkbox" id="lab_spelunkerobol_active" />
+
+        <label for="lab_depot_studies_phd">lab_depot_studies_phd</label>
+        <input type="checkbox" id="lab_depot_studies_phd" />
+
+        <label for="lab_vial_doubling">lab_vial_doubling</label>
+        <input type="checkbox" id="lab_vial_doubling" />
+
+        <label for="lab_amethyst_rhinestone">lab_amethyst_rhinestone</label>
+        <input type="checkbox" id="lab_amethyst_rhinestone" />
+
+        <label for="lab_purple_rhombol">lab_purple_rhombol</label>
+        <input type="checkbox" id="lab_purple_rhombol" />
+
+        <label for="lab_purple_navette">lab_purple_navette</label>
+        <input type="checkbox" id="lab_purple_navette" />
+
+        <label for="lab_emerald_pyramite">lab_emerald_pyramite</label>
+        <input type="checkbox" id="lab_emerald_pyramite" />
+
+        <label for="lab_black_diamond_rhinestone_active">lab_black_diamond_rhinestone_active</label>
+        <input type="checkbox" id="lab_black_diamond_rhinestone_active" />
+      </div>
+    </div>
+
+    <button type="button" class="collapsible">World 5</button>
+    <div class="content">
+      <button type="button" class="collapsible">Sailing</button>
+      <div class="content">
+        <label for="artifact_triangulon_lvl">artifact_triangulon_lvl:</label>
+        <input type="number" id="artifact_triangulon_lvl" />
+        <label for="artifact_winz_lantern_lvl">artifact_winz_lantern_lvl:</label>
+        <input type="number" id="artifact_winz_lantern_lvl" />
+
+      </div>
+      <button type="button" class="collapsible">Gaming</button>
+      <div class="content">
+        <label for="MSA_mealing_unlocked">MSA_mealing_unlocked</label>
+        <input type="checkbox" id="MSA_mealing_unlocked" />
+      </div>
+    </div>
+
+
+    <button type="button" class="collapsible">World 6</button>
+    <div class="content">
+      <button type="button" class="collapsible">Farming</button>
+      <div class="content">
+        <label for="farming_lvl">farming_lvl:</label>
+        <input type="number" id="farming_lvl" />
+        <label for="crop_acquired">crop_acquired:</label>
+        <input type="number" id="crop_acquired" />
+      </div>
+      <button type="button" class="collapsible">Sneaking</button>
+      <div class="content">
+        <label for="pristine_crystal_comb_obtained">pristine_crystal_comb_obtained</label>
+        <input type="checkbox" id="pristine_crystal_comb_obtained" />
+        <label for="pristine_liquorice_rolle_obtained">pristine_liquorice_rolle_obtained</label>
+        <input type="checkbox" id="pristine_liquorice_rolle_obtained" />
+      </div>
+      <button type="button" class="collapsible">Summoning</button>
+      <div class="content">
+        <label for="summoning_lvl">Summoning lvl:</label>
+        <input type="number" id="summoning_lvl" />
+        <label for="summon_battle_mushP">Purple mushroom (purple battle 1) beaten ?</label>
+        <input type="checkbox" id="summon_battle_mushP" />
+
+      </div>
+    </div>
+    <button type="button" class="collapsible">General</button>
+    <div class="content">
+      <button type="button" class="collapsible">Classes</button>
+      <div class="content">
+        <label for="voidwalker_blood_marrow_lvl">voidwalker_blood_marrow_lvl</label>
+        <input type="number" id="voidwalker_blood_marrow_lvl" />
+        <label for="voidwalker_eclipse_lvl">voidwalker_eclipse_lvl</label>
+        <input type="number" id="voidwalker_eclipse_lvl" />
+        <label for="blood_berserker_chow_count">blood_berserker_chow_count</label>
+        <input type="number" id="blood_berserker_chow_count" />
+        <label for="blood_berserker_overflowing_ladles_lvl">blood_berserker_overflowing_ladles_lvl</label>
+        <input type="number" id="blood_berserker_overflowing_ladles_lvl" />
+      </div>
+      <button type="button" class="collapsible">Cards</button>
+      <div class="content">
+        <label for="card_troll1_level">card_troll1_level</label>
+        <input type="number" id="card_troll1_level" />
+        <label for="card_ceramic_spirit_level">card_ceramic_spirit_level</label>
+        <input type="number" id="card_ceramic_spirit_level" />
+      </div>
+      <button type="button" class="collapsible">Star signs</button>
+      <div class="content">
+        <label for="star_sign_gordonius_major">star_sign_gordonius_major</label>
+        <input type="checkbox" id="star_sign_gordonius_major" />
+        <label for="star_sign_seraph_cosmos">star_sign_seraph_cosmos</label>
+        <input type="checkbox" id="star_sign_seraph_cosmos" />
+        <label for="star_sign_chip_doubler_active">star_sign_chip_doubler_active</label>
+        <input type="checkbox" id="star_sign_chip_doubler_active" />
+      </div>
+      <button type="button" class="collapsible">Achievments</button>
+      <div class="content">
+        <label for="achiev_cabbage_patch">achiev_cabbage_patch</label>
+        <input type="checkbox" id="achiev_cabbage_patch" />
+        <label for="achiev_pretzel_bleu">achiev_pretzel_bleu</label>
+        <input type="checkbox" id="achiev_pretzel_bleu" />
+        <label for="achiev_best_plate">achiev_best_plate</label>
+        <input type="checkbox" id="achiev_best_plate" />
+      </div>
+      <button type="button" class="collapsible">Arcade</button>
+      <div class="content">
+        <label for="arcade_cooking_bonus_lvl">arcade_cooking_bonus_lvl</label>
+        <input type="number" id="arcade_cooking_bonus_lvl" />
+      </div>
+    </div>
   </div>
 
   <div>
+    <button id="enter data" onclick="computeFromInputForm()">Compute order from inputs</button>
+  </div>
+  <div>
     Results:
+  </div>
+  <div>
+    Inital cooking speed: <span type="text" id="total_cooking_speed"></span>
   </div>
   <div>
     Ladles needed: <span id="ladles_needed"></span>
@@ -56,9 +242,11 @@
   <div>
     NMLB days needed: <span id="NMLB_needed"></span>
   </div>
-  <button type="button" class="collapsible">Upgrade order</button>
+  <button type="button" class="collapsible" id="result_collapsible">Upgrade order</button>
   <div class="content">
-
+    <div style="text-align:center">
+      <button id="remove_meal_upgrade" onclick="remove_meal_upgrade()">Remove first meal</button>
+    </div>
     <table id="meal_upgrade_order">
     </table>
 
@@ -82,7 +270,12 @@
       });
     }
   </script>
-
+  <script type="text/javascript">
+    createMealTable();
+    createMealQttTable();
+    createKitchenTable();
+    lookIntoLocalStorage();
+  </script>
 
 </body>
 
