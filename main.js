@@ -38,7 +38,8 @@ class CookingData {
   }
   initFromSaveData(save_data) {
 
-    this.max_ladles_per_meal = 10000
+    this.max_ladles_per_meal = 100000
+    this.ladles_per_day = 5000
 
     // world 1
     // stamps
@@ -197,16 +198,28 @@ class CookingData {
     let arcade_levels = JSON.parse(save_data["ArcadeUpg"])
     this.arcade_cooking_bonus_lvl = arcade_levels[28]
 
+    // storage
+    let chest_order = save_data["ChestOrder"]
+    let chest_quantities = save_data["ChestQuantity"]
+    let ladle_chest_pos = chest_order.findIndex((item) => (item == "Ladle"))
+    if (ladle_chest_pos) {
+      this.ladles_owned = chest_quantities[ladle_chest_pos]
+    } else {
+      this.ladles_owned = 0
+    }
+    // console.log(this.ladles_owned)
 
     this.initCalculatedBonus()
 
-    console.log("cooking speed:")
-    console.log(this.getCookingSpeed().toExponential(2))
+
+    this.getCookingSpeed(true)
   }
 
   initFromInputForm() {
 
     this.max_ladles_per_meal = Number(document.getElementById(`max_ladles_per_meal`).value)
+    this.ladles_owned = Number(document.getElementById(`ladles_owned`).value)
+    this.ladles_per_day = Number(document.getElementById(`ladles_per_day`).value)
 
     // world 1 
     // stamps
@@ -301,8 +314,7 @@ class CookingData {
 
     this.initCalculatedBonus()
 
-    console.log("cooking speed:")
-    console.log(this.getCookingSpeed().toExponential(2))
+    this.getCookingSpeed(true)
   }
 
 
@@ -412,6 +424,8 @@ class CookingData {
   fillDocumentInputForm() {
 
     document.getElementById(`max_ladles_per_meal`).value = this.max_ladles_per_meal
+    document.getElementById(`ladles_owned`).value = this.ladles_owned
+    document.getElementById(`ladles_per_day`).value = this.ladles_per_day
 
 
     // world 1 
@@ -513,7 +527,7 @@ class CookingData {
   }
 
 
-  getCookingSpeed() {
+  getCookingSpeed(debug = false) {
 
     const total_meal_levels = (this.meal_levels.reduce((a, b) => a + b))
 
@@ -577,9 +591,11 @@ class CookingData {
       kitchen_speeds.push(kitchen_speed)
     }
 
-
-    // console.log(kitchen_speeds)
-
+    if (debug) {
+      console.log(`cooking speed: ${total_cooking_speed.toExponential(2)}`)
+      console.log(`kitchen speeds:`)
+      console.log(kitchen_speeds)
+    }
     return total_cooking_speed
   }
 
@@ -700,6 +716,8 @@ function computeMealOptimalOrder(cooking_data) {
   document.getElementById(`total_cooking_speed`).innerHTML = cooking_data.getCookingSpeed().toExponential(2)
   var cumulative_ladles = 0
   var days_NMLB = 0
+
+  let missing_levels = (meal_count * meal_max_lvl) - cooking_data.meal_levels.reduce((a, b) => a + b)
   while (cooking_data.meal_levels.reduce((a, b) => a + b) < (meal_count * meal_max_lvl)) {
     cooking_speed = cooking_data.getCookingSpeed()
 
@@ -712,9 +730,10 @@ function computeMealOptimalOrder(cooking_data) {
     meal_time = cooking_data.meal_costs[best_meal] / cooking_speed
     ladles = cooking_data.getLadlesNeeded(meal_time)
 
-    if (ladles <= cooking_data.max_ladles_per_meal) {
+    if (ladles <= cooking_data.max_ladles_per_meal && ladles < cooking_data.ladles_owned) {
 
       cumulative_ladles += ladles
+      cooking_data.ladles_owned -= ladles
       content += addMealUpgradeDisplay(cooking_data, best_meal, new_lvl, ladles, cumulative_ladles, days_NMLB)
       cooking_data.updateMealQtt(best_meal, new_lvl)
       cooking_data.equinox_event_count = 0
@@ -724,6 +743,7 @@ function computeMealOptimalOrder(cooking_data) {
       best_meal = cooking_data.meal_levels.reduce((acc, currentVal, currentId) => (currentId < meal_count && currentVal <= acc.val) ? { "val": currentVal, "id": currentId } : acc, { "val": Infinity, "id": 0 }).id;
       new_lvl = cooking_data.meal_levels[best_meal] + 1
       days_NMLB += 1
+      cooking_data.ladles_owned += cooking_data.ladles_per_day
       content += addMealUpgradeDisplay(cooking_data, best_meal, new_lvl, 0, cumulative_ladles, days_NMLB)
 
     }
@@ -735,7 +755,9 @@ function computeMealOptimalOrder(cooking_data) {
 
   document.getElementById("meal_upgrade_order").innerHTML = content;
   document.getElementById("ladles_needed").innerHTML = cumulative_ladles;
+  document.getElementById("missing_levels").innerHTML = missing_levels;
   document.getElementById("NMLB_needed").innerHTML = days_NMLB;
+  document.getElementById("NMLB_needed_percent").innerHTML = (days_NMLB / missing_levels * 100).toFixed(2);
 
   // document.getElementById('result_collapsible').click();
   let coll = document.getElementById('result_collapsible');
@@ -765,6 +787,7 @@ function addMealUpgradeDisplay(cooking_data, meal_id, new_meal_lvl, ladles, cumu
   // content += `<td>Cumulative Time: ${display_cumulative_time}</td>`
   content += `<td>Cumulative Ladles: ${cumulative_ladles}</td>`
   content += `<td>NMLB: ${days_NMLB}</td>`
+  content += `<td>ladles storage: ${cooking_data.ladles_owned}</td>`
   content += `<td>equinox: ${cooking_data.equinox_event_count}</td>`
   // content += `<td>speed: ${cooking_data.getCookingSpeed().toExponential(3)}</td>`
   content += `</tr>`
