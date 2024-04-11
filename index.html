@@ -15,24 +15,39 @@
 
 
   <h1>IdleOn Cooking Planner</h1>
+  <h2> How to use? </h2>
   <div>
+    <p>
+      This tool will give you the best order to upgrade meals, and give you an estimated time to complete cooking (all
+      meals level max).
+    </p>
+    <p>
+      Start by pasting your Idleon Efficiency save data below and click the button. This will fill the input fields, do
+      the calculations and display the meal upgrade order.
+    </p>
+    <p>
+      Then you can manually alter the content of the "Input Data" section, to simulate different stats. To estimate the
+      time, the tool uses your ladles / day production, which is set by default to 10 000 (around what endgamers get).
+      Change this to have a result closer to your real situation. This option is located in Input Data > World 4 >
+      Cooking > Ladles.
+    </p>
+    <p>
+      After modifying the inputs, you can redo the calculations wiht the button "Compute order from inputs" below.
+    </p>
+
   </div>
   <label for="name">Enter your <a href="https://www.idleonefficiency.com/raw-data" target="_blank">IE save data</a>
     here:</label>
   <input type="text" id="raw_data" name="name" />
   <button id="enter data" onclick="onSubmit()">Enter</button>
 
-  <button type="button" class="collapsible">Input Data</button>
+  <button type="button" class="collapsible">
+    <span>Input Data</span>
+  </button>
   <div class="content">
 
-    <label for="max_ladles_per_meal">max_ladles_per_meal</label>
-    <input type="number" id="max_ladles_per_meal" />
 
-    <label for="ladles_owned">ladles owned</label>
-    <input type="number" id="ladles_owned" />
 
-    <label for="ladles_per_day">ladles gain per day</label>
-    <input type="number" id="ladles_per_day" />
 
 
     <button type="button" class="collapsible">World 1</button>
@@ -40,7 +55,7 @@
       <button type="button" class="collapsible">Stamps</button>
       <div class="content">
         <label for="stamp_cooked_meal_lvl">stamp_cooked_meal_lvl:</label>
-        <input type="number" id="stamp_cooked_meal_lvl" />
+        <input type="number" id="stamp_cooked_meal_lvl" min="0" />
       </div>
     </div>
     <button type="button" class="collapsible">World 2</button>
@@ -48,17 +63,17 @@
       <button type="button" class="collapsible">Alchemy</button>
       <div class="content">
         <label for="diamond_chef_lvl">diamond_chef_lvl:</label>
-        <input type="number" id="diamond_chef_lvl" />
+        <input type="number" id="diamond_chef_lvl" min="0" />
         <label for="max_level_vials">max_level_vials:</label>
-        <input type="number" id="max_level_vials" />
+        <input type="number" id="max_level_vials" min="0" />
         <label for="vial_level_turtle">vial_level_turtle:</label>
-        <input type="number" id="vial_level_turtle" />
+        <input type="number" id="vial_level_turtle" min="0" max="13" />
         <label for="vial_level_firefly">vial_level_firefly:</label>
-        <input type="number" id="vial_level_firefly" />
+        <input type="number" id="vial_level_firefly" min="0" max="13" />
         <label for="vial_level_sand_shark">vial_level_sand_shark:</label>
-        <input type="number" id="vial_level_sand_shark" />
+        <input type="number" id="vial_level_sand_shark" min="0" max="13" />
         <label for="vial_level_dreadlo">vial_level_dreadlo:</label>
-        <input type="number" id="vial_level_dreadlo" />
+        <input type="number" id="vial_level_dreadlo" min="0" max="13" />
 
 
       </div>
@@ -68,20 +83,38 @@
       <button type="button" class="collapsible">Construction - Atoms</button>
       <div class="content">
         <label for="void_plate_chef_lvl">void_plate_chef_lvl:</label>
-        <input type="number" id="void_plate_chef_lvl" />
+        <input type="number" id="void_plate_chef_lvl" min="0" max="30" />
       </div>
       <button type="button" class="collapsible">Worship</button>
       <div class="content">
         <label for="total_waves">total_waves:</label>
-        <input type="number" id="total_waves" />
+        <input type="number" id="total_waves" min="0" />
       </div>
     </div>
 
 
     <button type="button" class="collapsible">World 4</button>
     <div class="content">
-      <button type="button" class="collapsible">Cooking</button>
+      <button type="button" class="collapsible">
+        <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/8/87/Cooking_Skill_Icon.png" />Cooking
+      </button>
       <div class="content">
+        <button type="button" class="collapsible">
+          <img class="collapsible_icon"
+            src="https://idleon.wiki/wiki/images/thumb/1/11/Cooking_Ladle.png/54px-Cooking_Ladle.png" />
+          Ladles
+        </button>
+        <div class="content">
+
+          <label for="max_ladles_per_meal">max_ladles_per_meal</label>
+          <input type="number" id="max_ladles_per_meal" min="0" />
+
+          <label for="ladles_owned">ladles owned</label>
+          <input type="number" id="ladles_owned" min="0" />
+
+          <label for="ladles_per_day">ladles gain per day</label>
+          <input type="number" id="ladles_per_day" min="0" />
+        </div>
         <button type="button" class="collapsible">Meals</button>
         <div class="content">
 
@@ -102,8 +135,11 @@
 
       <button type="button" class="collapsible">Breeding</button>
       <div class="content">
-        <label for="shiny_lvl_red_mush">Shiny red mushroom lvl:</label><input type="number" id="shiny_lvl_red_mush" />
-        <label for="shiny_lvl_sheepie">Shiny sheepie lvl:</label><input type="number" id="shiny_lvl_sheepie" />
+        <label for="shiny_lvl_red_mush">Shiny red mushroom lvl:</label>
+        <input type="number" id="shiny_lvl_red_mush" min="0" />
+
+        <label for="shiny_lvl_sheepie">Shiny sheepie lvl:</label>
+        <input type="number" id="shiny_lvl_sheepie" min="0" />
       </div>
       <button type="button" class="collapsible">Lab</button>
       <div class="content">
@@ -256,10 +292,11 @@
     <div class="content">
       <button type="button" class="collapsible">Sailing</button>
       <div class="content">
+        <div>Artifact levels (0 = not owned, 4=sovereign)</div>
         <label for="artifact_triangulon_lvl">artifact_triangulon_lvl:</label>
-        <input type="number" id="artifact_triangulon_lvl" />
+        <input type="number" id="artifact_triangulon_lvl" min="0" max="4" />
         <label for="artifact_winz_lantern_lvl">artifact_winz_lantern_lvl:</label>
-        <input type="number" id="artifact_winz_lantern_lvl" />
+        <input type="number" id="artifact_winz_lantern_lvl" min="0" max="4" />
 
       </div>
       <button type="button" class="collapsible">Gaming</button>
@@ -275,9 +312,9 @@
       <button type="button" class="collapsible">Farming</button>
       <div class="content">
         <label for="farming_lvl">farming_lvl:</label>
-        <input type="number" id="farming_lvl" />
+        <input type="number" id="farming_lvl" min="0" />
         <label for="crop_acquired">crop_acquired:</label>
-        <input type="number" id="crop_acquired" />
+        <input type="number" id="crop_acquired" min="0" max="120" />
       </div>
       <button type="button" class="collapsible">Sneaking</button>
       <div class="content">
@@ -289,7 +326,7 @@
       <button type="button" class="collapsible">Summoning</button>
       <div class="content">
         <label for="summoning_lvl">Summoning lvl:</label>
-        <input type="number" id="summoning_lvl" />
+        <input type="number" id="summoning_lvl" min="0" />
         <label for="summon_battle_mushP">Purple mushroom (purple battle 1) beaten ?</label>
         <input type="checkbox" id="summon_battle_mushP" />
 
@@ -300,20 +337,21 @@
       <button type="button" class="collapsible">Classes</button>
       <div class="content">
         <label for="voidwalker_blood_marrow_lvl">voidwalker_blood_marrow_lvl</label>
-        <input type="number" id="voidwalker_blood_marrow_lvl" />
+        <input type="number" id="voidwalker_blood_marrow_lvl" min="0" />
         <label for="voidwalker_eclipse_lvl">voidwalker_eclipse_lvl</label>
-        <input type="number" id="voidwalker_eclipse_lvl" />
+        <input type="number" id="voidwalker_eclipse_lvl" min="0" />
         <label for="blood_berserker_chow_count">blood_berserker_chow_count</label>
-        <input type="number" id="blood_berserker_chow_count" />
+        <input type="number" id="blood_berserker_chow_count" min="0" />
         <label for="blood_berserker_overflowing_ladles_lvl">blood_berserker_overflowing_ladles_lvl</label>
-        <input type="number" id="blood_berserker_overflowing_ladles_lvl" />
+        <input type="number" id="blood_berserker_overflowing_ladles_lvl" min="0" />
       </div>
       <button type="button" class="collapsible">Cards</button>
       <div class="content">
+        <div>Card level = star count+1 (5 star is level 6)</div>
         <label for="card_troll1_level">card_troll1_level</label>
-        <input type="number" id="card_troll1_level" />
+        <input type="number" id="card_troll1_level" min="0" max="6" />
         <label for="card_ceramic_spirit_level">card_ceramic_spirit_level</label>
-        <input type="number" id="card_ceramic_spirit_level" />
+        <input type="number" id="card_ceramic_spirit_level" min="0" max="6" />
       </div>
       <button type="button" class="collapsible">Star signs</button>
       <div class="content">
@@ -336,7 +374,7 @@
       <button type="button" class="collapsible">Arcade</button>
       <div class="content">
         <label for="arcade_cooking_bonus_lvl">arcade_cooking_bonus_lvl</label>
-        <input type="number" id="arcade_cooking_bonus_lvl" />
+        <input type="number" id="arcade_cooking_bonus_lvl" min="0" max="100" />
       </div>
     </div>
   </div>
@@ -344,9 +382,7 @@
   <div>
     <button id="enter data" onclick="computeFromInputForm()">Compute order from inputs</button>
   </div>
-  <div>
-    Results:
-  </div>
+  <h2> Results: </h2>
   <div>
     Inital cooking speed: <span type="text" id="total_cooking_speed"></span>
   </div>

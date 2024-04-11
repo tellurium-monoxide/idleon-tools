@@ -38,7 +38,7 @@ class CookingData {
   }
   initFromSaveData(save_data) {
 
-    this.max_ladles_per_meal = 100000
+    this.max_ladles_per_meal = 1000000
     this.ladles_per_day = 10000
 
     // world 1
