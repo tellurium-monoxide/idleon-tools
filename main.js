@@ -103,8 +103,8 @@ class CookingData {
 
     this.lab_black_diamond_rhinestone_active = 1
 
-    this.lab_pure_opal_navette_active = 1
-    this.lab_pure_opal_rhombol_active = 1
+    this.lab_pure_opal_navette_active = 0
+    this.lab_pure_opal_rhombol_active = 0
 
     this.lab_certified_stamp_book = 1
     this.lab_spelunkerobol_active = 1
@@ -552,27 +552,33 @@ class CookingData {
       * this.meal_levels[63]
       * Math.ceil((this.farming_lvl + 1) / 50)
 
-    let global_meal_speed_mult = 10 / 60
-      * Math.pow(1 + this.blood_marrow_bonus, total_meal_levels)
-      * (this.crop_depot_bonus)
-      * (this.apocalypse_bonus)
-      * (1 + marshmallow_meal_bonus)
-      * (Math.pow(1 + this.diamond_chef_bonus, diamond_plate_meals))
-      * (Math.pow(1 + 0.01 * this.void_plate_chef_lvl, void_plate_meals))
-      * (1 + this.MAS_mealing_bonus)
-      * (1 + triangulon_bonus)
-      * (1 + this.arcade_cooking_bonus)
-      * (1 + this.vial_turtle_bonus)
-      * (1 + this.vial_cooking_bonus)
-      * (1 + this.stamp_cooked_meal_bonus + this.emerald_pyramite_bonus)
-      * (1 + cooking_speed_meals_bonus)
-      * (1 + this.star_sign_cooking_bonus)
-      * (this.summon_cooking_bonus)
-      * (1 + this.card_ceramic_spirit_level * 0.05)
-      * (1 + this.vial_firefly_bonus)
-      * (this.lab_amethyst_rhinestone_mult)
-      * (1 + this.card_troll1_level * 0.06 + this.achiev_cabbage_patch * 0.1 + this.achiev_pretzel_bleu * 0.2)
 
+    const global_meal_speed_bonuses = ([
+      ["base", 10],
+      ["correction", 1 / 75], // correction because my cooking speed appears to be exactly 75 times higher than it should
+      ["blood_marrow", Math.pow(1 + this.blood_marrow_bonus, total_meal_levels)],
+      ["crop_depot", (this.crop_depot_bonus)],
+      ["apocalypse", (this.apocalypse_bonus)],
+      ["marshmallow", (1 + marshmallow_meal_bonus)],
+      ["diamond_chef", (Math.pow(1 + this.diamond_chef_bonus, diamond_plate_meals))],
+      ["void_plate_chef", (Math.pow(1 + 0.01 * this.void_plate_chef_lvl, void_plate_meals))],
+      ["MSA", (1 + this.MAS_mealing_bonus)],
+      ["triangulon", (1 + triangulon_bonus)],
+      ["arcade", (1 + this.arcade_cooking_bonus)],
+      ["vial_turtle", (1 + this.vial_turtle_bonus)],
+      ["vial_other", (1 + this.vial_cooking_bonus)],
+      ["stamp_and_emerald_pyramite", (1 + this.stamp_cooked_meal_bonus + this.emerald_pyramite_bonus)],
+      ["meals", (1 + cooking_speed_meals_bonus)],
+      ["star_sign", (1 + this.star_sign_cooking_bonus)],
+      ["summoning", (this.summon_cooking_bonus)],
+      ["card_ceramic", (1 + this.card_ceramic_spirit_level * 0.05)],
+      ["vial_firefly", (1 + this.vial_firefly_bonus)],
+      ["amethyst_rhinestone", (this.lab_amethyst_rhinestone_mult)],
+      ["trollcard+achievs", (1 + this.card_troll1_level * 0.06 + this.achiev_cabbage_patch * 0.1 + this.achiev_pretzel_bleu * 0.2)]
+    ])
+
+    // const global_meal_speed_mult = global_meal_speed_bonuses.values().reduce((res, val) => { return res * val }, 1) // use for map or object but not yet avail in firefox
+    const global_meal_speed_mult = global_meal_speed_bonuses.reduce((res, val) => { return res * val[1] }, 1)
 
     let total_cooking_speed = 0
 
@@ -586,15 +592,22 @@ class CookingData {
       const kitchen_speed = global_meal_speed_mult
         * (1 + kitchen.speedLv / 10)
         * (1 + 2 * kitchen.isRichelin)
-        * (1 + cabbage_bonus * kitchen_total_lvl / 10)
+        * (1 + cabbage_bonus * Math.floor(kitchen_total_lvl / 10))
       total_cooking_speed += kitchen_speed
-      kitchen_speeds.push(kitchen_speed)
+      kitchen_speeds.push({
+        "speed": kitchen_speed,
+        "baseSpeed": (1 + kitchen.speedLv / 10),
+        "cabbageBonus": (1 + cabbage_bonus * Math.floor(kitchen_total_lvl / 10)),
+      })
     }
 
     if (debug) {
-      console.log(`cooking speed: ${total_cooking_speed.toExponential(2)}`)
+      console.log(`global mults:`)
+      console.log(global_meal_speed_bonuses)
       console.log(`kitchen speeds:`)
       console.log(kitchen_speeds)
+      console.log(`cooking speed: ${total_cooking_speed.toExponential(2)}`)
+
     }
     return total_cooking_speed
   }
