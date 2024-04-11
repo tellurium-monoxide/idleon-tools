@@ -780,6 +780,12 @@ function remove_meal_upgrade() {
 
 function createMealTable() {
   let content = "<tr>"
+  content += "<th></th>"
+  content += "<th>Meal</th>"
+  content += "<th>Current LVL</th>"
+  content += "<th>Amount owned</th>"
+  content += "</tr>"
+  content += "<tr>"
   for (let i = 0; i < meal_count; i++) {
 
     mdata = meal_info[i]
@@ -790,28 +796,13 @@ function createMealTable() {
     content += `<td><img src="${mdata.img}"></td>`
     content += `<td>${mdata.name}</td>`
     content += `<td><input type="number" id="meal${i}_level"/></td>`
+    content += `<td><input type="text" id="meal${i}_qtt"/></td>`
   }
   content += "</tr>"
   document.getElementById("meal_levels").innerHTML = content;
 
 }
-function createMealQttTable() {
-  let content = "<tr>"
-  for (let i = 0; i < meal_count; i++) {
 
-    mdata = meal_info[i]
-
-    if (i % 1 == 0) {
-      content += "</tr><tr>"
-    }
-    content += `<td><img src="${mdata.img}"></td>`
-    content += `<td>${mdata.name}</td>`
-    content += `<td><input type="text" id="meal${i}_qtt"/></td>`
-  }
-  content += "</tr>"
-  document.getElementById("meal_qtts").innerHTML = content;
-
-}
 function createKitchenTable() {
   let content = "<tr>"
   content += "<th>Kitchen</th>"
