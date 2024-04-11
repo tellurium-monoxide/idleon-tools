@@ -667,6 +667,13 @@ const tryToParse = str => {
     return null;
   }
 };
+const parseIfNeeded = str => {
+  try {
+    return JSON.parse(str);
+  } catch (e) {
+    return str;
+  }
+};
 async function onSubmit() {
 
   input_data = document.querySelector("#raw_data").value
@@ -683,7 +690,23 @@ async function onSubmit() {
     parseSaveData(save_data)
   } else {
     console.log("assuming character name")
-    url = `https://${input_data}.idleonefficiency.com`
+    let name = input_data.toLowerCase()
+    const cdn_location = 'https://cdn.idleonefficiency.com'
+    try {
+      const res = await fetch(`${cdn_location}/profiles/${input_data}.json`, {
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+      });
+      if (res.ok) {
+        const save_data = await res.json();
+        const raw_data = JSON.stringify(save_data);
+        // console.log(save_data);
+        parseSaveData(raw_data)
+      }
+      return undefined;
+    }
+    catch (e) {
+      console.debug(e);
+    }
   }
 }
 
