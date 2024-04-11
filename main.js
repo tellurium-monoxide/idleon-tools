@@ -39,7 +39,7 @@ class CookingData {
   initFromSaveData(save_data) {
 
     this.max_ladles_per_meal = 100000
-    this.ladles_per_day = 5000
+    this.ladles_per_day = 10000
 
     // world 1
     // stamps
@@ -602,9 +602,10 @@ class CookingData {
     }
 
     if (debug) {
+      console.log(`debug info for cooking speed calc:`)
       console.log(`global mults:`)
       console.log(global_meal_speed_bonuses)
-      console.log(`kitchen speeds:`)
+      console.log(`kitchen info:`)
       console.log(kitchen_speeds)
       console.log(`cooking speed: ${total_cooking_speed.toExponential(2)}`)
 
