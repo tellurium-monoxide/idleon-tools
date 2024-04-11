@@ -102,6 +102,9 @@ class CookingData {
 
     this.lab_black_diamond_rhinestone_active = 1
 
+    this.lab_pure_opal_navette_active = 1
+    this.lab_pure_opal_rhombol_active = 1
+
     this.lab_certified_stamp_book = 1
     this.lab_spelunkerobol_active = 1
     this.lab_depot_studies_phd = 1
@@ -252,6 +255,8 @@ class CookingData {
     this.lab_purple_navette = document.getElementById(`lab_purple_navette`).checked
     this.lab_emerald_pyramite = document.getElementById(`lab_emerald_pyramite`).checked
     this.lab_black_diamond_rhinestone_active = document.getElementById(`lab_black_diamond_rhinestone_active`).checked
+    this.lab_pure_opal_navette_active = document.getElementById(`lab_pure_opal_navette_active`).checked
+    this.lab_pure_opal_rhombol_active = document.getElementById(`lab_pure_opal_rhombol_active`).checked
     this.lab_certified_stamp_book = document.getElementById(`lab_certified_stamp_book`).checked
     this.lab_spelunkerobol_active = document.getElementById(`lab_spelunkerobol_active`).checked
     this.lab_depot_studies_phd = document.getElementById(`lab_depot_studies_phd`).checked
@@ -300,83 +305,110 @@ class CookingData {
     console.log(this.getCookingSpeed().toExponential(2))
   }
 
+
+  // calculates bonuses that do not evolve with meal progression
   initCalculatedBonus() {
 
     if (!this.equinox_event_count) {
       this.equinox_event_count = 0
     }
 
-    this.apocalypse_active = this.voidwalker_eclipse_lvl >= 125 ? 1 : 0;
-
     this.computeMealCosts()
 
-    this.diamond_chef_bonus = (this.diamond_chef_lvl * 0.3) / (this.diamond_chef_lvl + 13)
+    // this needs to be computed first as lab affects nearly everything
+    this.lab_jewel_effect = (1 + 0.5 * this.lab_spelunkerobol_active)
+      * (1 + 0.1 * this.lab_pure_opal_navette_active * (1 + 0.5 * this.lab_spelunkerobol_active))
 
+    // TODO : take active boonus effect into account
+    this.lab_bonus_effect = (1 + 0.1 * this.lab_pure_opal_navette_active * (1 + 0.5 * this.lab_spelunkerobol_active))
 
-    this.blood_marrow_bonus = (this.voidwalker_blood_marrow_lvl * 2.1 / 100) / (this.voidwalker_blood_marrow_lvl + 220);
-    this.overflowing_ladles_bonus = (this.blood_berserker_overflowing_ladles_lvl) / (this.blood_berserker_overflowing_ladles_lvl + 80);
-
-
-    this.apocalypse_bonus = Math.pow(1.1, this.apocalypse_active * this.blood_berserker_chow_count)
-
-
-    // init jewel bonus
-    this.lab_amethyst_rhinestone_mult =
-      (1 + this.lab_amethyst_rhinestone * (1 + (this.lab_purple_rhombol && this.lab_purple_navette))) // amethystRhinestone   
-      * (1 + 0.5 * this.lab_spelunkerobol_active)
-
-    let kitchen_total_levels = this.kitchen_stats.reduce((acc, kitchen) => acc + kitchen.speedLv + kitchen.fireLv + kitchen.luckLv, 0)
-
-    this.emerald_pyramite_bonus = this.lab_emerald_pyramite
-      * 0.01
-      * (1 + 0.5 * this.lab_spelunkerobol_active)
-      * (kitchen_total_levels / 25)
-
-
-
-    // init vials bonus
-    this.vial_turtle_bonus = (1 + 0.02 * this.max_level_vials) * this.vial_level_turtle * 0.04 * (1 + this.lab_vial_doubling)
-    this.vial_firefly_bonus = (1 + 0.02 * this.max_level_vials) * this.vial_level_firefly * 0.05 * (1 + this.lab_vial_doubling)
-    this.vial_cooking_bonus =
-      (1 + 0.02 * this.max_level_vials)
-      * (1 + this.lab_vial_doubling)
-      * (
-        this.vial_level_sand_shark * 0.06 +
-        this.vial_level_dreadlo * 0.02
-      )
-
-
-    this.meal_efficiency = 1
-      + 0.16 * this.lab_black_diamond_rhinestone_active * (1 + 0.5 * this.lab_spelunkerobol_active)
-      + 0.01 * (this.shiny_lvl_red_mush + this.shiny_lvl_sheepie)
-
+    // world 1
+    // stamps
     this.stamp_cooked_meal_bonus = 0.01
       * this.stamp_cooked_meal_lvl
       * (1 + this.lab_certified_stamp_book)
       * (1 + 0.25 * this.pristine_liquorice_rolle_obtained)
 
 
+    // world 2
+    // alchemy
+    this.diamond_chef_bonus = (this.diamond_chef_lvl * 0.3) / (this.diamond_chef_lvl + 13)
 
-    // init boosts from arcade
-    this.arcade_cooking_bonus = (this.arcade_cooking_bonus_lvl * 0.4) / (this.arcade_cooking_bonus_lvl + 100)
 
-    // init boosts from farming
-    this.crop_depot_bonus = Math.pow(1.1, this.crop_acquired) * (1 + this.lab_depot_studies_phd * 0.3)
+    // TODO : lab active bonus should impact this
+    this.vial_effect = (1 + this.lab_vial_doubling) * (1 + 0.02 * this.max_level_vials)
 
-    // init boosts from summoning
+    this.vial_turtle_bonus = this.vial_level_turtle * 0.04 * this.vial_effect
+    this.vial_firefly_bonus = this.vial_level_firefly * 0.05 * this.vial_effect
+    this.vial_cooking_bonus = this.vial_effect * (
+      this.vial_level_sand_shark * 0.06 +
+      this.vial_level_dreadlo * 0.02
+    )
+
+    // world 3
+    // construction
+    // worship
+
+    // world 4
+
+    this.meal_efficiency = 1
+      + 0.16 * this.lab_black_diamond_rhinestone_active * (1 + 0.5 * this.lab_spelunkerobol_active)
+      + 0.01 * (this.shiny_lvl_red_mush + this.shiny_lvl_sheepie)
+
+
+    // cooking
+    // breeding
+    // lab
+    this.lab_amethyst_rhinestone_mult = Math.max(1,
+      (1.5 * this.lab_amethyst_rhinestone) // amethystRhinestone   
+      * (this.lab_jewel_effect)
+      * (1 + (this.lab_purple_rhombol && this.lab_purple_navette))
+    )
+
+    let kitchen_total_levels = this.kitchen_stats.reduce((acc, kitchen) => acc + kitchen.speedLv + kitchen.fireLv + kitchen.luckLv, 0)
+    this.emerald_pyramite_bonus = this.lab_emerald_pyramite
+      * 0.01
+      * (this.lab_jewel_effect)
+      * (kitchen_total_levels / 25)
+
+    // world 5
+    // sailing
+    // gaming
+    this.MAS_mealing_bonus = this.MSA_mealing_unlocked * 0.1 * this.total_waves / 10
+
+    // world 6
+    // farming
+    this.crop_depot_bonus = Math.pow(1.1, this.crop_acquired)
+      * (1 + this.lab_depot_studies_phd * 0.3)
+      * (1 + 0.1 * this.lab_pure_opal_rhombol_active * (this.lab_jewel_effect))
+
+
+    // sneaking
+    // summoning
     this.summon_cooking_bonus = (1 + 0.25 * this.artifact_winz_lantern_lvl)
       * (1 + 0.3 * this.pristine_crystal_comb_obtained)
       * (1 + this.summon_battle_mushP * 1.75)
 
+    // general
+    // classes
+    this.blood_marrow_bonus = (this.voidwalker_blood_marrow_lvl * 2.1 / 100) / (this.voidwalker_blood_marrow_lvl + 220);
 
-    // init star sign boost
+    this.apocalypse_active = this.voidwalker_eclipse_lvl >= 125 ? 1 : 0;
+    this.apocalypse_bonus = Math.pow(1.1, this.apocalypse_active * this.blood_berserker_chow_count)
+
+    this.overflowing_ladles_bonus = (this.blood_berserker_overflowing_ladles_lvl) / (this.blood_berserker_overflowing_ladles_lvl + 80);
+    // cards
+    // star sign
     this.star_sign_cooking_bonus = 0.15
       * Math.pow(1.1, Math.ceil((this.summoning_lvl + 1) / 20))
       * (1 + this.star_sign_chip_doubler_active)
 
-
+    // achieve
+    // arcade
+    this.arcade_cooking_bonus = (this.arcade_cooking_bonus_lvl * 0.4) / (this.arcade_cooking_bonus_lvl + 100)
 
   }
+
   fillDocumentInputForm() {
 
     document.getElementById(`max_ladles_per_meal`).value = this.max_ladles_per_meal
@@ -427,6 +459,9 @@ class CookingData {
     document.getElementById(`lab_purple_navette`).checked = this.lab_purple_navette
     document.getElementById(`lab_emerald_pyramite`).checked = this.lab_emerald_pyramite
     document.getElementById(`lab_black_diamond_rhinestone_active`).checked = this.lab_black_diamond_rhinestone_active
+    document.getElementById(`lab_pure_opal_navette_active`).checked = this.lab_pure_opal_navette_active
+    document.getElementById(`lab_pure_opal_rhombol_active`).checked = this.lab_pure_opal_rhombol_active
+
     document.getElementById(`lab_certified_stamp_book`).checked = this.lab_certified_stamp_book
     document.getElementById(`lab_spelunkerobol_active`).checked = this.lab_spelunkerobol_active
     document.getElementById(`lab_depot_studies_phd`).checked = this.lab_depot_studies_phd
@@ -510,7 +545,7 @@ class CookingData {
       * (1 + marshmallow_meal_bonus)
       * (Math.pow(1 + this.diamond_chef_bonus, diamond_plate_meals))
       * (Math.pow(1 + 0.01 * this.void_plate_chef_lvl, void_plate_meals))
-      * (1 + this.MSA_mealing_unlocked * 0.1 * this.total_waves / 10) //msa mealing superbit bonus
+      * (1 + this.MAS_mealing_bonus)
       * (1 + triangulon_bonus)
       * (1 + this.arcade_cooking_bonus)
       * (1 + this.vial_turtle_bonus)
