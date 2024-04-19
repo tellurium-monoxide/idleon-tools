@@ -60,6 +60,11 @@ tr.NMLB {
 
 img.collapsible_icon {
   vertical-align: middle;
+  height: 40px;
+}
+
+img.collapsible_icon_world {
+  vertical-align: middle;
 }
 
 .collapsible {

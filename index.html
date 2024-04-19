@@ -50,17 +50,24 @@
 
 
 
-    <button type="button" class="collapsible">World 1</button>
+    <button type="button" class="collapsible">
+      <img class="collapsible_icon_world" src="https://idleon.wiki/wiki/images/f/f7/Wb1.png" />
+    </button>
     <div class="content">
-      <button type="button" class="collapsible">Stamps</button>
+      <button type="button" class="collapsible"><img class="collapsible_icon"
+          src="https://idleon.wiki/wiki/images/7/71/Mr_Pigibank.gif" />Stamps</button>
       <div class="content">
         <label for="stamp_cooked_meal_lvl">stamp_cooked_meal_lvl:</label>
         <input type="number" id="stamp_cooked_meal_lvl" min="0" />
       </div>
     </div>
-    <button type="button" class="collapsible">World 2</button>
+    <button type="button" class="collapsible">
+      <img class="collapsible_icon_world" src="https://idleon.wiki/wiki/images/c/c7/Wb2.png" />
+    </button>
     <div class="content">
-      <button type="button" class="collapsible">Alchemy</button>
+      <button type="button" class="collapsible">
+        <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/a/a3/Alchemy_Skill_Icon.png" />Alchemy
+      </button>
       <div class="content">
         <label for="diamond_chef_lvl">diamond_chef_lvl:</label>
         <input type="number" id="diamond_chef_lvl" min="0" />
@@ -78,14 +85,21 @@
 
       </div>
     </div>
-    <button type="button" class="collapsible">World 3</button>
+    <button type="button" class="collapsible">
+      <img class="collapsible_icon_world" src="https://idleon.wiki/wiki/images/a/ae/Wb3.png" />
+    </button>
     <div class="content">
-      <button type="button" class="collapsible">Construction - Atoms</button>
+      <button type="button" class="collapsible">
+        <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/4/4e/Atoms.png" />Construction -
+        Atoms
+      </button>
       <div class="content">
         <label for="void_plate_chef_lvl">void_plate_chef_lvl:</label>
         <input type="number" id="void_plate_chef_lvl" min="0" max="30" />
       </div>
-      <button type="button" class="collapsible">Worship</button>
+      <button type="button" class="collapsible">
+        <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/5/54/Worship_Skill_Icon.png" />Worship
+      </button>
       <div class="content">
         <label for="total_waves">total_waves:</label>
         <input type="number" id="total_waves" min="0" />
@@ -93,7 +107,9 @@
     </div>
 
 
-    <button type="button" class="collapsible">World 4</button>
+    <button type="button" class="collapsible">
+      <img class="collapsible_icon_world" src="https://idleon.wiki/wiki/images/5/55/Wb4.png" />
+    </button>
     <div class="content">
       <button type="button" class="collapsible">
         <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/8/87/Cooking_Skill_Icon.png" />Cooking
@@ -133,7 +149,9 @@
         </div>
       </div>
 
-      <button type="button" class="collapsible">Breeding</button>
+      <button type="button" class="collapsible">
+        <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/2/27/Breeding_Skill_Icon.png" />Breeding
+      </button>
       <div class="content">
         <label for="shiny_lvl_red_mush">Shiny red mushroom lvl:</label>
         <input type="number" id="shiny_lvl_red_mush" min="0" />
@@ -141,7 +159,9 @@
         <label for="shiny_lvl_sheepie">Shiny sheepie lvl:</label>
         <input type="number" id="shiny_lvl_sheepie" min="0" />
       </div>
-      <button type="button" class="collapsible">Lab</button>
+      <button type="button" class="collapsible">
+        <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/b/b9/Laboratory_Skill_Icon.png" />Lab
+      </button>
       <div class="content">
         <button type="button" class="collapsible">Bonuses</button>
         <div class="content">
@@ -156,6 +176,9 @@
               <td>
                 <input type="checkbox" id="lab_certified_stamp_book" />
               </td>
+              <td>
+                <span id="lab_certified_stamp_book_bonus"></span>
+              </td>
             </tr>
             <tr>
               <td>
@@ -166,6 +189,9 @@
               </td>
               <td>
                 <input type="checkbox" id="lab_spelunkerobol_active" />
+              </td>
+              <td>
+                <span id="lab_spelunkerobol_bonus"></span>
               </td>
             </tr>
             <tr>
@@ -178,6 +204,9 @@
               <td>
                 <input type="checkbox" id="lab_depot_studies_phd" />
               </td>
+              <td>
+                <span id="lab_depot_studies_phd_bonus"></span>
+              </td>
             </tr>
             <tr>
               <td>
@@ -188,6 +217,9 @@
               </td>
               <td>
                 <input type="checkbox" id="lab_vial_doubling" />
+              </td>
+              <td>
+                <span id="lab_vial_doubling_bonus"></span>
               </td>
             </tr>
           </table>
@@ -207,6 +239,9 @@
               <td>
                 <input type="checkbox" id="lab_amethyst_rhinestone" />
               </td>
+              <td>
+                <span id="lab_amethyst_rhinestone_bonus"></span>
+              </td>
             </tr>
             <tr>
               <td>
@@ -218,6 +253,9 @@
               </td>
               <td>
                 <input type="checkbox" id="lab_purple_navette" />
+              </td>
+              <td>
+                <span id="lab_purple_navette_bonus"></span>
               </td>
             </tr>
             <tr>
@@ -231,6 +269,9 @@
               <td>
                 <input type="checkbox" id="lab_purple_rhombol" />
               </td>
+              <td>
+                <span id="lab_purple_rhombol_bonus"></span>
+              </td>
             </tr>
             <tr>
               <td>
@@ -242,6 +283,9 @@
               </td>
               <td>
                 <input type="checkbox" id="lab_emerald_pyramite" />
+              </td>
+              <td>
+                <span id="lab_emerald_pyramite_bonus"></span>
               </td>
             </tr>
             <tr>
@@ -255,6 +299,9 @@
               <td>
                 <input type="checkbox" id="lab_black_diamond_rhinestone_active" />
               </td>
+              <td>
+                <span id="lab_black_diamond_rhinestone_bonus"></span>
+              </td>
             </tr>
             <tr>
               <td>
@@ -263,10 +310,12 @@
               </td>
               <td>
                 <label for="lab_pure_opal_navette_active">lab_pure_opal_navette_active</label>
-
               </td>
               <td>
                 <input type="checkbox" id="lab_pure_opal_navette_active" />
+              </td>
+              <td>
+                <span id="lab_pure_opal_navette_bonus"></span>
               </td>
             </tr>
             <tr>
@@ -276,10 +325,12 @@
               </td>
               <td>
                 <label for="lab_pure_opal_rhombol_active">lab_pure_opal_rhombol_active</label>
-
               </td>
               <td>
                 <input type="checkbox" id="lab_pure_opal_rhombol_active" />
+              </td>
+              <td>
+                <span id="lab_pure_opal_rhombol_bonus"></span>
               </td>
             </tr>
           </table>
@@ -288,9 +339,13 @@
       </div>
     </div>
 
-    <button type="button" class="collapsible">World 5</button>
+    <button type="button" class="collapsible">
+      <img class="collapsible_icon_world" src="https://idleon.wiki/wiki/images/3/33/Wb5.png" />
+    </button>
     <div class="content">
-      <button type="button" class="collapsible">Sailing</button>
+      <button type="button" class="collapsible">
+        <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/b/ba/Sailing_Skill_Icon.png" />Sailing
+      </button>
       <div class="content">
         <div>Artifact levels (0 = not owned, 4=sovereign)</div>
         <label for="artifact_triangulon_lvl">artifact_triangulon_lvl:</label>
@@ -299,7 +354,9 @@
         <input type="number" id="artifact_winz_lantern_lvl" min="0" max="4" />
 
       </div>
-      <button type="button" class="collapsible">Gaming</button>
+      <button type="button" class="collapsible">
+        <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/3/3d/Gaming_Skill_Icon.png" />Gaming
+      </button>
       <div class="content">
         <label for="MSA_mealing_unlocked">MSA_mealing_unlocked</label>
         <input type="checkbox" id="MSA_mealing_unlocked" />
@@ -307,23 +364,31 @@
     </div>
 
 
-    <button type="button" class="collapsible">World 6</button>
+    <button type="button" class="collapsible">
+      <img class="collapsible_icon_world" src="https://idleon.wiki/wiki/images/6/6d/Wb6.png" />
+    </button>
     <div class="content">
-      <button type="button" class="collapsible">Farming</button>
+      <button type="button" class="collapsible">
+        <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/8/82/Farming_Skill_Icon.png" />Farming
+      </button>
       <div class="content">
         <label for="farming_lvl">farming_lvl:</label>
         <input type="number" id="farming_lvl" min="0" />
         <label for="crop_acquired">crop_acquired:</label>
         <input type="number" id="crop_acquired" min="0" max="120" />
       </div>
-      <button type="button" class="collapsible">Sneaking</button>
+      <button type="button" class="collapsible">
+        <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/9/97/Sneaking_Skill_Icon.png" />Sneaking
+      </button>
       <div class="content">
         <label for="pristine_crystal_comb_obtained">pristine_crystal_comb_obtained</label>
         <input type="checkbox" id="pristine_crystal_comb_obtained" />
         <label for="pristine_liquorice_rolle_obtained">pristine_liquorice_rolle_obtained</label>
         <input type="checkbox" id="pristine_liquorice_rolle_obtained" />
       </div>
-      <button type="button" class="collapsible">Summoning</button>
+      <button type="button" class="collapsible">
+        <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/b/bc/Summoning_Skill_Icon.png" />Summoning
+      </button>
       <div class="content">
         <label for="summoning_lvl">Summoning lvl:</label>
         <input type="number" id="summoning_lvl" min="0" />
@@ -334,7 +399,9 @@
     </div>
     <button type="button" class="collapsible">General</button>
     <div class="content">
-      <button type="button" class="collapsible">Classes</button>
+      <button type="button" class="collapsible">
+        <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/9/97/Mainpage_Classes.png" />Classes
+      </button>
       <div class="content">
         <label for="voidwalker_blood_marrow_lvl">voidwalker_blood_marrow_lvl</label>
         <input type="number" id="voidwalker_blood_marrow_lvl" min="0" />

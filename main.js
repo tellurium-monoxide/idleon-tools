@@ -95,16 +95,21 @@ class CookingData {
     this.shiny_lvl_sheepie = getShinyLevel(shiny_time_sheepie)
 
     // lab
-    this.lab_amethyst_rhinestone = 1
-    this.lab_purple_rhombol = 1
-    this.lab_purple_navette = 1
+    let lab_info = JSON.parse(save_data["Lab"])
+    // console.log(lab_info)
+    let lab_jewels_info = Object.fromEntries(LAB_JEWELS.map(function (jewel_name, index) { return [jewel_name, lab_info[14][index]] }))
+    // console.log(lab_jewels_info)
 
-    this.lab_emerald_pyramite = 1
+    this.lab_amethyst_rhinestone = lab_jewels_info["amethyst_rhinestone"]
+    this.lab_purple_rhombol = lab_jewels_info["purple_rhombol"]
+    this.lab_purple_navette = lab_jewels_info["purple_navette"]
 
-    this.lab_black_diamond_rhinestone_active = 1
+    this.lab_emerald_pyramite = lab_jewels_info["emerald_pyramite"]
 
-    this.lab_pure_opal_navette_active = 0
-    this.lab_pure_opal_rhombol_active = 0
+    this.lab_black_diamond_rhinestone_active = lab_jewels_info["black_diamond_rhinestone"]
+
+    this.lab_pure_opal_navette_active = lab_jewels_info["pure_opal_navette"]
+    this.lab_pure_opal_rhombol_active = lab_jewels_info["pure_opal_rhombol"]
 
     this.lab_certified_stamp_book = 1
     this.lab_spelunkerobol_active = 1
@@ -328,10 +333,14 @@ class CookingData {
     this.computeMealCosts()
 
     // this needs to be computed first as lab affects nearly everything
-    this.lab_jewel_effect = (1 + 0.5 * this.lab_spelunkerobol_active)
-      * (1 + 0.1 * this.lab_pure_opal_navette_active * (1 + 0.5 * this.lab_spelunkerobol_active))
+    // TODO: pure opal navette seems to apply to itself... unsure about that, but it at least applies visually in lab
+    this.lab_jewel_effect = (
+      1
+      + 0.5 * this.lab_spelunkerobol_active
+      + 0.1 * this.lab_pure_opal_navette_active * (1 + 0.5 * this.lab_spelunkerobol_active)
+    )
 
-    // TODO : take active boonus effect into account
+    // TODO : take active bonus effect into account. actually doesn't seem to apply in game, or is not shown
     this.lab_bonus_effect = (1 + 0.1 * this.lab_pure_opal_navette_active * (1 + 0.5 * this.lab_spelunkerobol_active))
 
     // world 1
@@ -391,8 +400,7 @@ class CookingData {
     // world 6
     // farming
     this.crop_depot_bonus = Math.pow(1.1, this.crop_acquired)
-      * (1 + this.lab_depot_studies_phd * 0.3)
-      * (1 + 0.1 * this.lab_pure_opal_rhombol_active * (this.lab_jewel_effect))
+      * (1 + this.lab_depot_studies_phd * (0.3 + 0.1 * this.lab_pure_opal_rhombol_active * this.lab_jewel_effect))
 
 
     // sneaking
@@ -475,10 +483,12 @@ class CookingData {
     document.getElementById(`lab_black_diamond_rhinestone_active`).checked = this.lab_black_diamond_rhinestone_active
     document.getElementById(`lab_pure_opal_navette_active`).checked = this.lab_pure_opal_navette_active
     document.getElementById(`lab_pure_opal_rhombol_active`).checked = this.lab_pure_opal_rhombol_active
+    document.getElementById(`lab_pure_opal_rhombol_bonus`).innerText = `+${(10 * this.lab_jewel_effect).toFixed(0)}% to Depot Studies PhD bonus`
 
     document.getElementById(`lab_certified_stamp_book`).checked = this.lab_certified_stamp_book
     document.getElementById(`lab_spelunkerobol_active`).checked = this.lab_spelunkerobol_active
     document.getElementById(`lab_depot_studies_phd`).checked = this.lab_depot_studies_phd
+    document.getElementById(`lab_depot_studies_phd_bonus`).innerText = `x${(1 + (0.3 + 0.1 * this.lab_pure_opal_rhombol_active * this.lab_jewel_effect)).toFixed(2)} to crop depot bonuses`
     document.getElementById(`lab_vial_doubling`).checked = this.lab_vial_doubling
 
     // world 5
@@ -1027,6 +1037,29 @@ KILL_REQ[262] = 100e6;
 KILL_REQ[263] = 150e6;
 
 
+const LAB_JEWELS = [
+  "amethyst_rhinestone",
+  "purple_rhombol",
+  "purple_navette",
+  "sapphire_rhinestone",
+  "sapphire_navette",
+  "sapphire_pyramite",
+  "sapphire_rhombol",
+  "pyrite_rhinestone",
+  "pyrite_navette",
+  "pyrite_rhombol",
+  "pyrite_pyramite",
+  "emerald_rhinestone",
+  "emerald_navette",
+  "emerald_rhombol",
+  "emerald_pyramite",
+  "emerald_ulthurite",
+  "black_diamond_ulthurite",
+  "black_diamond_rhinestone",
+  "pure_opal_rhinestone",
+  "pure_opal_navette",
+  "pure_opal_rhombol",
+]
 
 function getTimeForShinyLevel(goal) {
   let time = 0;
