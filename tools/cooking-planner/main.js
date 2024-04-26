@@ -775,7 +775,7 @@ function computeMealOptimalOrder(cooking_data) {
 
 
 
-    const meal_time = Math.ceil(cooking_req / cooking_speed)
+    const meal_time = cooking_req / cooking_speed
     const ladles = cooking_data.getLadlesNeeded(meal_time)
 
     if (ladles <= cooking_data.max_ladles_per_meal && ladles < cooking_data.ladles_owned) {
