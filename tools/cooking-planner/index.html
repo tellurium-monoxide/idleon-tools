@@ -13,40 +13,49 @@
     $(document).ready(function () {
 
       $("#tabs-global").tabs({
-        collapsible: true
+        collapsible: true,
+        active: false
       });
-      $("#tabs-world1-features").tabs({
+      $(".jquerytabs").tabs({
         collapsible: false
       });
-      $("#tabs-world2-features").tabs({
-        collapsible: false
-      });
-      $("#tabs-world3-features").tabs({
-        collapsible: false
-      });
-      $("#tabs-world4-features").tabs({
-        collapsible: false
-      });
-      $("#tabs-cooking").tabs({
-        collapsible: false
-      });
-      $("#tabs-lab").tabs({
-        collapsible: false
-      });
-      $("#tabs-world5-features").tabs({
-        collapsible: false
-      });
-      $("#tabs-world6-features").tabs({
-        collapsible: false
-      });
-      $("#tabs-general-features").tabs({
-        collapsible: false
-      });
+      // $("#tabs-world1-features").tabs({
+      //   collapsible: false
+      // });
+      // $("#tabs-world2-features").tabs({
+      //   collapsible: false
+      // });
+      // $("#tabs-world3-features").tabs({
+      //   collapsible: false
+      // });
+      // $("#tabs-world4-features").tabs({
+      //   collapsible: false
+      // });
+      // $("#tabs-cooking").tabs({
+      //   collapsible: false
+      // });
+      // $("#tabs-lab").tabs({
+      //   collapsible: false
+      // });
+      // $("#tabs-world5-features").tabs({
+      //   collapsible: false
+      // });
+      // $("#tabs-world6-features").tabs({
+      //   collapsible: false
+      // });
+      // $("#tabs-general-features").tabs({
+      //   collapsible: false
+      // });
       createMealTable();
       createKitchenTable();
       lookIntoLocalStorage();
       $(document).tooltip({
         track: true
+      });
+      $("#to_ladle_tab").on("click", function (e) {
+        $("#tab_header_world4").click();
+        $("#tab_header_world4_cooking").click();
+        $("#tab_header_cooking_ladles").click();
       });
     });
   </script>
@@ -71,8 +80,9 @@
     <p>
       Then you can manually alter the content of the "Inputs" section, to simulate different stats. To estimate the
       time, the tool uses your ladles / day production, which is set by default to 10 000 (around what endgamers get).
-      Change this to have a result closer to your real situation. This option is located in Inputs > World 4 >
-      Cooking > Ladles.
+      Change this to have a result closer to your real situation. This option is located in
+      <button class="link" id="to_ladle_tab">Inputs > World 4 > Cooking > Ladles.</button>
+
     </p>
     <p>
       After modifying the inputs, you can redo the calculations wiht the button "Compute from inputs" below.
@@ -93,32 +103,46 @@
 
   <div id="tabs-global" class="ui-tabs ui-widget ui-corner-all ui-widget-content ui-tabs-collapsible">
     <ul class="ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header">
-      <li class="ui-tabs-tab"><a href=" #tabs-world1" class="ui-tabs-anchor">
+      <li class="ui-tabs-tab">
+        <a href="#tab-world1" class="ui-tabs-anchor">
           <img class="collapsible_icon_world" src="https://idleon.wiki/wiki/images/f/f7/Wb1.png" />
-        </a></li>
-      <li><a href="#tabs-world2" class="ui-tabs-anchor">
+        </a>
+      </li>
+      <li>
+        <a href="#tab-world2" class="ui-tabs-anchor">
           <img class="collapsible_icon_world" src="https://idleon.wiki/wiki/images/c/c7/Wb2.png" />
-        </a></li>
-      <li><a href="#tabs-world3" class="ui-tabs-anchor">
+        </a>
+      </li>
+      <li>
+        <a href="#tab-world3" class="ui-tabs-anchor">
           <img class="collapsible_icon_world" src="https://idleon.wiki/wiki/images/a/ae/Wb3.png" />
-        </a></li>
-      <li><a href="#tabs-world4" class="ui-tabs-anchor">
+        </a>
+      </li>
+      <li>
+        <a href="#tab-world4" class="ui-tabs-anchor" id="tab_header_world4">
           <img class="collapsible_icon_world" src="https://idleon.wiki/wiki/images/5/55/Wb4.png" />
-        </a></li>
-      <li><a href="#tabs-world5" class="ui-tabs-anchor">
+        </a>
+      </li>
+      <li>
+        <a href="#tab-world5" class="ui-tabs-anchor">
           <img class="collapsible_icon_world" src="https://idleon.wiki/wiki/images/3/33/Wb5.png" />
-        </a></li>
-      <li><a href="#tabs-world6" class="ui-tabs-anchor">
+        </a>
+      </li>
+      <li>
+        <a href="#tab-world6" class="ui-tabs-anchor">
           <img class="collapsible_icon_world" src="https://idleon.wiki/wiki/images/6/6d/Wb6.png" />
-        </a></li>
-      <li><a href="#tabs-general" class="ui-tabs-anchor">General</a></li>
+        </a>
+      </li>
+      <li><a href="#tab-general" class="ui-tabs-anchor">General</a></li>
     </ul>
 
 
 
 
-    <div id="tabs-world1" class="ui-tabs-panel ui-corner-bottom ui-widget-content">
-      <div id="tabs-world1-features" class="ui-tabs ui-widget ui-corner-all ui-widget-content ui-tabs-collapsible">
+    <div id="tab-world1" class="ui-tabs-panel ui-corner-bottom ui-widget-content">
+
+      <div id="tabs-world1-features"
+        class="ui-tabs ui-widget ui-corner-all ui-widget-content ui-tabs-collapsible jquerytabs">
         <ul class="ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header">
           <li class="ui-tabs-tab"><a href="#tabs-world1-stamps" class="ui-tabs-anchor">
               <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/7/71/Mr_Pigibank.gif" />Stamps
@@ -143,8 +167,9 @@
 
 
 
-    <div id="tabs-world2" style="display:none;">
-      <div id="tabs-world2-features" class="ui-tabs ui-widget">
+    <div id="tab-world2" style="display:none;">
+
+      <div id="tabs-world2-features" class="ui-tabs ui-widget jquerytabs">
         <ul class="ui-tabs-nav">
           <li><a href="#tabs-world2-alch">
               <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/a/a3/Alchemy_Skill_Icon.png" />Alchemy
@@ -176,9 +201,10 @@
 
 
 
-    <div id="tabs-world3" style="display:none;">
+    <div id="tab-world3" style="display:none;">
 
-      <div id="tabs-world3-features" class="ui-tabs ui-widget ui-corner-all ui-widget-content ui-tabs-collapsible">
+      <div id="tabs-world3-features"
+        class="ui-tabs ui-widget ui-corner-all ui-widget-content ui-tabs-collapsible jquerytabs">
         <ul class="ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header">
           <li class="ui-tabs-tab"><a href="#tabs-world3-atoms" class="ui-tabs-anchor">
               <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/4/4e/Atoms.png" /> Atoms
@@ -219,14 +245,14 @@
 
 
 
-    <div id="tabs-world4" style="display:none;">
-      <div id="tabs-world4-features">
+    <div id="tab-world4" style="display:none;">
+      <div id="tabs-world4-features" class="jquerytabs">
         <ul>
-          <li><a href="#tab-world4-cooking">
+          <li><a href="#tab-world4-cooking" id="tab_header_world4_cooking">
               <img class="collapsible_icon"
                 src="https://idleon.wiki/wiki/images/thumb/1/11/Cooking_Ladle.png/54px-Cooking_Ladle.png" />Cooking
             </a></li>
-          <li><a href="#tabs-world4-breeding">
+          <li><a href="#tab-world4-breeding">
               <img class="collapsible_icon"
                 src="https://idleon.wiki/wiki/images/2/27/Breeding_Skill_Icon.png" />Breeding
             </a></li>
@@ -236,9 +262,9 @@
         </ul>
 
         <div id="tab-world4-cooking">
-          <div id="tabs-cooking">
+          <div id="tabs-cooking" class="jquerytabs">
             <ul>
-              <li><a href="#tab-cooking-ladles">
+              <li><a href="#tab-cooking-ladles" id="tab_header_cooking_ladles">
                   <img class="collapsible_icon"
                     src="https://idleon.wiki/wiki/images/thumb/1/11/Cooking_Ladle.png/54px-Cooking_Ladle.png" />Ladles
                 </a></li>
@@ -276,7 +302,7 @@
 
 
 
-        <div id="tabs-world4-breeding">
+        <div id="tab-world4-breeding">
 
           <label for="shiny_lvl_red_mush">Shiny red mushroom lvl:</label>
           <input type="number" id="shiny_lvl_red_mush" min="0" />
@@ -288,7 +314,7 @@
 
         <div id="tab-world4-lab">
 
-          <div id="tabs-lab" class="ui-tabs ui-widget ui-corner-all ui-widget-content ui-tabs-collapsible">
+          <div id="tabs-lab" class="ui-tabs ui-widget ui-corner-all ui-widget-content ui-tabs-collapsible jquerytabs">
             <ul class="ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header">
               <li class="ui-tabs-tab"><a href="#tab-lab-bonuses" class="ui-tabs-anchor">
                   Bonuses
@@ -363,7 +389,7 @@
 
             </div>
 
-            <div id="tab-lab-jewels" class="ui-tabs-panel ui-corner-bottom ui-widget-content">
+            <div id="tab-lab-jewels" class="ui-tabs-panel ui-corner-bottom ui-widget-content jquerytabs">
               <table>
                 <tr>
                   <td>
@@ -499,20 +525,21 @@
 
 
 
-    <div id="tabs-world5" style="display:none;">
+    <div id="tab-world5" style="display:none;">
 
-      <div id="tabs-world5-features" class="ui-tabs ui-widget ui-corner-all ui-widget-content ui-tabs-collapsible">
+      <div id="tabs-world5-features"
+        class="ui-tabs ui-widget ui-corner-all ui-widget-content ui-tabs-collapsible jquerytabs">
         <ul class="ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header">
-          <li class="ui-tabs-tab"><a href="#tabs-world5-sailing" class="ui-tabs-anchor">
+          <li class="ui-tabs-tab"><a href="#tab-world5-sailing" class="ui-tabs-anchor">
               <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/b/ba/Sailing_Skill_Icon.png" />Sailing
             </a>
           </li>
-          <li class="ui-tabs-tab"><a href="#tabs-world5-gaming" class="ui-tabs-anchor">
+          <li class="ui-tabs-tab"><a href="#tab-world5-gaming" class="ui-tabs-anchor">
               <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/3/3d/Gaming_Skill_Icon.png" />Gaming
             </a>
           </li>
         </ul>
-        <div id="tabs-world5-sailing" class="ui-tabs-panel ui-corner-bottom ui-widget-content">
+        <div id="tab-world5-sailing" class="ui-tabs-panel ui-corner-bottom ui-widget-content">
 
           <div>Artifact levels (0 = not owned, 4=sovereign)</div>
           <label for="artifact_triangulon_lvl">artifact_triangulon_lvl:</label>
@@ -521,7 +548,7 @@
           <input type="number" id="artifact_winz_lantern_lvl" min="0" max="4" />
 
         </div>
-        <div id="tabs-world5-gaming" class="ui-tabs-panel ui-corner-bottom ui-widget-content">
+        <div id="tab-world5-gaming" class="ui-tabs-panel ui-corner-bottom ui-widget-content">
 
           <label for="MSA_mealing_unlocked">MSA mealing unlocked?</label>
           <input type="checkbox" id="MSA_mealing_unlocked" />
@@ -550,26 +577,27 @@
 
 
 
-    <div id="tabs-world6" style="display:none;">
+    <div id="tab-world6" style="display:none;">
 
-      <div id="tabs-world6-features" class="ui-tabs ui-widget ui-corner-all ui-widget-content ui-tabs-collapsible">
+      <div id="tabs-world6-features"
+        class="ui-tabs ui-widget ui-corner-all ui-widget-content ui-tabs-collapsible jquerytabs">
         <ul class="ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header">
-          <li class="ui-tabs-tab"><a href="#tabs-world6-farming" class="ui-tabs-anchor">
+          <li class="ui-tabs-tab"><a href="#tab-world6-farming" class="ui-tabs-anchor">
               <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/8/82/Farming_Skill_Icon.png" />Farming
             </a>
           </li>
-          <li class="ui-tabs-tab"><a href="#tabs-world6-sneaking" class="ui-tabs-anchor">
+          <li class="ui-tabs-tab"><a href="#tab-world6-sneaking" class="ui-tabs-anchor">
               <img class="collapsible_icon"
                 src="https://idleon.wiki/wiki/images/9/97/Sneaking_Skill_Icon.png" />Sneaking
             </a>
           </li>
-          <li class="ui-tabs-tab"><a href="#tabs-world6-summoning" class="ui-tabs-anchor">
+          <li class="ui-tabs-tab"><a href="#tab-world6-summoning" class="ui-tabs-anchor">
               <img class="collapsible_icon"
                 src="https://idleon.wiki/wiki/images/b/bc/Summoning_Skill_Icon.png" />Summoning
             </a>
           </li>
         </ul>
-        <div id="tabs-world6-farming" class="ui-tabs-panel ui-corner-bottom ui-widget-content">
+        <div id="tab-world6-farming" class="ui-tabs-panel ui-corner-bottom ui-widget-content">
 
           <label for="farming_lvl">farming_lvl:</label>
           <input type="number" id="farming_lvl" min="0" />
@@ -577,7 +605,7 @@
           <input type="number" id="crop_acquired" min="0" max="120" />
 
         </div>
-        <div id="tabs-world6-sneaking" class="ui-tabs-panel ui-corner-bottom ui-widget-content">
+        <div id="tab-world6-sneaking" class="ui-tabs-panel ui-corner-bottom ui-widget-content">
 
           <label for="pristine_crystal_comb_obtained">pristine_crystal_comb_obtained</label>
           <input type="checkbox" id="pristine_crystal_comb_obtained" />
@@ -586,7 +614,7 @@
 
         </div>
 
-        <div id="tabs-world6-summoning" class="ui-tabs-panel ui-corner-bottom ui-widget-content">
+        <div id="tab-world6-summoning" class="ui-tabs-panel ui-corner-bottom ui-widget-content">
 
           <label for="summoning_lvl">Summoning lvl:</label>
           <input type="number" id="summoning_lvl" min="0" />
@@ -604,33 +632,33 @@
 
 
 
-    <div id="tabs-general" style="display:none;">
+    <div id="tab-general" style="display:none;">
 
-      <div id="tabs-general-features">
+      <div id="tabs-general-features" class="jquerytabs">
         <ul>
-          <li><a href="#tabs-general-classes">
+          <li><a href="#tab-general-classes">
               <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/9/97/Mainpage_Classes.png" />Classes
             </a></li>
-          <li><a href="#tabs-general-cards">
+          <li><a href="#tab-general-cards">
               Cards
             </a></li>
-          <li><a href="#tabs-general-star-signs">
+          <li><a href="#tab-general-star-signs">
               Star signs
             </a></li>
-          <li><a href="#tabs-general-merit-shop">
+          <li><a href="#tab-general-merit-shop">
               <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/1/1d/Spirit_Sungmin.gif" />Merit Shop
             </a></li>
-          <li><a href="#tabs-general-achievements">
+          <li><a href="#tab-general-achievements">
               Achievements
             </a></li>
-          <li><a href="#tabs-general-arcade">
+          <li><a href="#tab-general-arcade">
               Arcade
             </a></li>
 
 
         </ul>
 
-        <div id="tabs-general-classes">
+        <div id="tab-general-classes">
           <label for="voidwalker_blood_marrow_lvl">voidwalker_blood_marrow_lvl</label>
           <input type="number" id="voidwalker_blood_marrow_lvl" min="0" />
           <label for="voidwalker_eclipse_lvl">voidwalker_eclipse_lvl</label>
@@ -640,14 +668,14 @@
           <label for="blood_berserker_overflowing_ladles_lvl">blood_berserker_overflowing_ladles_lvl</label>
           <input type="number" id="blood_berserker_overflowing_ladles_lvl" min="0" />
         </div>
-        <div id="tabs-general-cards">
+        <div id="tab-general-cards">
           <div>Card level = star count+1 (5 star is level 6)</div>
           <label for="card_troll1_level">card_troll1_level</label>
           <input type="number" id="card_troll1_level" min="0" max="6" />
           <label for="card_ceramic_spirit_level">card_ceramic_spirit_level</label>
           <input type="number" id="card_ceramic_spirit_level" min="0" max="6" />
         </div>
-        <div id="tabs-general-star-signs">
+        <div id="tab-general-star-signs">
           <label for="star_sign_gordonius_major">star_sign_gordonius_major</label>
           <input type="checkbox" id="star_sign_gordonius_major" />
           <label for="star_sign_seraph_cosmos">star_sign_seraph_cosmos</label>
@@ -655,11 +683,11 @@
           <label for="star_sign_chip_doubler_active">star_sign_chip_doubler_active</label>
           <input type="checkbox" id="star_sign_chip_doubler_active" />
         </div>
-        <div id="tabs-general-merit-shop">
+        <div id="tab-general-merit-shop">
           <label for="merit_world6_summoning_bonus">Summoning bonus level ?</label>
           <input type="number" id="merit_world6_summoning_bonus" min="0" max="10" />
         </div>
-        <div id="tabs-general-achievements">
+        <div id="tab-general-achievements">
           <!-- World 4 -->
           <label for="achiev_cabbage_patch">Cabbage Patch</label>
           <input type="checkbox" id="achiev_cabbage_patch" />
@@ -673,7 +701,7 @@
           <label for="achiev_regalis_my_beloved">Regalis My Beloved</label>
           <input type="checkbox" id="achiev_regalis_my_beloved" />
         </div>
-        <div id="tabs-general-arcade">
+        <div id="tab-general-arcade">
           <label for="arcade_cooking_bonus_lvl">arcade_cooking_bonus_lvl</label>
           <input type="number" id="arcade_cooking_bonus_lvl" min="0" max="100" />
         </div>

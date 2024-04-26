@@ -5,10 +5,12 @@ label {
     sans-serif;
 }
 
-/* input, */
-/* label {
-  margin: 0.4rem 0;
-} */
+button.link {
+  background: none;
+  border: none;
+  color: blue;
+  cursor: pointer;
+}
 
 table {
   margin-left: auto;
