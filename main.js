@@ -928,6 +928,7 @@ function addMealUpgradeDisplay(cooking_data, meal_id, new_meal_lvl, ladles, cumu
   content += `<td>NMLB: ${days_NMLB}</td>`
   content += `<td>ladles storage: ${cooking_data.ladles_owned}</td>`
   content += `<td>equinox: ${cooking_data.equinox_event_count}</td>`
+  content += `<td hidden>${JSON.stringify(cooking_data)}</td>`
   // content += `<td>speed: ${cooking_data.getCookingSpeed().toExponential(3)}</td>`
   content += `</tr>`
 
@@ -943,9 +944,16 @@ function remove_meal_upgrade() {
   console.log(meal_name)
   console.log(meal_id)
 
-  document.getElementById(`meal${meal_id}_level`).value = Number(document.getElementById(`meal${meal_id}_level`).value) + 1;
+  // document.getElementById(`meal${meal_id}_level`).value = Number(document.getElementById(`meal${meal_id}_level`).value) + 1;
+
+  let cooking_data_json = JSON.parse(meal_row.children[8].innerText)
+  let cooking_data = Object.assign(new CookingData(), cooking_data_json);
+  console.log(cooking_data)
+
+
+  cooking_data.fillDocumentInputForm()
   computeFromInputForm()
-  // meal_row.remove()
+
 
 }
 
@@ -964,7 +972,7 @@ function createMealTable() {
     if (i % 1 == 0) {
       content += "</tr><tr>"
     }
-    content += `<td><img src="${mdata.img}"></td>`
+    content += `<td><img src="${mdata.img}" class="meal_icon"></td>`
     content += `<td>${mdata.name}</td>`
     content += `<td><input type="number" id="meal${i}_level"/></td>`
     content += `<td><input type="text" id="meal${i}_qtt"/></td>`

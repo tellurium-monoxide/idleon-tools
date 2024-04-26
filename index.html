@@ -11,6 +11,7 @@
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
   <script>
     $(document).ready(function () {
+
       $("#tabs-global").tabs({
         collapsible: true
       });
@@ -41,6 +42,9 @@
       createMealTable();
       createKitchenTable();
       lookIntoLocalStorage();
+      $(document).tooltip({
+        track: true
+      });
     });
   </script>
   <script src="./main.js"></script>
