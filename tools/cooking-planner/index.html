@@ -278,7 +278,12 @@
                 </a></li>
             </ul>
             <div id="tab-cooking-ladles">
-              <label for="max_ladles_per_meal">max_ladles_per_meal</label>
+              <label for="min_ladles_per_meal">Minimum amount ladles to be used at once (set higher if you do not want
+                to click too
+                much)</label>
+              <input type="number" id="min_ladles_per_meal" min="0" />
+              <label for="max_ladles_per_meal">Max amout of ladles to be used at once (if you do not want to spend to
+                much ladles at once)</label>
               <input type="number" id="max_ladles_per_meal" min="0" />
               <label for="ladles_owned">ladles owned</label>
               <input type="number" id="ladles_owned" min="0" />

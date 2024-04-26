@@ -39,6 +39,7 @@ class CookingData {
   }
   initFromSaveData(save_data) {
 
+    this.min_ladles_per_meal = 1
     this.max_ladles_per_meal = 1000000
     this.ladles_per_day = 10000
 
@@ -235,9 +236,7 @@ class CookingData {
 
   initFromInputForm() {
 
-    this.max_ladles_per_meal = Number(document.getElementById(`max_ladles_per_meal`).value)
-    this.ladles_owned = Number(document.getElementById(`ladles_owned`).value)
-    this.ladles_per_day = Number(document.getElementById(`ladles_per_day`).value)
+
 
     // world 1 
     // stamps
@@ -260,6 +259,11 @@ class CookingData {
 
     // world 4
     // cooking
+    this.min_ladles_per_meal = Number(document.getElementById(`min_ladles_per_meal`).value)
+    this.max_ladles_per_meal = Number(document.getElementById(`max_ladles_per_meal`).value)
+    this.ladles_owned = Number(document.getElementById(`ladles_owned`).value)
+    this.ladles_per_day = Number(document.getElementById(`ladles_per_day`).value)
+
     this.meal_levels = Array(meal_count).fill(0)
     this.meal_quantities = Array(meal_count).fill(0)
     for (let i = 0; i < meal_count; i++) {
@@ -458,9 +462,7 @@ class CookingData {
 
   fillDocumentInputForm() {
 
-    document.getElementById(`max_ladles_per_meal`).value = this.max_ladles_per_meal
-    document.getElementById(`ladles_owned`).value = this.ladles_owned
-    document.getElementById(`ladles_per_day`).value = this.ladles_per_day
+
 
 
     // world 1 
@@ -485,6 +487,10 @@ class CookingData {
 
     // world 4
     // cooking
+    document.getElementById(`min_ladles_per_meal`).value = this.min_ladles_per_meal
+    document.getElementById(`max_ladles_per_meal`).value = this.max_ladles_per_meal
+    document.getElementById(`ladles_owned`).value = this.ladles_owned
+    document.getElementById(`ladles_per_day`).value = this.ladles_per_day
 
     for (let i = 0; i < meal_count; i++) {
       document.getElementById(`meal${i}_level`).value = this.meal_levels[i]
@@ -776,7 +782,7 @@ function computeMealOptimalOrder(cooking_data) {
 
 
     const meal_time = cooking_req / cooking_speed
-    const ladles = cooking_data.getLadlesNeeded(meal_time)
+    const ladles = Math.max(cooking_data.getLadlesNeeded(meal_time), cooking_data.min_ladles_per_meal)
 
     if (ladles <= cooking_data.max_ladles_per_meal && ladles < cooking_data.ladles_owned) {
 
