@@ -31,6 +31,7 @@ class CookingData {
     // classes
     // cards
     // star sign
+    // merit shop
     // achieve
     // arcade
 
@@ -162,20 +163,25 @@ class CookingData {
     }
 
     // find apocalypse count on BB
-    this.blood_berserker_chow_count = 0
+    this.blood_berserker_super_chow_count = 0
     this.blood_berserker_overflowing_ladles_lvl = 0
     for (let i = 0; i < 10; i++) {
       if (save_data[`CharacterClass_${i}`] == 10) {
         // console.log(`char ${i} is blood berserker`)
 
+
         let skill_max_levels = JSON.parse(save_data[`SM_${i}`]) // SM for max; SL and SLpre for currents
 
         this.blood_berserker_overflowing_ladles_lvl = Math.max(skill_max_levels[148], this.blood_berserker_overflowing_ladles_lvl)
-        this.blood_berserker_chow_count = 0
+        this.blood_berserker_super_chow_count = 0
         let KLA = JSON.parse(save_data[`KLA_${i}`])
+        let KillCounts = Array(300).fill(0)
         for (let k = 0; k < KLA.length; k++) {
-          if ((KLA[k][0] - KILL_REQ[k]) < -100e6) {
-            this.blood_berserker_chow_count += 1
+          KillCounts[k] = KILL_REQ[k] - KLA[k][0]
+        }
+        for (let k = 0; k < KLA.length; k++) {
+          if ((KillCounts[k]) > 100e6) {
+            this.blood_berserker_super_chow_count += 1
           }
         }
       }
@@ -193,12 +199,19 @@ class CookingData {
     this.star_sign_seraph_cosmos = 1
     this.star_sign_chip_doubler_active = 0
 
+    // merit shop
+    let merit_levels = JSON.parse(save_data["TaskZZ2"])
+    this.merit_world6_summoning_bonus = merit_levels[5][4]
+
     // achieve
     let achieve_data = JSON.parse(save_data["AchieveReg"]) // TODO : verify achiev id but how ?
     this.achiev_cabbage_patch = - achieve_data[224]
     this.achiev_pretzel_bleu = -achieve_data[225]
     this.achiev_best_plate = -achieve_data[233]
-
+    // todo : find these achiev ids
+    this.achiev_spectre_stars = 0
+    this.achiev_regalis_my_beloved = 0
+    console.log(achieve_data)
     // arcade
     let arcade_levels = JSON.parse(save_data["ArcadeUpg"])
     this.arcade_cooking_bonus_lvl = arcade_levels[28]
@@ -301,7 +314,7 @@ class CookingData {
     // classes
     this.voidwalker_blood_marrow_lvl = Number(document.getElementById(`voidwalker_blood_marrow_lvl`).value)
     this.voidwalker_eclipse_lvl = Number(document.getElementById(`voidwalker_eclipse_lvl`).value)
-    this.blood_berserker_chow_count = Number(document.getElementById(`blood_berserker_chow_count`).value)
+    this.blood_berserker_super_chow_count = Number(document.getElementById(`blood_berserker_super_chow_count`).value)
     this.blood_berserker_overflowing_ladles_lvl = Number(document.getElementById(`blood_berserker_overflowing_ladles_lvl`).value)
     // cards
     this.card_troll1_level = Number(document.getElementById(`card_troll1_level`).value)
@@ -310,10 +323,16 @@ class CookingData {
     this.star_sign_gordonius_major = document.getElementById(`star_sign_gordonius_major`).checked
     this.star_sign_seraph_cosmos = document.getElementById(`star_sign_seraph_cosmos`).checked
     this.star_sign_chip_doubler_active = document.getElementById(`star_sign_chip_doubler_active`).checked
+
+    // merit shop
+    this.merit_world6_summoning_bonus = Number(document.getElementById(`merit_world6_summoning_bonus`).value)
+
     // achieve
     this.achiev_cabbage_patch = document.getElementById(`achiev_cabbage_patch`).checked
     this.achiev_pretzel_bleu = document.getElementById(`achiev_pretzel_bleu`).checked
     this.achiev_best_plate = document.getElementById(`achiev_best_plate`).checked
+    this.achiev_spectre_stars = document.getElementById(`achiev_spectre_stars`).checked
+    this.achiev_regalis_my_beloved = document.getElementById(`achiev_regalis_my_beloved`).checked
     // arcade
     this.arcade_cooking_bonus_lvl = Number(document.getElementById(`arcade_cooking_bonus_lvl`).value)
 
@@ -405,16 +424,24 @@ class CookingData {
 
     // sneaking
     // summoning
-    this.summon_cooking_bonus = (1 + 0.25 * this.artifact_winz_lantern_lvl)
-      * (1 + 0.3 * this.pristine_crystal_comb_obtained)
-      * (1 + this.summon_battle_mushP * 1.75)
+    this.summon_bonus_mult = (1 + 0.3 * this.pristine_crystal_comb_obtained)
+      * (1
+        + 0.25 * this.artifact_winz_lantern_lvl
+        + 0.01 * this.merit_world6_summoning_bonus
+        + 0.01 * this.achiev_spectre_stars
+        + 0.01 * this.achiev_regalis_my_beloved
+      )
 
+
+    this.summon_cooking_bonus = 1 + (this.summon_battle_mushP * 1.75 * this.summon_bonus_mult)
+
+    // console.log(this.summon_cooking_bonus)
     // general
     // classes
     this.blood_marrow_bonus = (this.voidwalker_blood_marrow_lvl * 2.1 / 100) / (this.voidwalker_blood_marrow_lvl + 220);
 
     this.apocalypse_active = this.voidwalker_eclipse_lvl >= 125 ? 1 : 0;
-    this.apocalypse_bonus = Math.pow(1.1, this.apocalypse_active * this.blood_berserker_chow_count)
+    this.apocalypse_bonus = Math.pow(1.1, this.apocalypse_active * this.blood_berserker_super_chow_count)
 
     this.overflowing_ladles_bonus = (this.blood_berserker_overflowing_ladles_lvl) / (this.blood_berserker_overflowing_ladles_lvl + 80);
     // cards
@@ -512,7 +539,7 @@ class CookingData {
     // classes
     document.getElementById(`voidwalker_blood_marrow_lvl`).value = this.voidwalker_blood_marrow_lvl
     document.getElementById(`voidwalker_eclipse_lvl`).value = this.voidwalker_eclipse_lvl
-    document.getElementById(`blood_berserker_chow_count`).value = this.blood_berserker_chow_count
+    document.getElementById(`blood_berserker_super_chow_count`).value = this.blood_berserker_super_chow_count
     document.getElementById(`blood_berserker_overflowing_ladles_lvl`).value = this.blood_berserker_overflowing_ladles_lvl
     // cards
     document.getElementById(`card_troll1_level`).value = this.card_troll1_level
@@ -521,10 +548,14 @@ class CookingData {
     document.getElementById(`star_sign_gordonius_major`).checked = this.star_sign_gordonius_major
     document.getElementById(`star_sign_seraph_cosmos`).checked = this.star_sign_seraph_cosmos
     document.getElementById(`star_sign_chip_doubler_active`).checked = this.star_sign_chip_doubler_active
+    // merit shop
+    document.getElementById(`merit_world6_summoning_bonus`).value = this.merit_world6_summoning_bonus
     // achieve
     document.getElementById(`achiev_cabbage_patch`).checked = this.achiev_cabbage_patch
     document.getElementById(`achiev_pretzel_bleu`).checked = this.achiev_pretzel_bleu
     document.getElementById(`achiev_best_plate`).checked = this.achiev_best_plate
+    document.getElementById(`achiev_spectre_stars`).checked = this.achiev_spectre_stars
+    document.getElementById(`achiev_regalis_my_beloved`).checked = this.achiev_regalis_my_beloved
     // arcade
     document.getElementById(`arcade_cooking_bonus_lvl`).value = this.arcade_cooking_bonus_lvl
 
@@ -806,10 +837,7 @@ function computeMealOptimalOrder(cooking_data) {
   document.getElementById("NMLB_needed").innerHTML = days_NMLB;
   document.getElementById("NMLB_needed_percent").innerHTML = (days_NMLB / missing_levels * 100).toFixed(2);
 
-  // document.getElementById('result_collapsible').click();
-  let coll = document.getElementById('result_collapsible');
-  let content_coll = coll.nextElementSibling;
-  content_coll.style.display = "block";
+
 }
 
 function addMealUpgradeDisplay(cooking_data, meal_id, new_meal_lvl, ladles, cumulative_ladles, days_NMLB) {
@@ -1033,6 +1061,18 @@ function FormatCookingTime(time_in_hours) {
 
 
 KILL_REQ = Array(300).fill(0);
+// world 6
+KILL_REQ[251] = 25e3;
+KILL_REQ[252] = 50e3;
+KILL_REQ[253] = 100e3;
+KILL_REQ[254] = 250e3;
+KILL_REQ[255] = 400e3;
+KILL_REQ[256] = 1.1e6;
+KILL_REQ[257] = 3.2e6;
+KILL_REQ[258] = 8e6;
+KILL_REQ[259] = 12e6;
+KILL_REQ[260] = 25e6;
+KILL_REQ[261] = 70e6;
 KILL_REQ[262] = 100e6;
 KILL_REQ[263] = 150e6;
 
@@ -1058,7 +1098,7 @@ const LAB_JEWELS = [
   "black_diamond_rhinestone",
   "pure_opal_rhinestone",
   "pure_opal_navette",
-  "pure_opal_rhombol",
+  "pure_opal_rhombol"
 ]
 
 function getTimeForShinyLevel(goal) {
@@ -1076,14 +1116,15 @@ function getShinyLevel(time) {
 
 const DAYS_FOR_SHINY_LEVELS = [
   3, // for lvl 1
-  3, // for lvl 2
-  3, // for lvl 3
-  3, // for lvl 4
+  11, // for lvl 2
+  11, // for lvl 3 //TODO
+  11, // for lvl 4 //TODO
   85, // for lvl 5
   200, // for lvl 6
   448, // for lvl 7
   964, // for lvl 8
   2020, // for lvl 9
+  4110, // for lvl 10
 
 
 
