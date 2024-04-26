@@ -1,0 +1,72 @@
+label {
+  display: block;
+  font:
+    1rem 'Fira Sans',
+    sans-serif;
+}
+
+/* input, */
+/* label {
+  margin: 0.4rem 0;
+} */
+
+table {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+table,
+th,
+td {
+  border: 1px solid;
+}
+
+td {
+  text-align: center;
+  vertical-align: middle;
+}
+
+tr.completed_meal {
+  background-color: rgba(6, 119, 6, 0.482);
+}
+
+tr.NMLB {
+  background-color: rgba(238, 17, 17, 0.366);
+}
+
+/* use with  <div class="loader"></div> */
+.loader {
+  border: 16px solid #f3f3f3;
+  /* Light grey */
+  border-top: 16px solid #3498db;
+  /* Blue */
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
+
+img.collapsible_icon {
+  vertical-align: middle;
+  height: 40px;
+}
+
+img.collapsible_icon_world {
+  vertical-align: middle;
+}
+
+img.meal_icon {
+  height: 40px;
+}
