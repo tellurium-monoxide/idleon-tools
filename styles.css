@@ -11,10 +11,8 @@ label {
 } */
 
 table {
-  border-collapse: collapse;
   margin-left: auto;
   margin-right: auto;
-  /*width: 100%;*/
 }
 
 table,
@@ -65,60 +63,4 @@ img.collapsible_icon {
 
 img.collapsible_icon_world {
   vertical-align: middle;
-}
-
-.collapsible {
-  background-color: #777;
-  color: white;
-  cursor: pointer;
-  /* padding-left: 10px; */
-  min-height: 60px;
-  width: 100%;
-  margin: 0.4rem 0;
-  border: none;
-  text-align: center;
-  vertical-align: middle;
-  outline: none;
-  font-size: 15px;
-}
-
-.active,
-.collapsible:hover {
-  background-color: #555;
-}
-
-.collapsible::after {
-  content: '\02795';
-  /* Unicode character for "plus" sign (+) */
-  font-size: 15px;
-  color: white;
-  float: right;
-  margin-right: 15px;
-}
-
-.collapsible::before {
-  content: '\02795';
-  /* Unicode character for "plus" sign (+) */
-  font-size: 15px;
-  color: white;
-  float: left;
-  margin-left: 15px;
-}
-
-.active::after {
-  content: "\2796";
-  /* Unicode character for "minus" sign (-) */
-}
-
-.active::before {
-  content: "\2796";
-  /* Unicode character for "minus" sign (-) */
-}
-
-
-.content {
-  padding: 0 18px;
-  display: none;
-  overflow: hidden;
-  background-color: #f1f1f1;
 }

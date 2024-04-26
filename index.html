@@ -682,7 +682,7 @@
 
   <!-- <div style="text-align:center"> -->
   <h3>Upgrade order</h3>
-  <button id="remove_meal_upgrade" onclick="remove_meal_upgrade()">Remove first meal</button>
+  <button id="remove_meal_upgrade" onclick="remove_meal_upgrade()">Upgrade first meal</button>
   <!-- </div> -->
   <table id="meal_upgrade_order">
   </table>
@@ -691,22 +691,7 @@
 
 
 
-  <script>
-    var coll = document.getElementsByClassName("collapsible");
-    var i;
 
-    for (i = 0; i < coll.length; i++) {
-      coll[i].addEventListener("click", function () {
-        this.classList.toggle("active");
-        var content = this.nextElementSibling;
-        if (content.style.display === "block") {
-          content.style.display = "none";
-        } else {
-          content.style.display = "block";
-        }
-      });
-    }
-  </script>
   <script type="text/javascript">
     // createMealTable();
     // createKitchenTable();

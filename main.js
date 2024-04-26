@@ -349,7 +349,7 @@ class CookingData {
       this.equinox_event_count = 0
     }
 
-    this.computeMealCosts()
+    this.computeMealCookingReq()
 
     // this needs to be computed first as lab affects nearly everything
     // TODO: pure opal navette seems to apply to itself... unsure about that, but it at least applies visually in lab
@@ -443,7 +443,7 @@ class CookingData {
     this.apocalypse_active = this.voidwalker_eclipse_lvl >= 125 ? 1 : 0;
     this.apocalypse_bonus = Math.pow(1.1, this.apocalypse_active * this.blood_berserker_super_chow_count)
 
-    this.overflowing_ladles_bonus = (this.blood_berserker_overflowing_ladles_lvl) / (this.blood_berserker_overflowing_ladles_lvl + 80);
+    this.overflowing_ladles_mult = 1 + (this.blood_berserker_overflowing_ladles_lvl) / (this.blood_berserker_overflowing_ladles_lvl + 80);
     // cards
     // star sign
     this.star_sign_cooking_bonus = 0.15
@@ -656,22 +656,26 @@ class CookingData {
 
 
 
-  computeMealCosts() {
-    if (!this.meal_costs) {
-      this.meal_costs = Array(meal_count).fill(0)
+  computeMealCookingReq() {
+    if (!this.meal_cooking_req_to_next_lvl) {
+      this.meal_cooking_req_to_next_lvl = Array(meal_count).fill(0)
     }
-    for (let i = 0; i < meal_count; i++) {
-      this.updateMealCost(i)
+    for (let meal_id = 0; meal_id < meal_count; meal_id++) {
+      const mdata = meal_info[meal_id]
+      const current_lvl = this.meal_levels[meal_id]
+      const cost = this.getMealCost(current_lvl)
+      this.meal_cooking_req_to_next_lvl[meal_id] = (cost - this.meal_quantities[meal_id]) * mdata.cookReq;
     }
   }
-  updateMealCost(meal_id) {
-    const mdata = meal_info[meal_id]
-    const current_lvl = this.meal_levels[meal_id]
-    this.meal_costs[meal_id] = this.getMealCost(current_lvl) * mdata.cookReq;
+
+
+  getClosestMealUpgrade() {
+    const closest_meal = indexOfMin(this.meal_cooking_req_to_next_lvl)
+    const cook_req = this.meal_cooking_req_to_next_lvl[closest_meal]
+    return [closest_meal, cook_req]
   }
-  updateMealQtt(meal_id, current_lvl) {
-    this.meal_quantities[meal_id] = this.getMealCost(current_lvl - 1);
-  }
+
+
 
   getMealCost(current_lvl,) {
     if (current_lvl >= meal_max_lvl) {
@@ -693,14 +697,124 @@ class CookingData {
 
 
   }
-  getLadlesNeeded(meal_time_in_hours) {
 
-    return Math.ceil(meal_time_in_hours / (1 + this.overflowing_ladles_bonus))
+
+
+  cookMeal(meal_id, time_in_hours) {
+    let speed = this.getCookingSpeed()
+    let cook_req = meal_info[meal_id].cookReq
+    let cooked_amount = time_in_hours * speed / cook_req
+    this.meal_quantities[meal_id] += cooked_amount
+  }
+  cookMealWithLadles(meal_id, ladles) {
+    let speed = this.getCookingSpeed()
+    let cook_req = meal_info[meal_id].cookReq
+    let cooked_amount = ladles * (this.overflowing_ladles_mult) * speed / cook_req
+    this.meal_quantities[meal_id] += cooked_amount
+  }
+
+  upgradeMeal(meal_id) {
+    let meal_cost = this.getMealCost(this.meal_levels[meal_id])
+    if (meal_cost > this.meal_quantities[meal_id]) {
+      console.log(meal_cost)
+      console.log(this.meal_quantities[meal_id])
+      return false;
+    } else {
+      this.meal_quantities[meal_id] -= meal_cost
+      this.meal_levels[meal_id] += 1
+      this.equinox_event_count = 0
+      this.computeMealCookingReq()
+      return true
+    }
+  }
+
+  triggerNMLB() {
+
+    // NMLB upgrades lowest level meal starting with last ones
+    let NMLB_meal = this.meal_levels.reduce((acc, currentVal, currentId) => (currentId < meal_count && currentVal <= acc.val) ? { "val": currentVal, "id": currentId } : acc, { "val": Infinity, "id": 0 }).id;
+    let new_lvl = this.meal_levels[NMLB_meal] + 1
+
+    this.ladles_owned += this.ladles_per_day
+
+    this.meal_levels[NMLB_meal] += 1
+
+    this.equinox_event_count += 1
+    this.ladles_owned += this.ladles_per_day
+    this.computeMealCookingReq()
+
+    return [NMLB_meal, new_lvl]
+  }
+
+  getLadlesNeeded(meal_time_in_hours) {
+    return Math.max(Math.ceil(meal_time_in_hours / this.overflowing_ladles_mult), 0)
   }
 
 
 
 }
+
+
+
+function computeMealOptimalOrder(cooking_data) {
+
+  content = ""
+  document.getElementById(`total_cooking_speed`).innerHTML = cooking_data.getCookingSpeed().toExponential(2)
+  let cumulative_ladles = 0
+  let days_NMLB = 0
+
+  let missing_levels = (meal_count * meal_max_lvl) - cooking_data.meal_levels.reduce((a, b) => a + b)
+  while (cooking_data.meal_levels.reduce((a, b) => a + b) < (meal_count * meal_max_lvl)) {
+    const cooking_speed = cooking_data.getCookingSpeed()
+
+
+    // best_meal = cooking_data.meal_costs.reduce((acc, currentVal, currentId) => (currentId < meal_count && currentVal < acc.val) ? { "val": currentVal, "id": currentId } : acc, { "val": Infinity, "id": 0 }).id;
+    const [best_meal, cooking_req] = cooking_data.getClosestMealUpgrade()
+
+
+    const new_lvl = cooking_data.meal_levels[best_meal] + 1
+
+
+
+    const meal_time = Math.ceil(cooking_req / cooking_speed)
+    const ladles = cooking_data.getLadlesNeeded(meal_time)
+
+    if (ladles <= cooking_data.max_ladles_per_meal && ladles < cooking_data.ladles_owned) {
+
+      cooking_data.cookMealWithLadles(best_meal, ladles)
+
+      if (!cooking_data.upgradeMeal(best_meal)) {
+        console.log(`failed to upgrade meal ${meal_info[best_meal].name} to level ${new_lvl}`)
+      }
+
+      cumulative_ladles += ladles
+      cooking_data.ladles_owned -= ladles
+      content += addMealUpgradeDisplay(cooking_data, best_meal, new_lvl, ladles, cumulative_ladles, days_NMLB, false)
+
+    } else {
+      let [NMLB_meal, new_lvl] = cooking_data.triggerNMLB()
+
+      days_NMLB += 1
+
+      content += addMealUpgradeDisplay(cooking_data, NMLB_meal, new_lvl, 0, cumulative_ladles, days_NMLB, true)
+
+
+    }
+
+
+
+  }
+
+  document.getElementById("meal_upgrade_order").innerHTML = content;
+  document.getElementById("ladles_needed").innerHTML = cumulative_ladles;
+  document.getElementById("missing_levels").innerHTML = missing_levels;
+  document.getElementById("NMLB_needed").innerHTML = days_NMLB;
+  document.getElementById("NMLB_needed_percent").innerHTML = (days_NMLB / missing_levels * 100).toFixed(2);
+
+
+}
+
+
+
 const tryToParse = str => {
   try {
     return JSON.parse(str);
@@ -788,59 +902,9 @@ function computeFromInputForm() {
 
 
 
-function computeMealOptimalOrder(cooking_data) {
-
-  content = ""
-  document.getElementById(`total_cooking_speed`).innerHTML = cooking_data.getCookingSpeed().toExponential(2)
-  var cumulative_ladles = 0
-  var days_NMLB = 0
-
-  let missing_levels = (meal_count * meal_max_lvl) - cooking_data.meal_levels.reduce((a, b) => a + b)
-  while (cooking_data.meal_levels.reduce((a, b) => a + b) < (meal_count * meal_max_lvl)) {
-    cooking_speed = cooking_data.getCookingSpeed()
 
 
-    best_meal = cooking_data.meal_costs.reduce((acc, currentVal, currentId) => (currentId < meal_count && currentVal < acc.val) ? { "val": currentVal, "id": currentId } : acc, { "val": Infinity, "id": 0 }).id;
-    new_lvl = cooking_data.meal_levels[best_meal] + 1
-
-
-
-    meal_time = cooking_data.meal_costs[best_meal] / cooking_speed
-    ladles = cooking_data.getLadlesNeeded(meal_time)
-
-    if (ladles <= cooking_data.max_ladles_per_meal && ladles < cooking_data.ladles_owned) {
-
-      cumulative_ladles += ladles
-      cooking_data.ladles_owned -= ladles
-      content += addMealUpgradeDisplay(cooking_data, best_meal, new_lvl, ladles, cumulative_ladles, days_NMLB)
-      cooking_data.updateMealQtt(best_meal, new_lvl)
-      cooking_data.equinox_event_count = 0
-    } else {
-      cooking_data.equinox_event_count += 1
-      // NMLB upgrades lowest level meal starting with last ones
-      best_meal = cooking_data.meal_levels.reduce((acc, currentVal, currentId) => (currentId < meal_count && currentVal <= acc.val) ? { "val": currentVal, "id": currentId } : acc, { "val": Infinity, "id": 0 }).id;
-      new_lvl = cooking_data.meal_levels[best_meal] + 1
-      days_NMLB += 1
-      cooking_data.ladles_owned += cooking_data.ladles_per_day
-      content += addMealUpgradeDisplay(cooking_data, best_meal, new_lvl, 0, cumulative_ladles, days_NMLB)
-
-    }
-
-    cooking_data.meal_levels[best_meal] = new_lvl
-    cooking_data.computeMealCosts()
-
-  }
-
-  document.getElementById("meal_upgrade_order").innerHTML = content;
-  document.getElementById("ladles_needed").innerHTML = cumulative_ladles;
-  document.getElementById("missing_levels").innerHTML = missing_levels;
-  document.getElementById("NMLB_needed").innerHTML = days_NMLB;
-  document.getElementById("NMLB_needed_percent").innerHTML = (days_NMLB / missing_levels * 100).toFixed(2);
-
-
-}
-
-function addMealUpgradeDisplay(cooking_data, meal_id, new_meal_lvl, ladles, cumulative_ladles, days_NMLB) {
+function addMealUpgradeDisplay(cooking_data, meal_id, new_meal_lvl, ladles, cumulative_ladles, days_NMLB, isNMLB) {
   const mdata = meal_info[meal_id];
   // display_time = FormatCookingTime(meal_time)
   // display_cumulative_time = FormatCookingTime(cumulative_time)
@@ -848,7 +912,7 @@ function addMealUpgradeDisplay(cooking_data, meal_id, new_meal_lvl, ladles, cumu
   let trclass = ""
   if (new_meal_lvl == 90) {
     trclass = "completed_meal"
-  } else if (ladles == 0) {
+  } else if (isNMLB) {
     trclass = "NMLB"
   }
 
@@ -873,7 +937,16 @@ function addMealUpgradeDisplay(cooking_data, meal_id, new_meal_lvl, ladles, cumu
 
 function remove_meal_upgrade() {
 
-  document.getElementById("meal_upgrade_order").firstChild.firstChild.remove()
+  let meal_row = document.getElementById("meal_upgrade_order").firstChild.firstChild
+  let meal_name = meal_row.children[1].innerText
+  let meal_id = meal_info.findIndex((meal) => (meal.name == meal_name))
+  console.log(meal_name)
+  console.log(meal_id)
+
+  document.getElementById(`meal${meal_id}_level`).value = Number(document.getElementById(`meal${meal_id}_level`).value) + 1;
+  computeFromInputForm()
+  // meal_row.remove()
+
 }
 
 function createMealTable() {
@@ -1057,7 +1130,13 @@ function FormatCookingTime(time_in_hours) {
     return `${milliseconds.toFixed(2)}ms`
   }
 }
-
+function indexOfMin(a) {
+  let lowest = 0;
+  for (let i = 1; i < a.length; i++) {
+    if (a[i] < a[lowest]) lowest = i;
+  }
+  return lowest;
+}
 
 
 KILL_REQ = Array(300).fill(0);
