@@ -27,6 +27,9 @@
       $("#tabs-world4-features").tabs({
         collapsible: false
       });
+      $("#tabs-cooking").tabs({
+        collapsible: false
+      });
       $("#tabs-lab").tabs({
         collapsible: false
       });
@@ -219,15 +222,9 @@
     <div id="tabs-world4" style="display:none;">
       <div id="tabs-world4-features">
         <ul>
-          <li><a href="#tabs-world4-ladles">
+          <li><a href="#tab-world4-cooking">
               <img class="collapsible_icon"
-                src="https://idleon.wiki/wiki/images/thumb/1/11/Cooking_Ladle.png/54px-Cooking_Ladle.png" />Ladles
-            </a></li>
-          <li><a href="#tabs-world4-meals">
-              <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/8/87/Cooking_Skill_Icon.png" />Meals
-            </a></li>
-          <li><a href="#tabs-world4-kitchen">
-              <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/1/10/Richelin_Kitchen.png" />Kitchen
+                src="https://idleon.wiki/wiki/images/thumb/1/11/Cooking_Ladle.png/54px-Cooking_Ladle.png" />Cooking
             </a></li>
           <li><a href="#tabs-world4-breeding">
               <img class="collapsible_icon"
@@ -238,25 +235,46 @@
             </a></li>
         </ul>
 
-        <div id="tabs-world4-ladles">
-          <label for="max_ladles_per_meal">max_ladles_per_meal</label>
-          <input type="number" id="max_ladles_per_meal" min="0" />
-          <label for="ladles_owned">ladles owned</label>
-          <input type="number" id="ladles_owned" min="0" />
-          <label for="ladles_per_day">ladles gain per day</label>
-          <input type="number" id="ladles_per_day" min="0" />
+        <div id="tab-world4-cooking">
+          <div id="tabs-cooking">
+            <ul>
+              <li><a href="#tab-cooking-ladles">
+                  <img class="collapsible_icon"
+                    src="https://idleon.wiki/wiki/images/thumb/1/11/Cooking_Ladle.png/54px-Cooking_Ladle.png" />Ladles
+                </a></li>
+              <li><a href="#tab-cooking-meals">
+                  <img class="collapsible_icon"
+                    src="https://idleon.wiki/wiki/images/8/87/Cooking_Skill_Icon.png" />Meals
+                </a></li>
+              <li><a href="#tab-cooking-kitchen">
+                  <img class="collapsible_icon"
+                    src="https://idleon.wiki/wiki/images/1/10/Richelin_Kitchen.png" />Kitchens
+                </a></li>
+            </ul>
+            <div id="tab-cooking-ladles">
+              <label for="max_ladles_per_meal">max_ladles_per_meal</label>
+              <input type="number" id="max_ladles_per_meal" min="0" />
+              <label for="ladles_owned">ladles owned</label>
+              <input type="number" id="ladles_owned" min="0" />
+              <label for="ladles_per_day">ladles gain per day</label>
+              <input type="number" id="ladles_per_day" min="0" />
+            </div>
+
+            <div id="tab-cooking-meals">
+              <table id="meal_levels">
+              </table>
+            </div>
+
+            <div id="tab-cooking-kitchen">
+              <table id="kitchen_levels">
+              </table>
+            </div>
+          </div>
+
 
         </div>
 
-        <div id="tabs-world4-meals">
-          <table id="meal_levels">
-          </table>
-        </div>
 
-        <div id="tabs-world4-kitchen">
-          <table id="kitchen_levels">
-          </table>
-        </div>
 
         <div id="tabs-world4-breeding">
 
