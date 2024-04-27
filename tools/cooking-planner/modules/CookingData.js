@@ -206,14 +206,13 @@ class CookingData {
         this.merit_world6_summoning_bonus = merit_levels[5][4]
 
         // achieve
-        let achieve_data = JSON.parse(save_data["AchieveReg"]) // TODO : verify achiev id but how ?
+        let achieve_data = JSON.parse(save_data["AchieveReg"])
         this.achiev_cabbage_patch = - achieve_data[224]
         this.achiev_pretzel_bleu = -achieve_data[225]
         this.achiev_best_plate = -achieve_data[233]
-        // todo : find these achiev ids
-        this.achiev_spectre_stars = 0
-        this.achiev_regalis_my_beloved = 0
-        console.log(achieve_data)
+        this.achiev_spectre_stars = -achieve_data[379]
+        this.achiev_regalis_my_beloved = -achieve_data[373]
+
         // arcade
         let arcade_levels = JSON.parse(save_data["ArcadeUpg"])
         this.arcade_cooking_bonus_lvl = arcade_levels[28]

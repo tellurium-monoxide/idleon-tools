@@ -322,10 +322,9 @@ const LAB_JEWELS = [
 ]
 
 function getTimeForShinyLevel(goal) {
-  let time = 0;
-
   return Math.floor((1 + Math.pow(goal, 1.6)) * Math.pow(1.7, goal));
 }
+
 function getShinyLevel(time) {
   let lvl = 1;
   while (getTimeForShinyLevel(lvl) < time) {
@@ -334,21 +333,22 @@ function getShinyLevel(time) {
   return lvl;
 }
 
-const DAYS_FOR_SHINY_LEVELS = [
-  3, // for lvl 1
-  11, // for lvl 2
-  11, // for lvl 3 //TODO
-  11, // for lvl 4 //TODO
-  85, // for lvl 5
-  200, // for lvl 6
-  448, // for lvl 7
-  964, // for lvl 8
-  2020, // for lvl 9
-  4110, // for lvl 10
+// not used anymore
+// const DAYS_FOR_SHINY_LEVELS = [
+//   3, // for lvl 1
+//   11, // for lvl 2
+//   11, // for lvl 3 //TODO
+//   11, // for lvl 4 //TODO
+//   85, // for lvl 5
+//   200, // for lvl 6
+//   448, // for lvl 7
+//   964, // for lvl 8
+//   2020, // for lvl 9
+//   4110, // for lvl 10
 
 
 
-]
+// ]
 
 
 
@@ -364,3 +364,15 @@ function getCardLevel(card_id, card_count) {
   let card_level = (card_count > 0) + card_req.filter((a) => (a < card_count)).length
   return card_level;
 }
+
+
+
+const ACHIEVEMENT_DATA = {
+  "Cabbage Patch": { id: 224 },
+  "Le Pretzel Bleu": { id: 225 },
+  "Best Plate": { id: 233 },
+  "Spectre Stars": { id: 379 },
+  "Regalis My Beloved": { id: 373 },
+}
+
+
