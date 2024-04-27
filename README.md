@@ -10,6 +10,7 @@ This is a collection of tools for the game IdleOn I make for my own use. They ar
 ## Future tools
 I plan to make tools for the following purposes: 
 - Booking talent plannification / organizer
+- Shiny levelling planner
 
 Those are probably already covered in some google sheet, but I dislike using these for advanced calculations.
 
