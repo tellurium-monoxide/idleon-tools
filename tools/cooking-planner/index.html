@@ -11,7 +11,6 @@
   <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 
-
   <script src="../../external/bootstrap-input-spinner/InputSpinner.js"></script>
 
   <script src="./modules/utils.js"></script>
@@ -53,8 +52,6 @@
 
 <body>
 
-
-
   <h1>IdleOn Cooking Planner</h1>
   <h2> How to use? </h2>
   <div>
@@ -80,16 +77,14 @@
   <label for="name">Enter your <a href="https://www.idleonefficiency.com/raw-data" target="_blank">IE save data</a>
     here:</label>
   <input type="text" id="raw_data" name="name"
-    title="Tip: Your last entered save data is saved in your browser local storage for the next time you access the page." />
+         title="Tip: Your last entered save data is saved in your browser local storage for the next time you access the page." />
   <button id="enter_save_data" onclick="onSubmit()">Enter</button>
   <button id="clear_save_data" onclick="onClear()">Clear</button>
-
 
   <h2> Inputs: </h2>
   <div>
     <button id="use_inputs" onclick="computeFromInputForm()">Compute from inputs</button>
   </div>
-
 
   <div id="tabs-global" class="ui-tabs ui-widget ui-corner-all ui-widget-content ui-tabs-collapsible">
     <ul class="ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header">
@@ -123,20 +118,21 @@
           <img class="collapsible_icon_world" src="https://idleon.wiki/wiki/images/6/6d/Wb6.png" />
         </a>
       </li>
-      <li><a href="#tab-general" class="ui-tabs-anchor">General</a></li>
+      <li>
+        <a href="#tab-general" class="ui-tabs-anchor">General</a>
+      </li>
     </ul>
-
-
-
 
     <div id="tab-world1" class="ui-tabs-panel ui-corner-bottom ui-widget-content">
 
       <div id="tabs-world1-features"
-        class="ui-tabs ui-widget ui-corner-all ui-widget-content ui-tabs-collapsible jquerytabs">
+           class="ui-tabs ui-widget ui-corner-all ui-widget-content ui-tabs-collapsible jquerytabs">
         <ul class="ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header">
-          <li class="ui-tabs-tab"><a href="#tabs-world1-stamps" class="ui-tabs-anchor">
+          <li class="ui-tabs-tab">
+            <a href="#tabs-world1-stamps" class="ui-tabs-anchor">
               <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/7/71/Mr_Pigibank.gif" />Stamps
-            </a></li>
+            </a>
+          </li>
         </ul>
         <div id="tabs-world1-stamps" class="ui-tabs-panel ui-corner-bottom ui-widget-content">
 
@@ -146,16 +142,6 @@
         </div>
       </div>
     </div>
-
-
-
-
-
-
-
-
-
-
 
     <div id="tab-world2" style="display:none;">
 
@@ -185,16 +171,10 @@
 
     </div>
 
-
-
-
-
-
-
     <div id="tab-world3" style="display:none;">
 
       <div id="tabs-world3-features"
-        class="ui-tabs ui-widget ui-corner-all ui-widget-content ui-tabs-collapsible jquerytabs">
+           class="ui-tabs ui-widget ui-corner-all ui-widget-content ui-tabs-collapsible jquerytabs">
         <ul class="ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header">
           <li class="ui-tabs-tab"><a href="#tabs-world3-atoms" class="ui-tabs-anchor">
               <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/4/4e/Atoms.png" /> Atoms
@@ -221,30 +201,16 @@
 
     </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     <div id="tab-world4" style="display:none;">
       <div id="tabs-world4-features" class="jquerytabs">
         <ul>
           <li><a href="#tab-world4-cooking" id="tab_header_world4_cooking">
               <img class="collapsible_icon"
-                src="https://idleon.wiki/wiki/images/thumb/1/11/Cooking_Ladle.png/54px-Cooking_Ladle.png" />Cooking
+                   src="https://idleon.wiki/wiki/images/thumb/1/11/Cooking_Ladle.png/54px-Cooking_Ladle.png" />Cooking
             </a></li>
           <li><a href="#tab-world4-breeding">
               <img class="collapsible_icon"
-                src="https://idleon.wiki/wiki/images/2/27/Breeding_Skill_Icon.png" />Breeding
+                   src="https://idleon.wiki/wiki/images/2/27/Breeding_Skill_Icon.png" />Breeding
             </a></li>
           <li><a href="#tab-world4-lab">
               <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/b/b9/Laboratory_Skill_Icon.png" />Lab
@@ -256,15 +222,15 @@
             <ul>
               <li><a href="#tab-cooking-ladles" id="tab_header_cooking_ladles">
                   <img class="collapsible_icon"
-                    src="https://idleon.wiki/wiki/images/thumb/1/11/Cooking_Ladle.png/54px-Cooking_Ladle.png" />Ladles
+                       src="https://idleon.wiki/wiki/images/thumb/1/11/Cooking_Ladle.png/54px-Cooking_Ladle.png" />Ladles
                 </a></li>
               <li><a href="#tab-cooking-meals">
                   <img class="collapsible_icon"
-                    src="https://idleon.wiki/wiki/images/8/87/Cooking_Skill_Icon.png" />Meals
+                       src="https://idleon.wiki/wiki/images/8/87/Cooking_Skill_Icon.png" />Meals
                 </a></li>
               <li><a href="#tab-cooking-kitchen">
                   <img class="collapsible_icon"
-                    src="https://idleon.wiki/wiki/images/1/10/Richelin_Kitchen.png" />Kitchens
+                       src="https://idleon.wiki/wiki/images/1/10/Richelin_Kitchen.png" />Kitchens
                 </a></li>
             </ul>
             <div id="tab-cooking-ladles">
@@ -292,10 +258,7 @@
             </div>
           </div>
 
-
         </div>
-
-
 
         <div id="tab-world4-breeding">
 
@@ -381,7 +344,6 @@
                 </tr>
               </table>
 
-
             </div>
 
             <div id="tab-lab-jewels" class="ui-tabs-panel ui-corner-bottom ui-widget-content jquerytabs">
@@ -389,7 +351,7 @@
                 <tr>
                   <td>
                     <img
-                      src="https://idleon.wiki/wiki/images/thumb/5/5e/Console_Jewel_Amethyst_Rhinestone.png/54px-Console_Jewel_Amethyst_Rhinestone.png">
+                         src="https://idleon.wiki/wiki/images/thumb/5/5e/Console_Jewel_Amethyst_Rhinestone.png/54px-Console_Jewel_Amethyst_Rhinestone.png">
                   </td>
                   <td>
                     <label for="lab_amethyst_rhinestone">Amethyst Rhinestone</label>
@@ -404,7 +366,7 @@
                 <tr>
                   <td>
                     <img
-                      src="https://idleon.wiki/wiki/images/thumb/a/aa/Console_Jewel_Purple_Navette.png/54px-Console_Jewel_Purple_Navette.png">
+                         src="https://idleon.wiki/wiki/images/thumb/a/aa/Console_Jewel_Purple_Navette.png/54px-Console_Jewel_Purple_Navette.png">
                   </td>
                   <td>
                     <label for="lab_purple_navette">Purple Navette</label>
@@ -419,7 +381,7 @@
                 <tr>
                   <td>
                     <img
-                      src="https://idleon.wiki/wiki/images/thumb/e/e6/Console_Jewel_Purple_Rhombol.png/54px-Console_Jewel_Purple_Rhombol.png">
+                         src="https://idleon.wiki/wiki/images/thumb/e/e6/Console_Jewel_Purple_Rhombol.png/54px-Console_Jewel_Purple_Rhombol.png">
                   </td>
                   <td>
                     <label for="lab_purple_rhombol">Purple Rhombol</label>
@@ -434,7 +396,7 @@
                 <tr>
                   <td>
                     <img
-                      src="https://idleon.wiki/wiki/images/thumb/1/15/Console_Jewel_Emerald_Pyramite.png/54px-Console_Jewel_Emerald_Pyramite.png">
+                         src="https://idleon.wiki/wiki/images/thumb/1/15/Console_Jewel_Emerald_Pyramite.png/54px-Console_Jewel_Emerald_Pyramite.png">
                   </td>
                   <td>
                     <label for="lab_emerald_pyramite">Emerald Pyramite</label>
@@ -449,7 +411,7 @@
                 <tr>
                   <td>
                     <img
-                      src="https://idleon.wiki/wiki/images/thumb/5/5b/Console_Jewel_Black_Diamond_Ulthurite.png/54px-Console_Jewel_Black_Diamond_Ulthurite.png">
+                         src="https://idleon.wiki/wiki/images/thumb/5/5b/Console_Jewel_Black_Diamond_Ulthurite.png/54px-Console_Jewel_Black_Diamond_Ulthurite.png">
                   </td>
                   <td>
                     <label for="lab_black_diamond_rhinestone_active">Black Diamond Rhinestone</label>
@@ -464,7 +426,7 @@
                 <tr>
                   <td>
                     <img
-                      src="https://idleon.wiki/wiki/images/thumb/9/9a/Console_Jewel_Pure_Opal_Navette.png/54px-Console_Jewel_Pure_Opal_Navette.png">
+                         src="https://idleon.wiki/wiki/images/thumb/9/9a/Console_Jewel_Pure_Opal_Navette.png/54px-Console_Jewel_Pure_Opal_Navette.png">
                   </td>
                   <td>
                     <label for="lab_pure_opal_navette_active">Pure Opal Navette</label>
@@ -479,7 +441,7 @@
                 <tr>
                   <td>
                     <img
-                      src="https://idleon.wiki/wiki/images/thumb/f/f8/Console_Jewel_Pure_Opal_Rhombol.png/54px-Console_Jewel_Pure_Opal_Rhombol.png">
+                         src="https://idleon.wiki/wiki/images/thumb/f/f8/Console_Jewel_Pure_Opal_Rhombol.png/54px-Console_Jewel_Pure_Opal_Rhombol.png">
                   </td>
                   <td>
                     <label for="lab_pure_opal_rhombol_active">Pure Opal Rhombol</label>
@@ -493,37 +455,18 @@
                 </tr>
               </table>
 
-
             </div>
           </div>
 
-
-
         </div>
-
 
       </div>
     </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     <div id="tab-world5" style="display:none;">
 
       <div id="tabs-world5-features"
-        class="ui-tabs ui-widget ui-corner-all ui-widget-content ui-tabs-collapsible jquerytabs">
+           class="ui-tabs ui-widget ui-corner-all ui-widget-content ui-tabs-collapsible jquerytabs">
         <ul class="ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header">
           <li class="ui-tabs-tab"><a href="#tab-world5-sailing" class="ui-tabs-anchor">
               <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/b/ba/Sailing_Skill_Icon.png" />Sailing
@@ -551,31 +494,12 @@
         </div>
       </div>
 
-
     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     <div id="tab-world6" style="display:none;">
 
       <div id="tabs-world6-features"
-        class="ui-tabs ui-widget ui-corner-all ui-widget-content ui-tabs-collapsible jquerytabs">
+           class="ui-tabs ui-widget ui-corner-all ui-widget-content ui-tabs-collapsible jquerytabs">
         <ul class="ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header">
           <li class="ui-tabs-tab"><a href="#tab-world6-farming" class="ui-tabs-anchor">
               <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/8/82/Farming_Skill_Icon.png" />Farming
@@ -583,12 +507,12 @@
           </li>
           <li class="ui-tabs-tab"><a href="#tab-world6-sneaking" class="ui-tabs-anchor">
               <img class="collapsible_icon"
-                src="https://idleon.wiki/wiki/images/9/97/Sneaking_Skill_Icon.png" />Sneaking
+                   src="https://idleon.wiki/wiki/images/9/97/Sneaking_Skill_Icon.png" />Sneaking
             </a>
           </li>
           <li class="ui-tabs-tab"><a href="#tab-world6-summoning" class="ui-tabs-anchor">
               <img class="collapsible_icon"
-                src="https://idleon.wiki/wiki/images/b/bc/Summoning_Skill_Icon.png" />Summoning
+                   src="https://idleon.wiki/wiki/images/b/bc/Summoning_Skill_Icon.png" />Summoning
             </a>
           </li>
         </ul>
@@ -619,13 +543,7 @@
         </div>
       </div>
 
-
-
     </div>
-
-
-
-
 
     <div id="tab-general" style="display:none;">
 
@@ -649,7 +567,6 @@
           <li><a href="#tab-general-arcade">
               Arcade
             </a></li>
-
 
         </ul>
 
@@ -705,10 +622,7 @@
     </div>
   </div>
 
-
-
   </div>
-
 
   <h2> Results: </h2>
   <div>
@@ -724,24 +638,12 @@
     NMLB days needed: <span id="NMLB_needed"></span> (<span id="NMLB_needed_percent"></span>%)
   </div>
 
-
   <!-- <div style="text-align:center"> -->
   <h3>Upgrade order</h3>
   <button id="remove_meal_upgrade" onclick="remove_meal_upgrade()">Upgrade first meal</button>
   <!-- </div> -->
   <table id="meal_upgrade_order">
   </table>
-
-
-
-
-
-
-  <script type="text/javascript">
-    // createMealTable();
-    // createKitchenTable();
-    // lookIntoLocalStorage();
-  </script>
 
 </body>
 

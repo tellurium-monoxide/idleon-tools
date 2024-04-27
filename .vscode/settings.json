@@ -1,5 +1,8 @@
 {
     "editor.codeLens": false,
     "git.timeline.showAuthor": true,
-    "git.decorations.enabled": false
+    "git.decorations.enabled": false,
+    "html.format.maxPreserveNewLines": 1,
+    "html.format.wrapAttributes": "aligned-multiple",
+    "html.format.wrapLineLength": 120
 }
