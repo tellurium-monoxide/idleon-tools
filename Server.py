@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-#test on python 3.4 ,python of lower version  has different module organization.
+#test on python 3.4 ,python of lower version has different module organization.
 import http.server
-from http.server import HTTPServer, BaseHTTPRequestHandler
-import socketserver
+
 
 PORT = 8000
 
@@ -14,16 +13,17 @@ def run():
             '.manifest': 'text/cache-manifest',
             '.html': 'text/html',
             '.png': 'image/png',
-      '.jpg': 'image/jpg',
-      '.svg': 'image/svg+xml',
-      '.css': 'text/css',
-      # '.js':  'application/x-javascript',
-      '.js':  'text/javascript',
-      '': 'application/octet-stream', # Default
+            '.jpg': 'image/jpg',
+            '.svg': 'image/svg+xml',
+            '.css': 'text/css',
+            # '.js':  'application/x-javascript',
+            '.js':  'application/javascript',
+            '': 'application/octet-stream', # Default
         }
     
-    with socketserver.TCPServer(("", PORT), Handler) as httpd:
+    with http.server.HTTPServer(("", PORT), Handler) as httpd:
         print("serving at port", PORT)
+        print("address", httpd.server_name)
         httpd.serve_forever()
 
 
