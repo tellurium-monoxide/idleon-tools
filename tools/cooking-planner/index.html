@@ -85,20 +85,21 @@
 
     </p>
     <p>
-      After modifying the inputs, you can redo the calculations wiht the button "Compute from inputs" below.
+      After modifying the inputs, you can redo the calculations with the button "Compute from inputs" below.
     </p>
 
   </div>
   <label for="name">Enter your <a href="https://www.idleonefficiency.com/raw-data" target="_blank">IE save data</a>
     here:</label>
   <input type="text" id="raw_data" name="name" />
-  <button id="enter data" onclick="onSubmit()">Enter</button>
+  <button id="enter_save_data" onclick="onSubmit()">Enter</button>
+  <button id="clear_save_data" onclick="onClear()">Clear</button>
 
-  <div>
-    <button id="enter data" onclick="computeFromInputForm()">Compute order from inputs</button>
-  </div>
+
   <h2> Inputs: </h2>
-
+  <div>
+    <button id="use_inputs" onclick="computeFromInputForm()">Compute from inputs</button>
+  </div>
 
 
   <div id="tabs-global" class="ui-tabs ui-widget ui-corner-all ui-widget-content ui-tabs-collapsible">

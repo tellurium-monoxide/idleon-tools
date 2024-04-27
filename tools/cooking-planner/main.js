@@ -871,6 +871,10 @@ async function onSubmit() {
   }
 }
 
+function onClear() {
+  document.querySelector("#raw_data").value = ""
+}
+
 function lookIntoLocalStorage() {
   const raw_data = localStorage.getItem("IEsaveData");
 
