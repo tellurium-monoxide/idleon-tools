@@ -1,3 +1,18 @@
+h2 {
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+h3 {
+  margin-top: 2rem;
+}
+
+/* .input-group,
+input.test-value-input {
+  max-width: 250px;
+} */
+
 label {
   display: block;
   font:

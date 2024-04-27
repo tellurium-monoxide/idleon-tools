@@ -3,12 +3,16 @@
 
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>IdleOn Cooking Planner</title>
   <link rel="icon" href="https://idleon.wiki/wiki/images/8/87/Cooking_Skill_Icon.png">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+
+  <script src="../../external/bootstrap-input-spinner/InputSpinner.js"></script>
 
   <script src="./modules/utils.js"></script>
   <script src="./modules/CookingData.js"></script>
@@ -63,6 +67,11 @@
         $("#tab_header_world4_cooking").click();
         $("#tab_header_cooking_ladles").click();
       });
+
+      const inputSpinnerElements = document.querySelectorAll("input[type='number']")
+      for (const inputSpinnerElement of inputSpinnerElements) {
+        new InputSpinner(inputSpinnerElement)
+      }
     });
   </script>
 
