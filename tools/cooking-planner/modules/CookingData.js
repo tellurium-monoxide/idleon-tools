@@ -203,7 +203,7 @@ class CookingData {
 
         // merit shop
         let merit_levels = JSON.parse(save_data["TaskZZ2"])
-        this.merit_world6_summoning_bonus = merit_levels[5][4]
+        this.merit_world6_summoning_bonus_lvl = merit_levels[5][4]
 
         // achieve
         let achieve_data = JSON.parse(save_data["AchieveReg"])
@@ -329,7 +329,7 @@ class CookingData {
         this.star_sign_chip_doubler_active = document.getElementById(`star_sign_chip_doubler_active`).checked
 
         // merit shop
-        this.merit_world6_summoning_bonus = Number(document.getElementById(`merit_world6_summoning_bonus`).value)
+        this.merit_world6_summoning_bonus_lvl = Number(document.getElementById(`merit_world6_summoning_bonus`).value)
 
         // achieve
         this.achiev_cabbage_patch = document.getElementById(`achiev_cabbage_patch`).checked
@@ -357,11 +357,10 @@ class CookingData {
 
         // this needs to be computed first as lab affects nearly everything
         // TODO: pure opal navette seems to apply to itself... unsure about that, but it at least applies visually in lab
-        this.lab_jewel_effect = (
-            1
+        this.lab_jewel_effect = 1
             + 0.5 * this.lab_spelunkerobol_active
             + 0.1 * this.lab_pure_opal_navette_active * (1 + 0.5 * this.lab_spelunkerobol_active)
-        )
+
 
         // TODO : take active bonus effect into account. actually doesn't seem to apply in game, or is not shown
         this.lab_bonus_effect = (1 + 0.1 * this.lab_pure_opal_navette_active * (1 + 0.5 * this.lab_spelunkerobol_active))
@@ -396,7 +395,7 @@ class CookingData {
         // world 4
 
         this.meal_efficiency = 1
-            + 0.16 * this.lab_black_diamond_rhinestone_active * (1 + 0.5 * this.lab_spelunkerobol_active)
+            + 0.16 * this.lab_black_diamond_rhinestone_active * this.lab_jewel_effect
             + 0.01 * (this.shiny_lvl_red_mush + this.shiny_lvl_sheepie)
 
 
@@ -415,6 +414,7 @@ class CookingData {
             * (this.lab_jewel_effect)
             * (kitchen_total_levels / 25)
 
+        this.depot_studies_phd_bonus = (1 + this.lab_depot_studies_phd * (0.3 + 0.1 * this.lab_pure_opal_rhombol_active * this.lab_jewel_effect))
         // world 5
         // sailing
         // gaming
@@ -422,24 +422,25 @@ class CookingData {
 
         // world 6
         // farming
-        this.crop_depot_bonus = Math.pow(1.1, this.crop_acquired)
-            * (1 + this.lab_depot_studies_phd * (0.3 + 0.1 * this.lab_pure_opal_rhombol_active * this.lab_jewel_effect))
+        this.crop_depot_bonus = Math.pow(1.1, this.crop_acquired) * this.depot_studies_phd_bonus
 
+
+        console.log(this.crop_depot_bonus)
 
         // sneaking
         // summoning
         this.summon_bonus_mult = (1 + 0.3 * this.pristine_crystal_comb_obtained)
             * (1
                 + 0.25 * this.artifact_winz_lantern_lvl
-                + 0.01 * this.merit_world6_summoning_bonus
+                + 0.01 * this.merit_world6_summoning_bonus_lvl
                 + 0.01 * this.achiev_spectre_stars
                 + 0.01 * this.achiev_regalis_my_beloved
             )
 
 
         this.summon_cooking_bonus = 1 + (this.summon_battle_mushP * 1.75 * this.summon_bonus_mult)
-
         // console.log(this.summon_cooking_bonus)
+
         // general
         // classes
         this.blood_marrow_bonus = (this.voidwalker_blood_marrow_lvl * 2.1 / 100) / (this.voidwalker_blood_marrow_lvl + 220);
@@ -521,7 +522,7 @@ class CookingData {
         document.getElementById(`lab_certified_stamp_book`).checked = this.lab_certified_stamp_book
         document.getElementById(`lab_spelunkerobol_active`).checked = this.lab_spelunkerobol_active
         document.getElementById(`lab_depot_studies_phd`).checked = this.lab_depot_studies_phd
-        document.getElementById(`lab_depot_studies_phd_bonus`).innerText = `x${(1 + (0.3 + 0.1 * this.lab_pure_opal_rhombol_active * this.lab_jewel_effect)).toFixed(2)} to crop depot bonuses`
+        document.getElementById(`lab_depot_studies_phd_bonus`).innerText = `x${(this.depot_studies_phd_bonus).toFixed(2)} to crop depot bonuses`
         document.getElementById(`lab_vial_doubling`).checked = this.lab_vial_doubling
 
         // world 5
@@ -555,7 +556,7 @@ class CookingData {
         document.getElementById(`star_sign_seraph_cosmos`).checked = this.star_sign_seraph_cosmos
         document.getElementById(`star_sign_chip_doubler_active`).checked = this.star_sign_chip_doubler_active
         // merit shop
-        document.getElementById(`merit_world6_summoning_bonus`).value = this.merit_world6_summoning_bonus
+        document.getElementById(`merit_world6_summoning_bonus`).value = this.merit_world6_summoning_bonus_lvl
         // achieve
         document.getElementById(`achiev_cabbage_patch`).checked = this.achiev_cabbage_patch
         document.getElementById(`achiev_pretzel_bleu`).checked = this.achiev_pretzel_bleu
