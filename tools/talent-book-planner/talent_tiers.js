@@ -18,22 +18,28 @@ const TALENT_TIERS = [
         }
 
     },
-    // tier 2
+
     {
-        "purpose": "Vman account wide boosts, supplements to last tier",
+        "purpose": "Vman account wide boosts",
         "list": {
             "BLOOD_MARROW": { purpose: "Cooking speed", max_count_needed: 1 },
             "MASTER_OF_THE_SYSTEM": { purpose: "Multikill per tier", max_count_needed: 1 },
             "SPECIES_EPOCH": { purpose: "Trap/worship gains", max_count_needed: 1 },
             "VOODOO_STATUFICATION": { purpose: "boosts about everything", max_count_needed: 1 },
-            "ONE_STEP_AHEAD": { purpose: "Helps level vman talents" },
-            "SYMBOLS_OF_BEYOND_~P": { purpose: "Everything for mage (wormhole/cranium mostly)" },
-            "SYMBOLS_OF_BEYOND_~R": { purpose: "Everything for warriors (DK orb mostly)" },
-
         }
 
     },
-    // tier 3
+    {
+        "purpose": "Generally useful buffs",
+        "list": {
+            "ONE_STEP_AHEAD": { purpose: "Helps level vman talents" },
+            "SYMBOLS_OF_BEYOND_~P": { purpose: "Everything for mage (wormhole/cranium mostly)" },
+            "SYMBOLS_OF_BEYOND_~R": { purpose: "Everything for warriors (DK orb mostly)" },
+            "STAR_PLAYER": { purpose: "Star talent points, generally useful" },
+        }
+
+    },
+
     {
         "purpose": "Skilling bonus effective immediately",
         "list": {
@@ -41,6 +47,7 @@ const TALENT_TIERS = [
             "EAGLE_EYE": { purpose: "Trapping gains" },
             "REDOX_RATES": { purpose: "Construction speed" },
             "SHARPER_SAWS": { purpose: "Construction exp" },
+            "TEMPESTUOUS_EMOTIONS": { purpose: "Construction exp, DK only (maybe?)" },
         }
 
     },
@@ -73,6 +80,7 @@ const TALENT_TIERS = [
             "COPPER_COLLECTOR": { purpose: "Mining samples" },
             "TOOL_PROFICIENCY": { purpose: "Mining samples" },
             "'STR'ESS_TESTED_GARB": { purpose: "Mining samples" },
+            "HAUNGRY_FOR_GOLD": { purpose: "Mining samples" },
         }
 
     },
@@ -83,6 +91,9 @@ const TALENT_TIERS = [
             "SHARPENED_AXE": { purpose: "damage" },
             "GILDED_SWORD": { purpose: "damage" },
             "WORMHOLE_EMPEROR": { purpose: "damage" },
+            "STRENGTH_IN_NUMBERS": { purpose: "damage" },
+            "CARRY_A_BIG_STICK": { purpose: "damage" },
+            "ABSOLUTE_UNIT": { purpose: "damage" },
         }
 
     },
