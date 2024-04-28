@@ -121,6 +121,26 @@ class AccountBookingStatus {
         let max_tier = TALENT_TIERS.length
         let tiered_talents = Array.from({ length: max_tier + 1 }, () => ([]));
 
+        let talents_at_max_book = {}
+        // iterate all players
+        for (let playerId = 0; playerId < this.players.length; playerId++) {
+
+            let player = this.players[playerId]
+
+            // iterate all talents of the player
+            for (let talent_page of player.subclasses) {
+                for (let talent of Object.entries(TALENTS[talent_page])) {
+                    talents_at_max_book[talent[1].name] = talents_at_max_book[talent[1].name] ? talents_at_max_book[talent[1].name] : 0
+                    let current_max_level = player.skill_max_levels[talent[1].skillIndex]
+                    if (current_max_level == this.max_book_level) {
+
+                        talents_at_max_book[talent[1].name] += 1
+                    }
+                }
+            }
+        }
+
+        console.log(talents_at_max_book)
         // iterate all players
         for (let playerId = 0; playerId < this.players.length; playerId++) {
 
@@ -131,22 +151,26 @@ class AccountBookingStatus {
                 for (let talent of Object.entries(TALENTS[talent_page])) {
                     let current_level = player.skill_max_levels[talent[1].skillIndex]
                     if (current_level < this.max_book_level && !TALENT_UNBOOKABLE.includes(talent[1].name)) {
-                        // iterate tiers and see if
+                        // iterate tiers
                         let has_tier = false
                         for (let tier = 0; tier < max_tier; tier++) {
                             let talent_list = TALENT_TIERS[tier].list
                             // console.log(talent_list)
                             // console.log(talent[1].name)
                             if (talent_list.hasOwnProperty(talent[1].name)) {
-                                has_tier = true
-                                tiered_talents[tier].push({
-                                    "char": playerId,
-                                    "charname": player.name,
-                                    "class": talent_page,
-                                    "talent": talent[1].name,
-                                    "level": current_level,
-                                    "purpose": talent_list[talent[1].name]
-                                })
+                                let needed = talent_list[talent[1].name].max_count_needed
+                                if (!needed || talents_at_max_book[talent[1].name] < needed) {
+                                    has_tier = true
+                                    tiered_talents[tier].push({
+                                        "char": playerId,
+                                        "charname": player.name,
+                                        "class": talent_page,
+                                        "talent": talent[1].name,
+                                        "talentId": talent[1].skillIndex,
+                                        "level": current_level,
+                                        "purpose": talent_list[talent[1].name].purpose
+                                    })
+                                }
                             }
 
                         }
@@ -156,8 +180,9 @@ class AccountBookingStatus {
                                 "charname": player.name,
                                 "class": talent_page,
                                 "talent": talent[1].name,
+                                "talentId": talent[1].skillIndex,
                                 "level": current_level,
-                                "purpose": "Bad or not yet added to a tier"
+                                "purpose": ""
                             })
                         }
                     }
@@ -176,7 +201,7 @@ class AccountBookingStatus {
         tabs.find("div").remove();
         tabs.find("li").remove();
         for (let tier = 0; tier < max_tier + 1; tier++) {
-
+            tiered_talents[tier].sort((a, b) => a.purpose > b.purpose)
 
             if (tiered_talents[tier].length > 0) {
                 // add tier tab
@@ -186,6 +211,9 @@ class AccountBookingStatus {
                 let content = ""
                 if (tier < max_tier) {
                     content += `${TALENT_TIERS[tier].purpose}`
+
+                } else {
+                    content += `Bad or not yet added to a tier or not needed because maxed on another char`
                 }
                 content += `<table class="tiered_talents">`
                 content += `<tr>`
@@ -202,7 +230,7 @@ class AccountBookingStatus {
                     content += `<td>${(upgrade.talent)}</td>`
                     content += `<td>${capEachWord(upgrade.talent)}</td>`
                     content += `<td>${upgrade.charname} (n°${upgrade.char + 1})</td>`
-                    content += `<td>${upgrade.class}</td>`
+                    content += `<td>${capEachWord(upgrade.class)}</td>`
                     content += `<td>${upgrade.purpose}</td>`
                     content += `<td>${upgrade.level}/${this.max_book_level}</td>`
                     content += `</tr>`
