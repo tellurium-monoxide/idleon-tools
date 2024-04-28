@@ -190,7 +190,7 @@ class AccountBookingStatus {
                 content += `<th>Character</th>`
                 content += `<th>Talent tab</th>`
                 content += `<th>Purpose</th>`
-                content += `<th>Level</th>`
+                content += `<th>Max Level</th>`
                 content += `</tr>`
 
                 for (let upgrade of tiered_talents[tier]) {
