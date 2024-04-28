@@ -10,6 +10,9 @@ const TALENT_TIERS = [
             "PRINTER_GO_BRRR": "More prints",
             "DIMENSIONAL_WORMHOLE": "Active rare drop farm. See also all ES damage bonus",
             "ARCHLORD_OF_THE_PIRATES": "DR multi",
+            "VOID_TRIAL_RERUN": "vman speedrun / sampling",
+            "VOID_RADIUS": "vman speedrun / sampling",
+            "BOSSING_VAIN": "vman speedrun / sampling",
         }
 
     },
@@ -34,6 +37,7 @@ const TALENT_TIERS = [
             "UNT'WIS'TED_ROBES": "Wood samples / damage for ES / int of bubo money gains",
             "RIGHT_HAND_OF_ACTION": "global efficiency",
             "ACTIVE_AFK'ER": "Wood samples",
+            "ETERNAL_WIS": "Wood samples",
         }
 
     },
