@@ -183,6 +183,7 @@ class AccountBookingStatus {
                 let li = `<li><a href='#tab_tier${tier}'>${tier_name}</a> </li>`
 
                 let content = ""
+                content += `${TALENT_TIERS[tier].purpose}`
                 content += `<table class="tiered_talents">`
                 content += `<tr>`
                 content += `<th>Icon</th>`
