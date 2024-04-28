@@ -110,6 +110,7 @@ class AccountBookingStatus {
         let max_lvl = player.skill_max_levels[talent.skillIndex]
         let cur_lvl = player.skill_current_levels[talent.skillIndex]
         let display_class = (max_lvl == this.max_book_level) ? "completed" : ""
+        display_class = (TALENT_UNBOOKABLE.includes(talent.name)) ? "unbookable" : display_class
         display += `<div class="talent_display ${display_class}">${icon_display}<br> ${cur_lvl}/${max_lvl}</div>`
         return display
     }
@@ -129,7 +130,7 @@ class AccountBookingStatus {
             for (let talent_page of player.subclasses) {
                 for (let talent of Object.entries(TALENTS[talent_page])) {
                     let current_level = player.skill_max_levels[talent[1].skillIndex]
-                    if (current_level < this.max_book_level) {
+                    if (current_level < this.max_book_level && !TALENT_UNBOOKABLE.includes(talent[1].name)) {
                         // iterate tiers and see if
                         let has_tier = false
                         for (let tier = 0; tier < max_tier; tier++) {
