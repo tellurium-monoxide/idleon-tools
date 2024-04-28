@@ -20,6 +20,7 @@ class AccountBookingStatus {
 
 
             this.players[i]["skill_max_levels"] = JSON.parse(save_data[`SM_${i}`]); // SM for max; SL and SLpre for currents
+            this.players[i]["skill_current_levels"] = JSON.parse(save_data[`SL_${i}`]); // SM for max; SL and SLpre for currents
 
 
 
@@ -106,8 +107,10 @@ class AccountBookingStatus {
         let icon = TALENT_ICONS[talent.name]
         let icon_display = icon ? `<img src=${icon}/>` : (talent.name)
         // let icon_display = icon ? `<img src=${icon}/>` : capEachWord(talent.name)
-        let display_class = (player.skill_max_levels[talent.skillIndex] == this.max_book_level) ? "completed" : ""
-        display += `<div class="talent_display ${display_class}">${icon_display}<br> ${player.skill_max_levels[talent.skillIndex]}</div>`
+        let max_lvl = player.skill_max_levels[talent.skillIndex]
+        let cur_lvl = player.skill_current_levels[talent.skillIndex]
+        let display_class = (max_lvl == this.max_book_level) ? "completed" : ""
+        display += `<div class="talent_display ${display_class}">${icon_display}<br> ${cur_lvl}/${max_lvl}</div>`
         return display
     }
 
