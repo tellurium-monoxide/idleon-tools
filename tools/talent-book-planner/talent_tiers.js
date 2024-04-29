@@ -53,7 +53,7 @@ const TALENT_TIERS = [
     },
     // tier 4
     {
-        "purpose": "Wood samples mostly, not max_count_needed until you need to resample",
+        "purpose": "Wood samples mostly, not needed until you need to resample",
         "list": {
             "SMART_EFFICIENCY": { purpose: "Wood samples" },
             "LOG_ON_LOGS": { purpose: "Wood samples" },
@@ -73,7 +73,7 @@ const TALENT_TIERS = [
     },
     // tier 5
     {
-        "purpose": "Mining samples mostly, not max_count_needed until you need to resample",
+        "purpose": "Mining samples mostly, not needed until you need to resample",
         "list": {
             "BRUTE_EFFICIENCY": { purpose: "Mining samples" },
             "BIG_PICK": { purpose: "Mining samples" },
