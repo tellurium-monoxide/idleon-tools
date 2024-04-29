@@ -74,23 +74,24 @@
     <button id="clear_save_data" onclick="onClear()">Clear</button>
 
     <h2>Talent upgrade list</h2>
-    <div id="tabs-talent-upgrade-list" class="jquerytabs">
-      <ul>
+    <div id="tabs-talent-upgrade-list"
+         class="jquerytabs ui-tabs ui-widget ui-corner-all ui-widget-content ui-tabs-collapsible">
+      <ul class="ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header">
 
-        <li>
-          <a href="#tab-by-tier">
+        <li class="ui-tabs-tab">
+          <a href="#tab-by-tier" class="ui-tabs-anchor">
             By Tier
           </a>
         </li>
-        <li>
-          <a href="#tab-by-char">
+        <li class="ui-tabs-tab">
+          <a href="#tab-by-char" class="ui-tabs-anchor">
             By Character
           </a>
         </li>
 
       </ul>
 
-      <div id="tab-by-tier">
+      <div id="tab-by-tier" class="ui-tabs-panel ui-corner-bottom ui-widget-content">
 
         <div id="tabs-talents-by-tier" class="jquerytabs">
           <ul id="tabs-talents-by-tier-nav">
@@ -100,7 +101,7 @@
         </div>
 
       </div>
-      <div id="tab-by-char">
+      <div id="tab-by-char" style="display:none;">
         Not done yet.
       </div>
 
