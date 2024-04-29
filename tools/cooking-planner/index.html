@@ -6,7 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>IdleOn Cooking Planner</title>
   <link rel="icon" href="https://idleon.wiki/wiki/images/8/87/Cooking_Skill_Icon.png">
+
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="../../css/topnav.css">
+
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
@@ -52,599 +55,611 @@
 
 <body>
 
-  <h1>IdleOn Cooking Planner</h1>
-  <h2> How to use? </h2>
-  <div>
-    <p>
-      This tool will give you the best order to upgrade meals, and give you an estimated time to complete cooking (all
-      meals level max).
-    </p>
-    <p>
-      Start by pasting your Idleon Efficiency save data below and click the button. This will fill the input fields, do
-      the calculations and display the meal upgrade order. </p>
-    <p>
-      Then you can manually alter the content of the "Inputs" section, to simulate different stats. To estimate the
-      time, the tool uses your ladles / day production, which is set by default to 10 000 (around what endgamers get).
-      Change this to have a result closer to your real situation. This option is located in
-      <button class="link" id="to_ladle_tab">Inputs > World 4 > Cooking > Ladles.</button>
+  <ul class="navbar">
+    <li><a href="../../index.html">Tools</a></li>
+    <li class="active"><a href="../cooking-planner/index.html">Cooking Planner</a></li>
+    <li><a href="../talent-book-planner/index.html">Talent Planner</a></li>
+    <li style="float:right">
+      <a href="https://github.com/tellurium-monoxide/idleon-tools" target="_blank">Git Repo</a>
+    </li>
+  </ul>
+  <div class="main">
+    <h1>IdleOn Cooking Planner</h1>
+    <h2> How to use? </h2>
+    <div>
+      <p>
+        This tool will give you the best order to upgrade meals, and give you an estimated time to complete cooking (all
+        meals level max).
+      </p>
+      <p>
+        Start by pasting your Idleon Efficiency save data below and click the button. This will fill the input fields,
+        do
+        the calculations and display the meal upgrade order. </p>
+      <p>
+        Then you can manually alter the content of the "Inputs" section, to simulate different stats. To estimate the
+        time, the tool uses your ladles / day production, which is set by default to 10 000 (around what endgamers get).
+        Change this to have a result closer to your real situation. This option is located in
+        <button class="link" id="to_ladle_tab">Inputs > World 4 > Cooking > Ladles.</button>
 
-    </p>
-    <p>
-      After modifying the inputs, you can redo the calculations with the button "Compute from inputs" below.
-    </p>
+      </p>
+      <p>
+        After modifying the inputs, you can redo the calculations with the button "Compute from inputs" below.
+      </p>
 
-  </div>
-  <label for="name">Enter your <a href="https://www.idleonefficiency.com/raw-data" target="_blank">IE save data</a>
-    here:</label>
-  <input type="text" id="raw_data" name="name"
-         title="Tip: Your last entered save data is saved in your browser local storage for the next time you access the page." />
-  <button id="enter_save_data" onclick="onSubmit()">Enter</button>
-  <button id="clear_save_data" onclick="onClear()">Clear</button>
+    </div>
+    <label for="name">Enter your <a href="https://www.idleonefficiency.com/raw-data" target="_blank">IE save data</a>
+      here:</label>
+    <input type="text" id="raw_data" name="name"
+           title="Tip: Your last entered save data is saved in your browser local storage for the next time you access the page." />
+    <button id="enter_save_data" onclick="onSubmit()">Enter</button>
+    <button id="clear_save_data" onclick="onClear()">Clear</button>
 
-  <h2> Inputs: </h2>
-  <div>
-    <button id="use_inputs" onclick="computeFromInputForm()">Compute from inputs</button>
-  </div>
-
-  <div id="tabs-global" class="ui-tabs ui-widget ui-corner-all ui-widget-content ui-tabs-collapsible">
-    <ul class="ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header">
-      <li class="ui-tabs-tab">
-        <a href="#tab-world1" class="ui-tabs-anchor">
-          <img class="collapsible_icon_world" src="https://idleon.wiki/wiki/images/f/f7/Wb1.png" />
-        </a>
-      </li>
-      <li>
-        <a href="#tab-world2" class="ui-tabs-anchor">
-          <img class="collapsible_icon_world" src="https://idleon.wiki/wiki/images/c/c7/Wb2.png" />
-        </a>
-      </li>
-      <li>
-        <a href="#tab-world3" class="ui-tabs-anchor">
-          <img class="collapsible_icon_world" src="https://idleon.wiki/wiki/images/a/ae/Wb3.png" />
-        </a>
-      </li>
-      <li>
-        <a href="#tab-world4" class="ui-tabs-anchor" id="tab_header_world4">
-          <img class="collapsible_icon_world" src="https://idleon.wiki/wiki/images/5/55/Wb4.png" />
-        </a>
-      </li>
-      <li>
-        <a href="#tab-world5" class="ui-tabs-anchor">
-          <img class="collapsible_icon_world" src="https://idleon.wiki/wiki/images/3/33/Wb5.png" />
-        </a>
-      </li>
-      <li>
-        <a href="#tab-world6" class="ui-tabs-anchor">
-          <img class="collapsible_icon_world" src="https://idleon.wiki/wiki/images/6/6d/Wb6.png" />
-        </a>
-      </li>
-      <li>
-        <a href="#tab-general" class="ui-tabs-anchor">General</a>
-      </li>
-    </ul>
-
-    <div id="tab-world1" class="ui-tabs-panel ui-corner-bottom ui-widget-content">
-
-      <div id="tabs-world1-features"
-           class="ui-tabs ui-widget ui-corner-all ui-widget-content ui-tabs-collapsible jquerytabs">
-        <ul class="ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header">
-          <li class="ui-tabs-tab">
-            <a href="#tabs-world1-stamps" class="ui-tabs-anchor">
-              <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/7/71/Mr_Pigibank.gif" />Stamps
-            </a>
-          </li>
-        </ul>
-        <div id="tabs-world1-stamps" class="ui-tabs-panel ui-corner-bottom ui-widget-content">
-
-          <label for="stamp_cooked_meal_lvl">stamp_cooked_meal_lvl:</label>
-          <input type="number" id="stamp_cooked_meal_lvl" min="0" />
-
-        </div>
-      </div>
+    <h2> Inputs: </h2>
+    <div>
+      <button id="use_inputs" onclick="computeFromInputForm()">Compute from inputs</button>
     </div>
 
-    <div id="tab-world2" style="display:none;">
+    <div id="tabs-global" class="ui-tabs ui-widget ui-corner-all ui-widget-content ui-tabs-collapsible">
+      <ul class="ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header">
+        <li class="ui-tabs-tab">
+          <a href="#tab-world1" class="ui-tabs-anchor">
+            <img class="collapsible_icon_world" src="https://idleon.wiki/wiki/images/f/f7/Wb1.png" />
+          </a>
+        </li>
+        <li>
+          <a href="#tab-world2" class="ui-tabs-anchor">
+            <img class="collapsible_icon_world" src="https://idleon.wiki/wiki/images/c/c7/Wb2.png" />
+          </a>
+        </li>
+        <li>
+          <a href="#tab-world3" class="ui-tabs-anchor">
+            <img class="collapsible_icon_world" src="https://idleon.wiki/wiki/images/a/ae/Wb3.png" />
+          </a>
+        </li>
+        <li>
+          <a href="#tab-world4" class="ui-tabs-anchor" id="tab_header_world4">
+            <img class="collapsible_icon_world" src="https://idleon.wiki/wiki/images/5/55/Wb4.png" />
+          </a>
+        </li>
+        <li>
+          <a href="#tab-world5" class="ui-tabs-anchor">
+            <img class="collapsible_icon_world" src="https://idleon.wiki/wiki/images/3/33/Wb5.png" />
+          </a>
+        </li>
+        <li>
+          <a href="#tab-world6" class="ui-tabs-anchor">
+            <img class="collapsible_icon_world" src="https://idleon.wiki/wiki/images/6/6d/Wb6.png" />
+          </a>
+        </li>
+        <li>
+          <a href="#tab-general" class="ui-tabs-anchor">General</a>
+        </li>
+      </ul>
 
-      <div id="tabs-world2-features" class="ui-tabs ui-widget jquerytabs">
-        <ul class="ui-tabs-nav">
-          <li><a href="#tabs-world2-alch">
-              <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/a/a3/Alchemy_Skill_Icon.png" />Alchemy
-            </a></li>
-        </ul>
-        <div id="tabs-world2-alch">
+      <div id="tab-world1" class="ui-tabs-panel ui-corner-bottom ui-widget-content">
 
-          <label for="diamond_chef_lvl">diamond_chef_lvl:</label>
-          <input type="number" id="diamond_chef_lvl" min="0" />
-          <label for="max_level_vials">max_level_vials:</label>
-          <input type="number" id="max_level_vials" min="0" />
-          <label for="vial_level_turtle">vial_level_turtle:</label>
-          <input type="number" id="vial_level_turtle" min="0" max="13" />
-          <label for="vial_level_firefly">vial_level_firefly:</label>
-          <input type="number" id="vial_level_firefly" min="0" max="13" />
-          <label for="vial_level_sand_shark">vial_level_sand_shark:</label>
-          <input type="number" id="vial_level_sand_shark" min="0" max="13" />
-          <label for="vial_level_dreadlo">vial_level_dreadlo:</label>
-          <input type="number" id="vial_level_dreadlo" min="0" max="13" />
+        <div id="tabs-world1-features"
+             class="ui-tabs ui-widget ui-corner-all ui-widget-content ui-tabs-collapsible jquerytabs">
+          <ul class="ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header">
+            <li class="ui-tabs-tab">
+              <a href="#tabs-world1-stamps" class="ui-tabs-anchor">
+                <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/7/71/Mr_Pigibank.gif" />Stamps
+              </a>
+            </li>
+          </ul>
+          <div id="tabs-world1-stamps" class="ui-tabs-panel ui-corner-bottom ui-widget-content">
 
+            <label for="stamp_cooked_meal_lvl">stamp_cooked_meal_lvl:</label>
+            <input type="number" id="stamp_cooked_meal_lvl" min="0" />
+
+          </div>
         </div>
       </div>
 
-    </div>
+      <div id="tab-world2" style="display:none;">
 
-    <div id="tab-world3" style="display:none;">
+        <div id="tabs-world2-features" class="ui-tabs ui-widget jquerytabs">
+          <ul class="ui-tabs-nav">
+            <li><a href="#tabs-world2-alch">
+                <img class="collapsible_icon"
+                     src="https://idleon.wiki/wiki/images/a/a3/Alchemy_Skill_Icon.png" />Alchemy
+              </a></li>
+          </ul>
+          <div id="tabs-world2-alch">
 
-      <div id="tabs-world3-features"
-           class="ui-tabs ui-widget ui-corner-all ui-widget-content ui-tabs-collapsible jquerytabs">
-        <ul class="ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header">
-          <li class="ui-tabs-tab"><a href="#tabs-world3-atoms" class="ui-tabs-anchor">
-              <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/4/4e/Atoms.png" /> Atoms
-            </a>
-          </li>
-          <li class="ui-tabs-tab"><a href="#tabs-world3-worship" class="ui-tabs-anchor">
-              <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/5/54/Worship_Skill_Icon.png" />Worship
-            </a>
-          </li>
-        </ul>
-        <div id="tabs-world3-atoms" class="ui-tabs-panel ui-corner-bottom ui-widget-content">
+            <label for="diamond_chef_lvl">diamond_chef_lvl:</label>
+            <input type="number" id="diamond_chef_lvl" min="0" />
+            <label for="max_level_vials">max_level_vials:</label>
+            <input type="number" id="max_level_vials" min="0" />
+            <label for="vial_level_turtle">vial_level_turtle:</label>
+            <input type="number" id="vial_level_turtle" min="0" max="13" />
+            <label for="vial_level_firefly">vial_level_firefly:</label>
+            <input type="number" id="vial_level_firefly" min="0" max="13" />
+            <label for="vial_level_sand_shark">vial_level_sand_shark:</label>
+            <input type="number" id="vial_level_sand_shark" min="0" max="13" />
+            <label for="vial_level_dreadlo">vial_level_dreadlo:</label>
+            <input type="number" id="vial_level_dreadlo" min="0" max="13" />
 
-          <label for="void_plate_chef_lvl">void_plate_chef_lvl:</label>
-          <input type="number" id="void_plate_chef_lvl" min="0" max="30" />
-
+          </div>
         </div>
-        <div id="tabs-world3-worship" class="ui-tabs-panel ui-corner-bottom ui-widget-content">
 
-          <label for="total_waves">total_waves:</label>
-          <input type="number" id="total_waves" min="0" />
-
-        </div>
       </div>
 
-    </div>
+      <div id="tab-world3" style="display:none;">
 
-    <div id="tab-world4" style="display:none;">
-      <div id="tabs-world4-features" class="jquerytabs">
-        <ul>
-          <li><a href="#tab-world4-cooking" id="tab_header_world4_cooking">
-              <img class="collapsible_icon"
-                   src="https://idleon.wiki/wiki/images/thumb/1/11/Cooking_Ladle.png/54px-Cooking_Ladle.png" />Cooking
-            </a></li>
-          <li><a href="#tab-world4-breeding">
-              <img class="collapsible_icon"
-                   src="https://idleon.wiki/wiki/images/2/27/Breeding_Skill_Icon.png" />Breeding
-            </a></li>
-          <li><a href="#tab-world4-lab">
-              <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/b/b9/Laboratory_Skill_Icon.png" />Lab
-            </a></li>
-        </ul>
+        <div id="tabs-world3-features"
+             class="ui-tabs ui-widget ui-corner-all ui-widget-content ui-tabs-collapsible jquerytabs">
+          <ul class="ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header">
+            <li class="ui-tabs-tab"><a href="#tabs-world3-atoms" class="ui-tabs-anchor">
+                <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/4/4e/Atoms.png" /> Atoms
+              </a>
+            </li>
+            <li class="ui-tabs-tab"><a href="#tabs-world3-worship" class="ui-tabs-anchor">
+                <img class="collapsible_icon"
+                     src="https://idleon.wiki/wiki/images/5/54/Worship_Skill_Icon.png" />Worship
+              </a>
+            </li>
+          </ul>
+          <div id="tabs-world3-atoms" class="ui-tabs-panel ui-corner-bottom ui-widget-content">
 
-        <div id="tab-world4-cooking">
-          <div id="tabs-cooking" class="jquerytabs">
-            <ul>
-              <li><a href="#tab-cooking-ladles" id="tab_header_cooking_ladles">
-                  <img class="collapsible_icon"
-                       src="https://idleon.wiki/wiki/images/thumb/1/11/Cooking_Ladle.png/54px-Cooking_Ladle.png" />Ladles
-                </a></li>
-              <li><a href="#tab-cooking-meals">
-                  <img class="collapsible_icon"
-                       src="https://idleon.wiki/wiki/images/8/87/Cooking_Skill_Icon.png" />Meals
-                </a></li>
-              <li><a href="#tab-cooking-kitchen">
-                  <img class="collapsible_icon"
-                       src="https://idleon.wiki/wiki/images/1/10/Richelin_Kitchen.png" />Kitchens
-                </a></li>
-            </ul>
-            <div id="tab-cooking-ladles">
-              <label for="min_ladles_per_meal">Minimum amount ladles to be used at once (set higher if you do not want
-                to click too
-                much)</label>
-              <input type="number" id="min_ladles_per_meal" min="0" />
-              <label for="max_ladles_per_meal">Max amout of ladles to be used at once (if you do not want to spend to
-                much ladles at once)</label>
-              <input type="number" id="max_ladles_per_meal" min="0" />
-              <label for="ladles_owned">ladles owned</label>
-              <input type="number" id="ladles_owned" min="0" />
-              <label for="ladles_per_day">ladles gain per day</label>
-              <input type="number" id="ladles_per_day" min="0" />
+            <label for="void_plate_chef_lvl">void_plate_chef_lvl:</label>
+            <input type="number" id="void_plate_chef_lvl" min="0" max="30" />
+
+          </div>
+          <div id="tabs-world3-worship" class="ui-tabs-panel ui-corner-bottom ui-widget-content">
+
+            <label for="total_waves">total_waves:</label>
+            <input type="number" id="total_waves" min="0" />
+
+          </div>
+        </div>
+
+      </div>
+
+      <div id="tab-world4" style="display:none;">
+        <div id="tabs-world4-features" class="jquerytabs">
+          <ul>
+            <li><a href="#tab-world4-cooking" id="tab_header_world4_cooking">
+                <img class="collapsible_icon"
+                     src="https://idleon.wiki/wiki/images/thumb/1/11/Cooking_Ladle.png/54px-Cooking_Ladle.png" />Cooking
+              </a></li>
+            <li><a href="#tab-world4-breeding">
+                <img class="collapsible_icon"
+                     src="https://idleon.wiki/wiki/images/2/27/Breeding_Skill_Icon.png" />Breeding
+              </a></li>
+            <li><a href="#tab-world4-lab">
+                <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/b/b9/Laboratory_Skill_Icon.png" />Lab
+              </a></li>
+          </ul>
+
+          <div id="tab-world4-cooking">
+            <div id="tabs-cooking" class="jquerytabs">
+              <ul>
+                <li><a href="#tab-cooking-ladles" id="tab_header_cooking_ladles">
+                    <img class="collapsible_icon"
+                         src="https://idleon.wiki/wiki/images/thumb/1/11/Cooking_Ladle.png/54px-Cooking_Ladle.png" />Ladles
+                  </a></li>
+                <li><a href="#tab-cooking-meals">
+                    <img class="collapsible_icon"
+                         src="https://idleon.wiki/wiki/images/8/87/Cooking_Skill_Icon.png" />Meals
+                  </a></li>
+                <li><a href="#tab-cooking-kitchen">
+                    <img class="collapsible_icon"
+                         src="https://idleon.wiki/wiki/images/1/10/Richelin_Kitchen.png" />Kitchens
+                  </a></li>
+              </ul>
+              <div id="tab-cooking-ladles">
+                <label for="min_ladles_per_meal">Minimum amount ladles to be used at once (set higher if you do not want
+                  to click too
+                  much)</label>
+                <input type="number" id="min_ladles_per_meal" min="0" />
+                <label for="max_ladles_per_meal">Max amout of ladles to be used at once (if you do not want to spend to
+                  much ladles at once)</label>
+                <input type="number" id="max_ladles_per_meal" min="0" />
+                <label for="ladles_owned">ladles owned</label>
+                <input type="number" id="ladles_owned" min="0" />
+                <label for="ladles_per_day">ladles gain per day</label>
+                <input type="number" id="ladles_per_day" min="0" />
+              </div>
+
+              <div id="tab-cooking-meals">
+                <table id="meal_levels">
+                </table>
+              </div>
+
+              <div id="tab-cooking-kitchen">
+                <table id="kitchen_levels">
+                </table>
+              </div>
             </div>
 
-            <div id="tab-cooking-meals">
-              <table id="meal_levels">
-              </table>
+          </div>
+
+          <div id="tab-world4-breeding">
+
+            <label for="shiny_lvl_red_mush">Shiny red mushroom lvl:</label>
+            <input type="number" id="shiny_lvl_red_mush" min="0" />
+
+            <label for="shiny_lvl_sheepie">Shiny sheepie lvl:</label>
+            <input type="number" id="shiny_lvl_sheepie" min="0" />
+
+          </div>
+
+          <div id="tab-world4-lab">
+
+            <div id="tabs-lab" class="ui-tabs ui-widget ui-corner-all ui-widget-content ui-tabs-collapsible jquerytabs">
+              <ul class="ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header">
+                <li class="ui-tabs-tab"><a href="#tab-lab-bonuses" class="ui-tabs-anchor">
+                    Bonuses
+                  </a>
+                </li>
+                <li class="ui-tabs-tab"><a href="#tab-lab-jewels" class="ui-tabs-anchor">
+                    Jewels
+                  </a>
+                </li>
+              </ul>
+
+              <div id="tab-lab-bonuses" class="ui-tabs-panel ui-corner-bottom ui-widget-content">
+                <table>
+                  <tr>
+                    <td>
+                      <img src="https://idleon.wiki/wiki/images/2/29/Certified_Stamp_Book_Lab_Bonus.png">
+                    </td>
+                    <td>
+                      <label for="lab_certified_stamp_book">Certified Stamp Book</label>
+                    </td>
+                    <td>
+                      <input type="checkbox" id="lab_certified_stamp_book" />
+                    </td>
+                    <td>
+                      <span id="lab_certified_stamp_book_bonus"></span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <img src="https://idleon.wiki/wiki/images/3/33/Spelunker_Obol_Lab_Bonus.png">
+                    </td>
+                    <td>
+                      <label for="lab_spelunkerobol_active">Spelunker Obol</label>
+                    </td>
+                    <td>
+                      <input type="checkbox" id="lab_spelunkerobol_active" />
+                    </td>
+                    <td>
+                      <span id="lab_spelunkerobol_bonus"></span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <img src="https://idleon.wiki/wiki/images/f/fd/Depot_Studies_PhD_Lab_Bonus.png">
+                    </td>
+                    <td>
+                      <label for="lab_depot_studies_phd">Depot Studies Phd</label>
+                    </td>
+                    <td>
+                      <input type="checkbox" id="lab_depot_studies_phd" />
+                    </td>
+                    <td>
+                      <span id="lab_depot_studies_phd_bonus"></span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <img src="https://idleon.wiki/wiki/images/f/f2/My_1st_Chemistry_Set_Lab_Bonus.png">
+                    </td>
+                    <td>
+                      <label for="lab_vial_doubling">My 1st Chemistry Set</label>
+                    </td>
+                    <td>
+                      <input type="checkbox" id="lab_vial_doubling" />
+                    </td>
+                    <td>
+                      <span id="lab_vial_doubling_bonus"></span>
+                    </td>
+                  </tr>
+                </table>
+
+              </div>
+
+              <div id="tab-lab-jewels" class="ui-tabs-panel ui-corner-bottom ui-widget-content jquerytabs">
+                <table>
+                  <tr>
+                    <td>
+                      <img
+                           src="https://idleon.wiki/wiki/images/thumb/5/5e/Console_Jewel_Amethyst_Rhinestone.png/54px-Console_Jewel_Amethyst_Rhinestone.png">
+                    </td>
+                    <td>
+                      <label for="lab_amethyst_rhinestone">Amethyst Rhinestone</label>
+                    </td>
+                    <td>
+                      <input type="checkbox" id="lab_amethyst_rhinestone" />
+                    </td>
+                    <td>
+                      <span id="lab_amethyst_rhinestone_bonus"></span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <img
+                           src="https://idleon.wiki/wiki/images/thumb/a/aa/Console_Jewel_Purple_Navette.png/54px-Console_Jewel_Purple_Navette.png">
+                    </td>
+                    <td>
+                      <label for="lab_purple_navette">Purple Navette</label>
+                    </td>
+                    <td>
+                      <input type="checkbox" id="lab_purple_navette" />
+                    </td>
+                    <td>
+                      <span id="lab_purple_navette_bonus"></span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <img
+                           src="https://idleon.wiki/wiki/images/thumb/e/e6/Console_Jewel_Purple_Rhombol.png/54px-Console_Jewel_Purple_Rhombol.png">
+                    </td>
+                    <td>
+                      <label for="lab_purple_rhombol">Purple Rhombol</label>
+                    </td>
+                    <td>
+                      <input type="checkbox" id="lab_purple_rhombol" />
+                    </td>
+                    <td>
+                      <span id="lab_purple_rhombol_bonus"></span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <img
+                           src="https://idleon.wiki/wiki/images/thumb/1/15/Console_Jewel_Emerald_Pyramite.png/54px-Console_Jewel_Emerald_Pyramite.png">
+                    </td>
+                    <td>
+                      <label for="lab_emerald_pyramite">Emerald Pyramite</label>
+                    </td>
+                    <td>
+                      <input type="checkbox" id="lab_emerald_pyramite" />
+                    </td>
+                    <td>
+                      <span id="lab_emerald_pyramite_bonus"></span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <img
+                           src="https://idleon.wiki/wiki/images/thumb/5/5b/Console_Jewel_Black_Diamond_Ulthurite.png/54px-Console_Jewel_Black_Diamond_Ulthurite.png">
+                    </td>
+                    <td>
+                      <label for="lab_black_diamond_rhinestone_active">Black Diamond Rhinestone</label>
+                    </td>
+                    <td>
+                      <input type="checkbox" id="lab_black_diamond_rhinestone_active" />
+                    </td>
+                    <td>
+                      <span id="lab_black_diamond_rhinestone_bonus"></span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <img
+                           src="https://idleon.wiki/wiki/images/thumb/9/9a/Console_Jewel_Pure_Opal_Navette.png/54px-Console_Jewel_Pure_Opal_Navette.png">
+                    </td>
+                    <td>
+                      <label for="lab_pure_opal_navette_active">Pure Opal Navette</label>
+                    </td>
+                    <td>
+                      <input type="checkbox" id="lab_pure_opal_navette_active" />
+                    </td>
+                    <td>
+                      <span id="lab_pure_opal_navette_bonus"></span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <img
+                           src="https://idleon.wiki/wiki/images/thumb/f/f8/Console_Jewel_Pure_Opal_Rhombol.png/54px-Console_Jewel_Pure_Opal_Rhombol.png">
+                    </td>
+                    <td>
+                      <label for="lab_pure_opal_rhombol_active">Pure Opal Rhombol</label>
+                    </td>
+                    <td>
+                      <input type="checkbox" id="lab_pure_opal_rhombol_active" />
+                    </td>
+                    <td>
+                      <span id="lab_pure_opal_rhombol_bonus"></span>
+                    </td>
+                  </tr>
+                </table>
+
+              </div>
             </div>
 
-            <div id="tab-cooking-kitchen">
-              <table id="kitchen_levels">
-              </table>
-            </div>
           </div>
 
         </div>
+      </div>
 
-        <div id="tab-world4-breeding">
+      <div id="tab-world5" style="display:none;">
 
-          <label for="shiny_lvl_red_mush">Shiny red mushroom lvl:</label>
-          <input type="number" id="shiny_lvl_red_mush" min="0" />
+        <div id="tabs-world5-features"
+             class="ui-tabs ui-widget ui-corner-all ui-widget-content ui-tabs-collapsible jquerytabs">
+          <ul class="ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header">
+            <li class="ui-tabs-tab"><a href="#tab-world5-sailing" class="ui-tabs-anchor">
+                <img class="collapsible_icon"
+                     src="https://idleon.wiki/wiki/images/b/ba/Sailing_Skill_Icon.png" />Sailing
+              </a>
+            </li>
+            <li class="ui-tabs-tab"><a href="#tab-world5-gaming" class="ui-tabs-anchor">
+                <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/3/3d/Gaming_Skill_Icon.png" />Gaming
+              </a>
+            </li>
+          </ul>
+          <div id="tab-world5-sailing" class="ui-tabs-panel ui-corner-bottom ui-widget-content">
 
-          <label for="shiny_lvl_sheepie">Shiny sheepie lvl:</label>
-          <input type="number" id="shiny_lvl_sheepie" min="0" />
+            <div>Artifact levels (0 = not owned, 4=sovereign)</div>
+            <label for="artifact_triangulon_lvl">artifact_triangulon_lvl:</label>
+            <input type="number" id="artifact_triangulon_lvl" min="0" max="4" />
+            <label for="artifact_winz_lantern_lvl">artifact_winz_lantern_lvl:</label>
+            <input type="number" id="artifact_winz_lantern_lvl" min="0" max="4" />
 
+          </div>
+          <div id="tab-world5-gaming" class="ui-tabs-panel ui-corner-bottom ui-widget-content">
+
+            <label for="MSA_mealing_unlocked">MSA mealing unlocked?</label>
+            <input type="checkbox" id="MSA_mealing_unlocked" />
+
+          </div>
         </div>
 
-        <div id="tab-world4-lab">
+      </div>
 
-          <div id="tabs-lab" class="ui-tabs ui-widget ui-corner-all ui-widget-content ui-tabs-collapsible jquerytabs">
-            <ul class="ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header">
-              <li class="ui-tabs-tab"><a href="#tab-lab-bonuses" class="ui-tabs-anchor">
-                  Bonuses
-                </a>
-              </li>
-              <li class="ui-tabs-tab"><a href="#tab-lab-jewels" class="ui-tabs-anchor">
-                  Jewels
-                </a>
-              </li>
-            </ul>
+      <div id="tab-world6" style="display:none;">
 
-            <div id="tab-lab-bonuses" class="ui-tabs-panel ui-corner-bottom ui-widget-content">
-              <table>
-                <tr>
-                  <td>
-                    <img src="https://idleon.wiki/wiki/images/2/29/Certified_Stamp_Book_Lab_Bonus.png">
-                  </td>
-                  <td>
-                    <label for="lab_certified_stamp_book">Certified Stamp Book</label>
-                  </td>
-                  <td>
-                    <input type="checkbox" id="lab_certified_stamp_book" />
-                  </td>
-                  <td>
-                    <span id="lab_certified_stamp_book_bonus"></span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <img src="https://idleon.wiki/wiki/images/3/33/Spelunker_Obol_Lab_Bonus.png">
-                  </td>
-                  <td>
-                    <label for="lab_spelunkerobol_active">Spelunker Obol</label>
-                  </td>
-                  <td>
-                    <input type="checkbox" id="lab_spelunkerobol_active" />
-                  </td>
-                  <td>
-                    <span id="lab_spelunkerobol_bonus"></span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <img src="https://idleon.wiki/wiki/images/f/fd/Depot_Studies_PhD_Lab_Bonus.png">
-                  </td>
-                  <td>
-                    <label for="lab_depot_studies_phd">Depot Studies Phd</label>
-                  </td>
-                  <td>
-                    <input type="checkbox" id="lab_depot_studies_phd" />
-                  </td>
-                  <td>
-                    <span id="lab_depot_studies_phd_bonus"></span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <img src="https://idleon.wiki/wiki/images/f/f2/My_1st_Chemistry_Set_Lab_Bonus.png">
-                  </td>
-                  <td>
-                    <label for="lab_vial_doubling">My 1st Chemistry Set</label>
-                  </td>
-                  <td>
-                    <input type="checkbox" id="lab_vial_doubling" />
-                  </td>
-                  <td>
-                    <span id="lab_vial_doubling_bonus"></span>
-                  </td>
-                </tr>
-              </table>
+        <div id="tabs-world6-features"
+             class="ui-tabs ui-widget ui-corner-all ui-widget-content ui-tabs-collapsible jquerytabs">
+          <ul class="ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header">
+            <li class="ui-tabs-tab"><a href="#tab-world6-farming" class="ui-tabs-anchor">
+                <img class="collapsible_icon"
+                     src="https://idleon.wiki/wiki/images/8/82/Farming_Skill_Icon.png" />Farming
+              </a>
+            </li>
+            <li class="ui-tabs-tab"><a href="#tab-world6-sneaking" class="ui-tabs-anchor">
+                <img class="collapsible_icon"
+                     src="https://idleon.wiki/wiki/images/9/97/Sneaking_Skill_Icon.png" />Sneaking
+              </a>
+            </li>
+            <li class="ui-tabs-tab"><a href="#tab-world6-summoning" class="ui-tabs-anchor">
+                <img class="collapsible_icon"
+                     src="https://idleon.wiki/wiki/images/b/bc/Summoning_Skill_Icon.png" />Summoning
+              </a>
+            </li>
+          </ul>
+          <div id="tab-world6-farming" class="ui-tabs-panel ui-corner-bottom ui-widget-content">
 
-            </div>
+            <label for="farming_lvl">farming_lvl:</label>
+            <input type="number" id="farming_lvl" min="0" />
+            <label for="crop_acquired">crop_acquired:</label>
+            <input type="number" id="crop_acquired" min="0" max="120" />
 
-            <div id="tab-lab-jewels" class="ui-tabs-panel ui-corner-bottom ui-widget-content jquerytabs">
-              <table>
-                <tr>
-                  <td>
-                    <img
-                         src="https://idleon.wiki/wiki/images/thumb/5/5e/Console_Jewel_Amethyst_Rhinestone.png/54px-Console_Jewel_Amethyst_Rhinestone.png">
-                  </td>
-                  <td>
-                    <label for="lab_amethyst_rhinestone">Amethyst Rhinestone</label>
-                  </td>
-                  <td>
-                    <input type="checkbox" id="lab_amethyst_rhinestone" />
-                  </td>
-                  <td>
-                    <span id="lab_amethyst_rhinestone_bonus"></span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <img
-                         src="https://idleon.wiki/wiki/images/thumb/a/aa/Console_Jewel_Purple_Navette.png/54px-Console_Jewel_Purple_Navette.png">
-                  </td>
-                  <td>
-                    <label for="lab_purple_navette">Purple Navette</label>
-                  </td>
-                  <td>
-                    <input type="checkbox" id="lab_purple_navette" />
-                  </td>
-                  <td>
-                    <span id="lab_purple_navette_bonus"></span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <img
-                         src="https://idleon.wiki/wiki/images/thumb/e/e6/Console_Jewel_Purple_Rhombol.png/54px-Console_Jewel_Purple_Rhombol.png">
-                  </td>
-                  <td>
-                    <label for="lab_purple_rhombol">Purple Rhombol</label>
-                  </td>
-                  <td>
-                    <input type="checkbox" id="lab_purple_rhombol" />
-                  </td>
-                  <td>
-                    <span id="lab_purple_rhombol_bonus"></span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <img
-                         src="https://idleon.wiki/wiki/images/thumb/1/15/Console_Jewel_Emerald_Pyramite.png/54px-Console_Jewel_Emerald_Pyramite.png">
-                  </td>
-                  <td>
-                    <label for="lab_emerald_pyramite">Emerald Pyramite</label>
-                  </td>
-                  <td>
-                    <input type="checkbox" id="lab_emerald_pyramite" />
-                  </td>
-                  <td>
-                    <span id="lab_emerald_pyramite_bonus"></span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <img
-                         src="https://idleon.wiki/wiki/images/thumb/5/5b/Console_Jewel_Black_Diamond_Ulthurite.png/54px-Console_Jewel_Black_Diamond_Ulthurite.png">
-                  </td>
-                  <td>
-                    <label for="lab_black_diamond_rhinestone_active">Black Diamond Rhinestone</label>
-                  </td>
-                  <td>
-                    <input type="checkbox" id="lab_black_diamond_rhinestone_active" />
-                  </td>
-                  <td>
-                    <span id="lab_black_diamond_rhinestone_bonus"></span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <img
-                         src="https://idleon.wiki/wiki/images/thumb/9/9a/Console_Jewel_Pure_Opal_Navette.png/54px-Console_Jewel_Pure_Opal_Navette.png">
-                  </td>
-                  <td>
-                    <label for="lab_pure_opal_navette_active">Pure Opal Navette</label>
-                  </td>
-                  <td>
-                    <input type="checkbox" id="lab_pure_opal_navette_active" />
-                  </td>
-                  <td>
-                    <span id="lab_pure_opal_navette_bonus"></span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <img
-                         src="https://idleon.wiki/wiki/images/thumb/f/f8/Console_Jewel_Pure_Opal_Rhombol.png/54px-Console_Jewel_Pure_Opal_Rhombol.png">
-                  </td>
-                  <td>
-                    <label for="lab_pure_opal_rhombol_active">Pure Opal Rhombol</label>
-                  </td>
-                  <td>
-                    <input type="checkbox" id="lab_pure_opal_rhombol_active" />
-                  </td>
-                  <td>
-                    <span id="lab_pure_opal_rhombol_bonus"></span>
-                  </td>
-                </tr>
-              </table>
+          </div>
+          <div id="tab-world6-sneaking" class="ui-tabs-panel ui-corner-bottom ui-widget-content">
 
-            </div>
+            <label for="pristine_crystal_comb_obtained">pristine_crystal_comb_obtained</label>
+            <input type="checkbox" id="pristine_crystal_comb_obtained" />
+            <label for="pristine_liquorice_rolle_obtained">pristine_liquorice_rolle_obtained</label>
+            <input type="checkbox" id="pristine_liquorice_rolle_obtained" />
+
           </div>
 
+          <div id="tab-world6-summoning" class="ui-tabs-panel ui-corner-bottom ui-widget-content">
+
+            <label for="summoning_lvl">Summoning lvl:</label>
+            <input type="number" id="summoning_lvl" min="0" />
+            <label for="summon_battle_mushP">Purple mushroom (purple battle 1) beaten ?</label>
+            <input type="checkbox" id="summon_battle_mushP" />
+
+          </div>
+        </div>
+
+      </div>
+
+      <div id="tab-general" style="display:none;">
+
+        <div id="tabs-general-features" class="jquerytabs">
+          <ul>
+            <li><a href="#tab-general-classes">
+                <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/9/97/Mainpage_Classes.png" />Classes
+              </a></li>
+            <li><a href="#tab-general-cards">
+                Cards
+              </a></li>
+            <li><a href="#tab-general-star-signs">
+                Star signs
+              </a></li>
+            <li><a href="#tab-general-merit-shop">
+                <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/1/1d/Spirit_Sungmin.gif" />Merit Shop
+              </a></li>
+            <li><a href="#tab-general-achievements">
+                Achievements
+              </a></li>
+            <li><a href="#tab-general-arcade">
+                Arcade
+              </a></li>
+
+          </ul>
+
+          <div id="tab-general-classes">
+            <label for="voidwalker_blood_marrow_lvl">voidwalker_blood_marrow_lvl</label>
+            <input type="number" id="voidwalker_blood_marrow_lvl" min="0" />
+            <label for="voidwalker_eclipse_lvl">voidwalker_eclipse_lvl</label>
+            <input type="number" id="voidwalker_eclipse_lvl" min="0" />
+            <label for="blood_berserker_super_chow_count">Blood Berserker Super Chow Count</label>
+            <input type="number" id="blood_berserker_super_chow_count" min="0" />
+            <label for="blood_berserker_overflowing_ladles_lvl">blood_berserker_overflowing_ladles_lvl</label>
+            <input type="number" id="blood_berserker_overflowing_ladles_lvl" min="0" />
+          </div>
+          <div id="tab-general-cards">
+            <div>Card level = star count+1 (5 star is level 6)</div>
+            <label for="card_troll1_level">card_troll1_level</label>
+            <input type="number" id="card_troll1_level" min="0" max="6" />
+            <label for="card_ceramic_spirit_level">card_ceramic_spirit_level</label>
+            <input type="number" id="card_ceramic_spirit_level" min="0" max="6" />
+          </div>
+          <div id="tab-general-star-signs">
+            <label for="star_sign_gordonius_major">star_sign_gordonius_major</label>
+            <input type="checkbox" id="star_sign_gordonius_major" />
+            <label for="star_sign_seraph_cosmos">star_sign_seraph_cosmos</label>
+            <input type="checkbox" id="star_sign_seraph_cosmos" />
+            <label for="star_sign_chip_doubler_active">star_sign_chip_doubler_active</label>
+            <input type="checkbox" id="star_sign_chip_doubler_active" />
+          </div>
+          <div id="tab-general-merit-shop">
+            <label for="merit_world6_summoning_bonus">Summoning bonus level ?</label>
+            <input type="number" id="merit_world6_summoning_bonus" min="0" max="10" />
+          </div>
+          <div id="tab-general-achievements">
+            <!-- World 4 -->
+            <label for="achiev_cabbage_patch">Cabbage Patch</label>
+            <input type="checkbox" id="achiev_cabbage_patch" />
+            <label for="achiev_pretzel_bleu">Pretzel Bleu</label>
+            <input type="checkbox" id="achiev_pretzel_bleu" />
+            <label for="achiev_best_plate">Best Plate</label>
+            <input type="checkbox" id="achiev_best_plate" />
+            <!-- World 6 -->
+            <label for="achiev_spectre_stars">Spectre stars</label>
+            <input type="checkbox" id="achiev_spectre_stars" />
+            <label for="achiev_regalis_my_beloved">Regalis My Beloved</label>
+            <input type="checkbox" id="achiev_regalis_my_beloved" />
+          </div>
+          <div id="tab-general-arcade">
+            <label for="arcade_cooking_bonus_lvl">arcade_cooking_bonus_lvl</label>
+            <input type="number" id="arcade_cooking_bonus_lvl" min="0" max="100" />
+          </div>
         </div>
 
       </div>
     </div>
 
-    <div id="tab-world5" style="display:none;">
-
-      <div id="tabs-world5-features"
-           class="ui-tabs ui-widget ui-corner-all ui-widget-content ui-tabs-collapsible jquerytabs">
-        <ul class="ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header">
-          <li class="ui-tabs-tab"><a href="#tab-world5-sailing" class="ui-tabs-anchor">
-              <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/b/ba/Sailing_Skill_Icon.png" />Sailing
-            </a>
-          </li>
-          <li class="ui-tabs-tab"><a href="#tab-world5-gaming" class="ui-tabs-anchor">
-              <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/3/3d/Gaming_Skill_Icon.png" />Gaming
-            </a>
-          </li>
-        </ul>
-        <div id="tab-world5-sailing" class="ui-tabs-panel ui-corner-bottom ui-widget-content">
-
-          <div>Artifact levels (0 = not owned, 4=sovereign)</div>
-          <label for="artifact_triangulon_lvl">artifact_triangulon_lvl:</label>
-          <input type="number" id="artifact_triangulon_lvl" min="0" max="4" />
-          <label for="artifact_winz_lantern_lvl">artifact_winz_lantern_lvl:</label>
-          <input type="number" id="artifact_winz_lantern_lvl" min="0" max="4" />
-
-        </div>
-        <div id="tab-world5-gaming" class="ui-tabs-panel ui-corner-bottom ui-widget-content">
-
-          <label for="MSA_mealing_unlocked">MSA mealing unlocked?</label>
-          <input type="checkbox" id="MSA_mealing_unlocked" />
-
-        </div>
-      </div>
-
+    <h2> Results: </h2>
+    <div>
+      Current cooking speed: <span type="text" id="total_cooking_speed"></span>
+    </div>
+    <div>
+      Ladles needed: <span id="ladles_needed"></span>
+    </div>
+    <div>
+      Meal levels missing: <span id="missing_levels"></span>
+    </div>
+    <div>
+      NMLB days needed: <span id="NMLB_needed"></span> (<span id="NMLB_needed_percent"></span>%)
     </div>
 
-    <div id="tab-world6" style="display:none;">
-
-      <div id="tabs-world6-features"
-           class="ui-tabs ui-widget ui-corner-all ui-widget-content ui-tabs-collapsible jquerytabs">
-        <ul class="ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header">
-          <li class="ui-tabs-tab"><a href="#tab-world6-farming" class="ui-tabs-anchor">
-              <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/8/82/Farming_Skill_Icon.png" />Farming
-            </a>
-          </li>
-          <li class="ui-tabs-tab"><a href="#tab-world6-sneaking" class="ui-tabs-anchor">
-              <img class="collapsible_icon"
-                   src="https://idleon.wiki/wiki/images/9/97/Sneaking_Skill_Icon.png" />Sneaking
-            </a>
-          </li>
-          <li class="ui-tabs-tab"><a href="#tab-world6-summoning" class="ui-tabs-anchor">
-              <img class="collapsible_icon"
-                   src="https://idleon.wiki/wiki/images/b/bc/Summoning_Skill_Icon.png" />Summoning
-            </a>
-          </li>
-        </ul>
-        <div id="tab-world6-farming" class="ui-tabs-panel ui-corner-bottom ui-widget-content">
-
-          <label for="farming_lvl">farming_lvl:</label>
-          <input type="number" id="farming_lvl" min="0" />
-          <label for="crop_acquired">crop_acquired:</label>
-          <input type="number" id="crop_acquired" min="0" max="120" />
-
-        </div>
-        <div id="tab-world6-sneaking" class="ui-tabs-panel ui-corner-bottom ui-widget-content">
-
-          <label for="pristine_crystal_comb_obtained">pristine_crystal_comb_obtained</label>
-          <input type="checkbox" id="pristine_crystal_comb_obtained" />
-          <label for="pristine_liquorice_rolle_obtained">pristine_liquorice_rolle_obtained</label>
-          <input type="checkbox" id="pristine_liquorice_rolle_obtained" />
-
-        </div>
-
-        <div id="tab-world6-summoning" class="ui-tabs-panel ui-corner-bottom ui-widget-content">
-
-          <label for="summoning_lvl">Summoning lvl:</label>
-          <input type="number" id="summoning_lvl" min="0" />
-          <label for="summon_battle_mushP">Purple mushroom (purple battle 1) beaten ?</label>
-          <input type="checkbox" id="summon_battle_mushP" />
-
-        </div>
-      </div>
-
-    </div>
-
-    <div id="tab-general" style="display:none;">
-
-      <div id="tabs-general-features" class="jquerytabs">
-        <ul>
-          <li><a href="#tab-general-classes">
-              <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/9/97/Mainpage_Classes.png" />Classes
-            </a></li>
-          <li><a href="#tab-general-cards">
-              Cards
-            </a></li>
-          <li><a href="#tab-general-star-signs">
-              Star signs
-            </a></li>
-          <li><a href="#tab-general-merit-shop">
-              <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/1/1d/Spirit_Sungmin.gif" />Merit Shop
-            </a></li>
-          <li><a href="#tab-general-achievements">
-              Achievements
-            </a></li>
-          <li><a href="#tab-general-arcade">
-              Arcade
-            </a></li>
-
-        </ul>
-
-        <div id="tab-general-classes">
-          <label for="voidwalker_blood_marrow_lvl">voidwalker_blood_marrow_lvl</label>
-          <input type="number" id="voidwalker_blood_marrow_lvl" min="0" />
-          <label for="voidwalker_eclipse_lvl">voidwalker_eclipse_lvl</label>
-          <input type="number" id="voidwalker_eclipse_lvl" min="0" />
-          <label for="blood_berserker_super_chow_count">Blood Berserker Super Chow Count</label>
-          <input type="number" id="blood_berserker_super_chow_count" min="0" />
-          <label for="blood_berserker_overflowing_ladles_lvl">blood_berserker_overflowing_ladles_lvl</label>
-          <input type="number" id="blood_berserker_overflowing_ladles_lvl" min="0" />
-        </div>
-        <div id="tab-general-cards">
-          <div>Card level = star count+1 (5 star is level 6)</div>
-          <label for="card_troll1_level">card_troll1_level</label>
-          <input type="number" id="card_troll1_level" min="0" max="6" />
-          <label for="card_ceramic_spirit_level">card_ceramic_spirit_level</label>
-          <input type="number" id="card_ceramic_spirit_level" min="0" max="6" />
-        </div>
-        <div id="tab-general-star-signs">
-          <label for="star_sign_gordonius_major">star_sign_gordonius_major</label>
-          <input type="checkbox" id="star_sign_gordonius_major" />
-          <label for="star_sign_seraph_cosmos">star_sign_seraph_cosmos</label>
-          <input type="checkbox" id="star_sign_seraph_cosmos" />
-          <label for="star_sign_chip_doubler_active">star_sign_chip_doubler_active</label>
-          <input type="checkbox" id="star_sign_chip_doubler_active" />
-        </div>
-        <div id="tab-general-merit-shop">
-          <label for="merit_world6_summoning_bonus">Summoning bonus level ?</label>
-          <input type="number" id="merit_world6_summoning_bonus" min="0" max="10" />
-        </div>
-        <div id="tab-general-achievements">
-          <!-- World 4 -->
-          <label for="achiev_cabbage_patch">Cabbage Patch</label>
-          <input type="checkbox" id="achiev_cabbage_patch" />
-          <label for="achiev_pretzel_bleu">Pretzel Bleu</label>
-          <input type="checkbox" id="achiev_pretzel_bleu" />
-          <label for="achiev_best_plate">Best Plate</label>
-          <input type="checkbox" id="achiev_best_plate" />
-          <!-- World 6 -->
-          <label for="achiev_spectre_stars">Spectre stars</label>
-          <input type="checkbox" id="achiev_spectre_stars" />
-          <label for="achiev_regalis_my_beloved">Regalis My Beloved</label>
-          <input type="checkbox" id="achiev_regalis_my_beloved" />
-        </div>
-        <div id="tab-general-arcade">
-          <label for="arcade_cooking_bonus_lvl">arcade_cooking_bonus_lvl</label>
-          <input type="number" id="arcade_cooking_bonus_lvl" min="0" max="100" />
-        </div>
-      </div>
-
-    </div>
+    <!-- <div style="text-align:center"> -->
+    <h3>Upgrade order</h3>
+    <button id="remove_meal_upgrade" onclick="remove_meal_upgrade()">Upgrade first meal</button>
+    <!-- </div> -->
+    <table id="meal_upgrade_order">
+    </table>
   </div>
-
-  </div>
-
-  <h2> Results: </h2>
-  <div>
-    Current cooking speed: <span type="text" id="total_cooking_speed"></span>
-  </div>
-  <div>
-    Ladles needed: <span id="ladles_needed"></span>
-  </div>
-  <div>
-    Meal levels missing: <span id="missing_levels"></span>
-  </div>
-  <div>
-    NMLB days needed: <span id="NMLB_needed"></span> (<span id="NMLB_needed_percent"></span>%)
-  </div>
-
-  <!-- <div style="text-align:center"> -->
-  <h3>Upgrade order</h3>
-  <button id="remove_meal_upgrade" onclick="remove_meal_upgrade()">Upgrade first meal</button>
-  <!-- </div> -->
-  <table id="meal_upgrade_order">
-  </table>
-
 </body>
 
 </html>
