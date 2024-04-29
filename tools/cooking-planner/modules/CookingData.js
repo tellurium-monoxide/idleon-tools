@@ -76,8 +76,8 @@ class CookingData {
         // cooking
         let meal_data = JSON.parse(save_data["Meals"])
 
-        this.meal_levels = meal_data[0]
-        this.meal_quantities = meal_data[2].map(Number)
+        this.meal_levels = meal_data[0].map(Number).slice(0, meal_count)
+        this.meal_quantities = meal_data[2].map(Number).slice(0, meal_count)
 
         this.kitchen_stats = []
         let kitchen_data = JSON.parse(save_data["Cooking"])
@@ -150,7 +150,8 @@ class CookingData {
         // general
 
         // p2w
-        this.p2w_pack_sacred_methods = false
+        let bundle_info = JSON.parse(save_data["BundlesReceived"])
+        this.p2w_pack_sacred_methods = bundle_info.hasOwnProperty("bun_s")
 
         // find voidWalker blood marrow and eclipse lvl
         this.voidwalker_blood_marrow_lvl = 0;
@@ -749,8 +750,9 @@ class CookingData {
 
         // NMLB upgrades lowest level meal starting with last ones
         let NMLB_upgrades = []
+        let NMLB_meal = indexOfMin(this.meal_levels)
         for (let i = 0; i < this.NMLB_count; i++) {
-            let NMLB_meal = this.meal_levels.reduce((acc, currentVal, currentId) => (currentId < meal_count && currentVal <= acc.val) ? { "val": currentVal, "id": currentId } : acc, { "val": Infinity, "id": 0 }).id;
+
             let new_lvl = this.meal_levels[NMLB_meal] + 1
 
             this.meal_levels[NMLB_meal] += 1
