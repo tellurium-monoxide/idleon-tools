@@ -36,9 +36,6 @@ table,
 th,
 td {
   border: 1px solid;
-}
-
-td {
   text-align: center;
   vertical-align: middle;
 }
@@ -50,6 +47,8 @@ tr.completed_meal {
 tr.NMLB {
   background-color: rgba(238, 17, 17, 0.366);
 }
+
+
 
 /* use with  <div class="loader"></div> */
 .loader {
@@ -86,4 +85,33 @@ img.collapsible_icon_world {
 
 img.meal_icon {
   height: 40px;
+}
+
+/* table.sticky_header th {
+  position: sticky;
+} */
+
+table.sticky_header {
+  text-align: left;
+  position: relative;
+  /* border-collapse: collapse; */
+}
+
+table.sticky_header th,
+td {
+  padding: 0.25rem;
+}
+
+table.sticky_header tr.red th {
+  background: red;
+  color: white;
+}
+
+
+table.sticky_header thead th {
+  background: white;
+  position: sticky;
+  top: 52px;
+  /* Don't forget this, required for the stickiness */
+  box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
 }

@@ -566,6 +566,9 @@
 
         <div id="tabs-general-features" class="jquerytabs">
           <ul>
+            <li><a href="#tab-general-p2w">
+                <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/a/aa/Gem.png" />Gemshop
+              </a></li>
             <li><a href="#tab-general-classes">
                 <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/9/97/Mainpage_Classes.png" />Classes
               </a></li>
@@ -587,6 +590,11 @@
 
           </ul>
 
+          <div id="tab-general-p2w">
+            <label for="p2w_pack_sacred_methods">Sacred Method Pack (+2 NMLB per day)</label>
+            <input type="checkbox" id="p2w_pack_sacred_methods" />
+
+          </div>
           <div id="tab-general-classes">
             <label for="voidwalker_blood_marrow_lvl">voidwalker_blood_marrow_lvl</label>
             <input type="number" id="voidwalker_blood_marrow_lvl" min="0" />
@@ -644,20 +652,23 @@
       Current cooking speed: <span type="text" id="total_cooking_speed"></span>
     </div>
     <div>
-      Ladles needed: <span id="ladles_needed"></span>
+      Ladles used: <span id="ladles_needed"></span>
     </div>
     <div>
       Meal levels missing: <span id="missing_levels"></span>
     </div>
     <div>
-      NMLB days needed: <span id="NMLB_needed"></span> (<span id="NMLB_needed_percent"></span>%)
+      Days needed: <span id="days_needed"></span>
+    </div>
+    <div>
+      Levels from NMLB: <span id="NMLB_needed"></span> (<span id="NMLB_needed_percent"></span>% of missing levels)
     </div>
 
     <!-- <div style="text-align:center"> -->
     <h3>Upgrade order</h3>
     <button id="remove_meal_upgrade" onclick="remove_meal_upgrade()">Upgrade first meal</button>
     <!-- </div> -->
-    <table id="meal_upgrade_order">
+    <table id="meal_upgrade_order" class="sticky_header">
     </table>
   </div>
 </body>

@@ -149,6 +149,9 @@ class CookingData {
 
         // general
 
+        // p2w
+        this.p2w_pack_sacred_methods = false
+
         // find voidWalker blood marrow and eclipse lvl
         this.voidwalker_blood_marrow_lvl = 0;
         this.voidwalker_eclipse_lvl = 0;
@@ -315,6 +318,9 @@ class CookingData {
         this.summoning_lvl = Number(document.getElementById(`summoning_lvl`).value)
 
         // general
+        // p2w
+        this.p2w_pack_sacred_methods = document.getElementById(`p2w_pack_sacred_methods`).checked
+
         // classes
         this.voidwalker_blood_marrow_lvl = Number(document.getElementById(`voidwalker_blood_marrow_lvl`).value)
         this.voidwalker_eclipse_lvl = Number(document.getElementById(`voidwalker_eclipse_lvl`).value)
@@ -400,6 +406,9 @@ class CookingData {
 
 
         // cooking
+
+        this.NMLB_count = 1 + 2 * this.p2w_pack_sacred_methods // TODO: consider unlocking jade empo nmlb
+
         // breeding
         // lab
         this.lab_amethyst_rhinestone_mult = Math.max(1,
@@ -543,6 +552,7 @@ class CookingData {
         document.getElementById(`summoning_lvl`).value = this.summoning_lvl
 
         // general
+        document.getElementById(`p2w_pack_sacred_methods`).checked = this.p2w_pack_sacred_methods
         // classes
         document.getElementById(`voidwalker_blood_marrow_lvl`).value = this.voidwalker_blood_marrow_lvl
         document.getElementById(`voidwalker_eclipse_lvl`).value = this.voidwalker_eclipse_lvl
@@ -738,18 +748,24 @@ class CookingData {
     triggerNMLB() {
 
         // NMLB upgrades lowest level meal starting with last ones
-        let NMLB_meal = this.meal_levels.reduce((acc, currentVal, currentId) => (currentId < meal_count && currentVal <= acc.val) ? { "val": currentVal, "id": currentId } : acc, { "val": Infinity, "id": 0 }).id;
-        let new_lvl = this.meal_levels[NMLB_meal] + 1
+        let NMLB_upgrades = []
+        for (let i = 0; i < this.NMLB_count; i++) {
+            let NMLB_meal = this.meal_levels.reduce((acc, currentVal, currentId) => (currentId < meal_count && currentVal <= acc.val) ? { "val": currentVal, "id": currentId } : acc, { "val": Infinity, "id": 0 }).id;
+            let new_lvl = this.meal_levels[NMLB_meal] + 1
+
+            this.meal_levels[NMLB_meal] += 1
+            NMLB_upgrades.push([NMLB_meal, new_lvl])
+        }
 
         this.ladles_owned += this.ladles_per_day
 
-        this.meal_levels[NMLB_meal] += 1
+
 
         this.equinox_event_count += 1
-        this.ladles_owned += this.ladles_per_day
+
         this.computeMealCookingReq()
 
-        return [NMLB_meal, new_lvl]
+        return NMLB_upgrades
     }
 
     getLadlesNeeded(meal_time_in_hours) {
