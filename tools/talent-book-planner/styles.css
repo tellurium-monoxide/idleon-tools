@@ -1,18 +1,3 @@
-h2 {
-  margin-top: 3rem;
-  margin-bottom: 1rem;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
-}
-
-h3 {
-  margin-top: 2rem;
-}
-
-/* .input-group,
-input.test-value-input {
-  max-width: 250px;
-} */
-
 label {
   display: block;
   font:
@@ -25,18 +10,6 @@ button.link {
   border: none;
   color: blue;
   cursor: pointer;
-}
-
-table {
-  margin-left: auto;
-  margin-right: auto;
-}
-
-
-
-td {
-  text-align: center;
-  vertical-align: middle;
 }
 
 table.tiered_talents {
@@ -55,11 +28,6 @@ img.collapsible_icon {
 img.collapsible_icon_world {
   vertical-align: middle;
 }
-
-img.meal_icon {
-  height: 40px;
-}
-
 
 .talent_display {
   text-align: center;
