@@ -105,13 +105,14 @@ class AccountBookingStatus {
     getTalentDisplay(player, talent) {
         let display = ""
         let icon = TALENT_ICONS[talent.name]
+        let is_tiered = isTiered(talent.name) ? "" : ">>"
         let icon_display = icon ? `<img src=${icon}/>` : (talent.name)
         // let icon_display = icon ? `<img src=${icon}/>` : capEachWord(talent.name)
         let max_lvl = player.skill_max_levels[talent.skillIndex]
         let cur_lvl = player.skill_current_levels[talent.skillIndex]
         let display_class = (max_lvl == this.max_book_level) ? "completed" : ""
         display_class = (TALENT_UNBOOKABLE.includes(talent.name)) ? "unbookable" : display_class
-        display += `<div class="talent_display ${display_class}">${icon_display}<br> ${cur_lvl}/${max_lvl}</div>`
+        display += `<div class="talent_display ${display_class}"> ${is_tiered} ${icon_display}<br> ${cur_lvl}/${max_lvl}</div>`
         return display
     }
 

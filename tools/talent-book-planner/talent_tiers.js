@@ -100,3 +100,15 @@ const TALENT_TIERS = [
 
 
 ]
+
+function isTiered(talent_name) {
+    for (let TIER of TALENT_TIERS) {
+        for (let talent_in_tier of Object.entries(TIER.list)) {
+            if (talent_name == talent_in_tier[0] || TALENT_UNBOOKABLE.includes(talent_name)) {
+                return true;
+            }
+        }
+    }
+    return false;
+
+}
