@@ -4,7 +4,7 @@
 //  - list: list of talent in that tier
 // these talents can contain:
 //  - purpose: explains why this is useful
-//  - max_count_needed: if you don't need all chars to level this talent (for global talents, maybe this should be reworked as more than 1 doesnt happen)
+//  - global: boolean indicating global talents (need book on only one char)
 //  - class_restrict: if only a certain class is concerned by that tier. This is looked up in all subclasses
 const TALENT_TIERS = [
     {
@@ -13,11 +13,11 @@ const TALENT_TIERS = [
             "CRANIUM_COOKING": { purpose: "Liquid production" },
             "TENTEYECLE": { purpose: "Liquid production" },
             "AUSPICIOUS_AURA": { purpose: "Liquid production" },
-            "ORB_OF_REMEMBRANCE": { purpose: "Active DK farm", max_count_needed: 1 },
+            "ORB_OF_REMEMBRANCE": { purpose: "Active DK farm" },
             "PRINTER_GO_BRRR": { purpose: "prints" },
-            "KING_OF_THE_REMEMBERED": { purpose: "prints", max_count_needed: 1 },
+            "KING_OF_THE_REMEMBERED": { purpose: "prints", global: true },
             "DIMENSIONAL_WORMHOLE": { purpose: "Active rare drop farm. See also all ES damage bonus" },
-            "ARCHLORD_OF_THE_PIRATES": { purpose: "DR multi", max_count_needed: 1 },
+            "ARCHLORD_OF_THE_PIRATES": { purpose: "DR multi", global: true },
             "VOID_TRIAL_RERUN": { purpose: "vman speedrun / sampling" },
             "VOID_RADIUS": { purpose: "vman speedrun / sampling" },
             "BOSSING_VAIN": { purpose: "vman speedrun / sampling" },
@@ -29,10 +29,10 @@ const TALENT_TIERS = [
     {
         "purpose": "Vman account wide boosts",
         "list": {
-            "BLOOD_MARROW": { purpose: "Cooking speed", max_count_needed: 1 },
-            "MASTER_OF_THE_SYSTEM": { purpose: "Multikill per tier", max_count_needed: 1 },
-            "SPECIES_EPOCH": { purpose: "Trap/worship gains", max_count_needed: 1 },
-            "VOODOO_STATUFICATION": { purpose: "boosts about everything", max_count_needed: 1 },
+            "BLOOD_MARROW": { purpose: "Cooking speed", global: true },
+            "MASTER_OF_THE_SYSTEM": { purpose: "Multikill per tier", global: true },
+            "SPECIES_EPOCH": { purpose: "Trap/worship gains", global: true },
+            "VOODOO_STATUFICATION": { purpose: "boosts about everything", global: true },
         }
 
     },
@@ -68,7 +68,7 @@ const TALENT_TIERS = [
             "CHOPPIN_IT_UP_EZ": { purpose: "Wood samples" },
             "LEAF_THIEF": { purpose: "Wood samples" },
             "UNT'WIS'TED_ROBES": { purpose: "Wood samples / damage for ES / wisdom for bubo money gains" },
-            "RIGHT_HAND_OF_ACTION": { purpose: "global efficiency", max_count_needed: 1 },
+            "RIGHT_HAND_OF_ACTION": { purpose: "global efficiency", global: true },
             "ACTIVE_AFK'ER": { purpose: "Wood samples" },
             "ETERNAL_WIS": { purpose: "Wood samples" },
             "UTMOST_INTELLECT": { purpose: "Wood samples" },

@@ -160,12 +160,12 @@ class AccountBookingStatus {
                             // console.log(talent_list)
                             // console.log(talent[1].name)
                             if (talent_list.hasOwnProperty(talent[1].name)) {
-                                let needed = talent_list[talent[1].name].max_count_needed
-                                let is_covered_by_other_chars = !needed || talents_at_max_book[talent[1].name] < needed
+                                let global = talent_list[talent[1].name].global
+                                let not_covered_by_other_chars = !global || talents_at_max_book[talent[1].name] < 1
 
                                 let class_restrict = talent_list[talent[1].name].class_restrict
                                 let is_correct_class = !class_restrict || player.subclasses.includes(class_restrict)
-                                if (is_covered_by_other_chars && is_correct_class) {
+                                if (not_covered_by_other_chars && is_correct_class) {
                                     has_tier = true
                                     tiered_talents[tier].push({
                                         "char": playerId,
@@ -283,17 +283,19 @@ class AccountBookingStatus {
             content += `<tr>`
             content += `<th>Talent</th>`
             content += `<th>Purpose</th>`
-            content += `<th>Amount Needed</th>`
-            // content += `<th>Class</th>`
+            content += `<th>Is global?</th>`
+            content += `<th>Class</th>`
             content += `</tr>`
 
             for (let tiered_talent of Object.entries(TALENT_TIERS[tier].list)) {
 
-                let needed = tiered_talent[1].max_count_needed || "All chars"
+                let global = tiered_talent[1].global ? "yes" : "no"
+                let class_restrict = tiered_talent[1].class_restrict || ""
                 content += `<tr>`
                 content += `<td>${capEachWord(tiered_talent[0])}</td>`
                 content += `<td>${tiered_talent[1].purpose}</td>`
-                content += `<td>${needed}</td>`
+                content += `<td>${global}</td>`
+                content += `<td>${class_restrict}</td>`
                 content += `</tr>`
             }
 
