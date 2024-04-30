@@ -223,7 +223,7 @@ class AccountBookingStatus {
                 }
                 content += `<table class="tiered_talents">`
                 content += `<tr>`
-                content += `<th>Icon</th>`
+                // content += `<th>Icon</th>`
                 content += `<th>Talent</th>`
                 content += `<th>Character</th>`
                 content += `<th>Talent tab</th>`
@@ -233,7 +233,7 @@ class AccountBookingStatus {
 
                 for (let upgrade of tiered_talents[tier]) {
                     content += `<tr>`
-                    content += `<td>${(upgrade.talent)}</td>`
+                    // content += `<td>${(upgrade.talent)}</td>`
                     content += `<td>${capEachWord(upgrade.talent)}</td>`
                     content += `<td>${upgrade.charname} (n°${upgrade.char + 1})</td>`
                     content += `<td>${capEachWord(upgrade.class)}</td>`
