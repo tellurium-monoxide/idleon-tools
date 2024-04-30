@@ -1,3 +1,11 @@
+// list if tiers in order
+// a tier contains:
+//  - purpose: explains the general boosts given by that tier
+//  - list: list of talent in that tier
+// these talents can contain:
+//  - purpose: explains why this is useful
+//  - max_count_needed: if you don't need all chars to level this talent (for global talents, maybe this should be reworked as more than 1 doesnt happen)
+//  - class_restrict: if only a certain class is concerned by that tier. This is looked up in all subclasses
 const TALENT_TIERS = [
     {
         "purpose": "Mostly boosts to active farming. Choose depending of your current activity.",
@@ -46,7 +54,7 @@ const TALENT_TIERS = [
             "EAGLE_EYE": { purpose: "Trapping gains" },
             "REDOX_RATES": { purpose: "Construction speed" },
             "SHARPER_SAWS": { purpose: "Construction exp" },
-            "TEMPESTUOUS_EMOTIONS": { purpose: "Construction exp, DK only (maybe?)" },
+            "TEMPESTUOUS_EMOTIONS": { purpose: "Construction exp", class_restrict: "Squire" },
         }
 
     },

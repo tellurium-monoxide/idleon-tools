@@ -161,7 +161,11 @@ class AccountBookingStatus {
                             // console.log(talent[1].name)
                             if (talent_list.hasOwnProperty(talent[1].name)) {
                                 let needed = talent_list[talent[1].name].max_count_needed
-                                if (!needed || talents_at_max_book[talent[1].name] < needed) {
+                                let is_covered_by_other_chars = !needed || talents_at_max_book[talent[1].name] < needed
+
+                                let class_restrict = talent_list[talent[1].name].class_restrict
+                                let is_correct_class = !class_restrict || player.subclasses.includes(class_restrict)
+                                if (is_covered_by_other_chars && is_correct_class) {
                                     has_tier = true
                                     tiered_talents[tier].push({
                                         "char": playerId,
