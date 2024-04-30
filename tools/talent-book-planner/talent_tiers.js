@@ -1,5 +1,4 @@
 const TALENT_TIERS = [
-    // tier 1
     {
         "purpose": "Mostly boosts to active farming. Choose depending of your current activity.",
         "list": {
@@ -51,7 +50,7 @@ const TALENT_TIERS = [
         }
 
     },
-    // tier 4
+
     {
         "purpose": "Wood samples mostly, not needed until you need to resample",
         "list": {
@@ -71,7 +70,7 @@ const TALENT_TIERS = [
         }
 
     },
-    // tier 5
+
     {
         "purpose": "Mining samples mostly, not needed until you need to resample",
         "list": {
@@ -84,9 +83,9 @@ const TALENT_TIERS = [
         }
 
     },
-    // tier 6
+
     {
-        "purpose": "Damage boosts, will be sent to higher tiers later",
+        "purpose": "Good damage boosts",
         "list": {
             "SHARPENED_AXE": { purpose: "damage" },
             "GILDED_SWORD": { purpose: "damage" },

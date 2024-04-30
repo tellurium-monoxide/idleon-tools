@@ -45,6 +45,7 @@ class AccountBookingStatus {
         }
 
         this.makeTalentUpgradeList()
+        this.displayTiers()
 
     }
 
@@ -246,6 +247,62 @@ class AccountBookingStatus {
                 tabs.tabs("refresh");
                 tabs.tabs("option", "active", 0);
             }
+
+        }
+
+
+    }
+
+
+
+    displayTiers() {
+        let max_tier = TALENT_TIERS.length
+
+        let tabs = $("#tabs-all-tiers").tabs();
+        tabs.find("div").remove();
+        tabs.find("li").remove();
+        for (let tier = 0; tier < max_tier; tier++) {
+
+
+            // add tier tab
+            let tier_name = `Tier ${tier + 1}`
+            let li = `<li><a href='#tab_tier_display${tier}'>${tier_name}</a> </li>`
+
+            let content = ""
+            if (tier < max_tier) {
+                content += `${TALENT_TIERS[tier].purpose}`
+
+            } else {
+                content += `Bad or not yet added to a tier or not needed because maxed on another char`
+            }
+            content += `<table class="tiered_talents">`
+            content += `<tr>`
+            content += `<th>Talent</th>`
+            content += `<th>Purpose</th>`
+            content += `<th>Amount Needed</th>`
+            // content += `<th>Class</th>`
+            content += `</tr>`
+
+            for (let tiered_talent of Object.entries(TALENT_TIERS[tier].list)) {
+
+                let needed = tiered_talent[1].max_count_needed || "All chars"
+                content += `<tr>`
+                content += `<td>${capEachWord(tiered_talent[0])}</td>`
+                content += `<td>${tiered_talent[1].purpose}</td>`
+                content += `<td>${needed}</td>`
+                content += `</tr>`
+            }
+
+            content += `</table>`
+
+
+
+            tabs.find("#tabs-all-tiers-nav").append(li);
+            tabs.append(`<div id="tab_tier_display${tier}">` + content + "</div>");
+            tabs.tabs("refresh");
+            tabs.tabs("option", "heightStyle", "auto");
+            tabs.tabs("option", "active", 0);
+
 
         }
 

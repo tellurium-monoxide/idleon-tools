@@ -76,7 +76,7 @@
     <button id="enter_save_data" onclick="onSubmit()">Enter</button>
     <button id="clear_save_data" onclick="onClear()">Clear</button>
 
-    <h2>Talent upgrade list</h2>
+    <h2>Talents left to book</h2>
     <div id="tabs-talent-upgrade-list"
          class="jquerytabs ui-tabs ui-widget ui-corner-all ui-widget-content ui-tabs-collapsible">
       <ul class="ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header">
@@ -141,7 +141,7 @@
             <td rowspan="2"> Legend: </td>
             <td> Unbookable </td>
             <td> Already booked to <br>max level </td>
-            <td> Not included in <br>tier list </td>
+            <td> Not yet included<br>in tier list </td>
           </tr>
           <tr>
             <td>
@@ -350,6 +350,14 @@
         </div>
 
       </div>
+
+    </div>
+
+    <h2>Implemented tiers (<a href="./talent_tiers.js" target="_blank">see file</a>)</h2>
+    <div id="tabs-all-tiers" class="jquerytabs ui-tabs ui-widget ui-corner-all ui-widget-content ui-tabs-collapsible">
+      <ul id="tabs-all-tiers-nav" class="ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header">
+
+      </ul>
 
     </div>
   </div>
