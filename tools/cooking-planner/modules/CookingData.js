@@ -754,9 +754,10 @@ class CookingData {
         for (let i = 0; i < this.NMLB_count; i++) {
 
             let new_lvl = this.meal_levels[NMLB_meal] + 1
-
-            this.meal_levels[NMLB_meal] += 1
-            NMLB_upgrades.push([NMLB_meal, new_lvl])
+            if (new_lvl <= meal_max_lvl) {
+                this.meal_levels[NMLB_meal] += 1
+                NMLB_upgrades.push([NMLB_meal, new_lvl])
+            }
         }
 
         this.ladles_owned += this.ladles_per_day
