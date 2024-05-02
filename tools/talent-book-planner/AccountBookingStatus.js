@@ -234,9 +234,9 @@ class AccountBookingStatus {
                 for (let upgrade of tiered_talents[tier]) {
                     content += `<tr>`
                     // content += `<td>${(upgrade.talent)}</td>`
-                    content += `<td>${capEachWord(upgrade.talent)}</td>`
+                    content += `<td>${FormatWords(upgrade.talent)}</td>`
                     content += `<td>${upgrade.charname} (n°${upgrade.char + 1})</td>`
-                    content += `<td>${capEachWord(upgrade.class)}</td>`
+                    content += `<td>${FormatWords(upgrade.class)}</td>`
                     content += `<td>${upgrade.purpose}</td>`
                     content += `<td>${upgrade.level}/${this.max_book_level}</td>`
                     content += `</tr>`
@@ -292,10 +292,10 @@ class AccountBookingStatus {
                 let global = tiered_talent[1].global ? "yes" : "no"
                 let class_restrict = tiered_talent[1].class_restrict || ""
                 content += `<tr>`
-                content += `<td>${capEachWord(tiered_talent[0])}</td>`
+                content += `<td>${FormatWords(tiered_talent[0])}</td>`
                 content += `<td>${tiered_talent[1].purpose}</td>`
                 content += `<td>${global}</td>`
-                content += `<td>${class_restrict}</td>`
+                content += `<td>${FormatWords(class_restrict)}</td>`
                 content += `</tr>`
             }
 
@@ -318,7 +318,7 @@ class AccountBookingStatus {
 
 
 
-function capEachWord(name) {
+function FormatWords(name) {
     let words = name.split(/[_ ]/)
     let result = ""
     for (let word of words) {
