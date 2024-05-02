@@ -4,5 +4,6 @@
     "git.decorations.enabled": false,
     "html.format.maxPreserveNewLines": 1,
     "html.format.wrapAttributes": "aligned-multiple",
-    "html.format.wrapLineLength": 120
+    "html.format.wrapLineLength": 0,
+    "editor.wordWrap": "on"
 }
