@@ -33,6 +33,7 @@ const TALENT_TIERS = [
             "MASTER_OF_THE_SYSTEM": { purpose: "Multikill per tier", global: true },
             "SPECIES_EPOCH": { purpose: "Trap/worship gains", global: true },
             "VOODOO_STATUFICATION": { purpose: "boosts about everything", global: true },
+            "RIGHT_HAND_OF_ACTION": { purpose: "global efficiency", global: true },
         }
 
     },
@@ -41,8 +42,8 @@ const TALENT_TIERS = [
         "list": {
             "ONE_STEP_AHEAD": { purpose: "Helps level vman talents" },
             "SYMBOLS_OF_BEYOND_~P": { purpose: "Everything for mage (wormhole/cranium mostly)" },
-            "SYMBOLS_OF_BEYOND_~R": { purpose: "Everything for warriors (DK orb mostly)" },
-            "STAR_PLAYER": { purpose: "Star talent points, generally useful" },
+            "SYMBOLS_OF_BEYOND_~R": { purpose: "Everything for warriors (DK orb mostly)", class_restrict: "Divine_Knight" },
+
         }
 
     },
@@ -65,16 +66,15 @@ const TALENT_TIERS = [
             "SMART_EFFICIENCY": { purpose: "Wood samples" },
             "LOG_ON_LOGS": { purpose: "Wood samples" },
             "DEFORESTING_ALL_DOUBT": { purpose: "Wood samples" },
-            "CHOPPIN_IT_UP_EZ": { purpose: "Wood samples" },
             "LEAF_THIEF": { purpose: "Wood samples" },
             "UNT'WIS'TED_ROBES": { purpose: "Wood samples / damage for ES / wisdom for bubo money gains" },
-            "RIGHT_HAND_OF_ACTION": { purpose: "global efficiency", global: true },
             "ACTIVE_AFK'ER": { purpose: "Wood samples" },
             "ETERNAL_WIS": { purpose: "Wood samples" },
             "UTMOST_INTELLECT": { purpose: "Wood samples" },
             "SKILL_WIZ": { purpose: "Wood samples" },
             "WIS_WUMBO": { purpose: "Wood samples" },
             "STOP_RIGHT_THERE": { purpose: "Worship minigame" },
+            "STAR_PLAYER": { purpose: "Star talent points, generally useful", class_restrict: "Mage" },
         }
 
     },
@@ -88,6 +88,7 @@ const TALENT_TIERS = [
             "TOOL_PROFICIENCY": { purpose: "Mining samples" },
             "'STR'ESS_TESTED_GARB": { purpose: "Mining samples" },
             "HAUNGRY_FOR_GOLD": { purpose: "Mining samples" },
+            "STAR_PLAYER": { purpose: "Star talent points, generally useful", class_restrict: "Warrior" },
         }
 
     },
