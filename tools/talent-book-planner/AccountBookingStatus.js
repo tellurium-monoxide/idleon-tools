@@ -211,16 +211,18 @@ class AccountBookingStatus {
 
             if (tiered_talents[tier].length > 0) {
                 // add tier tab
-                let tier_name = tier < max_tier ? `Tier ${tier + 1}` : "No Tier"
+                let tier_name = tier < max_tier ? `Tier ${tier + 1}` + (TALENT_TIERS[tier].name ? " : " : "") + (TALENT_TIERS[tier].name || "") : "No Tier"
                 let li = `<li><a href='#tab_tier${tier}'>${tier_name}</a> </li>`
 
                 let content = ""
+                content += `<p style="text-align:center;">`
                 if (tier < max_tier) {
                     content += `${TALENT_TIERS[tier].purpose}`
 
                 } else {
                     content += `Bad or not yet added to a tier or not needed because maxed on another char`
                 }
+                content += "</p>"
                 content += `<table class="tiered_talents">`
                 content += `<tr>`
                 // content += `<th>Icon</th>`
