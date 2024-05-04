@@ -28,6 +28,10 @@ const TALENT_TIERS = [
             "ORB_OF_REMEMBRANCE": { purpose: "Active DK farm" },
             "KNIGHTLY_DISCIPLE": { purpose: "Active DK farm" },
             "SYMBOLS_OF_BEYOND_~R": { purpose: "Active DK farm", class_restrict: "Divine_Knight" },
+            "SHOCKWAVE_SLASH": { purpose: "Clear mobs faster", class_restrict: "Divine_Knight" },
+            "IMBUED_SHOCKWAVES": { purpose: "Clear mobs faster", class_restrict: "Divine_Knight" },
+            "DAGGERANG": { purpose: "Clear mobs faster", class_restrict: "Divine_Knight" },
+            "MEGA_MONGORANG": { purpose: "Clear mobs faster", class_restrict: "Divine_Knight" },
             "ENHANCEMENT_ECLIPSE": { purpose: "global efficiency", global: true, goal_lvl: 225 },
         }
 
@@ -88,9 +92,9 @@ const TALENT_TIERS = [
         "name": "Trap",
         "purpose": "Trapping can be useful quickly because no need to resample",
         "list": {
-            "EAGLE_EYE": { purpose: "Trapping gains, effective immediately, very good" },
-            "INVASIVE_SPECIES": { purpose: "Trapping eff" },
-            "SKILL_AMBIDEXTERITY": { purpose: "Trapping eff" },
+            "EAGLE_EYE": { purpose: "Trapping gains, effective immediately, very good", class_restrict: "Hunter" },
+            "INVASIVE_SPECIES": { purpose: "Trapping eff", class_restrict: "Hunter" },
+            "SKILL_AMBIDEXTERITY": { purpose: "Trapping eff", class_restrict: "Hunter" },
             "RIGHT_HAND_OF_ACTION": { purpose: "global efficiency", global: true },
         }
     },
