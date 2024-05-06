@@ -98,6 +98,7 @@ const TALENT_TIERS = [
             "SHROOM_BAIT": { purpose: "Trapping exp, low priority", class_restrict: "Hunter" },
             "REFLECTIVE_EYESIGHT": { purpose: "Shiny chance, low priority", class_restrict: "Hunter" },
             "RIGHT_HAND_OF_ACTION": { purpose: "global efficiency", global: true },
+            "SPECIES_EPOCH": { purpose: "Trap/worship gains", global: true },
         }
     },
 
@@ -127,8 +128,8 @@ const TALENT_TIERS = [
         "purpose": "Maximize worship gains",
         "list": {
             "SPECIES_EPOCH": { purpose: "Trap/worship gains", global: true },
-            "STOP_RIGHT_THERE": { purpose: "worship TD", class_restrict: "Hunter" },
-            "KUNG_FU_KICK": { purpose: "worship TD", class_restrict: "Hunter" },
+            "STOP_RIGHT_THERE": { purpose: "worship TD minigame", class_restrict: "Hunter" },
+            "KUNG_FU_KICK": { purpose: "worship TD minigame", class_restrict: "Hunter" },
             "NEARBY_OUTLET": { purpose: "worship charge", class_restrict: "Wizard" },
             "CHARGE_SYPHON": { purpose: "worship charge", class_restrict: "Wizard" },
             "BLESS_UP": { purpose: "worship eff", class_restrict: "Wizard" },
@@ -175,6 +176,8 @@ const TALENT_TIERS = [
         "purpose": "Maximize catching samples, not needed until you want to resample",
         "list": {
             "RIGHT_HAND_OF_ACTION": { purpose: "global efficiency", global: true },
+            "GARB_OF_UN'AGI'NG_QUALITY": { purpose: "Catching eff", class_restrict: "Bowman" },
+            "ADAPTATION_REVELATION": { purpose: "Catching eff", class_restrict: "Bowman" },
             "ELUSIVE_EFFICIENCY": { purpose: "Catching eff", class_restrict: "Bowman" },
             "SKILL_AMBIDEXTERITY": { purpose: "Catching eff", class_restrict: "Bowman" },
             "TELEKI'NET'IC_LOGS": { purpose: "Catching eff", class_restrict: "Bowman" },
@@ -270,12 +273,25 @@ const TALENT_TIERS = [
             "STRENGTH_IN_NUMBERS": { purpose: "damage" },
             "CARRY_A_BIG_STICK": { purpose: "damage" },
             "BELIEVER_STRENGTH": { purpose: "damage" },
+            "GAMER_STRENGTH": { purpose: "damage" },
+            "CREW_ROWING_STRENGTH": { purpose: "damage" },
+            "ANIMALISTIC_FEROCITY": { purpose: "damage" },
+            "KNOWLEDGE_IS_POWER": { purpose: "damage" },
+            "POWER_OVERWHELMING": { purpose: "damage" },
+            "VEINS_OF_THE_INFERNAL": { purpose: "damage" },
+            "HIGH_POLYMER_LIMBS": { purpose: "damage" },
+            "VIRILE_VIALS": { purpose: "damage" },
+            "PRECISION_POWER": { purpose: "damage" },
+            "PAPERWORK,_GREAT...": { purpose: "damage" },
+            "LOOTY_MC_SHOOTY": { purpose: "damage" },
+            "APOCALYPSE_ZOW": { purpose: "damage" },
+            "SPEEDNA": { purpose: "damage" },
         }
     },
 
     {
         "name": "Bad",
-        "purpose": "Waste of time, for true completionnists",
+        "purpose": "Waste of time, only for true completionnists",
         "list": {
             "TASTE_TEST": { purpose: "" },
             "MOTHERLODE_MINER": { purpose: "" },
@@ -284,6 +300,7 @@ const TALENT_TIERS = [
             "FREE_MEAL": { purpose: "" },
             "MINI_FIREBALL": { purpose: "" },
             "ENERGY_BOLT": { purpose: "" },
+            "BUCKLERED_UP": { purpose: "" },
         }
 
     },
