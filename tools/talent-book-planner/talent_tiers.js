@@ -95,6 +95,8 @@ const TALENT_TIERS = [
             "EAGLE_EYE": { purpose: "Trapping gains, effective immediately, very good", class_restrict: "Hunter" },
             "INVASIVE_SPECIES": { purpose: "Trapping eff", class_restrict: "Hunter" },
             "SKILL_AMBIDEXTERITY": { purpose: "Trapping eff", class_restrict: "Hunter" },
+            "SHROOM_BAIT": { purpose: "Trapping exp, low priority", class_restrict: "Hunter" },
+            "REFLECTIVE_EYESIGHT": { purpose: "Shiny chance, low priority", class_restrict: "Hunter" },
             "RIGHT_HAND_OF_ACTION": { purpose: "global efficiency", global: true },
         }
     },
@@ -103,7 +105,7 @@ const TALENT_TIERS = [
 
     {
         "name": "Chop",
-        "purpose": "Wood samples mostly, not needed until you need to resample",
+        "purpose": "Maximize wood samples, not needed until you want to resample",
         "list": {
             "SMART_EFFICIENCY": { purpose: "Wood samples" },
             "LOG_ON_LOGS": { purpose: "Wood samples" },
@@ -136,7 +138,7 @@ const TALENT_TIERS = [
     },
     {
         "name": "Mining",
-        "purpose": "Mining samples mostly, not needed until you need to resample",
+        "purpose": "Maximize mining samples, not needed until you want to resample",
         "list": {
             "BRUTE_EFFICIENCY": { purpose: "Mining samples" },
             "BIG_PICK": { purpose: "Mining samples" },
@@ -154,7 +156,34 @@ const TALENT_TIERS = [
             "RIGHT_HAND_OF_ACTION": { purpose: "global efficiency", global: true },
         }
     },
+    {
+        "name": "Fishing",
+        "purpose": "Maximize fishing samples, not needed until you want to resample",
+        "list": {
+            "RIGHT_HAND_OF_ACTION": { purpose: "global efficiency", global: true },
+            "BRUTE_EFFICIENCY": { purpose: "Fishing eff", class_restrict: "Barbarian" },
+            "SKILL_STRENGTHEN": { purpose: "Fishing eff", class_restrict: "Barbarian" },
+            "BOBBIN'_BOBBERS": { purpose: "Fishing eff", class_restrict: "Barbarian" },
+            "WORMING_UNDERCOVER": { purpose: "Fishing AFK gains ", class_restrict: "Barbarian" },
+            "CATCHING_SOME_ZZZ'S": { purpose: "Fishing AFK gains ", class_restrict: "Barbarian" },
+            "ALL_FISH_DIET": { purpose: "Fishing exp, low priority ", class_restrict: "Barbarian" },
 
+        }
+    },
+    {
+        "name": "Catching",
+        "purpose": "Maximize catching samples, not needed until you want to resample",
+        "list": {
+            "RIGHT_HAND_OF_ACTION": { purpose: "global efficiency", global: true },
+            "ELUSIVE_EFFICIENCY": { purpose: "Catching eff", class_restrict: "Bowman" },
+            "SKILL_AMBIDEXTERITY": { purpose: "Catching eff", class_restrict: "Bowman" },
+            "TELEKI'NET'IC_LOGS": { purpose: "Catching eff", class_restrict: "Bowman" },
+            "BRIAR_PATCH_RUNNER": { purpose: "Catching eff", class_restrict: "Bowman" },
+            "SUNSET_ON_THE_HIVES": { purpose: "Catching eff", class_restrict: "Bowman" },
+            "BUG_ENTHUSIAST": { purpose: "Catching exp, low priority", class_restrict: "Bowman" },
+
+        }
+    },
     {
         "name": "Chows",
         "purpose": "blood berserker chowing (ignore if you have finished superchows) (comes before cooking because it makes it more efficient)",
