@@ -44,13 +44,14 @@
         track: true
       });
 
-
+      displayTiers();
+      lookIntoLocalStorage();
       const inputSpinnerElements = document.querySelectorAll("input[type='number']")
       for (const inputSpinnerElement of inputSpinnerElements) {
         new InputSpinner(inputSpinnerElement)
       }
-      displayTiers();
-      lookIntoLocalStorage();
+
+
     });
   </script>
 
@@ -124,9 +125,13 @@
         </li>
 
         <li>
-          <a href="#tab-max-book-bonus" class="ui-tabs-anchor">
-            <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/a/ae/Talent_Book_Library.png" /> Library
-            Bonuses
+          <a href="#tab-library-bonuses" class="ui-tabs-anchor">
+            <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/a/ae/Talent_Book_Library.png" /> Library Bonuses
+          </a>
+        </li>
+        <li>
+          <a href="#tab-library-stats" class="ui-tabs-anchor">
+            <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/a/ae/Talent_Book_Library.png" /> Library Stats
           </a>
         </li>
       </ul>
@@ -160,7 +165,7 @@
         </table>
       </div>
 
-      <div id="tab-max-book-bonus" style="display:none;">
+      <div id="tab-library-bonuses" style="display:none;">
 
         <div id="tabs-max-book" class="jquerytabs">
           <ul class="ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header">
@@ -171,8 +176,18 @@
             </li>
 
             <li>
+              <a href="#tab-world2" class="ui-tabs-anchor">
+                <img class="collapsible_icon_world" src="https://idleon.wiki/wiki/images/c/c7/Wb2.png" />
+              </a>
+            </li>
+            <li>
               <a href="#tab-world3" class="ui-tabs-anchor">
                 <img class="collapsible_icon_world" src="https://idleon.wiki/wiki/images/a/ae/Wb3.png" />
+              </a>
+            </li>
+            <li>
+              <a href="#tab-world4" class="ui-tabs-anchor" id="tab_header_world4">
+                <img class="collapsible_icon_world" src="https://idleon.wiki/wiki/images/5/55/Wb4.png" />
               </a>
             </li>
 
@@ -204,40 +219,145 @@
               </ul>
               <div id="tabs-world1-stamps" class="ui-tabs-panel ui-corner-bottom ui-widget-content">
 
-                <label for="stamp_cooked_meal_lvl">stamp_cooked_meal_lvl:</label>
-                <input type="number" id="stamp_cooked_meal_lvl" min="0" />
+                <label for="stamp_biblio">Biblio stamp (checkout speed)</label>
+                <input type="number" id="stamp_biblio" min="0" />
 
               </div>
             </div>
           </div>
 
-          <div id="tab-world3" style="display:none;">
+          <div id="tab-world2" style="display:none;">
 
-            <div id="tabs-world3-features" class="ui-tabs ui-widget ui-corner-all ui-widget-content ui-tabs-collapsible jquerytabs">
-              <ul class="ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header">
-                <li class="ui-tabs-tab"><a href="#tabs-world3-atoms" class="ui-tabs-anchor">
-                    <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/4/4e/Atoms.png" /> Atoms
-                  </a>
-                </li>
-                <li class="ui-tabs-tab"><a href="#tabs-world3-worship" class="ui-tabs-anchor">
-                    <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/5/54/Worship_Skill_Icon.png" />Worship
-                  </a>
-                </li>
+            <div id="tabs-world2-features" class="ui-tabs ui-widget jquerytabs">
+              <ul class="ui-tabs-nav">
+                <li><a href="#tabs-world2-alch">
+                    <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/a/a3/Alchemy_Skill_Icon.png" />Alchemy
+                  </a></li>
               </ul>
-              <div id="tabs-world3-atoms" class="ui-tabs-panel ui-corner-bottom ui-widget-content">
+              <div id="tabs-world2-alch">
 
-                <label for="void_plate_chef_lvl">void_plate_chef_lvl:</label>
-                <input type="number" id="void_plate_chef_lvl" min="0" max="30" />
+                <label for="bubble_ignore_overdues">Bubble Ignore Overdues (checkout speed)</label>
+                <input type="number" id="bubble_ignore_overdues" min="0" />
 
-              </div>
-              <div id="tabs-world3-worship" class="ui-tabs-panel ui-corner-bottom ui-widget-content">
+                <label for="vial_chonker_chug">Vial Chonker Chug (checkout speed)</label>
+                <input type="number" id="vial_chonker_chug" min="0" max="13" />
 
-                <label for="total_waves">total_waves:</label>
-                <input type="number" id="total_waves" min="0" />
+                <label for="max_level_vials">max_level_vials:</label>
+                <input type="number" id="max_level_vials" min="0" />
 
               </div>
             </div>
 
+          </div>
+
+          <div id="tab-world3" style="display:none;">
+
+            <label for="building_library_lvl">Talent library building lvl (checkout speed)</label>
+            <input type="number" id="building_library_lvl" min="0" max="201" />
+
+            <label for="atom_oxygen">Atom Oxygen level (10 max book lvls at lv 1, 2% checkout speed and 1 min book lvl per lvl)</label>
+            <input type="number" id="atom_oxygen" min="0" max="30" />
+
+            <label for="salt_lick_spontaneity_salts">Salt Lick: Spontaneity Salts (2 max book lvl per purchase)</label>
+            <input type="number" id="salt_lick_spontaneity_salts" min="0" max="10" />
+
+          </div>
+
+          <div id="tab-world4" style="display:none;">
+            <div id="tabs-world4-features" class="jquerytabs">
+              <ul>
+                <li><a href="#tab-world4-cooking" id="tab_header_world4_cooking">
+                    <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/thumb/1/11/Cooking_Ladle.png/54px-Cooking_Ladle.png" />Cooking
+                  </a></li>
+                <li><a href="#tab-world4-breeding">
+                    <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/2/27/Breeding_Skill_Icon.png" />Breeding
+                  </a></li>
+                <li><a href="#tab-world4-lab">
+                    <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/b/b9/Laboratory_Skill_Icon.png" />Lab
+                  </a></li>
+              </ul>
+
+              <div id="tab-world4-cooking">
+
+                <label for="meal_lvl_fortune_cookies">Fortune cookies meal lvl</label>
+                <input type="number" id="meal_lvl_fortune_cookies" min="0" />
+
+              </div>
+
+              <div id="tab-world4-breeding">
+
+                <label for="shiny_lvl_red_mush">Shiny red mushroom lvl (Meal Efficiency):</label>
+                <input type="number" id="shiny_lvl_red_mush" min="0" max="20" />
+
+                <label for="shiny_lvl_sheepie">Shiny sheepie lvl (Meal Efficiency):</label>
+                <input type="number" id="shiny_lvl_sheepie" min="0" max="20" />
+
+              </div>
+
+              <div id="tab-world4-lab">
+                <table>
+
+                  <tr>
+                    <td>
+                      <img src="https://idleon.wiki/wiki/images/3/33/Spelunker_Obol_Lab_Bonus.png">
+                    </td>
+                    <td>
+                      <label for="lab_spelunkerobol_active">Spelunker Obol</label>
+                    </td>
+                    <td>
+                      <input type="checkbox" id="lab_spelunkerobol_active" />
+                    </td>
+                    <td>
+                      <span id="lab_spelunkerobol_bonus"></span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <img src="https://idleon.wiki/wiki/images/f/f2/My_1st_Chemistry_Set_Lab_Bonus.png">
+                    </td>
+                    <td>
+                      <label for="lab_vial_doubling">My 1st Chemistry Set</label>
+                    </td>
+                    <td>
+                      <input type="checkbox" id="lab_vial_doubling" />
+                    </td>
+                    <td>
+                      <span id="lab_vial_doubling_bonus"></span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <img src="https://idleon.wiki/wiki/images/thumb/5/5b/Console_Jewel_Black_Diamond_Ulthurite.png/54px-Console_Jewel_Black_Diamond_Ulthurite.png">
+                    </td>
+                    <td>
+                      <label for="lab_black_diamond_rhinestone_active">Black Diamond Rhinestone</label>
+                    </td>
+                    <td>
+                      <input type="checkbox" id="lab_black_diamond_rhinestone_active" />
+                    </td>
+                    <td>
+                      <span id="lab_black_diamond_rhinestone_bonus"></span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <img src="https://idleon.wiki/wiki/images/thumb/9/9a/Console_Jewel_Pure_Opal_Navette.png/54px-Console_Jewel_Pure_Opal_Navette.png">
+                    </td>
+                    <td>
+                      <label for="lab_pure_opal_navette_active">Pure Opal Navette</label>
+                    </td>
+                    <td>
+                      <input type="checkbox" id="lab_pure_opal_navette_active" />
+                    </td>
+                    <td>
+                      <span id="lab_pure_opal_navette_bonus"></span>
+                    </td>
+                  </tr>
+                </table>
+
+              </div>
+
+            </div>
           </div>
 
           <div id="tab-world5" style="display:none;">
@@ -248,16 +368,27 @@
                     <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/b/ba/Sailing_Skill_Icon.png" />Sailing
                   </a>
                 </li>
+                <li class="ui-tabs-tab"><a href="#tab-world5-gaming" class="ui-tabs-anchor">
+                    <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/b/ba/Sailing_Skill_Icon.png" />Gaming
+                  </a>
+                </li>
 
               </ul>
               <div id="tab-world5-sailing" class="ui-tabs-panel ui-corner-bottom ui-widget-content">
 
                 <div>Artifact levels (0 = not owned, 4=sovereign)</div>
-                <label for="artifact_triangulon_lvl">artifact_triangulon_lvl:</label>
-                <input type="number" id="artifact_triangulon_lvl" min="0" max="4" />
+                <label for="artifact_fury_relic_lvl">artifact_fury_relic_lvl:</label>
+                <input type="number" id="artifact_fury_relic_lvl" min="0" max="4" />
                 <label for="artifact_winz_lantern_lvl">artifact_winz_lantern_lvl:</label>
                 <input type="number" id="artifact_winz_lantern_lvl" min="0" max="4" />
 
+              </div>
+              <div id="tab-world5-gaming" class="ui-tabs-panel ui-corner-bottom ui-widget-content">
+
+                <label for="superbit_library_checkouts">Superbit Library Checkouts (checkout speed, scales with gaming level)</label>
+                <input type="checkbox" id="superbit_library_checkouts" />
+                <label for="gaming_lvl">Gaming level (checkout speed)</label>
+                <input type="number" id="gaming_lvl" min="0" />
               </div>
 
             </div>
@@ -268,10 +399,7 @@
 
             <div id="tabs-world6-features" class="ui-tabs ui-widget ui-corner-all ui-widget-content ui-tabs-collapsible jquerytabs">
               <ul class="ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header">
-                <li class="ui-tabs-tab"><a href="#tab-world6-farming" class="ui-tabs-anchor">
-                    <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/8/82/Farming_Skill_Icon.png" />Farming
-                  </a>
-                </li>
+
                 <li class="ui-tabs-tab"><a href="#tab-world6-sneaking" class="ui-tabs-anchor">
                     <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/9/97/Sneaking_Skill_Icon.png" />Sneaking
                   </a>
@@ -281,29 +409,15 @@
                   </a>
                 </li>
               </ul>
-              <div id="tab-world6-farming" class="ui-tabs-panel ui-corner-bottom ui-widget-content">
 
-                <label for="farming_lvl">farming_lvl:</label>
-                <input type="number" id="farming_lvl" min="0" />
-                <label for="crop_acquired">crop_acquired:</label>
-                <input type="number" id="crop_acquired" min="0" max="120" />
-
-              </div>
               <div id="tab-world6-sneaking" class="ui-tabs-panel ui-corner-bottom ui-widget-content">
 
                 <label for="pristine_crystal_comb_obtained">pristine_crystal_comb_obtained</label>
                 <input type="checkbox" id="pristine_crystal_comb_obtained" />
-                <label for="pristine_liquorice_rolle_obtained">pristine_liquorice_rolle_obtained</label>
-                <input type="checkbox" id="pristine_liquorice_rolle_obtained" />
 
               </div>
 
               <div id="tab-world6-summoning" class="ui-tabs-panel ui-corner-bottom ui-widget-content">
-
-                <label for="summoning_lvl">Summoning lvl:</label>
-                <input type="number" id="summoning_lvl" min="0" />
-                <label for="summon_battle_mushP">Purple mushroom (purple battle 1) beaten ?</label>
-                <input type="checkbox" id="summon_battle_mushP" />
 
               </div>
             </div>
@@ -314,35 +428,51 @@
 
             <div id="tabs-general-features" class="jquerytabs">
               <ul>
-
-                <li>
-                  <a href="#tab-general-merit-shop">
-                    <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/1/1d/Spirit_Sungmin.gif" />Merit
-                    Shop
-                  </a>
-                </li>
-                <li>
-                  <a href="#tab-general-achievements">
+                <li><a href="#tab-general-merit-shop">
+                    <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/1/1d/Spirit_Sungmin.gif" />Merit Shop
+                  </a></li>
+                <li><a href="#tab-general-achievements">
                     Achievements
-                  </a>
-                </li>
-
+                  </a></li>
               </ul>
 
               <div id="tab-general-merit-shop">
-                <label for="merit_world6_summoning_bonus">Summoning bonus level ?</label>
-                <input type="number" id="merit_world6_summoning_bonus" min="0" max="10" />
+                <label for="merit_world3_max_book_lvl">W3 max book lvls (2 max book lvl per purchase, up to +10)</label>
+                <input type="number" id="merit_world3_max_book_lvl" min="0" max="5" />
+                <label for="merit_world6_summoning_bonus_lvl">W6 summoning bonus</label>
+                <input type="number" id="merit_world6_summoning_bonus_lvl" min="0" max="10" />
               </div>
               <div id="tab-general-achievements">
                 <!-- World 3 -->
-
+                <label for="achiev_checkout_takeout">Checkout Takeout achievement (5 max book lvl, 30% checkout speed)</label>
+                <input type="checkbox" id="achiev_checkout_takeout" />
+                <!-- World 6 -->
+                <label for="achiev_spectre_stars">Spectre stars</label>
+                <input type="checkbox" id="achiev_spectre_stars" />
+                <label for="achiev_regalis_my_beloved">Regalis My Beloved</label>
+                <input type="checkbox" id="achiev_regalis_my_beloved" />
               </div>
-
             </div>
 
           </div>
+
         </div>
 
+      </div>
+
+      <div id="tab-library-stats" style="display:none;">
+        <p>
+          Max book level: <span id="max_book_level"></span>
+        </p>
+        <p>
+          Time to 5 books: <span id="time_to_5_books"></span>
+        </p>
+        <p>
+          Time to 20 books: <span id="time_to_20_books"></span>
+        </p>
+        <p>
+          Time to 40 books: <span id="time_to_40_books"></span>
+        </p>
       </div>
 
     </div>

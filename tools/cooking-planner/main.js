@@ -230,7 +230,7 @@ function FormatCookingTime(time_in_hours) {
   let m = 60 * s
   let h = 60 * m
   let d = 24 * h
-  let y = 365 * 24
+  let y = 365 * d
 
   let accounted = 0
 
