@@ -478,47 +478,47 @@ class CookingData {
 
         // world 1 
         // stamps
-        document.getElementById(`stamp_cooked_meal_lvl`).value = this.stamp_cooked_meal_lvl
+        document.getElementById(`stamp_cooked_meal_lvl`).setValue(this.stamp_cooked_meal_lvl)
 
 
         // world 2
         // alchemy
-        document.getElementById(`diamond_chef_lvl`).value = this.diamond_chef_lvl
-        document.getElementById(`max_level_vials`).value = this.max_level_vials
-        document.getElementById(`vial_level_turtle`).value = this.vial_level_turtle
-        document.getElementById(`vial_level_firefly`).value = this.vial_level_firefly
-        document.getElementById(`vial_level_sand_shark`).value = this.vial_level_sand_shark
-        document.getElementById(`vial_level_dreadlo`).value = this.vial_level_dreadlo
+        document.getElementById(`diamond_chef_lvl`).setValue(this.diamond_chef_lvl)
+        document.getElementById(`max_level_vials`).setValue(this.max_level_vials)
+        document.getElementById(`vial_level_turtle`).setValue(this.vial_level_turtle)
+        document.getElementById(`vial_level_firefly`).setValue(this.vial_level_firefly)
+        document.getElementById(`vial_level_sand_shark`).setValue(this.vial_level_sand_shark)
+        document.getElementById(`vial_level_dreadlo`).setValue(this.vial_level_dreadlo)
 
         // world 3
         // construction
-        document.getElementById(`void_plate_chef_lvl`).value = this.void_plate_chef_lvl
+        document.getElementById(`void_plate_chef_lvl`).setValue(this.void_plate_chef_lvl)
         // worship
-        document.getElementById(`total_waves`).value = this.total_waves
+        document.getElementById(`total_waves`).setValue(this.total_waves)
 
         // world 4
         // cooking
-        document.getElementById(`min_ladles_per_meal`).value = this.min_ladles_per_meal
-        document.getElementById(`max_ladles_per_meal`).value = this.max_ladles_per_meal
-        document.getElementById(`ladles_owned`).value = this.ladles_owned
-        document.getElementById(`ladles_per_day`).value = this.ladles_per_day
+        document.getElementById(`min_ladles_per_meal`).setValue(this.min_ladles_per_meal)
+        document.getElementById(`max_ladles_per_meal`).setValue(this.max_ladles_per_meal)
+        document.getElementById(`ladles_owned`).setValue(this.ladles_owned)
+        document.getElementById(`ladles_per_day`).setValue(this.ladles_per_day)
 
         for (let i = 0; i < meal_count; i++) {
-            document.getElementById(`meal${i}_level`).value = this.meal_levels[i]
-            document.getElementById(`meal${i}_qtt`).value = this.meal_quantities[i].toExponential(2)
+            document.getElementById(`meal${i}_level`).setValue(this.meal_levels[i])
+            document.getElementById(`meal${i}_qtt`).value = (this.meal_quantities[i].toExponential(2))
         }
 
         for (let i = 0; i < 10; i++) {
             let kitchen = this.kitchen_stats[i]
-            document.getElementById(`kitchen${i}_speed_level`).value = kitchen.speedLv
-            document.getElementById(`kitchen${i}_fire_level`).value = kitchen.fireLv
-            document.getElementById(`kitchen${i}_luck_level`).value = kitchen.luckLv
-            document.getElementById(`kitchen${i}_is_richelin`).checked = kitchen.isRichelin
+            document.getElementById(`kitchen${i}_speed_level`).setValue(kitchen.speedLv)
+            document.getElementById(`kitchen${i}_fire_level`).setValue(kitchen.fireLv)
+            document.getElementById(`kitchen${i}_luck_level`).setValue(kitchen.luckLv)
+            document.getElementById(`kitchen${i}_is_richelin`).checked = (kitchen.isRichelin)
         }
 
         // breeding
-        document.getElementById(`shiny_lvl_red_mush`).value = this.shiny_lvl_red_mush
-        document.getElementById(`shiny_lvl_sheepie`).value = this.shiny_lvl_sheepie
+        document.getElementById(`shiny_lvl_red_mush`).setValue(this.shiny_lvl_red_mush)
+        document.getElementById(`shiny_lvl_sheepie`).setValue(this.shiny_lvl_sheepie)
         // lab
         document.getElementById(`lab_amethyst_rhinestone`).checked = this.lab_amethyst_rhinestone
         document.getElementById(`lab_purple_rhombol`).checked = this.lab_purple_rhombol
@@ -537,37 +537,37 @@ class CookingData {
 
         // world 5
         // sailing
-        document.getElementById(`artifact_triangulon_lvl`).value = this.artifact_triangulon_lvl
-        document.getElementById(`artifact_winz_lantern_lvl`).value = this.artifact_winz_lantern_lvl
+        document.getElementById(`artifact_triangulon_lvl`).setValue(this.artifact_triangulon_lvl)
+        document.getElementById(`artifact_winz_lantern_lvl`).setValue(this.artifact_winz_lantern_lvl)
         // gaming
         document.getElementById(`MSA_mealing_unlocked`).checked = this.MSA_mealing_unlocked
         // world 6
         // farming
-        document.getElementById(`farming_lvl`).value = this.farming_lvl
-        document.getElementById(`crop_acquired`).value = this.crop_acquired
+        document.getElementById(`farming_lvl`).setValue(this.farming_lvl)
+        document.getElementById(`crop_acquired`).setValue(this.crop_acquired)
         // sneaking
         document.getElementById(`pristine_crystal_comb_obtained`).checked = this.pristine_crystal_comb_obtained
         document.getElementById(`pristine_liquorice_rolle_obtained`).checked = this.pristine_liquorice_rolle_obtained
         // summoning
         document.getElementById(`summon_battle_mushP`).checked = this.summon_battle_mushP
-        document.getElementById(`summoning_lvl`).value = this.summoning_lvl
+        document.getElementById(`summoning_lvl`).setValue(this.summoning_lvl)
 
         // general
         document.getElementById(`p2w_pack_sacred_methods`).checked = this.p2w_pack_sacred_methods
         // classes
-        document.getElementById(`voidwalker_blood_marrow_lvl`).value = this.voidwalker_blood_marrow_lvl
-        document.getElementById(`voidwalker_eclipse_lvl`).value = this.voidwalker_eclipse_lvl
-        document.getElementById(`blood_berserker_super_chow_count`).value = this.blood_berserker_super_chow_count
-        document.getElementById(`blood_berserker_overflowing_ladles_lvl`).value = this.blood_berserker_overflowing_ladles_lvl
+        document.getElementById(`voidwalker_blood_marrow_lvl`).setValue(this.voidwalker_blood_marrow_lvl)
+        document.getElementById(`voidwalker_eclipse_lvl`).setValue(this.voidwalker_eclipse_lvl)
+        document.getElementById(`blood_berserker_super_chow_count`).setValue(this.blood_berserker_super_chow_count)
+        document.getElementById(`blood_berserker_overflowing_ladles_lvl`).setValue(this.blood_berserker_overflowing_ladles_lvl)
         // cards
-        document.getElementById(`card_troll1_level`).value = this.card_troll1_level
-        document.getElementById(`card_ceramic_spirit_level`).value = this.card_ceramic_spirit_level
+        document.getElementById(`card_troll1_level`).setValue(this.card_troll1_level)
+        document.getElementById(`card_ceramic_spirit_level`).setValue(this.card_ceramic_spirit_level)
         // star sign
         document.getElementById(`star_sign_gordonius_major`).checked = this.star_sign_gordonius_major
         document.getElementById(`star_sign_seraph_cosmos`).checked = this.star_sign_seraph_cosmos
         document.getElementById(`star_sign_chip_doubler_active`).checked = this.star_sign_chip_doubler_active
         // merit shop
-        document.getElementById(`merit_world6_summoning_bonus`).value = this.merit_world6_summoning_bonus_lvl
+        document.getElementById(`merit_world6_summoning_bonus`).setValue(this.merit_world6_summoning_bonus_lvl)
         // achieve
         document.getElementById(`achiev_cabbage_patch`).checked = this.achiev_cabbage_patch
         document.getElementById(`achiev_pretzel_bleu`).checked = this.achiev_pretzel_bleu
@@ -575,7 +575,7 @@ class CookingData {
         document.getElementById(`achiev_spectre_stars`).checked = this.achiev_spectre_stars
         document.getElementById(`achiev_regalis_my_beloved`).checked = this.achiev_regalis_my_beloved
         // arcade
-        document.getElementById(`arcade_cooking_bonus_lvl`).value = this.arcade_cooking_bonus_lvl
+        document.getElementById(`arcade_cooking_bonus_lvl`).setValue(this.arcade_cooking_bonus_lvl)
 
 
 

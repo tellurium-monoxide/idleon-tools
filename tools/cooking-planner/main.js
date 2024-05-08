@@ -81,7 +81,7 @@ function computeFromInputForm() {
 
 function remove_meal_upgrade() {
 
-  let meal_row = document.getElementById("meal_upgrade_order").firstChild.firstChild
+  let meal_row = document.getElementById("meal_upgrade_order").children[1].firstChild
   let meal_name = meal_row.children[1].innerText
   let meal_id = meal_info.findIndex((meal) => (meal.name == meal_name))
   console.log(meal_name)
@@ -89,7 +89,7 @@ function remove_meal_upgrade() {
 
   // document.getElementById(`meal${meal_id}_level`).value = Number(document.getElementById(`meal${meal_id}_level`).value) + 1;
 
-  let cooking_data_json = JSON.parse(meal_row.children[8].innerText)
+  let cooking_data_json = JSON.parse(meal_row.children[7].innerText)
   let cooking_data = Object.assign(new CookingData(), cooking_data_json);
   console.log(cooking_data)
 
