@@ -32,6 +32,7 @@ const TALENT_TIERS = [
             "IMBUED_SHOCKWAVES": { purpose: "Clear mobs faster", class_restrict: "Divine_Knight" },
             "DAGGERANG": { purpose: "Clear mobs faster", class_restrict: "Divine_Knight" },
             "MEGA_MONGORANG": { purpose: "Clear mobs faster", class_restrict: "Divine_Knight" },
+            "HAUNGRY_FOR_GOLD": { purpose: "DR from golden food", class_restrict: "Divine_Knight" },
             "ENHANCEMENT_ECLIPSE": { purpose: "global efficiency", global: true, goal_lvl: 225 },
         }
 
