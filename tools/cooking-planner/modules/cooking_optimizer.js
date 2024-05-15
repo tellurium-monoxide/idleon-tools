@@ -8,6 +8,7 @@ function computeMealOptimalOrder(cooking_data) {
     document.getElementById(`total_cooking_speed`).innerHTML = cooking_data.getCookingSpeed().toExponential(2)
     let cumulative_ladles = 0
     let days_NMLB = 0
+    let lvls_NMLB = 0
 
     let missing_levels = (meal_count * meal_max_lvl) - cooking_data.meal_levels.reduce((a, b) => a + b)
     while (cooking_data.meal_levels.reduce((a, b) => a + b) < (meal_count * meal_max_lvl)) {
@@ -43,7 +44,7 @@ function computeMealOptimalOrder(cooking_data) {
             days_NMLB += 1
             for (let [NMLB_meal, new_lvl] of NMLB_upgrades) {
                 content += addMealUpgradeDisplay(cooking_data, NMLB_meal, new_lvl, 0, cumulative_ladles, days_NMLB, true)
-
+                lvls_NMLB += 1
             }
         }
 
@@ -58,7 +59,7 @@ function computeMealOptimalOrder(cooking_data) {
     document.getElementById("missing_levels").innerHTML = missing_levels.toLocaleString();
     document.getElementById("days_needed").innerHTML = days_NMLB.toLocaleString();
     document.getElementById("NMLB_needed").innerHTML = days_NMLB * cooking_data.NMLB_count;
-    document.getElementById("NMLB_needed_percent").innerHTML = (days_NMLB * cooking_data.NMLB_count / missing_levels * 100).toFixed(2);
+    document.getElementById("NMLB_needed_percent").innerHTML = (lvls_NMLB / missing_levels * 100).toFixed(2);
 
 
 }
@@ -71,22 +72,26 @@ function addMealUpgradeDisplay(cooking_data, meal_id, new_meal_lvl, ladles, cumu
     // display_cumulative_time = FormatCookingTime(cumulative_time)
 
     let trclass = ""
-    if (new_meal_lvl == 90) {
-        trclass = "completed_meal"
-    } else if (isNMLB) {
-        trclass = "NMLB"
+    let NMLBclass = ""
+    if (isNMLB) {
+        NMLBclass = "NMLB"
     }
-
+    let lvlclass = ""
+    if (new_meal_lvl == 90) {
+        lvlclass = "completed_meal"
+    } else if (new_meal_lvl % 3 == 0) {
+        lvlclass = "multiple_of_3"
+    }
     content = `<tr class=${trclass}>`
     content += `<td><img src="${mdata.img}"></td>`
     content += `<td> ${mdata.name} </td>`
-    content += `<td>${new_meal_lvl}</td>`
+    content += `<td class="${lvlclass}">${new_meal_lvl}</td>`
     // content += `<td>Amount: ${getMealCost(new_meal_lvl, 0).toExponential(3)}</td>`
     // content += `<td>Time: ${display_time}</td>`
     content += `<td>${ladles}</td>`
     // content += `<td>Cumulative Time: ${display_cumulative_time}</td>`
     // content += `<td>Cumulative Ladles: ${cumulative_ladles}</td>`
-    content += `<td>${days_NMLB}</td>`
+    content += `<td class="${NMLBclass}">${days_NMLB}</td>`
     content += `<td>${cooking_data.ladles_owned}</td>`
     content += `<td> ${cooking_data.equinox_event_count}</td>`
     content += `<td hidden>${JSON.stringify(cooking_data)}</td>`

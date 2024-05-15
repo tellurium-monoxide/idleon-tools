@@ -14,12 +14,16 @@ button.link {
 
 
 
-tr.completed_meal {
+td.completed_meal {
   background-color: rgba(6, 119, 6, 0.482);
 }
 
-tr.NMLB {
+td.NMLB {
   background-color: rgba(238, 17, 17, 0.366);
+}
+
+td.multiple_of_3 {
+  background-color: rgba(212, 217, 84, 0.682);
 }
 
 img.collapsible_icon {
