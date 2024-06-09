@@ -145,7 +145,8 @@ class CookingData {
         this.summoning_lvl = save_data["Lv0_0"][18]
         let summoning_data = JSON.parse(save_data["Summon"])
         this.summon_battle_mushP = (summoning_data[1].includes("mushP"))
-
+        this.summon_battle_troll = (summoning_data[1].includes("w6b3"))
+        // console.log(summoning_data[1])
 
         // general
 
@@ -316,6 +317,7 @@ class CookingData {
         this.pristine_crystal_comb_obtained = document.getElementById(`pristine_crystal_comb_obtained`).checked
         // summoning
         this.summon_battle_mushP = document.getElementById(`summon_battle_mushP`).checked
+        this.summon_battle_troll = document.getElementById(`summon_battle_troll`).checked
         this.summoning_lvl = Number(document.getElementById(`summoning_lvl`).value)
 
         // general
@@ -448,9 +450,12 @@ class CookingData {
             )
 
 
-        this.summon_cooking_bonus = 1 + (this.summon_battle_mushP * 1.75 * this.summon_bonus_mult)
-        // console.log(this.summon_cooking_bonus)
-
+        this.summon_cooking_bonus = 1
+            + this.summon_battle_mushP * 1.75
+            * this.summon_battle_troll * 5.2
+            * this.summon_bonus_mult
+        console.log(this.summon_cooking_bonus)
+        document.getElementById(`summon_cooking_mult`).innerText = (this.summon_cooking_bonus.toFixed(3))
         // general
         // classes
         this.blood_marrow_bonus = (this.voidwalker_blood_marrow_lvl * 2.1 / 100) / (this.voidwalker_blood_marrow_lvl + 220);
@@ -489,6 +494,7 @@ class CookingData {
         document.getElementById(`vial_level_firefly`).setValue(this.vial_level_firefly)
         document.getElementById(`vial_level_sand_shark`).setValue(this.vial_level_sand_shark)
         document.getElementById(`vial_level_dreadlo`).setValue(this.vial_level_dreadlo)
+
 
         // world 3
         // construction
@@ -550,6 +556,7 @@ class CookingData {
         document.getElementById(`pristine_liquorice_rolle_obtained`).checked = this.pristine_liquorice_rolle_obtained
         // summoning
         document.getElementById(`summon_battle_mushP`).checked = this.summon_battle_mushP
+        document.getElementById(`summon_battle_troll`).checked = this.summon_battle_troll
         document.getElementById(`summoning_lvl`).setValue(this.summoning_lvl)
 
         // general

@@ -102,7 +102,8 @@ class AccountBookingStatus {
 
         // summoning
         let summoning_data = JSON.parse(save_data["Summon"])
-
+        console.log(summoning_data)
+        this.summon_battle_cyan14 = (summoning_data[1].includes("w6d3"))
 
         // general
 
@@ -218,6 +219,7 @@ class AccountBookingStatus {
             + 5 * this.achiev_checkout_takeout
             + 10 * (this.atom_oxygen >= 1)
             + 25 * this.artifact_fury_relic_lvl
+            + Math.round(10.5 * this.summon_battle_cyan14 * this.summon_bonus_mult)
 
 
         this.lib_checkout_speed = 4 * 3600
@@ -290,8 +292,9 @@ class AccountBookingStatus {
         // world 6
         // sneaking
         document.getElementById(`pristine_crystal_comb_obtained`).checked = this.pristine_crystal_comb_obtained
-        // summoning
 
+        // summoning
+        document.getElementById(`summon_battle_cyan14`).checked = this.summon_battle_cyan14
         // general
 
         // merit shop
