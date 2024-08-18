@@ -44,6 +44,7 @@ const TALENT_TIERS = [
             "CRANIUM_COOKING": { purpose: "Liquid production" },
             "TENTEYECLE": { purpose: "Liquid production" },
             "AUSPICIOUS_AURA": { purpose: "Liquid production" },
+            "RAISE_DEAD": { purpose: "Liquid production" },
             "SYMBOLS_OF_BEYOND_~P": { purpose: "Liquid production", class_restrict: "Bubonic_Conjuror" },
         }
 
