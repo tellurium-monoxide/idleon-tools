@@ -16,5 +16,5 @@ except OSError as e:
     
 
 complexity('project/', 'www/')
-serve_static_site('www/')
+# serve_static_site('www/')
 
