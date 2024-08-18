@@ -9,10 +9,11 @@ import shutil
 mydir = 'www/'
 
 # Try to remove the tree; if it fails, throw an error using try...except.
+print("Try to delete build destination if it exists")
 try:
     shutil.rmtree(mydir)
 except OSError as e:
-    print("Error: %s - %s." % (e.filename, e.strerror))
+    print("%s does not exist, no need to delete." % (e.filename))
     
 
 complexity('project/', 'www/')
