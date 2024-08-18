@@ -1,0 +1,74 @@
+body {
+    margin: 0;
+}
+
+/* The navigation bar */
+ul.navbar {
+    list-style-type: none;
+    overflow: hidden;
+    border: 1px solid #e7e7e7;
+    background-color: #f3f3f3;
+    position: fixed;
+    /* Set the navbar to fixed position */
+    top: 0;
+    margin: 0;
+    padding: 0;
+    /* Position the navbar at the top of the page */
+    width: 100%;
+    height: 50px;
+    /* Full width */
+    z-index: 100;
+}
+
+.navbar li {
+    float: left;
+    display: inline;
+    height: 50px;
+    /* border-right: 1px solid #bbb; */
+}
+
+.navbar li:last-child {
+    border-right: none;
+}
+
+.navbar li a {
+    display: block;
+    color: #666;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    height: 50px;
+}
+
+li a:hover {
+    background: #ddd;
+    color: black;
+}
+
+/* Links inside the navbar */
+/* .navbar a {
+    float: left;
+    display: inline;
+    color: #f2f2f2;
+    text-align: center;
+    padding-right: 14px;
+    text-decoration: none;
+    vertical-align: middle;
+    height: 40px;
+} */
+
+.navbar li.active {
+    background: #d4d954ae;
+}
+
+img.topicon {
+    height: 10px;
+}
+
+/* Main content */
+.main {
+    padding-top: 50px;
+    margin-left: 20px;
+    margin-right: 20px;
+    /* Add a top margin to avoid content overlay */
+}

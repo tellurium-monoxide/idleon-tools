@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="main">
+
+    <div>
+        {% block desc %}
+        <h1>Talent book planner</h1>
+        <p>
+            This tool gives of tier list of talent worth booking to max level.
+        </p>
+        <p>
+            The tiers are organized by activity, and ordered depending on how important the activity is. This is partially subjective, and also depends a lot on where you are in the game. Do not follow these tiers by the letter, and choose depending on what activity you are currently working on. Also, in each tier, some talents are more useful than others, it is left to the user to make an educated choice.
+        </p>
+        {% endblock %}
+    </div>
+    <div>
+        <label for="name">Enter your <a href="https://www.idleonefficiency.com/raw-data" target="_blank">IE save data</a>
+            here:</label>
+        <input type="text" id="raw_data" name="name" title="Tip: Your last entered save data is saved in your browser local storage for the next time you access the page." />
+        <button id="enter_save_data" onclick="onSubmit()">Enter</button>
+        <button id="clear_save_data" onclick="onClear()">Clear</button>
+    </div>
+    <div>
+        {% block tool %}
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}
