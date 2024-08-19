@@ -1,0 +1,48 @@
+label {
+  display: block;
+  font:
+    1rem 'Fira Sans',
+    sans-serif;
+}
+
+button.link {
+  background: none;
+  border: none;
+  color: blue;
+  cursor: pointer;
+}
+
+table.tiered_talents {
+  border: 1px solid;
+}
+
+table.tiered_talents td {
+  padding: 0 15px;
+}
+
+img.collapsible_icon {
+  vertical-align: middle;
+  height: 40px;
+}
+
+img.collapsible_icon_world {
+  vertical-align: middle;
+}
+
+.talent_display {
+  text-align: center;
+  border: 1px solid;
+  margin: 5px;
+}
+
+.talent_display.completed {
+  background-color: rgba(6, 119, 6, 0.482);
+}
+
+.talent_display.unbookable {
+  background-color: rgba(114, 114, 114, 0.798);
+}
+
+.talent_display.not_leveled {
+  background-color: rgba(238, 17, 17, 0.366);
+}

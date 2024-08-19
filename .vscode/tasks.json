@@ -4,19 +4,13 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build",
-            "type": "shell",
-            "command": "python build.py",
-            "problemMatcher": []
-        },
-        {
             "label": "serve",
             "type": "shell",
-            "command": "python serve.py",
+            "command": "bundle exec jekyll serve",
             "problemMatcher": [],
-            "dependsOn": [
-                "build",
-            ],
+            // "dependsOn": [
+            //     "build"
+            // ],
             "group": {
                 "kind": "build",
                 "isDefault": true
