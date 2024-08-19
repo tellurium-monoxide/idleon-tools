@@ -1,0 +1,32 @@
+---
+layout: default
+title: Home
+nav_id: nav_cook
+permalink: /cooking-planner/
+---
+<div class="main">
+    <h1>IdleOn Cooking Planner</h1>
+    <h2> How to use? </h2>
+    <div>
+        <p>
+            This tool will give you the best order to upgrade meals, and give you an estimated time to complete cooking (all
+            meals level max).
+        </p>
+        <p>
+            Start by pasting your Idleon Efficiency save data below and click the button. This will fill the input fields,
+            do
+            the calculations and display the meal upgrade order. </p>
+        <p>
+            Then you can manually alter the content of the "Inputs" section, to simulate different stats. To estimate the
+            time, the tool uses your ladles / day production, which is set by default to 10 000 (around what endgamers get).
+            Change this to have a result closer to your real situation. This option is located in
+            <button class="link" id="to_ladle_tab">Inputs > World 4 > Cooking > Ladles.</button>
+
+        </p>
+        <p>
+            After modifying the inputs, you can redo the calculations with the button "Compute from inputs" below.
+        </p>
+
+    </div>
+    {% include input_save_data.html %}
+</div>

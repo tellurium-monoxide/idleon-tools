@@ -1,0 +1,46 @@
+label {
+  display: block;
+  font:
+    1rem 'Fira Sans',
+    sans-serif;
+}
+
+button.link {
+  background: none;
+  border: none;
+  color: blue;
+  cursor: pointer;
+}
+
+
+
+td.completed_meal {
+  background-color: rgba(6, 119, 6, 0.482);
+}
+
+td.NMLB {
+  background-color: rgba(238, 17, 17, 0.366);
+}
+
+td.multiple_of_3 {
+  background-color: rgba(212, 217, 84, 0.682);
+}
+
+img.collapsible_icon {
+  vertical-align: middle;
+  height: 40px;
+}
+
+img.collapsible_icon_world {
+  vertical-align: middle;
+}
+
+img.meal_icon {
+  height: 40px;
+}
+
+table,
+th,
+td {
+  border: 1px solid;
+}
