@@ -14,10 +14,37 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 
+    <script src="{{ site.baseurl }}/assets/js/utils.js"></script>
+    <script src="{{ site.baseurl }}/assets/js/input_save_data.js"></script>
+    <script src="{{ site.baseurl }}/assets/js/bootstrap-input-spinner/InputSpinner.js"></script>
+
+    {% if page.on_ready_js %}
+    <script type="text/javascript" src="{{ site.baseurl }}/assets/js/{{ page.on_ready_js }}"></script>
+    {% endif %}
+
     <script>
         $(document).ready(function () {
             $(".navbar li").removeClass("active");
             $("#{{ page.nav_id }}").addClass("active");
+
+            $("#tabs-global").tabs({
+                collapsible: true,
+                active: false
+            });
+            $(".jquerytabs").tabs({
+                collapsible: false
+            });
+            try {
+                onReady();
+            } catch (e) {
+                // console.debug(e);
+            }
+
+            const inputSpinnerElements = document.querySelectorAll("input[type='number']")
+            for (const inputSpinnerElement of inputSpinnerElements) {
+                new InputSpinner(inputSpinnerElement)
+            }
+            lookIntoLocalStorage();
         });
     </script>
 </head>
@@ -42,17 +69,17 @@
 
     {% if layout.custom_css %}
     {% for stylesheet in layout.custom_css %}
-    <link rel="stylesheet" href="/assets/css/{{ stylesheet }}.css">
+    <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/{{ stylesheet }}">
     {% endfor %}
     {% endif %}
     {% if page.custom_css %}
     {% for stylesheet in page.custom_css %}
-    <link rel="stylesheet" href="/assets/css/{{ stylesheet }}.css">
+    <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/{{ stylesheet }}">
     {% endfor %}
     {% endif %}
     {% if page.custom_js %}
     {% for js_file in page.custom_js %}
-    <script type="text/javascript" src="{{ site.baseurl }}/assets/js/{{ js_file }}.js"></script>
+    <script type="text/javascript" src="{{ site.baseurl }}/assets/js/{{ js_file }}"></script>
     {% endfor %}
     {% endif %}
 </body>

@@ -5,5 +5,10 @@
     "html.format.maxPreserveNewLines": 1,
     "html.format.wrapAttributes": "aligned-multiple",
     "html.format.wrapLineLength": 0,
-    "editor.wordWrap": "on"
+    "editor.wordWrap": "on",
+    "html.format.contentUnformatted": "pre,code,textarea",
+    // Enables formatting of all .html files
+    // "[html]": {
+    //     "editor.defaultFormatter": "sissel.shopify-liquid"
+    // },
 }

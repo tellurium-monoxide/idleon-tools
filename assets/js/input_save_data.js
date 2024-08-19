@@ -4,7 +4,7 @@ function lookIntoLocalStorage() {
     if (raw_data) {
         console.log("Found save data in local storage")
         document.querySelector("#raw_data").value = raw_data
-        parseSaveData(raw_data)
+        run_local_tool(raw_data)
     }
 
 }
@@ -18,25 +18,28 @@ async function onSubmit() {
     if (tryToParse(input_data) && "Meals" in tryToParse(input_data)) {
         console.log("found raw IE data")
         raw_data = input_data
-        parseSaveData(raw_data)
+        run_local_tool(raw_data)
 
     } else if (tryToParse(input_data) && "serverVars" in tryToParse(input_data)) {
         console.log("found IT data")
         save_data = JSON.parse(input_data)["data"]
-        parseSaveData(save_data)
+        run_local_tool(save_data)
     } else {
         console.log("assuming character name")
         let name = input_data.toLowerCase()
         const cdn_location = 'https://cdn.idleonefficiency.com'
+        const full_link = `${cdn_location}/profiles/${input_data}.json`
+        console.log("full_link")
+        console.log(full_link)
         try {
-            const res = await fetch(`${cdn_location}/profiles/${input_data}.json`, {
+            const res = await fetch(full_link, {
                 cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
             });
             if (res.ok) {
                 const save_data = await res.json();
                 const raw_data = JSON.stringify(save_data);
                 // console.log(save_data);
-                parseSaveData(raw_data)
+                run_local_tool(raw_data)
             }
             return undefined;
         }
