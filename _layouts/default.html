@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>{{ page.title }} - Built with Complexity</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://idleon.wiki/wiki/images/0/05/Trabble_Ultimate.png">
+
+    <link href="{{ site.baseurl }}/assets/css/topnav.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $(".navbar li").removeClass("active");
+            $("#{{ page.nav_id }}").addClass("active");
+        });
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <ul class="navbar">
+            <li id="nav_home"><a href="{{ site.baseurl }}/">Home</a></li>
+            <li id="nav_cook" class="active"><a href="{{ site.baseurl }}/cooking-planner/">Cooking Planner</a></li>
+            <li id="nav_book"><a href="{{ site.baseurl }}/talent-book-planner/">Talent Planner</a></li>
+            <li style="float:right">
+                <a href="https://github.com/tellurium-monoxide/idleon-tools" target="_blank">Git Repo</a>
+            </li>
+        </ul>
+
+        {{ content }}
+    </div>
+
+    <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="/js/example.js"></script> -->
+
+    {% if layout.custom_css %}
+    {% for stylesheet in layout.custom_css %}
+    <link rel="stylesheet" href="/assets/css/{{ stylesheet }}.css">
+    {% endfor %}
+    {% endif %}
+    {% if page.custom_css %}
+    {% for stylesheet in page.custom_css %}
+    <link rel="stylesheet" href="/assets/css/{{ stylesheet }}.css">
+    {% endfor %}
+    {% endif %}
+    {% if page.custom_js %}
+    {% for js_file in page.custom_js %}
+    <script type="text/javascript" src="{{ site.baseurl }}/assets/js/{{ js_file }}.js"></script>
+    {% endfor %}
+    {% endif %}
+</body>
+
+</html>
