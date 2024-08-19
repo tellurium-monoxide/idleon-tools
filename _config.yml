@@ -3,5 +3,5 @@ url: "https://tellurium-monoxide.github.io" # the base hostname & protocol for y
 baseurl: "/idleon-tools" # the subpath of your site, e.g. /blog
 title: "Idleon Tools" # the name of your site, e.g. ACME Corp.
 github_username: "tellurium-monoxide"
-repository: "idleon-tools"
+repository: "tellurium-monoxide/idleon-tools"
 description: ""
