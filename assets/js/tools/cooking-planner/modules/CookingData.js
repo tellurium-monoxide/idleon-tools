@@ -151,7 +151,6 @@ class CookingData {
         // general
 
         // p2w
-        console.log(save_data)
         let bundle_info = JSON.parse(save_data["BundlesReceived"])
         this.p2w_pack_sacred_methods = bundle_info.hasOwnProperty("bun_s")
 
