@@ -2,4 +2,6 @@ domain: "tellurium-monoxide.github.io"
 url: "https://tellurium-monoxide.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 baseurl: "/idleon-tools" # the subpath of your site, e.g. /blog
 title: "Idleon Tools" # the name of your site, e.g. ACME Corp.
-github_username:  tellurium-monoxide
+github_username: "tellurium-monoxide"
+repository: "idleon-tools"
+description: ""
