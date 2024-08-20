@@ -2,9 +2,11 @@
 <html lang="en">
 
 <head>
-    <title>{{ page.title }} - Built with Complexity</title>
+    <title>{{ page.title }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="https://idleon.wiki/wiki/images/0/05/Trabble_Ultimate.png">
+    {% if page.icon_url %}
+    <link rel="icon" href={{ page.icon_url }}>
+    {% endif %}
 
     <link href="{{ site.baseurl }}/assets/css/topnav.css" rel="stylesheet">
     <link href="{{ site.baseurl }}/assets/css/titles.css" rel="stylesheet">
