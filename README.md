@@ -14,6 +14,7 @@ This is a collection of tools for the game IdleOn I make for my own use. They ar
 ## Future tools
 I plan to make tools for the following purposes: 
 - Shiny levelling planner
+- Construction finisher calculator
 
 Those are probably already covered in some google sheet, but I dislike using these for advanced calculations.
 
