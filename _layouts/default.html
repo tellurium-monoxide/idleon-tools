@@ -24,8 +24,8 @@
 
     <script>
         $(document).ready(function () {
-            $(".navbar li").removeClass("active");
-            $("#{{ page.nav_id }}").addClass("active");
+            // $(".navbar li").removeClass("active");
+            // $("#{{ page.nav_id }}").addClass("active");
 
             $("#tabs-global").tabs({
                 collapsible: true,
@@ -34,6 +34,7 @@
             $(".jquerytabs").tabs({
                 collapsible: false
             });
+            // execute the onReady function defined by the page.on_ready_js file
             try {
                 onReady();
             } catch (e) {
@@ -52,9 +53,15 @@
 <body>
     <div class="container">
         <ul class="navbar">
-            <li id="nav_home"><a href="{{ site.baseurl }}/">Home</a></li>
-            <li id="nav_cook"><a href="{{ site.baseurl }}/cooking-planner/">Cooking Planner</a></li>
-            <li id="nav_book"><a href="{{ site.baseurl }}/talent-book-planner/">Talent Planner</a></li>
+            <li id="nav_home" {% if page.nav_id=="nav_home" %}class="active" {% endif %}>
+                <a href="{{ site.baseurl }}/">Home</a>
+            </li>
+            <li id="nav_cook" {% if page.nav_id=="nav_cook" %}class="active" {% endif %}>
+                <a href="{{ site.baseurl }}/cooking-planner/">Cooking Planner</a>
+            </li>
+            <li id="nav_book" {% if page.nav_id=="nav_book" %}class="active" {% endif %}>
+                <a href="{{ site.baseurl }}/talent-book-planner/">Talent Planner</a>
+            </li>
             <li style="float:right">
                 <a href="https://github.com/tellurium-monoxide/idleon-tools" target="_blank">Git Repo</a>
             </li>

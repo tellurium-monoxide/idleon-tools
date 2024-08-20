@@ -24,8 +24,10 @@ function computeMealOptimalOrder(cooking_data) {
 
 
         const meal_time = cooking_req / cooking_speed
-        const ladles = Math.max(cooking_data.getLadlesNeeded(meal_time), cooking_data.min_ladles_per_meal)
-
+        let ladles = 0
+        if (meal_time > 0) {
+            ladles = Math.max(cooking_data.getLadlesNeeded(meal_time), cooking_data.min_ladles_per_meal)
+        }
         if (ladles <= cooking_data.max_ladles_per_meal && ladles < cooking_data.ladles_owned) {
 
             cooking_data.cookMealWithLadles(best_meal, ladles)

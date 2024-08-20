@@ -72,6 +72,18 @@ class CookingData {
         // worship
         let totem_info = JSON.parse(save_data["TotemInfo"])
         this.total_waves = totem_info[0].reduce((a, b) => a + b)
+
+        // equinox
+        const dreams = save_data["Dream"]
+        this.dream_food_lust_level = dreams[11]
+
+        const WeeklyBoss = JSON.parse(save_data["WeeklyBoss"])
+        const clouds = Object.keys(WeeklyBoss).filter(key => key.startsWith('d_')).reduce((obj, key) => {
+            obj[key.substring(2)] = WeeklyBoss[key];
+            return obj;
+        }, {});
+
+        this.equinox_cloud_34 = (clouds[33] == -1)
         // world 4
         // cooking
         let meal_data = JSON.parse(save_data["Meals"])
@@ -151,8 +163,12 @@ class CookingData {
         // general
 
         // p2w
-        let bundle_info = JSON.parse(save_data["BundlesReceived"])
-        this.p2w_pack_sacred_methods = bundle_info.hasOwnProperty("bun_s")
+        if (save_data.hasOwnProperty("BundlesReceived")) {
+            let bundle_info = JSON.parse(save_data["BundlesReceived"])
+            this.p2w_pack_sacred_methods = bundle_info.hasOwnProperty("bun_s")
+        } else {
+            this.p2w_pack_sacred_methods = false
+        }
 
         // find voidWalker blood marrow and eclipse lvl
         this.voidwalker_blood_marrow_lvl = 0;
@@ -261,6 +277,9 @@ class CookingData {
         this.void_plate_chef_lvl = Number(document.getElementById(`void_plate_chef_lvl`).value)
         // worship
         this.total_waves = Number(document.getElementById(`total_waves`).value)
+        //equinox
+        this.dream_food_lust_level = Number(document.getElementById(`dream_food_lust_level`).value)
+        this.equinox_cloud_34 = document.getElementById(`equinox_cloud_34`).checked
 
         // world 4
         // cooking
@@ -358,11 +377,6 @@ class CookingData {
     // calculates bonuses that do not evolve with meal progression
     initCalculatedBonus() {
 
-        if (!this.equinox_event_count) {
-            this.equinox_event_count = 0
-        }
-
-        this.computeMealCookingReq()
 
         // this needs to be computed first as lab affects nearly everything
         // TODO: pure opal navette seems to apply to itself... unsure about that, but it at least applies visually in lab
@@ -400,6 +414,12 @@ class CookingData {
         // world 3
         // construction
         // worship
+        // equinox
+        this.food_lust_max_count = this.dream_food_lust_level
+        this.food_lust_cost_multiplier = 0.8 - this.equinox_cloud_34 * 0.22
+        if (!this.equinox_event_count) {
+            this.equinox_event_count = 0
+        }
 
         // world 4
 
@@ -437,8 +457,6 @@ class CookingData {
         this.crop_depot_bonus = Math.pow(1.1, this.crop_acquired) * this.depot_studies_phd_bonus
 
 
-        console.log(this.crop_depot_bonus)
-
         // sneaking
         // summoning
         this.summon_bonus_mult = (1 + 0.3 * this.pristine_crystal_comb_obtained)
@@ -454,7 +472,7 @@ class CookingData {
             + this.summon_battle_mushP * 1.75
             * this.summon_battle_troll * 5.2
             * this.summon_bonus_mult
-        console.log(this.summon_cooking_bonus)
+
         document.getElementById(`summon_cooking_mult`).innerText = (this.summon_cooking_bonus.toFixed(3))
         // general
         // classes
@@ -473,6 +491,8 @@ class CookingData {
         // achieve
         // arcade
         this.arcade_cooking_bonus = (this.arcade_cooking_bonus_lvl * 0.4) / (this.arcade_cooking_bonus_lvl + 100)
+
+        this.computeMealCookingReq()
 
     }
 
@@ -501,6 +521,9 @@ class CookingData {
         document.getElementById(`void_plate_chef_lvl`).setValue(this.void_plate_chef_lvl)
         // worship
         document.getElementById(`total_waves`).setValue(this.total_waves)
+        // equinox
+        document.getElementById(`dream_food_lust_level`).setValue(this.dream_food_lust_level)
+        document.getElementById(`equinox_cloud_34`).checked = this.equinox_cloud_34
 
         // world 4
         // cooking
@@ -708,12 +731,13 @@ class CookingData {
         }
         else {
             let level = current_lvl
-            // achiev 4-24 "best plate" gives 10% lower cost, actually cost efficiency 
+            // achiev w4-24 "best plate" gives 10% lower cost, actually cost efficiency 
             // like most other badly worded cost reductions in this game
             const achiev_cost_reduction = 1 / (1 + 0.1 * this.achiev_best_plate)
 
             // equinox gives reduced cost per daily event done, up to 14 (depends on equinox upgrade level actually)
-            const equinox = Math.max(0.01, Math.pow(0.8, Math.min(this.equinox_event_count, 14)))
+            const equinox = Math.max(0.01, Math.pow(this.food_lust_cost_multiplier, Math.min(this.equinox_event_count, this.food_lust_max_count)))
+            // console.log(equinox)
 
             const base_mult1 = (10 + (level + Math.pow(level, 2)));
             const base_mult2 = Math.pow(1.2 + 0.05 * level, level);
