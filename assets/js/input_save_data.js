@@ -1,10 +1,13 @@
 function lookIntoLocalStorage() {
     const raw_data = localStorage.getItem("IEsaveData");
 
-    if (raw_data) {
-        console.log("Found save data in local storage")
-        document.querySelector("#raw_data").value = raw_data
-        run_local_tool(raw_data)
+    if (document.querySelector("#raw_data")) {
+        if (raw_data) {
+            console.log("Found save data in local storage")
+
+            document.querySelector("#raw_data").value = raw_data
+            run_local_tool(raw_data)
+        }
     }
 
 }
