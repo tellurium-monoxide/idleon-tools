@@ -6,3 +6,8 @@ td.progress {
 table.costs {
     margin-left: 0;
 }
+
+.resources {
+    display: flex;
+    flex-wrap: wrap;
+}
