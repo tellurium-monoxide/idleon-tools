@@ -131,10 +131,11 @@ class AccountBookingStatus {
         // document.getElementById("tabs-char-talents").tabs();
         // tabs.tabs("refresh");
 
+        this.non_tiered_count = 0
         for (let i = 0; i < player_names.length; i++) {
             this.addPlayerDisplay(i)
         }
-
+        console.log(`Number of talent without tier: ${this.non_tiered_count}`)
         this.makeTalentUpgradeList()
 
 
@@ -378,9 +379,13 @@ class AccountBookingStatus {
         // let icon_display = icon ? `<img src=${icon}/>` : capEachWord(talent.name)
         let max_lvl = player.skill_max_levels[talent.skillIndex]
         let cur_lvl = player.skill_current_levels[talent.skillIndex]
-        let display_class = (max_lvl == this.max_book_level) ? "completed" : ""
+        let display_class = isTiered(talent.name, player.class_name) ? "" : "notier"
+        display_class = (max_lvl == this.max_book_level) ? "completed" : display_class
         display_class = (TALENT_UNBOOKABLE.includes(talent.name)) ? "unbookable" : display_class
-        display += `<div class="talent_display ${display_class}"> ${is_tiered} ${icon_display}<br> ${cur_lvl}/${max_lvl}</div>`
+        if (display_class == "notier") {
+            this.non_tiered_count += 1
+        }
+        display += `<div class="talent_display ${display_class}" title="${talent.description}"> ${is_tiered} ${icon_display}<br> ${cur_lvl}/${max_lvl}</div>`
         return display
     }
 
@@ -475,6 +480,7 @@ class AccountBookingStatus {
         tabs.find("li").remove();
         for (let tier = 0; tier < max_tier + 1; tier++) {
             tiered_talents[tier].sort((a, b) => a.purpose > b.purpose)
+            tiered_talents[tier].sort((a, b) => a.charname > b.charname)
 
             if (tiered_talents[tier].length > 0) {
                 // add tier tab

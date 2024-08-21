@@ -13,6 +13,7 @@ const TALENT_TIERS = [
         "purpose": "Global and very useful bonuses",
         "list": {
             "PRINTER_GO_BRRR": { purpose: "prints" },
+            "ITS_YOUR_BIRTHDAY!": { purpose: "some candies" },
             "KING_OF_THE_REMEMBERED": { purpose: "prints", global: true },
             "ARCHLORD_OF_THE_PIRATES": { purpose: "DR multi", global: true },
             "EXTRA_BAGS": { purpose: "stamp upgrading" },
@@ -39,13 +40,18 @@ const TALENT_TIERS = [
     },
     {
         "name": "Bubo",
-        "purpose": "Maximize Bubo active farm (liquid and money).",
+        "purpose": "Maximize Bubo active farm (liquid and money) (DK in w6 is better for money now). You may also need to take some damage talents for this in early game",
         "list": {
-            "CRANIUM_COOKING": { purpose: "Liquid production" },
-            "TENTEYECLE": { purpose: "Liquid production" },
-            "AUSPICIOUS_AURA": { purpose: "Liquid production" },
+            "CRANIUM_COOKING": { purpose: "R1: Liquid production" },
+            "TENTEYECLE": { purpose: "R1: Liquid production" },
+            "AUSPICIOUS_AURA": { purpose: "R2: Liquid production" },
+            "FLATULENT_SPIRIT": { purpose: "R2: Liquid production" },
             "RAISE_DEAD": { purpose: "Liquid production" },
-            "SYMBOLS_OF_BEYOND_~P": { purpose: "Liquid production", class_restrict: "Bubonic_Conjuror" },
+            "BUSY_BREWIN": { purpose: "R4: brew speed" },
+            "BUBBLE_BREAKTHROUGH": { purpose: "R3: alch exp & new bubble chance" },
+            "SHARING_SOME_SMARTS": { purpose: "R3: alch exp" },
+            "INNER_PEACE": { purpose: "R3: alch exp", class_restrict: "Bubonic_Conjuror" },
+            "SYMBOLS_OF_BEYOND_~P": { purpose: "R1: Liquid production", class_restrict: "Bubonic_Conjuror" },
         }
 
     },
@@ -53,16 +59,22 @@ const TALENT_TIERS = [
         "name": "ES",
         "purpose": "Maximize ES active farm.",
         "list": {
-            "DIMENSIONAL_WORMHOLE": { purpose: "Active rare drop farm. See also all ES damage bonus", class_restrict: "Elemental_Sorcerer" },
-            "LIGHTNING_BARRAGE": { purpose: "Useful for portal kills", class_restrict: "Elemental_Sorcerer" },
-            "RADIANT_CHAINBOLT": { purpose: "Useful for portal kills", class_restrict: "Elemental_Sorcerer" },
-            "METEOR_SHOWER": { purpose: "Useful for portal kills", class_restrict: "Elemental_Sorcerer" },
-            "TORNADO": { purpose: "Useful for portal kills", class_restrict: "Elemental_Sorcerer" },
-            "METEOR_SHOWER": { purpose: "Useful for portal kills", class_restrict: "Elemental_Sorcerer" },
-            "FLOOR_IS_LAVA": { purpose: "Useful for portal kills", class_restrict: "Elemental_Sorcerer" },
-            "SPEEDY_BOOK": { purpose: "Useful for portal kills", class_restrict: "Elemental_Sorcerer" },
-            "CHAOTIC_FORCE": { purpose: "Useful for portal kills", class_restrict: "Elemental_Sorcerer" },
-            "SYMBOLS_OF_BEYOND_~P": { purpose: "Wormhole lvl and damage", class_restrict: "Elemental_Sorcerer" },
+            "DIMENSIONAL_WORMHOLE": { purpose: "R1: Active rare drop farm. See also all ES damage bonus", class_restrict: "Elemental_Sorcerer" },
+            "SYMBOLS_OF_BEYOND_~P": { purpose: "R1: Wormhole lvl and damage", class_restrict: "Elemental_Sorcerer" },
+            "LIGHTNING_BARRAGE": { purpose: "R2: Useful for portal kills", class_restrict: "Elemental_Sorcerer" },
+            "RADIANT_CHAINBOLT": { purpose: "R2: Useful for portal kills", class_restrict: "Elemental_Sorcerer" },
+            "METEOR_SHOWER": { purpose: "R2: Useful for portal kills", class_restrict: "Elemental_Sorcerer" },
+            "TORNADO": { purpose: "R2: Useful for portal kills", class_restrict: "Elemental_Sorcerer" },
+            "METEOR_SHOWER": { purpose: "R2: Useful for portal kills", class_restrict: "Elemental_Sorcerer" },
+            "FLOOR_IS_LAVA": { purpose: "R3: Useful for portal kills", class_restrict: "Elemental_Sorcerer" },
+            "SPEEDY_BOOK": { purpose: "R3: Useful for portal kills", class_restrict: "Elemental_Sorcerer" },
+            "CHAOTIC_FORCE": { purpose: "R2: Useful for portal kills", class_restrict: "Elemental_Sorcerer" },
+
+            "SHARPENED_AXE": { purpose: "R4: damage", class_restrict: "Elemental_Sorcerer" },
+            "GILDED_SWORD": { purpose: "R4: damage", class_restrict: "Elemental_Sorcerer" },
+            "FUSCIA_FLASKS": { purpose: "R4: damage", class_restrict: "Elemental_Sorcerer" },
+            "YOU'RE_NEXT": { purpose: "R4: damage", class_restrict: "Elemental_Sorcerer" },
+            "CHOPPIN_IT_UP_EZ": { purpose: "R5: damage", class_restrict: "Elemental_Sorcerer" },
         }
 
     },
@@ -70,10 +82,17 @@ const TALENT_TIERS = [
         "name": "Vman",
         "purpose": "Maximize vman speedruns.",
         "list": {
-            "ONE_STEP_AHEAD": { purpose: "Helps level vman talents" },
-            "VOID_TRIAL_RERUN": { purpose: "vman speedrun / sampling" },
+            "ONE_STEP_AHEAD": { purpose: "R1: Helps level vman talents" },
+            "VOID_TRIAL_RERUN": { purpose: "R1: vman speedrun / sampling" },
             "VOID_RADIUS": { purpose: "vman speedrun / sampling" },
             "BOSSING_VAIN": { purpose: "vman speedrun / sampling" },
+            "COLLOQUIAL_CONTAINERS": { purpose: "R3: some afk gains for sampling" },
+            "LUCKY_HIT": { purpose: "R3: vman damage" },
+            "ETERNAL_LUK": { purpose: "R3: vman damage" },
+            "F'LUK'EY_FABRICS": { purpose: "R3: vman damage" },
+            "SKILLAGE_DAMAGE": { purpose: "R3: vman damage" },
+            "BLISS_N_CHIPS": { purpose: "R3: vman damage" },
+            "CLEVER_CLOVER_OBOLS": { purpose: "R4: vman damage" },
         }
 
     },
@@ -90,19 +109,6 @@ const TALENT_TIERS = [
         }
 
     },
-    {
-        "name": "Trap",
-        "purpose": "Trapping can be useful quickly because no need to resample",
-        "list": {
-            "EAGLE_EYE": { purpose: "Trapping gains, effective immediately, very good", class_restrict: "Hunter" },
-            "INVASIVE_SPECIES": { purpose: "Trapping eff", class_restrict: "Hunter" },
-            "SKILL_AMBIDEXTERITY": { purpose: "Trapping eff", class_restrict: "Hunter" },
-            "SHROOM_BAIT": { purpose: "Trapping exp, low priority", class_restrict: "Hunter" },
-            "REFLECTIVE_EYESIGHT": { purpose: "Shiny chance, low priority", class_restrict: "Hunter" },
-            "RIGHT_HAND_OF_ACTION": { purpose: "global efficiency", global: true },
-            "SPECIES_EPOCH": { purpose: "Trap/worship gains", global: true },
-        }
-    },
 
 
 
@@ -110,34 +116,26 @@ const TALENT_TIERS = [
         "name": "Chop",
         "purpose": "Maximize wood samples, not needed until you want to resample",
         "list": {
-            "SMART_EFFICIENCY": { purpose: "Wood samples" },
-            "LOG_ON_LOGS": { purpose: "Wood samples" },
-            "DEFORESTING_ALL_DOUBT": { purpose: "Wood samples" },
-            "LEAF_THIEF": { purpose: "Wood samples" },
-            "UNT'WIS'TED_ROBES": { purpose: "Wood samples / damage for ES / wisdom for bubo money gains" },
-            "ACTIVE_AFK'ER": { purpose: "Wood samples" },
-            "ETERNAL_WIS": { purpose: "Wood samples" },
-            "UTMOST_INTELLECT": { purpose: "Wood samples" },
-            "SKILL_WIZ": { purpose: "Wood samples" },
-            "WIS_WUMBO": { purpose: "Wood samples" },
-            "MANA_OVERDRIVE": { purpose: "mana boosts chopping eff" },
-            "STAR_PLAYER": { purpose: "Star talent points, generally useful", class_restrict: "Mage" },
-            "RIGHT_HAND_OF_ACTION": { purpose: "global efficiency", global: true },
+            "SMART_EFFICIENCY": { purpose: "R1: Wood samples" },
+            "LOG_ON_LOGS": { purpose: "R1: Wood samples" },
+            "DEFORESTING_ALL_DOUBT": { purpose: "R1: Wood samples" },
+            "LEAF_THIEF": { purpose: "R1: Wood samples" },
+            "UNT'WIS'TED_ROBES": { purpose: "R1: Wood samples / damage for ES / wisdom for bubo money gains" },
+            "ACTIVE_AFK'ER": { purpose: "R3: Wood samples" },
+            "STARING_STATUES": { purpose: "R3: Wood samples" },
+            "STUPENDOUS_STATUES": { purpose: "R3: Wood samples" },
+            "ETERNAL_WIS": { purpose: "R2: Wood samples" },
+            "UTMOST_INTELLECT": { purpose: "R2: Wood samples" },
+            "SKILL_WIZ": { purpose: "R2: Wood samples" },
+            "WIS_WUMBO": { purpose: "R2: Wood samples" },
+            "INDIVIDUAL_INSIGHT": { purpose: "R2: WIS for efficiency" },
+            "MANA_OVERDRIVE": { purpose: "R5: mana boosts chopping eff" },
+            "OCCULT_OBOLS": { purpose: "R6: very little WIS" },
+            "INNER_PEACE": { purpose: "R6: chopping exp" },
+            "MANA_BOOSTER": { purpose: "R5: mana boosts chopping eff", class_restrict: "Savvy_Basics" },
+            "STAR_PLAYER": { purpose: "R4: Star talent points, for efficiency and stats star talents", class_restrict: "Mage" },
+            "RIGHT_HAND_OF_ACTION": { purpose: "R1: global efficiency", global: true },
         }
-    },
-    {
-        "name": "Worship",
-        "purpose": "Maximize worship gains",
-        "list": {
-            "SPECIES_EPOCH": { purpose: "Trap/worship gains", global: true },
-            "STOP_RIGHT_THERE": { purpose: "worship TD minigame", class_restrict: "Hunter" },
-            "KUNG_FU_KICK": { purpose: "worship TD minigame", class_restrict: "Hunter" },
-            "NEARBY_OUTLET": { purpose: "worship charge", class_restrict: "Wizard" },
-            "CHARGE_SYPHON": { purpose: "worship charge", class_restrict: "Wizard" },
-            "BLESS_UP": { purpose: "worship eff", class_restrict: "Wizard" },
-            "SOOOULS": { purpose: "worship eff", class_restrict: "Wizard" },
-        }
-
     },
     {
         "name": "Mining",
@@ -155,9 +153,45 @@ const TALENT_TIERS = [
             "FIRMLY_GRASP_IT": { purpose: "STR for mining samples" },
             "ABSOLUTE_UNIT": { purpose: "STR for mining samples" },
             "STAR_PLAYER": { purpose: "Star talent points, generally useful", class_restrict: "Warrior" },
+            "HEALTH_BOOSTER": { purpose: "Health boost mining eff", class_restrict: "Warrior" },
             "HEALTH_OVERDRIVE": { purpose: "Health boost mining eff" },
-            "RIGHT_HAND_OF_ACTION": { purpose: "global efficiency", global: true },
+            "RIGHT_HAND_OF_ACTION": { purpose: "R1: global efficiency", global: true },
+            "ETERNAL_STR": { purpose: "STR for mining samples", global: true },
         }
+    },
+    {
+        "name": "Trap",
+        "purpose": "Maximize trapping gains. This comes before the other harvesting skills (fishing, catching) because you don't need to resample to make use of it. Ignore this tier if you finished trapping.",
+        "list": {
+            "EAGLE_EYE": { purpose: "R1: Trapping gains, effective immediately, very good", class_restrict: "Hunter" },
+            "INVASIVE_SPECIES": { purpose: "R1: Trapping eff", class_restrict: "Hunter" },
+            "ELUSIVE_EFFICIENCY": { purpose: "R1: Trapping eff", class_restrict: "Hunter" },
+            "SKILL_AMBIDEXTERITY": { purpose: "R2: Trapping eff", class_restrict: "Hunter" },
+            "SANIC_SPEED": { purpose: "R2: AGI for trapping eff", class_restrict: "Hunter" },
+            "AGI_AGAIN": { purpose: "R2: AGI for trapping eff", class_restrict: "Hunter" },
+            "ADAPTATION_REVELATION": { purpose: "R2: AGI for trapping eff", class_restrict: "Hunter" },
+            "SHOEFUL_OF_OBOL": { purpose: "R3: little AGI for trapping eff", class_restrict: "Hunter" },
+            "GARB_OF_UN'AGI'NG_QUALITY": { purpose: "R2: AGI for trapping eff", class_restrict: "Hunter" },
+            "SHROOM_BAIT": { purpose: "R3: Trapping exp, low priority", class_restrict: "Hunter" },
+            "REFLECTIVE_EYESIGHT": { purpose: "R3: Shiny chance, low priority", class_restrict: "Hunter" },
+            "RIGHT_HAND_OF_ACTION": { purpose: "R1: global efficiency", global: true },
+            "SPECIES_EPOCH": { purpose: "R1: Trap/worship gains", global: true },
+        }
+    },
+    {
+        "name": "Worship",
+        "purpose": "Maximize worship gains. This comes before the other harvesting skills (fishing, catching) because you don't need to resample to make use of it.",
+        "list": {
+            "SPECIES_EPOCH": { purpose: "R1: Trap/worship gains", global: true },
+            "STOP_RIGHT_THERE": { purpose: "R2: Helps for TD minigame", class_restrict: "Hunter" },
+            "KUNG_FU_KICK": { purpose: "R2: Helps for TD minigame", class_restrict: "Hunter" },
+            "SYMBOLS_OF_BEYOND_~G": { purpose: "R2: Helps for TD minigame", class_restrict: "Hunter" },
+            "NEARBY_OUTLET": { purpose: "R1: more worship charge", class_restrict: "Wizard" },
+            "CHARGE_SYPHON": { purpose: "R1: more worship charge", class_restrict: "Wizard" },
+            "BLESS_UP": { purpose: "R1: worship eff", class_restrict: "Wizard" },
+            "SOOOULS": { purpose: "R1: worship eff", class_restrict: "Wizard" },
+        }
+
     },
     {
         "name": "Fishing",
@@ -166,10 +200,14 @@ const TALENT_TIERS = [
             "RIGHT_HAND_OF_ACTION": { purpose: "global efficiency", global: true },
             "BRUTE_EFFICIENCY": { purpose: "Fishing eff", class_restrict: "Barbarian" },
             "SKILL_STRENGTHEN": { purpose: "Fishing eff", class_restrict: "Barbarian" },
+            "STR_SUMMORE": { purpose: "Fishing eff", class_restrict: "Barbarian" },
+            "STRONGEST_STATUES": { purpose: "Fishing eff", class_restrict: "Barbarian" },
+            "FISTFUL_OF_OBOL": { purpose: "Fishing eff", class_restrict: "Barbarian" },
             "BOBBIN'_BOBBERS": { purpose: "Fishing eff", class_restrict: "Barbarian" },
             "WORMING_UNDERCOVER": { purpose: "Fishing AFK gains ", class_restrict: "Barbarian" },
             "CATCHING_SOME_ZZZ'S": { purpose: "Fishing AFK gains ", class_restrict: "Barbarian" },
             "ALL_FISH_DIET": { purpose: "Fishing exp, low priority ", class_restrict: "Barbarian" },
+            "TEMPESTUOUS_EMOTIONS": { purpose: "Fishing exp, low priority ", class_restrict: "Barbarian" },
 
         }
     },
@@ -178,12 +216,17 @@ const TALENT_TIERS = [
         "purpose": "Maximize catching samples, not needed until you want to resample",
         "list": {
             "RIGHT_HAND_OF_ACTION": { purpose: "global efficiency", global: true },
+            "ETERNAL_AGI": { purpose: "R2: AGI for catching eff", global: true },
             "GARB_OF_UN'AGI'NG_QUALITY": { purpose: "Catching eff", class_restrict: "Bowman" },
             "ADAPTATION_REVELATION": { purpose: "Catching eff", class_restrict: "Bowman" },
             "ELUSIVE_EFFICIENCY": { purpose: "Catching eff", class_restrict: "Bowman" },
             "SKILL_AMBIDEXTERITY": { purpose: "Catching eff", class_restrict: "Bowman" },
+            "SHWIFTY_STATUES": { purpose: "Catching eff", class_restrict: "Bowman" },
             "TELEKI'NET'IC_LOGS": { purpose: "Catching eff", class_restrict: "Bowman" },
             "BRIAR_PATCH_RUNNER": { purpose: "Catching eff", class_restrict: "Bowman" },
+            "AGI_AGAIN": { purpose: "R2: AGI for catching eff", class_restrict: "Bowman" },
+            "SANIC_SPEED": { purpose: "R2: AGI for catching eff", class_restrict: "Bowman" },
+            "SHOEFUL_OF_OBOL": { purpose: "R4: little AGI for catching eff", class_restrict: "Bowman" },
             "SUNSET_ON_THE_HIVES": { purpose: "Catching eff", class_restrict: "Bowman" },
             "BUG_ENTHUSIAST": { purpose: "Catching exp, low priority", class_restrict: "Bowman" },
 
@@ -204,6 +247,14 @@ const TALENT_TIERS = [
         }
     },
     {
+        "name": "Div",
+        "purpose": "increase div gains",
+        "list": {
+            "POLYTHEISM": { purpose: "div points" },
+            "SHARED_BELIEFS": { purpose: "Global div exp", global: true },
+        }
+    },
+    {
         "name": "KpH",
         "purpose": "Maximize KpH for eclipse skulls and Gmush kills (improve money gains). Improve SB in priority.",
         "list": {
@@ -216,6 +267,7 @@ const TALENT_TIERS = [
             "STACKED_SKULLS": { purpose: "KpK, minor" },
             "SPEEDNA": { purpose: "SB damage" },
             "MANA_IS_LIFE": { purpose: "MK per tier" },
+
         }
 
     },
@@ -231,6 +283,16 @@ const TALENT_TIERS = [
     },
 
     {
+        "name": "Lab",
+        "purpose": "Lab progress",
+        "list": {
+            "PURPLE_TUBE": { purpose: "Lab" },
+            "GREEN_TUBE": { purpose: "Lab" },
+            "ESSENCE_TRANSFERRAL": { purpose: "Lab" },
+            "UPLOAD_SQUARED": { purpose: "Lab" },
+        }
+    },
+    {
         "name": "Cooking",
         "purpose": "Cooking (less useful if you have sacred methods bundle)",
         "list": {
@@ -238,6 +300,27 @@ const TALENT_TIERS = [
             "APOCALYPSE_CHOW": { purpose: "Cooking" },
             "OVERFLOWING_LADLE": { purpose: "Cooking" },
             "WAITING_TO_COOL": { purpose: "Cooking" },
+            "SYMBOLS_OF_BEYOND_~R": { purpose: "Cooking", class_restrict: "Blood_Berserker" },
+        }
+    },
+    {
+        "name": "Breeding",
+        "purpose": "",
+        "list": {
+            "ARENA_SPIRIT": { purpose: "R2: arena entry and pet power during fights", global: true },
+            "SHINING_BEACON_OF_EGG": { purpose: "R1: breeding exp", global: true },
+            "CURVITURE_OF_THE_PAW": { purpose: "R1: pet power", global: true },
+            "I_DREAM_OF_PEACE_AND_EGG": { purpose: "R3: Eggs while AFK" },
+        }
+    },
+
+    {
+        "name": "Gaming",
+        "purpose": "Gaming boosts",
+        "list": {
+            "1000_HOURS_PLAYED": { purpose: "Gaming exp", global: true },
+            "BITTY_LITTY": { purpose: "Bit gain", global: true },
+            "UNDYING_PASSION": { purpose: "Gaming progress on afk" },
         }
     },
 
@@ -264,6 +347,19 @@ const TALENT_TIERS = [
         }
 
     },
+    {
+        "name": "Anvil",
+        "purpose": "Increase anvil production from archers",
+        "list": {
+            "BROKEN_TIME": { purpose: "R1: anvil production speed" },
+            "SMELTIN'_ERRYDAY": { purpose: "R3: anvil production on afk kills" },
+            "ACME_ANVIL": { purpose: "R1: anvil points" },
+            "FOCUSED_SOUL": { purpose: "R2: smithing exp" },
+            "SHWIFTY_STATUES": { purpose: "R2: production speed" },
+            "YEA_I_ALREADY_KNOW": { purpose: "R2: smithing exp" },
+        }
+
+    },
 
     {
         "name": "DMG",
@@ -271,8 +367,11 @@ const TALENT_TIERS = [
         "list": {
             "SHARPENED_AXE": { purpose: "damage" },
             "GILDED_SWORD": { purpose: "damage" },
-            "WORMHOLE_EMPEROR": { purpose: "damage" },
+            "WORMHOLE_EMPEROR": { purpose: "R1: Global damage", global: true },
+            "GODS_CHOSEN_CHILDREN": { purpose: "R1: Global damage", global: true },
+            "POWER_ORB": { purpose: "R2: Global damage", global: true },
             "STRENGTH_IN_NUMBERS": { purpose: "damage" },
+            "WIRED_IN_POWER": { purpose: "damage" },
             "CARRY_A_BIG_STICK": { purpose: "damage" },
             "BELIEVER_STRENGTH": { purpose: "damage" },
             "GAMER_STRENGTH": { purpose: "damage" },
@@ -288,6 +387,31 @@ const TALENT_TIERS = [
             "LOOTY_MC_SHOOTY": { purpose: "damage" },
             "APOCALYPSE_ZOW": { purpose: "damage" },
             "SPEEDNA": { purpose: "damage" },
+            "DOUBLE_STRIKE": { purpose: "R3: active damage" },
+            "FEROCITY_STRIKE": { purpose: "R3: active damage" },
+            "FIRED_UP": { purpose: "R3: active damage" },
+            "PLAGUE_STRICKEN": { purpose: "R3: active damage" },
+            "QUAD_JAB": { purpose: "R2: active damage" },
+            "TRIPLE_JAB": { purpose: "R2: active damage" },
+            "TWO_PUNCH_MAN": { purpose: "R2: active damage" },
+            "BEEFY_BOTTLES": { purpose: "R2: active damage" },
+            "KNUCKLEBUSTER": { purpose: "R3: active damage" },
+        }
+    },
+    {
+        "name": "Misc",
+        "purpose": "various useful bonus that might not be in an earlier tier",
+        "list": {
+            "LUCKY_CLOVER": { purpose: "some luck" },
+            "ETERNAL_LUK": { purpose: "some luck" },
+            "LUCKY_CHARMS": { purpose: "some class exp for vman" },
+            "EXP_CULTIVATION": { purpose: "some class exp for everyone" },
+            "STAR_PLAYER": { purpose: "some star talent points" },
+            "SUPERNOVA_PLAYER": { purpose: "some star talent points" },
+            "THE_FAMILY_GUY": { purpose: "various bonus depending on class" },
+            "YEA_I_ALREADY_KNOW": { purpose: "exp advantage for archers" },
+            "GODLY_CREATION": { purpose: "small boost to crafting equips if you bother to change character" },
+            "TELEPORT": { purpose: "kinda fun to use" },
         }
     },
 
@@ -303,6 +427,16 @@ const TALENT_TIERS = [
             "MINI_FIREBALL": { purpose: "" },
             "ENERGY_BOLT": { purpose: "" },
             "BUCKLERED_UP": { purpose: "" },
+            "MANA_BOOSTER": { purpose: "" },
+            "MOCKING_SHOUT": { purpose: "" },
+            "HEALTH_BOOSTER": { purpose: "" },
+            "BACK_TO_BASICS": { purpose: "" },
+            "PREVIOUS_POINTS": { purpose: "" },
+            "EARLIER_EDUCATION": { purpose: "" },
+            "ICE_SHARDS": { purpose: "" },
+            "SIZZLING_SKULL": { purpose: "" },
+            "TAMPERED_INJECTION": { purpose: "" },
+            "JMAN_WAS_BETTER": { purpose: "" },
         }
 
     },

@@ -39,6 +39,10 @@ img.collapsible_icon_world {
   background-color: rgba(6, 119, 6, 0.482);
 }
 
+.talent_display.notier {
+  background-color: rgba(252, 214, 2, 0.747);
+}
+
 .talent_display.unbookable {
   background-color: rgba(114, 114, 114, 0.798);
 }
