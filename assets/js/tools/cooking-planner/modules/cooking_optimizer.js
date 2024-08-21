@@ -70,6 +70,7 @@ function computeMealOptimalOrder(cooking_data) {
 
 function addMealUpgradeDisplay(cooking_data, meal_id, new_meal_lvl, ladles, cumulative_ladles, days_NMLB, isNMLB) {
     const mdata = meal_info[meal_id];
+    const mdata_NMLB = meal_info[cooking_data.getNMLBtarget()];
     // display_time = FormatCookingTime(meal_time)
     // display_cumulative_time = FormatCookingTime(cumulative_time)
 
@@ -96,6 +97,12 @@ function addMealUpgradeDisplay(cooking_data, meal_id, new_meal_lvl, ladles, cumu
     content += `<td class="${NMLBclass}">${days_NMLB}</td>`
     content += `<td>${cooking_data.ladles_owned}</td>`
     content += `<td> ${cooking_data.equinox_event_count}</td>`
+    let NMLB_targets = cooking_data.getNMLBtargetList()
+    let imgs = ""
+    for (let i = 0; i < Math.min(7, NMLB_targets.length); i++) {
+        imgs += `<img src="${meal_info[NMLB_targets[i]].img}">`
+    }
+    content += `<td>${imgs}</td>`
     content += `<td hidden>${JSON.stringify(cooking_data)}</td>`
     // content += `<td>speed: ${cooking_data.getCookingSpeed().toExponential(3)}</td>`
     content += `</tr>`
@@ -116,6 +123,7 @@ function addTableHeader() {
     content += `<th>Day</th>`
     content += `<th>Ladle<br>storage</th>`
     content += `<th>Equinox</th>`
+    content += `<th>Next NMLB targets</th>`
     content += `<td hidden></td>`
     // content += `<td>speed: ${cooking_data.getCookingSpeed().toExponential(3)}</td>`
     content += `</tr></thead>`

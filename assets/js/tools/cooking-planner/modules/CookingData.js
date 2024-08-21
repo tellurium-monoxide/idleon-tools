@@ -718,7 +718,7 @@ class CookingData {
 
 
     getClosestMealUpgrade() {
-        const closest_meal = indexOfMin(this.meal_cooking_req_to_next_lvl)
+        const closest_meal = indexOfLastMin(this.meal_cooking_req_to_next_lvl)
         const cook_req = this.meal_cooking_req_to_next_lvl[closest_meal]
         return [closest_meal, cook_req]
     }
@@ -781,7 +781,7 @@ class CookingData {
 
         // NMLB upgrades lowest level meal starting with last ones
         let NMLB_upgrades = []
-        let NMLB_meal = indexOfMin(this.meal_levels)
+        let NMLB_meal = this.getNMLBtarget()
         for (let i = 0; i < this.NMLB_count; i++) {
 
             let new_lvl = this.meal_levels[NMLB_meal] + 1
@@ -802,6 +802,21 @@ class CookingData {
         return NMLB_upgrades
     }
 
+    getNMLBtarget() {
+        return this.meal_levels.lastIndexOf(Math.min(...this.meal_levels))
+    }
+    getNMLBtargetList() {
+        let meal_indexes = Array.from(this.meal_levels, (_, i) => i)
+        // console.log(meal_indexes)
+        meal_indexes.sort((a, b) => (b - a))
+        meal_indexes.sort((id1, id2) => { return (this.meal_levels[id1] - this.meal_levels[id2]) })
+        let meal_indexes_notmax = meal_indexes.filter((id) => this.meal_levels[id] < meal_max_lvl)
+        // meal_indexes_notmax.sort((a, b) => (b - a))
+        // console.log(meal_indexes)
+        // console.log(meal_indexes.map(i => this.meal_levels[i]))
+        // console.log(meal_indexes_notmax)
+        return meal_indexes_notmax
+    }
     getLadlesNeeded(meal_time_in_hours) {
         return Math.max(Math.ceil(meal_time_in_hours / this.overflowing_ladles_mult), 0)
     }
