@@ -162,9 +162,9 @@ class ConstructionState {
             content += `<td>${current_lvl}</td>`
 
             if (current_lvl < building_data.max_level) {
-                content += `<td>${format_idleon_numbers(cost_to_next)}</td>`
+                content += `<td>${formatIdleonNumbers(cost_to_next)}</td>`
                 content += `<td>${formatPercent(progress)}</td>`
-                content += `<td>${format_idleon_numbers(cost_to_max)}</td>`
+                content += `<td>${formatIdleonNumbers(cost_to_max)}</td>`
             } else {
                 content += `<td></td>`
                 content += `<td></td>`
@@ -209,18 +209,5 @@ class ConstructionState {
 }
 
 
-number_notations = ["", "", "M", "B", "T", "e15", "e18", "e21", "e24", "e27"]
-function format_idleon_numbers(value) {
-    if (value < 10000000) {
-        return value
-    } else {
-        let notation_id = Math.floor(Math.log(value) / Math.log(1000))
-
-        let numeral_part = (value / Math.pow(1000, notation_id)).toFixed(1)
-        let symbol = number_notations[notation_id]
-
-        return (numeral_part + symbol)
-    }
-}
 
 const formatPercent = (percent) => `${(percent * 100).toFixed(2)}%`;
