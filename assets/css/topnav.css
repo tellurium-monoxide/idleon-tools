@@ -61,6 +61,10 @@ li a:hover {
     background: #d4d954ae;
 }
 
+.navbar li.active a:hover {
+    background: #989b48ae;
+}
+
 img.topicon {
     height: 10px;
 }
