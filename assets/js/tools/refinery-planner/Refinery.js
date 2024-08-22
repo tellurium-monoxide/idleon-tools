@@ -87,7 +87,7 @@ class Refinery {
 
             let nextRankPowerPerCycle = this.getPowerPerCycle(salt.rank + 1)
             content += `<td>${salt.powerPerCycle}<br>(${nextRankPowerPerCycle}|+${nextRankPowerPerCycle - salt.powerPerCycle})</td>`
-            content += `<td>${salt.cyclesPerRank}<br>(${salt.NextCycleBreakpoint.cyclesPerRank} at r${salt.NextCycleBreakpoint.rank})</td>`
+            content += `<td>${salt.cyclesPerRank}<br>(${salt.NextCycleBreakpoint.cyclesPerRank} at r${salt.NextCycleBreakpoint.rank}|+${salt.NextCycleBreakpoint.inc})</td>`
             content += `<td><table class="costs"><tr>`
             let i = 0
             for (let material of salt.data.material_costs) {
