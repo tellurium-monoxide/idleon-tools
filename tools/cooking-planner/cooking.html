@@ -14,7 +14,9 @@ on_ready_js: tools/cooking-planner/on_ready.js
 ---
 <div class="main">
     <h1>Cooking Planner</h1>
-    <h2> How to use? </h2>
+    <h2>
+        How to use?
+    </h2>
     <div>
         <p>
             This tool will give you the best order to upgrade meals, and give you an estimated time to complete cooking (all
@@ -22,7 +24,8 @@ on_ready_js: tools/cooking-planner/on_ready.js
         </p>
         <p>
             Start by pasting your Idleon Efficiency save data in the toolbar at the top of the screen. This will fill the input fields,
-            do the calculations and display the meal upgrade order. </p>
+            do the calculations and display the meal upgrade order.
+        </p>
         <p>
             Then you can manually alter the content of the "Inputs" section, to simulate different stats. To estimate the
             time, the tool uses your ladles / day production, which is set by default to 10 000 (close to what you could have in late game).
@@ -36,7 +39,9 @@ on_ready_js: tools/cooking-planner/on_ready.js
 
     </div>
 
-    <h2> Inputs: </h2>
+    <h2>
+        Inputs:
+    </h2>
     <div>
         <button id="use_inputs" onclick="computeFromInputForm()">Compute from manual inputs</button>
     </div>
@@ -107,28 +112,35 @@ on_ready_js: tools/cooking-planner/on_ready.js
         </div>
     </div>
 
-    <h2> Results: </h2>
+    <h2>
+        Results:
+    </h2>
     <div>
-        Current cooking speed: <span type="text" id="total_cooking_speed"></span>
+        Current cooking speed:
+        <span type="text" id="total_cooking_speed"></span>
     </div>
     <div>
-        Ladles used: <span id="ladles_needed"></span>
+        Ladles used:
+        <span id="ladles_needed"></span>
     </div>
     <div>
-        Meal levels missing: <span id="missing_levels"></span>
+        Meal levels missing:
+        <span id="missing_levels"></span>
     </div>
     <div>
-        Days needed: <span id="days_needed"></span>
+        Days needed:
+        <span id="days_needed"></span>
     </div>
     <div>
-        Levels from NMLB: <span id="NMLB_needed"></span> (<span id="NMLB_needed_percent"></span>% of missing levels)
+        Levels from NMLB:
+        <span id="NMLB_needed"></span>
+        (<span id="NMLB_needed_percent"></span>% of missing levels)
     </div>
 
     <!-- <div style="text-align:center"> -->
     <h3>Upgrade order</h3>
     <button id="remove_meal_upgrade" onclick="remove_meal_upgrade()">Upgrade first meal</button>
     <!-- </div> -->
-    <table id="meal_upgrade_order" class="sticky_header">
-    </table>
+    <table id="meal_upgrade_order" class="sticky_header"></table>
 
 </div>

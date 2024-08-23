@@ -8,4 +8,6 @@ function run_local_tool(raw_data) {
     let refinery = new Refinery()
     refinery.initFromSaveData(save_data)
 
+    document.refinery = refinery
+
 }
