@@ -8,7 +8,28 @@
     "editor.wordWrap": "on",
     "html.format.contentUnformatted": "pre,code,textarea",
     // Enables formatting of all .html files
-    // "[html]": {
-    //     "editor.defaultFormatter": "sissel.shopify-liquid"
+    // "[liquid]": {
+    //     "editor.defaultFormatter": "sissel.shopify-liquid",
+    //     "editor.formatOnSave": true
     // },
+    // "[html]": {
+    //     "editor.defaultFormatter": "sissel.shopify-liquid",
+    //     "editor.formatOnSave": true
+    // },
+    // "[js]": {
+    //     "editor.defaultFormatter": "sissel.shopify-liquid",
+    //     "editor.formatOnSave": true
+    // },
+    // "[js.liquid]": {
+    //     "editor.defaultFormatter": "sissel.shopify-liquid",
+    //     "editor.formatOnSave": true
+    // },
+    // "files.associations": {
+    //     "*.html": "liquid",
+    //     // "*.js": "liquid"
+    // },
+    // "[liquid-javascript]": {
+    //     "editor.defaultFormatter": "sissel.shopify-liquid",
+    //     "editor.formatOnSave": true
+    // }
 }

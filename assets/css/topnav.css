@@ -32,12 +32,18 @@ ul.navbar {
 }
 
 .navbar li a {
-    display: block;
     color: #666;
-    text-align: center;
-    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0px 16px;
     text-decoration: none;
     height: 50px;
+}
+
+.navbar li a img {
+    /* object-fit: contain; */
+    height: 80%;
 }
 
 li a:hover {
