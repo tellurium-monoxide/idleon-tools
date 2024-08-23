@@ -8,6 +8,11 @@ function run_local_tool(raw_data) {
     let refinery = new Refinery()
     refinery.initFromSaveData(save_data)
 
+    refinery.showRefinery()
+    refinery.showResources()
+    refinery.createCalculatorTimeToMakeAmounts()
+    refinery.createCalculatorBreakPoint()
+
     document.refinery = refinery
 
 }

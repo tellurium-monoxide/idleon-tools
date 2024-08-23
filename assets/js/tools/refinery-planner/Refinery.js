@@ -38,9 +38,6 @@ class Refinery {
       }
     }
 
-    this.showRefinery()
-    this.showResources()
-    this.createCalculatorTimeToMakeAmounts()
   }
   calcNextCycleBreakpoint(rank) {
     let initialRank = rank
@@ -159,6 +156,52 @@ class Refinery {
 
       document.getElementById("cycles_with_rank_ups").innerHTML = cycles.toLocaleString() + `<br>(+${rankups})`
       document.getElementById("cycles_without_rank_ups").innerText = cycles_without.toLocaleString()
+
+    }
+    choiceElem.addEventListener("input", doTheCalc);
+    inputValueElem.addEventListener("input", doTheCalc);
+    doTheCalc();
+  }
+  createCalculatorBreakPoint() {
+    let choiceElem = document.getElementById("salt_select_breakpoints")
+    let inputValueElem = document.getElementById("breakpoint_goal")
+    // let i = 0
+    // for (let child of choiceElem) {
+    // console.log(child.value)
+    // child.value = this.salts[i]
+    // i++
+    // }
+    const doTheCalc = (event) => {
+      let salt = this.salts[choiceElem.selectedIndex]
+      let goal = inputValueElem.value
+      // console.log(salt)
+      // console.log(needed)
+
+
+      let cycles = 0
+      let rank = salt.rank
+
+      let cc = this.getPowerPerCycle(rank)
+      let pp = this.getPowerToRankUp(rank)
+
+      let cycles_per_rank = Math.ceil(pp / cc)
+      let init_bp = cycles_per_rank
+      while (goal < cycles_per_rank) {
+        cycles += cycles_per_rank
+        rank++
+        cc = this.getPowerPerCycle(rank)
+        pp = this.getPowerToRankUp(rank)
+        cycles_per_rank = Math.ceil(pp / cc)
+
+
+      }
+
+      let rankups = rank - salt.rank
+
+
+      document.getElementById("bpcalc_current_breakpoint").innerHTML = init_bp
+      document.getElementById("rank_ups_to_breakpoint").innerHTML = rankups
+      document.getElementById("bpcalc_cycles_to_breakpoint").innerHTML = cycles.toLocaleString()
 
     }
     choiceElem.addEventListener("input", doTheCalc);
