@@ -1,10 +1,10 @@
-<table>
+<table class="calculator">
     <tr>
         <th>Salt type</th>
-        <th>Current breakpoint</th>
-        <th>Goal</th>
-        <th>Rank ups to reach</th>
-        <th>Cycles to reach</th>
+        <th>Cycle/rank goal</th>
+        <th>Current cycle/rank<br>(Current rank)</th>
+        <th>Rank needed for goal<br>(rankups needed)</th>
+        <th>Time to reach goal<br>(cycles to reach)</th>
     </tr>
     <tr>
         <td>
@@ -17,11 +17,19 @@
                 <option value="salt6">Nullo</option>
             </select>
         </td>
-        <td id="bpcalc_current_breakpoint"></td>
-        <td><input type="number" value="1" id="breakpoint_goal"></td>
+
+        <td>
+            <input type="number" value="1" min=1 id="breakpoint_goal">
+        </td>
+
+        <td id="bpcalc_current_breakpoint">
+
+        </td>
+
         <td id="rank_ups_to_breakpoint">
 
         </td>
+
         <td id="bpcalc_cycles_to_breakpoint">
 
         </td>

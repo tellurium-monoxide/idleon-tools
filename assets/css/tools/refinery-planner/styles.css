@@ -11,6 +11,11 @@ table.costs {
     margin-left: 0;
 }
 
+table.calculator {
+    margin-left: 0;
+    border: solid 1px;
+}
+
 .resources {
     display: flex;
     flex-wrap: wrap;

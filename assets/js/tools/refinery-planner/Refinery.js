@@ -1,8 +1,12 @@
 class Refinery {
   constructor() { } initFromSaveData(save_data) {
 
+
+    this.computeRefinerySpeed(save_data)
+
+
     let refinery_data = JSON.parse(save_data["Refinery"])
-    console.log(refinery_data)
+    // console.log(refinery_data)
 
     this.salts = Array(6).fill().map((_, i) => ({}));
     this.resources = []
@@ -17,6 +21,8 @@ class Refinery {
       salt.powerToRankUp = this.getPowerToRankUp(rank)
       salt.cyclesPerRank = Math.ceil(salt.powerToRankUp / salt.powerPerCycle)
       salt.NextCycleBreakpoint = this.calcNextCycleBreakpoint(rank)
+
+      salt.timePerCycle = CYCLE_BASE_TIMES[salt.data.category] / this.refinery_speed_mult
       for (let material of salt.data.material_costs) {
         this.resources.push(JSON.parse(JSON.stringify(material)))
         const isSalt = material.name.includes("Salts")
@@ -38,6 +44,132 @@ class Refinery {
       }
     }
 
+
+
+
+
+  }
+
+  computeRefinerySpeed(save_data) {
+    // calc ref speed
+
+    // world 1
+    // stamps
+    let stamp_info = save_data["StampLv"]
+    this.stamp_cooked_meal_lvl = stamp_info[2][21]
+    // world 2
+    // alchemy
+    let vial_info = save_data["CauldronInfo"][4]
+    let vial_levels = []
+    for (let i = 0; i < vial_info.length; i++) {
+      vial_levels.push(vial_info[i])
+    }
+
+    this.max_level_vials = [...vial_levels].filter(x => x >= 13).length
+    this.vial_level_red_malt = vial_levels[25]
+
+    // sigils
+    let sigil_info = JSON.parse(save_data["CauldronP2W"])
+    // console.log(sigil_info)
+    // this.sigil_pipe_gauge_level = sigil_info[2 * (11 - 1) + 1]
+    this.sigil_pipe_gauge_time = sigil_info[4][2 * (11 - 1)]
+    // console.log(this.sigil_pipe_gauge_time)
+    let sigil_bonus = 0.1 * ((this.sigil_pipe_gauge_time >= 700)
+      + (this.sigil_pipe_gauge_time >= 12000)
+      + (this.sigil_pipe_gauge_time >= 320000))
+    // arcade
+    let arcade_levels = JSON.parse(save_data["ArcadeUpg"])
+    this.arcade_refinery_lvl = arcade_levels[25]
+    // world 3
+    // construction
+    let building_data = JSON.parse(save_data["Tower"])
+    let building_current_levels = building_data.slice(0, 27)
+    this.total_building_levels = building_current_levels.reduce((a, b) => (a + b))
+
+    let salt_lick_data = JSON.parse(save_data["SaltLick"])
+    this.salt_lick_refinery_speed = salt_lick_data[2]
+    // world 4
+    // breeding
+    let breeding_info = JSON.parse(save_data["Breeding"])
+    // console.log(breeding_info)
+    let shiny_time_bored_bean = breeding_info[22][3]
+    let shiny_time_whale = breeding_info[23][9]
+    let shiny_time_Demon_Genie = breeding_info[25][3]
+    // let shiny_time_sheepie = breeding_info[24][0]
+    this.shiny_lvl_bored_bean = getShinyLevel(shiny_time_bored_bean)
+    this.shiny_lvl_whale = getShinyLevel(shiny_time_whale)
+    this.shiny_lvl_Demon_Genie = getShinyLevel(shiny_time_Demon_Genie)
+    // console.log(this.shiny_lvl_bored_bean)
+    // console.log(this.shiny_lvl_whale)
+    // console.log(this.shiny_lvl_Demon_Genie)
+
+    let shinyRefineryBonus = 0.02 * (this.shiny_lvl_bored_bean + this.shiny_lvl_whale + this.shiny_lvl_Demon_Genie)
+    // lab
+
+    // world 5
+    // sailing
+    let sailing_info = JSON.parse(save_data["Sailing"])
+    this.artifact_chilled_yarn_lvl = sailing_info[3][16]
+
+
+    // general
+    // classes
+    let player_names = save_data[`playerNames`]
+    this.players = Array.from({ length: player_names.length }, () => ({}));
+
+    for (let i = 0; i < player_names.length; i++) {
+      this.players[i]["name"] = player_names[i]
+      this.players[i]["class"] = save_data[`CharacterClass_${i}`]
+      this.players[i]["class_name"] = CLASSES[save_data[`CharacterClass_${i}`]]
+      this.players[i]["subclasses"] = getClassList(CLASSES[save_data[`CharacterClass_${i}`]])
+
+
+      this.players[i]["skill_max_levels"] = JSON.parse(save_data[`SM_${i}`]); // SM for max; SL and SLpre for currents
+      this.players[i]["skill_current_levels"] = JSON.parse(save_data[`SL_${i}`]); // SM for max; SL and SLpre for currents
+      this.players[i]["level"] = save_data[`Lv0_${i}`][0];
+
+      let talent_family_guy = TALENTS["Divine_Knight"]["THE_FAMILY_GUY"]
+      let level_fg = this.players[i]["skill_current_levels"][talent_family_guy.skillIndex]
+      this.players[i]["family_guy_lvl"] = level_fg
+      this.players[i].family_guy_bonus = talent_family_guy.x1 / 100 * level_fg / (talent_family_guy.x2 + level_fg)
+
+    }
+    // console.log(this.players)
+
+    let highest_level_DK = this.players.filter((p) => (p.subclasses.includes("Divine_Knight"))).reduce(
+      (acc, val) => {
+        return acc.level > val.level ? acc : val;
+      })
+    // console.log(highest_level_DK)
+
+    let dk_level = highest_level_DK.level
+    let family_refinery_bonus = 0.5 * dk_level / (150 + dk_level) * (1 + highest_level_DK.family_guy_bonus)
+
+    // calc total speed mult
+    this.bonusBreakdown = [
+      { name: 'Base', value: 1 },
+      { name: 'Vials', value: this.vial_level_red_malt * 0.02 * (1 + 0.02 * this.max_level_vials) },
+      { name: 'Salt lick', value: this.salt_lick_refinery_speed * 0.02 },
+      { name: 'Family', value: family_refinery_bonus },
+      { name: 'Sigils', value: sigil_bonus * (1 + this.artifact_chilled_yarn_lvl) },
+      { name: 'Stamps', value: this.stamp_cooked_meal_lvl / 100 },
+      { name: 'Shinies', value: shinyRefineryBonus },
+      { name: 'Const mastery', value: Math.floor(this.total_building_levels / 10) / 100 },
+      { name: 'Arcade', value: 0.3 * this.arcade_refinery_lvl / (100 + this.arcade_refinery_lvl) },
+      // { name: 'Vote', value: 0 }, // not taken into account as not very useful for the long term planning
+    ]
+
+
+    this.refinery_speed_mult = this.bonusBreakdown.reduce((a, b) => { return (a + b.value) }, 0) * (3) // lab bonus always on
+    let sum = this.bonusBreakdown.reduce((a, b) => { return (a + b.value) }, 0)
+    for (let bonus of this.bonusBreakdown) {
+      bonus.weight = bonus.value / sum
+    }
+    console.log(this.bonusBreakdown)
+    console.log(this.refinery_speed_mult)
+
+    document.getElementById("speed_combustion").innerHTML = `${formatTime(CYCLE_BASE_TIMES["Combustion"] / this.refinery_speed_mult)}`
+    document.getElementById("speed_synthesis").innerHTML = `${formatTime(CYCLE_BASE_TIMES["Synthesis"] / this.refinery_speed_mult)}`
   }
   calcNextCycleBreakpoint(rank) {
     let initialRank = rank
@@ -75,20 +207,16 @@ class Refinery {
     content += `<th>Power per cycle<br>(next rank|increase)</th>`
     content += `<th>Cycles per rank<br>(next breakpoint)</th>`
     content += `<th>Cost per rank</th>`
+    content += `<th>Time per rank</th>`
     content += "</tr>"
 
     for (const salt of this.salts) {
 
 
       content += "<tr>"
-      content += `<td><img src="${salt.data.icon_url
-        }"></td>`
-      content += `<td>${salt.rank
-        }</td>`
-      content += `<td class="progress">${salt.progress.toLocaleString().padStart(9, " ")
-        }/${salt.powerToRankUp.toLocaleString().padEnd(9, " ")
-        }<br>(${formatPercent(salt.progress / salt.powerToRankUp)
-        })</td>`
+      content += `<td><img src="${salt.data.icon_url}"></td>`
+      content += `<td>${salt.rank}</td>`
+      content += `<td class="progress">${salt.progress.toLocaleString().padStart(9, " ")}/${salt.powerToRankUp.toLocaleString().padEnd(9, " ")}<br>(${formatPercent(salt.progress / salt.powerToRankUp)})</td>`
 
       let nextRankPowerPerCycle = this.getPowerPerCycle(salt.rank + 1)
       content += `<td>${salt.powerPerCycle
@@ -116,6 +244,9 @@ class Refinery {
 
       }
       content += `</tr></table></td>`
+
+      content += `<td>${formatTime(salt.cyclesPerRank * salt.timePerCycle)}</td>`
+
       content += "</tr>"
     }
 
@@ -125,12 +256,7 @@ class Refinery {
   createCalculatorTimeToMakeAmounts() {
     let choiceElem = document.getElementById("salt_select")
     let inputValueElem = document.getElementById("production_needed")
-    // let i = 0
-    // for (let child of choiceElem) {
-    // console.log(child.value)
-    // child.value = this.salts[i]
-    // i++
-    // }
+
     const doTheCalc = (event) => {
       let salt = this.salts[choiceElem.selectedIndex]
       let needed = inputValueElem.value
@@ -152,10 +278,11 @@ class Refinery {
       }
 
       let rankups = rank - salt.rank
+      let time = cycles * salt.timePerCycle
+      let time_without = cycles_without * salt.timePerCycle
 
-
-      document.getElementById("cycles_with_rank_ups").innerHTML = cycles.toLocaleString() + `<br>(+${rankups})`
-      document.getElementById("cycles_without_rank_ups").innerText = cycles_without.toLocaleString()
+      document.getElementById("cycles_with_rank_ups").innerHTML = formatTime(time) + `<br>(${cycles.toLocaleString() + `|+${rankups}`})`
+      document.getElementById("cycles_without_rank_ups").innerHTML = formatTime(time_without) + `<br>(${cycles_without.toLocaleString()})`
 
     }
     choiceElem.addEventListener("input", doTheCalc);
@@ -197,11 +324,11 @@ class Refinery {
       }
 
       let rankups = rank - salt.rank
+      let time = cycles * salt.timePerCycle
 
-
-      document.getElementById("bpcalc_current_breakpoint").innerHTML = init_bp
-      document.getElementById("rank_ups_to_breakpoint").innerHTML = rankups
-      document.getElementById("bpcalc_cycles_to_breakpoint").innerHTML = cycles.toLocaleString()
+      document.getElementById("bpcalc_current_breakpoint").innerHTML = `${init_bp}<br>(${salt.rank})`
+      document.getElementById("rank_ups_to_breakpoint").innerHTML = `${rank}<br>(+${rankups})`
+      document.getElementById("bpcalc_cycles_to_breakpoint").innerHTML = formatTime(time) + `<br>(${cycles.toLocaleString()})`
 
     }
     choiceElem.addEventListener("input", doTheCalc);
@@ -231,6 +358,7 @@ const formatPercent = (percent) => `${(percent * 100).toFixed(2)
 const SALT_DATA = [
   {
     name: "Redox_Salts",
+    category: "Combustion",
     icon_url: "https://idleon.wiki/wiki/images/thumb/c/cb/Redox_Salts.png/36px-Redox_Salts.png",
     material_costs: [
       {
@@ -246,6 +374,7 @@ const SALT_DATA = [
   },
   {
     name: "Explosive_Salts",
+    category: "Combustion",
     icon_url: "https://idleon.wiki/wiki/images/thumb/2/2f/Explosive_Salts.png/36px-Explosive_Salts.png",
     material_costs: [
       {
@@ -265,6 +394,7 @@ const SALT_DATA = [
   },
   {
     name: "Spontaneity_Salts",
+    category: "Combustion",
     icon_url: "https://idleon.wiki/wiki/images/thumb/3/3e/Spontaneity_Salts.png/36px-Spontaneity_Salts.png",
     material_costs: [
       {
@@ -288,6 +418,7 @@ const SALT_DATA = [
   },
   {
     name: "Dioxide_Salts",
+    category: "Synthesis",
     icon_url: "https://idleon.wiki/wiki/images/thumb/9/96/Dioxide_Synthesis.png/36px-Dioxide_Synthesis.png",
     material_costs: [
       {
@@ -310,6 +441,7 @@ const SALT_DATA = [
     ]
   }, {
     name: "Purple_Salts",
+    category: "Synthesis",
     icon_url: "https://idleon.wiki/wiki/images/thumb/f/fb/Purple_Salt.png/36px-Purple_Salt.png",
     material_costs: [
       {
@@ -340,6 +472,7 @@ const SALT_DATA = [
   }, {
     name: "Nullo_Salts",
     icon_url: "https://idleon.wiki/wiki/images/thumb/a/a1/Nullo_Salt.png/36px-Nullo_Salt.png",
+    category: "Synthesis",
     material_costs: [
       {
         name: "Contact_Lense",
@@ -373,5 +506,6 @@ const SALT_DATA = [
   }
 ]
 
+const CYCLE_BASE_TIMES = { "Combustion": 900, "Synthesis": 3600 }
 // const POWER_COSTS = "50 50 200 800 3000 8000 14000 20000 30000 40000 50000 65000 80000 100000 200000 300000 400000 500000 600000 700000 800000 900000 1000000 1000000 1000000 1000000"
 const POWER_COSTS = [50, 50, 200, 800, 3000, 8000, 14000, 20000, 30000, 40000, 50000, 65000, 80000, 100000, 200000, 300000, 400000, 500000, 600000, 700000, 800000, 900000, 1000000, 1000000, 1000000, 1000000]

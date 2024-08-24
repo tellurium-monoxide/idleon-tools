@@ -7,6 +7,10 @@
     "html.format.wrapLineLength": 0,
     "editor.wordWrap": "on",
     "html.format.contentUnformatted": "pre,code,textarea",
+    "outline.showBooleans": true,
+    "outline.showArrays": true,
+    "outline.showNumbers": true,
+    "outline.showVariables": false,
     // Enables formatting of all .html files
     // "[liquid]": {
     //     "editor.defaultFormatter": "sissel.shopify-liquid",
