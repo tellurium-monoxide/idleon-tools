@@ -80,8 +80,8 @@ class InputSpinner {
             locale: navigator.language, // the locale, per default detected automatically from the browser
             editor: I18nEditor, // the editor (parsing and rendering of the input)
             template: // the template of the input
-                '<div class="input-group ${groupClass}">' +
-                '<button style="min-width: ${buttonsWidth}" class="btn btn-decrement ${buttonsClass} btn-minus" type="button">${decrementButton}</button>' +
+                '<div class="input-group ${groupClass}" title="Min: ${min}\nMax: ${max}">' +
+                '<button style="min-width: ${buttonsWidth}" class="btn btn-decrement ${buttonsClass} btn-minus" type="button" >${decrementButton}</button>' +
                 '<input type="text" inputmode="decimal" style="text-align: ${textAlign}" class="form-control form-control-text-input"/>' +
                 '<button style="min-width: ${buttonsWidth}" class="btn btn-increment ${buttonsClass} btn-plus" type="button">${incrementButton}</button>' +
                 '</div>'
@@ -96,6 +96,8 @@ class InputSpinner {
             .replace(/\${decrementButton}/g, this.props.decrementButton)
             .replace(/\${incrementButton}/g, this.props.incrementButton)
             .replace(/\${textAlign}/g, this.props.textAlign)
+            .replace(/\${min}/g, this.element.min ? this.element.min : "None")
+            .replace(/\${max}/g, this.element.max ? this.element.max : "None")
 
         if (this.element["bootstrap-input-spinner"]) {
             console.warn("element", this.element, "is already a bootstrap-input-spinner")
