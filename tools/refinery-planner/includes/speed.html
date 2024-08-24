@@ -1,0 +1,151 @@
+Combustion cycle: <span type="text" id="speed_combustion"></span><br>
+Synthesis cycle: <span type="text" id="speed_synthesis"></span>
+<table class="refinery_speed">
+    <tr>
+        <th>Source</th>
+        <th>Inputs</th>
+        <th>Total boost</th>
+        <th>Weight</th>
+
+    </tr>
+    <tr id="Base">
+        <td>Base</td>
+        <td class="speed_inputs"></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr id="Vials">
+        <td>Vials</td>
+        <td class="speed_inputs">
+            <table class="speed_input_table">
+                <tr>
+                    <td>Max level vials</td>
+                    <td><input type="number" id="refinery_speed_max_lvl_vials" min="0"></td>
+                </tr>
+                <tr>
+                    <td>Red malt vial level (/13)</td>
+                    <td><input type="number" id="refinery_speed_red_malt_vial" min="0" max="13"></td>
+                </tr>
+            </table>
+        </td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr id="Salt_lick">
+        <td>Salt lick</td>
+        <td class="speed_inputs">
+            <table class="speed_input_table">
+                <tr>
+                    <td>Salt lick level (/20)</td>
+                    <td><input type="number" id="refinery_speed_salt_lick_lvl" max="20" min="0"></td>
+                </tr>
+            </table>
+        </td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr id="Family">
+        <td>Family</td>
+        <td class="speed_inputs">
+            <table class="speed_input_table">
+                <tr>
+                    <td>Highest level of DK</td>
+                    <td><input type="number" id="refinery_speed_dk_level" min="1"></td>
+                </tr>
+                <tr>
+                    <td>Family guy talent level</td>
+                    <td><input type="number" id="refinery_speed_fg_talent_lvl" min="0"></td>
+                </tr>
+            </table>
+        </td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr id="Sigils">
+        <td>Sigils</td>
+        <td class="speed_inputs">
+            <table class="speed_input_table">
+                <tr>
+                    <td>Pipe gauge sigil rank (/3)</td>
+                    <td><input type="number" id="refinery_speed_sigil_lvl" min="0" max="3"></td>
+                </tr>
+                <tr>
+                    <td>Chilled yarn artifact rank (/4)</td>
+                    <td><input type="number" id="refinery_speed_arti_lvl" min="0" max="4"></td>
+                </tr>
+            </table>
+        </td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr id="Stamps">
+        <td>Stamps</td>
+        <td class="speed_inputs">
+            <table class="speed_input_table">
+                <tr>
+                    <td>Refinery stamp level</td>
+                    <td><input type="number" id="refinery_speed_stamp_level" min="0"></td>
+                </tr>
+            </table>
+        </td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr id="Shinies">
+        <td>Shinies</td>
+        <td class="speed_inputs">
+            <table class="speed_input_table">
+                <tr>
+                    <td>Bored Bean shiny level (/20)</td>
+                    <td><input type="number" id="refinery_speed_shiny_bored_bean_lvl" min="0" max="20"></td>
+                </tr>
+                <tr>
+                    <td>Whale shiny level (/20)</td>
+                    <td><input type="number" id="refinery_speed_shiny_whale_lvl" min="0" max="20"></td>
+                </tr>
+                <tr>
+                    <td>Demon Genie shiny level (/20)</td>
+                    <td><input type="number" id="refinery_speed_shiny_demon_genie_lvl" min="0" max="20"></td>
+                </tr>
+            </table>
+        </td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr id="Const_mastery">
+        <td>Construction mastery</td>
+        <td class="speed_inputs">
+            <table class="speed_input_table">
+                <tr>
+                    <td>Sum of building levels</td>
+                    <td><input type="number" id="refinery_speed_building_lvls" min="0"></td>
+                </tr>
+            </table>
+        </td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr id="Arcade">
+        <td>Arcade</td>
+        <td class="speed_inputs">
+            <table class="speed_input_table">
+                <tr>
+                    <td>Arcade refinery level (/100)</td>
+                    <td><input type="number" id="refinery_speed_arcade_lvl" min="0" max="100"></td>
+                </tr>
+            </table>
+        </td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr id="Total">
+        <td>Total</td>
+        <td class="speed_inputs">
+            <button onclick="button_calc_from_save()">Calc from save</button>
+            <button onclick="button_calc_from_inputs()">Calc from inputs</button>
+        </td>
+        <td></td>
+        <td></td>
+    </tr>
+
+</table>

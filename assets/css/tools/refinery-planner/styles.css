@@ -20,3 +20,25 @@ table.calculator {
     display: flex;
     flex-wrap: wrap;
 }
+
+table.refinery_speed {
+    border-collapse: collapse;
+}
+
+table.refinery_speed,
+table.refinery_speed td {
+    border: solid 1px;
+
+}
+
+table.speed_input_table {
+    text-align: left;
+    margin-right: 0;
+    border-collapse: collapse;
+    border: 0px;
+}
+
+table.speed_input_table td {
+
+    border: 0px;
+}

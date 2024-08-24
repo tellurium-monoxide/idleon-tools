@@ -10,6 +10,7 @@ custom_js:
 - tools/talent-planner/talents.js
 - game/classes.js
 - game/world4/breeding.js
+- tools/refinery-planner/RefinerySpeed.js
 - tools/refinery-planner/Refinery.js
 - tools/refinery-planner/main.js
 on_ready_js: tools/refinery-planner/on_ready.js
@@ -30,8 +31,7 @@ on_ready_js: tools/refinery-planner/on_ready.js
 
     <h2>Refinery speed</h2>
     <div id="refinery_speed">
-        Combustion cycle: <span type="text" id="speed_combustion"></span><br>
-        Synthesis cycle: <span type="text" id="speed_synthesis"></span>
+        {% include_relative includes/speed.html %}
     </div>
 
     <h2>Resource generation</h2>

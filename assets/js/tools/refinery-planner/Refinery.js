@@ -1,28 +1,32 @@
 class Refinery {
-  constructor() { } initFromSaveData(save_data) {
+  constructor(save_data) {
+    this.save_data = save_data
 
+    this.refinerySpeed = new RefinerySpeed(save_data)
+    this.refinery_data = JSON.parse(save_data["Refinery"])
 
-    this.computeRefinerySpeed(save_data)
+    this.calculators = []
+  }
 
+  processRefineryRanks() {
 
-    let refinery_data = JSON.parse(save_data["Refinery"])
-    // console.log(refinery_data)
 
     this.salts = Array(6).fill().map((_, i) => ({}));
     this.resources = []
     this.resource_generation = {} // per hour
     for (let salt_index = 0; salt_index < 6; salt_index++) {
       let salt = this.salts[salt_index]
-      const rank = refinery_data[salt_index + 3][1]
+      const rank = this.refinery_data[salt_index + 3][1]
+      salt.progress = this.refinery_data[salt_index + 3][0]
       salt.rank = rank
-      salt.progress = refinery_data[salt_index + 3][0]
+
       salt.data = JSON.parse(JSON.stringify(SALT_DATA[salt_index]));
       salt.powerPerCycle = this.getPowerPerCycle(rank)
       salt.powerToRankUp = this.getPowerToRankUp(rank)
       salt.cyclesPerRank = Math.ceil(salt.powerToRankUp / salt.powerPerCycle)
       salt.NextCycleBreakpoint = this.calcNextCycleBreakpoint(rank)
 
-      salt.timePerCycle = CYCLE_BASE_TIMES[salt.data.category] / this.refinery_speed_mult
+      salt.timePerCycle = CYCLE_BASE_TIMES[salt.data.category] / this.refinerySpeed.getMult()
       for (let material of salt.data.material_costs) {
         this.resources.push(JSON.parse(JSON.stringify(material)))
         const isSalt = material.name.includes("Salts")
@@ -44,133 +48,18 @@ class Refinery {
       }
     }
 
+    this.showRefinery()
+    this.showResources()
 
-
-
+    for (let calc of this.calculators) {
+      calc("a");
+    }
 
   }
 
-  computeRefinerySpeed(save_data) {
-    // calc ref speed
-
-    // world 1
-    // stamps
-    let stamp_info = save_data["StampLv"]
-    this.stamp_cooked_meal_lvl = stamp_info[2][21]
-    // world 2
-    // alchemy
-    let vial_info = save_data["CauldronInfo"][4]
-    let vial_levels = []
-    for (let i = 0; i < vial_info.length; i++) {
-      vial_levels.push(vial_info[i])
-    }
-
-    this.max_level_vials = [...vial_levels].filter(x => x >= 13).length
-    this.vial_level_red_malt = vial_levels[25]
-
-    // sigils
-    let sigil_info = JSON.parse(save_data["CauldronP2W"])
-    // console.log(sigil_info)
-    // this.sigil_pipe_gauge_level = sigil_info[2 * (11 - 1) + 1]
-    this.sigil_pipe_gauge_time = sigil_info[4][2 * (11 - 1)]
-    // console.log(this.sigil_pipe_gauge_time)
-    let sigil_bonus = 0.1 * ((this.sigil_pipe_gauge_time >= 700)
-      + (this.sigil_pipe_gauge_time >= 12000)
-      + (this.sigil_pipe_gauge_time >= 320000))
-    // arcade
-    let arcade_levels = JSON.parse(save_data["ArcadeUpg"])
-    this.arcade_refinery_lvl = arcade_levels[25]
-    // world 3
-    // construction
-    let building_data = JSON.parse(save_data["Tower"])
-    let building_current_levels = building_data.slice(0, 27)
-    this.total_building_levels = building_current_levels.reduce((a, b) => (a + b))
-
-    let salt_lick_data = JSON.parse(save_data["SaltLick"])
-    this.salt_lick_refinery_speed = salt_lick_data[2]
-    // world 4
-    // breeding
-    let breeding_info = JSON.parse(save_data["Breeding"])
-    // console.log(breeding_info)
-    let shiny_time_bored_bean = breeding_info[22][3]
-    let shiny_time_whale = breeding_info[23][9]
-    let shiny_time_Demon_Genie = breeding_info[25][3]
-    // let shiny_time_sheepie = breeding_info[24][0]
-    this.shiny_lvl_bored_bean = getShinyLevel(shiny_time_bored_bean)
-    this.shiny_lvl_whale = getShinyLevel(shiny_time_whale)
-    this.shiny_lvl_Demon_Genie = getShinyLevel(shiny_time_Demon_Genie)
-    // console.log(this.shiny_lvl_bored_bean)
-    // console.log(this.shiny_lvl_whale)
-    // console.log(this.shiny_lvl_Demon_Genie)
-
-    let shinyRefineryBonus = 0.02 * (this.shiny_lvl_bored_bean + this.shiny_lvl_whale + this.shiny_lvl_Demon_Genie)
-    // lab
-
-    // world 5
-    // sailing
-    let sailing_info = JSON.parse(save_data["Sailing"])
-    this.artifact_chilled_yarn_lvl = sailing_info[3][16]
 
 
-    // general
-    // classes
-    let player_names = save_data[`playerNames`]
-    this.players = Array.from({ length: player_names.length }, () => ({}));
 
-    for (let i = 0; i < player_names.length; i++) {
-      this.players[i]["name"] = player_names[i]
-      this.players[i]["class"] = save_data[`CharacterClass_${i}`]
-      this.players[i]["class_name"] = CLASSES[save_data[`CharacterClass_${i}`]]
-      this.players[i]["subclasses"] = getClassList(CLASSES[save_data[`CharacterClass_${i}`]])
-
-
-      this.players[i]["skill_max_levels"] = JSON.parse(save_data[`SM_${i}`]); // SM for max; SL and SLpre for currents
-      this.players[i]["skill_current_levels"] = JSON.parse(save_data[`SL_${i}`]); // SM for max; SL and SLpre for currents
-      this.players[i]["level"] = save_data[`Lv0_${i}`][0];
-
-      let talent_family_guy = TALENTS["Divine_Knight"]["THE_FAMILY_GUY"]
-      let level_fg = this.players[i]["skill_current_levels"][talent_family_guy.skillIndex]
-      this.players[i]["family_guy_lvl"] = level_fg
-      this.players[i].family_guy_bonus = talent_family_guy.x1 / 100 * level_fg / (talent_family_guy.x2 + level_fg)
-
-    }
-    // console.log(this.players)
-
-    let highest_level_DK = this.players.filter((p) => (p.subclasses.includes("Divine_Knight"))).reduce(
-      (acc, val) => {
-        return acc.level > val.level ? acc : val;
-      })
-    // console.log(highest_level_DK)
-
-    let dk_level = highest_level_DK.level
-    let family_refinery_bonus = 0.5 * dk_level / (150 + dk_level) * (1 + highest_level_DK.family_guy_bonus)
-
-    // calc total speed mult
-    this.bonusBreakdown = [
-      { name: 'Base', value: 1 },
-      { name: 'Vials', value: this.vial_level_red_malt * 0.02 * (1 + 0.02 * this.max_level_vials) },
-      { name: 'Salt lick', value: this.salt_lick_refinery_speed * 0.02 },
-      { name: 'Family', value: family_refinery_bonus },
-      { name: 'Sigils', value: sigil_bonus * (1 + this.artifact_chilled_yarn_lvl) },
-      { name: 'Stamps', value: this.stamp_cooked_meal_lvl / 100 },
-      { name: 'Shinies', value: shinyRefineryBonus },
-      { name: 'Const mastery', value: Math.floor(this.total_building_levels / 10) / 100 },
-      { name: 'Arcade', value: 0.3 * this.arcade_refinery_lvl / (100 + this.arcade_refinery_lvl) },
-      // { name: 'Vote', value: 0 }, // not taken into account as not very useful for the long term planning
-    ]
-
-
-    this.refinery_speed_mult = this.bonusBreakdown.reduce((a, b) => { return (a + b.value) }, 0) * (3) // lab bonus always on
-    let sum = this.bonusBreakdown.reduce((a, b) => { return (a + b.value) }, 0)
-    for (let bonus of this.bonusBreakdown) {
-      bonus.weight = bonus.value / sum
-    }
-    console.log(this.bonusBreakdown)
-    console.log(this.refinery_speed_mult)
-
-    document.getElementById("speed_combustion").innerHTML = `${formatTime(CYCLE_BASE_TIMES["Combustion"] / this.refinery_speed_mult)}`
-    document.getElementById("speed_synthesis").innerHTML = `${formatTime(CYCLE_BASE_TIMES["Synthesis"] / this.refinery_speed_mult)}`
-  }
   calcNextCycleBreakpoint(rank) {
     let initialRank = rank
     let powerPerCycle = this.getPowerPerCycle(rank)
@@ -288,6 +177,7 @@ class Refinery {
     choiceElem.addEventListener("input", doTheCalc);
     inputValueElem.addEventListener("input", doTheCalc);
     doTheCalc();
+    this.calculators.push(doTheCalc);
   }
   createCalculatorBreakPoint() {
     let choiceElem = document.getElementById("salt_select_breakpoints")
@@ -334,7 +224,11 @@ class Refinery {
     choiceElem.addEventListener("input", doTheCalc);
     inputValueElem.addEventListener("input", doTheCalc);
     doTheCalc();
+    this.calculators.push(doTheCalc);
   }
+
+
+
   showResources() {
     let content = ""
     for (let material of this.resources) {
