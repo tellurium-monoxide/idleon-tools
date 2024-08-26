@@ -37,6 +37,7 @@ class Refinery {
             : 1.5
         ))
         material.costPerRank = material.costPerCycle * salt.cyclesPerRank
+        material.costPerHour = material.costPerCycle * 3600 / salt.timePerCycle
 
       }
       this.resource_generation[salt.data.name] = salt.powerPerCycle
@@ -95,7 +96,7 @@ class Refinery {
     content += `<th>Progress</th>`
     content += `<th>Power per cycle<br>(next rank|increase)</th>`
     content += `<th>Cycles per rank<br>(next breakpoint)</th>`
-    content += `<th>Cost per rank</th>`
+    content += `<th>Costs</th>`
     content += `<th>Time per rank</th>`
     content += "</tr>"
 
@@ -120,10 +121,8 @@ class Refinery {
       let i = 0
       for (let material of salt.data.material_costs) {
         i++
-        content += `<td><img src="${material.icon
-          }"></td>`
-        content += `<td>${formatIdleonNumbers(material.costPerRank)
-          }</td>`
+        content += `<td><img src="${material.icon}"></td>`
+        content += `<td>${formatIdleonNumbers(material.costPerHour)}/h<br>${formatIdleonNumbers(material.costPerRank)}/r</td>`
         if (i % 3 == 0)
           content += "</tr><tr>"
 
