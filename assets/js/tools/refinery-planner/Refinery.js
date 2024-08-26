@@ -40,7 +40,7 @@ class Refinery {
         material.costPerHour = material.costPerCycle * 3600 / salt.timePerCycle
 
       }
-      this.resource_generation[salt.data.name] = salt.powerPerCycle
+      this.resource_generation[salt.data.name] = salt.powerPerCycle * 3600 / salt.timePerCycle
     }
 
     for (let material of this.resources) {
@@ -233,10 +233,8 @@ class Refinery {
     for (let material of this.resources) {
       content += "<div><table>"
       content += "<tr>"
-      content += `<td><img src="${material.icon
-        }"></td>`
-      content += `<td>${this.resource_generation[material.name]
-        }/h</td>`
+      content += `<td><img src="${material.icon}"></td>`
+      content += `<td>${formatIdleonNumbers(this.resource_generation[material.name])}/h</td>`
       content += "</tr>"
       content += "</table>"
       content += "</div>"

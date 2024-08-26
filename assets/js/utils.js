@@ -28,8 +28,8 @@ function indexOfLastMin(a) {
 
 number_notations = ["", "k", "M", "B", "T", "Q", "QQ", "QQQ", "e24", "e27"]
 function formatIdleonNumbers(value) {
-    if (value < 1000) {
-        return value.toFixed(2)
+    if (value < 1000000) {
+        return value.toFixed(0).padStart(6, " ")
     } else {
         let notation_id = Math.floor(Math.log(value) / Math.log(1000))
 

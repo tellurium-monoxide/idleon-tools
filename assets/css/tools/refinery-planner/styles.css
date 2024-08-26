@@ -7,8 +7,13 @@ td.progress {
     white-space: pre;
 }
 
+
 table.costs {
     margin-left: 0;
+}
+
+table.costs td {
+    white-space: pre;
 }
 
 table.calculator {
