@@ -96,8 +96,8 @@ class Refinery {
     content += `<th>Progress</th>`
     content += `<th>Power per cycle<br>(next rank|increase)</th>`
     content += `<th>Cycles per rank<br>(next breakpoint)</th>`
-    content += `<th>Costs</th>`
     content += `<th>Time per rank</th>`
+    content += `<th>Costs</th>`
     content += "</tr>"
 
     for (const salt of this.salts) {
@@ -117,6 +117,9 @@ class Refinery {
         } at r${salt.NextCycleBreakpoint.rank
         }|+${salt.NextCycleBreakpoint.inc
         })</td>`
+      content += `<td>${formatTime(salt.cyclesPerRank * salt.timePerCycle)}</td>`
+      ///////////////////////////////
+      // display costs
       content += `<td><table class="costs"><tr>`
       let i = 0
       for (let material of salt.data.material_costs) {
@@ -135,8 +138,8 @@ class Refinery {
 
       }
       content += `</tr></table></td>`
-
-      content += `<td>${formatTime(salt.cyclesPerRank * salt.timePerCycle)}</td>`
+      // end display costs
+      ///////////////////////////////
 
       content += "</tr>"
     }
