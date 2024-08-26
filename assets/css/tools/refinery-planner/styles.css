@@ -21,6 +21,18 @@ table.calculator {
     border: solid 1px;
 }
 
+td.enough {
+    color: blue;
+}
+
+td.not_enough_but_storage {
+    color: yellow;
+}
+
+td.not_enough {
+    color: red;
+}
+
 .resources {
     display: flex;
     flex-wrap: wrap;
