@@ -122,6 +122,8 @@ class ConstructionState {
 
         this.initCalculatedBonus()
 
+        console.log(BUILDINGS.reduce((a, b) => (a + b.max_level), 0))
+
 
 
     }
