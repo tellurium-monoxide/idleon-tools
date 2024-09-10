@@ -117,7 +117,7 @@ class RefinerySpeed {
             { name: 'Family', value: family_refinery_bonus, max: 0.7 },
             { name: 'Sigils', value: 0.1 * this.sigil_pipe_gauge_level * (1 + this.artifact_chilled_yarn_lvl), max: 1.5 },
             { name: 'Stamps', value: this.stamp_refinery_level / 100, max: 1 },
-            { name: 'Shinies', value: shinyRefineryBonus, max: 0.6 },
+            { name: 'Shinies', value: shinyRefineryBonus, max: 1.2 },
             { name: 'Const_mastery', value: Math.floor(this.total_building_levels / 10) / 100, max: 3.67 },
             { name: 'Arcade', value: 0.3 * this.arcade_refinery_lvl / (100 + this.arcade_refinery_lvl), max: 0.15 },
             // { name: 'Vote', value: 0 }, // not taken into account as not very useful for the long term planning
@@ -149,8 +149,10 @@ class RefinerySpeed {
         }
 
         let sum = this.bonusBreakdown.reduce((a, b) => { return (a + b.value) }, 0)
+        let sum_max = this.bonusBreakdown.reduce((a, b) => { return (a + b.max) }, 0)
         document.getElementById("Total").children[2].innerHTML = "+" + formatPercent(sum)
-        document.getElementById("Total").children[3].innerHTML = formatPercent(1)
+        document.getElementById("Total").children[3].innerHTML = formatPercent(sum_max)
+        document.getElementById("Total").children[4].innerHTML = formatPercent(sum / sum_max)
 
         document.getElementById("refinery_speed_max_lvl_vials").setValue(this.max_level_vials)
         document.getElementById("refinery_speed_red_malt_vial").setValue(this.vial_level_red_malt)
