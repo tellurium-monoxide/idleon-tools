@@ -11,6 +11,23 @@
     "outline.showArrays": true,
     "outline.showNumbers": true,
     "outline.showVariables": false,
+    "[liquid-javascript]": {
+        "editor.defaultFormatter": "sissel.shopify-liquid",
+        "editor.formatOnSave": true
+    },
+    "liquid.completion.filters": false,
+    "liquid.completion.objects": false,
+    "liquid.completion.operators": false,
+    "liquid.completion.properties": false,
+    "liquid.completion.schema": false,
+    "liquid.completion.sections": false,
+    "liquid.completion.tags": false,
+    "liquid.completion.variables": false,
+    "liquid.config.method": "workspace",
+    "liquid.engine": "jekyll",
+    "emmet.includeLanguages": {
+        "liquid-javascript": "js"
+    },
     // Enables formatting of all .html files
     // "[liquid]": {
     //     "editor.defaultFormatter": "sissel.shopify-liquid",
