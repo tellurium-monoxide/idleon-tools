@@ -63,7 +63,7 @@ function createMealTable() {
     if (i % 1 == 0) {
       content += "</tr><tr>"
     }
-    content += `<td><img src="${mdata.img}" class="meal_icon"></td>`
+    content += `<td><div class="meal_icon"><img src="${GET_MEAL_ICON(i)}"></div></td>`
     content += `<td>${mdata.name}</td>`
     content += `<td><input type="number" id="meal${i}_level"/></td>`
     content += `<td><input type="text" id="meal${i}_qtt"/></td>`

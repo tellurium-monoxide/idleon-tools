@@ -86,7 +86,7 @@ function addMealUpgradeDisplay(cooking_data, meal_id, new_meal_lvl, ladles, cumu
         lvlclass = "multiple_of_3"
     }
     content = `<tr class=${trclass}>`
-    content += `<td><img src="${mdata.img}"></td>`
+    content += `<td><div class="meal_icon"><img src="${GET_MEAL_ICON(meal_id)}"></div></td>`
     content += `<td> ${mdata.name} </td>`
     content += `<td class="${lvlclass}">${new_meal_lvl}</td>`
     // content += `<td>Amount: ${getMealCost(new_meal_lvl, 0).toExponential(3)}</td>`
@@ -100,7 +100,7 @@ function addMealUpgradeDisplay(cooking_data, meal_id, new_meal_lvl, ladles, cumu
     let NMLB_targets = cooking_data.getNMLBtargetList()
     let imgs = ""
     for (let i = 0; i < Math.min(7, NMLB_targets.length); i++) {
-        imgs += `<img src="${meal_info[NMLB_targets[i]].img}">`
+        imgs += `<img src="${GET_MEAL_ICON(NMLB_targets[i])}">`
     }
     content += `<td>${imgs}</td>`
     content += `<td hidden>${JSON.stringify(cooking_data)}</td>`
