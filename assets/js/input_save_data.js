@@ -55,13 +55,17 @@ async function onSubmit() {
 function onClear() {
     document.querySelector("#raw_data").value = ""
 }
-function onInputFromClip() {
-    navigator.clipboard
-        .readText()
-        .then((clipText) => {
-            document.querySelector("#raw_data").value = clipText;
-            run_local_tool(clipText);
-        });
+async function onInputFromClip() {
+
+    clipText = await navigator.clipboard.readText()
+    document.querySelector("#raw_data").value = clipText;
+    run_local_tool(clipText);
+    // navigator.clipboard
+    //     .readText()
+    //     .then((clipText) => {
+    //         document.querySelector("#raw_data").value = clipText;
+    //         run_local_tool(clipText);
+    //     });
 }
 async function onCopySave() {
     input_data = document.querySelector("#raw_data").value
