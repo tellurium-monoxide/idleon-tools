@@ -111,23 +111,25 @@ class RefinerySpeed {
         let shinyRefineryBonus = 0.02 * (this.shiny_lvl_bored_bean + this.shiny_lvl_whale + this.shiny_lvl_Demon_Genie)
         let family_refinery_bonus = 0.5 * this.highest_dk_level / (150 + this.highest_dk_level) * (1 + family_guy_bonus)
         this.bonusBreakdown = [
-            { name: 'Base', value: 1 },
-            { name: 'Vials', value: this.vial_level_red_malt * 0.02 * (1 + 0.02 * this.max_level_vials) },
-            { name: 'Salt_lick', value: this.salt_lick_refinery_speed * 0.02 },
-            { name: 'Family', value: family_refinery_bonus },
-            { name: 'Sigils', value: 0.1 * this.sigil_pipe_gauge_level * (1 + this.artifact_chilled_yarn_lvl) },
-            { name: 'Stamps', value: this.stamp_refinery_level / 100 },
-            { name: 'Shinies', value: shinyRefineryBonus },
-            { name: 'Const_mastery', value: Math.floor(this.total_building_levels / 10) / 100 },
-            { name: 'Arcade', value: 0.3 * this.arcade_refinery_lvl / (100 + this.arcade_refinery_lvl) },
+            { name: 'Base', value: 1, max: 1 },
+            { name: 'Vials', value: this.vial_level_red_malt * 0.02 * (1 + 0.02 * this.max_level_vials), max: 0.6188 },
+            { name: 'Salt_lick', value: this.salt_lick_refinery_speed * 0.02, max: 0.2 },
+            { name: 'Family', value: family_refinery_bonus, max: 0.7 },
+            { name: 'Sigils', value: 0.1 * this.sigil_pipe_gauge_level * (1 + this.artifact_chilled_yarn_lvl), max: 1.5 },
+            { name: 'Stamps', value: this.stamp_refinery_level / 100, max: 1 },
+            { name: 'Shinies', value: shinyRefineryBonus, max: 0.6 },
+            { name: 'Const_mastery', value: Math.floor(this.total_building_levels / 10) / 100, max: 3.67 },
+            { name: 'Arcade', value: 0.3 * this.arcade_refinery_lvl / (100 + this.arcade_refinery_lvl), max: 0.15 },
             // { name: 'Vote', value: 0 }, // not taken into account as not very useful for the long term planning
         ]
 
 
         this.refinery_speed_mult = this.bonusBreakdown.reduce((a, b) => { return (a + b.value) }, 0) * (3) // lab bonus always on
+        this.max_refinery_speed_mult = this.bonusBreakdown.reduce((a, b) => { return (a + b.max) }, 0) * (3) // lab bonus always on
         let sum = this.bonusBreakdown.reduce((a, b) => { return (a + b.value) }, 0)
         for (let bonus of this.bonusBreakdown) {
             bonus.weight = bonus.value / sum
+            bonus.completion = bonus.value / bonus.max
         }
 
 
@@ -142,7 +144,8 @@ class RefinerySpeed {
 
         for (let bonus of this.bonusBreakdown) {
             document.getElementById(bonus.name).children[2].innerHTML = "+" + formatPercent(bonus.value)
-            document.getElementById(bonus.name).children[3].innerHTML = formatPercent(bonus.weight)
+            document.getElementById(bonus.name).children[3].innerHTML = formatPercent(bonus.max)
+            document.getElementById(bonus.name).children[4].innerHTML = formatPercent(bonus.completion)
         }
 
         let sum = this.bonusBreakdown.reduce((a, b) => { return (a + b.value) }, 0)

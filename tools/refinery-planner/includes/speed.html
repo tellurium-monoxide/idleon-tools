@@ -5,12 +5,14 @@ Synthesis cycle: <span type="text" id="speed_synthesis"></span>
         <th>Source</th>
         <th>Inputs</th>
         <th>Total boost</th>
-        <th>Weight</th>
+        <th>Max boost</th>
+        <th>Completion</th>
 
     </tr>
     <tr id="Base">
         <td>Base</td>
         <td class="speed_inputs"></td>
+        <td></td>
         <td></td>
         <td></td>
     </tr>
@@ -19,8 +21,8 @@ Synthesis cycle: <span type="text" id="speed_synthesis"></span>
         <td class="speed_inputs">
             <table class="speed_input_table">
                 <tr>
-                    <td>Max level vials</td>
-                    <td><input type="number" id="refinery_speed_max_lvl_vials" min="0"></td>
+                    <td>Max level vials (/69 realistic)</td>
+                    <td><input type="number" id="refinery_speed_max_lvl_vials" min="0" max="74"></td>
                 </tr>
                 <tr>
                     <td>Red malt vial level (/13)</td>
@@ -28,6 +30,7 @@ Synthesis cycle: <span type="text" id="speed_synthesis"></span>
                 </tr>
             </table>
         </td>
+        <td></td>
         <td></td>
         <td></td>
     </tr>
@@ -41,6 +44,7 @@ Synthesis cycle: <span type="text" id="speed_synthesis"></span>
                 </tr>
             </table>
         </td>
+        <td></td>
         <td></td>
         <td></td>
     </tr>
@@ -60,6 +64,7 @@ Synthesis cycle: <span type="text" id="speed_synthesis"></span>
         </td>
         <td></td>
         <td></td>
+        <td></td>
     </tr>
     <tr id="Sigils">
         <td>Sigils</td>
@@ -77,6 +82,7 @@ Synthesis cycle: <span type="text" id="speed_synthesis"></span>
         </td>
         <td></td>
         <td></td>
+        <td></td>
     </tr>
     <tr id="Stamps">
         <td>Stamps</td>
@@ -88,6 +94,7 @@ Synthesis cycle: <span type="text" id="speed_synthesis"></span>
                 </tr>
             </table>
         </td>
+        <td></td>
         <td></td>
         <td></td>
     </tr>
@@ -111,6 +118,7 @@ Synthesis cycle: <span type="text" id="speed_synthesis"></span>
         </td>
         <td></td>
         <td></td>
+        <td></td>
     </tr>
     <tr id="Const_mastery">
         <td>Construction mastery</td>
@@ -122,6 +130,7 @@ Synthesis cycle: <span type="text" id="speed_synthesis"></span>
                 </tr>
             </table>
         </td>
+        <td></td>
         <td></td>
         <td></td>
     </tr>
@@ -137,6 +146,7 @@ Synthesis cycle: <span type="text" id="speed_synthesis"></span>
         </td>
         <td></td>
         <td></td>
+        <td></td>
     </tr>
     <tr id="Total">
         <td>Total</td>
@@ -144,6 +154,7 @@ Synthesis cycle: <span type="text" id="speed_synthesis"></span>
             <button onclick="button_calc_from_save()">Calc from save</button>
             <button onclick="button_calc_from_inputs()">Calc from inputs</button>
         </td>
+        <td></td>
         <td></td>
         <td></td>
     </tr>

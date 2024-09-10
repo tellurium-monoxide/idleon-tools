@@ -127,7 +127,8 @@ class Refinery {
 
         let material_cost_class = (this.resource_generation[material.name] >= material.costPerHour) ? "enough" : "not_enough"
         let cost_tooltip = `Prod: ${formatIdleonNumbers(this.resource_generation[material.name])}/h\nLeftover: ${formatIdleonNumbers(this.resource_generation[material.name] - material.costPerHour)}/h`
-        content += `<td><img src="${material.icon}"></td>`
+        // content += `<td><img src="${material.icon}"></td>`
+        content += `<td>${material.name}</td>`
         content += `<td class="${material_cost_class}" title="${cost_tooltip}">${formatIdleonNumbers(material.costPerHour)}/h<br>${formatIdleonNumbers(material.costPerRank)}/r</td>`
         if (i % 3 == 0)
           content += "</tr><tr>"
@@ -239,7 +240,8 @@ class Refinery {
     for (let material of this.resources) {
       content += "<div><table>"
       content += "<tr>"
-      content += `<td><img src="${material.icon}"></td>`
+      // content += `<td><img src="${material.icon}"></td>`
+      content += `<td>${material.name}</td>`
       content += `<td>${formatIdleonNumbers(this.resource_generation[material.name])}/h</td>`
       content += "</tr>"
       content += "</table>"
