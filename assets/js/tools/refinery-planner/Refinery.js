@@ -106,7 +106,7 @@ class Refinery {
       content += "<tr>"
       content += `<td><img src="${salt.data.icon_url}"></td>`
       content += `<td>${salt.rank}</td>`
-      content += `<td class="progress">${salt.progress.toLocaleString().padStart(9, " ")}/${salt.powerToRankUp.toLocaleString().padEnd(9, " ")}<br>(${formatPercent(salt.progress / salt.powerToRankUp)})</td>`
+      content += `<td class="progress">${salt.progress.toLocaleString().padStart(9, " ")}/${salt.powerToRankUp.toLocaleString().padEnd(9, " ")}<br>(${formatPercentPad(salt.progress / salt.powerToRankUp)})</td>`
 
       let nextRankPowerPerCycle = this.getPowerPerCycle(salt.rank + 1)
       content += `<td>${salt.powerPerCycle
@@ -252,5 +252,4 @@ class Refinery {
     document.getElementById("resources").innerHTML = content;
   }
 }
-const formatPercent = (percent) => `${(percent * 100).toFixed(2)
-  }%`.padStart(6, "0");
+const formatPercentPad = (percent) => `${(percent * 100).toFixed(2)}%`.padStart(6, "0");

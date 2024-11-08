@@ -53,7 +53,7 @@ class StampPlanner {
 
         let sigil_stamp_cost_red = sigil_enveloppe_pile_reduction * (1 + artifact_chilled_yarn_lvl)
 
-        this.base_stamp_cost_multiplier = 1 / (1 + sigil_stamp_cost_red) * Math.max(0.1, 1 - vial_total_bonus) * 0.05 * 0.1
+        this.base_stamp_cost_multiplier = 1 / (1 + sigil_stamp_cost_red) * Math.max(0.1, 1 - vial_total_bonus)
 
 
 
@@ -64,6 +64,11 @@ class StampPlanner {
 
         let shrine_bonus = (0.1 + 0.02 * shrine_pantheon_lvl) * 1.3
 
+
+        let guild_rucksack_lvl = JSON.parse(save_data["Guild"])[0][2]
+        console.log(guild_rucksack_lvl)
+        let guild_bonus = 0.7 * guild_rucksack_lvl / (50 + guild_rucksack_lvl)
+
         let base_cap = 30000 // base carry cap of max bag
             * 80 // inventory slots
             * 3.5 // Gem Shop Carry Capacity
@@ -71,13 +76,13 @@ class StampPlanner {
             * 2.77 // Prayer Ruck Sack
             * (1 + 0.3 * 50 / (60 + 50)) //Star Talent Telekinetic Storage
             * (1 + shrine_bonus) // Shrine Pantheon
+            * (1 + guild_bonus) // Guild Rucksack
             * (1
                 + this.stamp_states["misc"][1].lvl * 0.01 // Stamp Mason Jar
                 + (0.1 + 0.5 + 0.3) * 2 * Math.pow(1.1, Math.ceil((summoning_lvl + 1) / 20)) // Star signs: Pack Mule, The OG Skiller, Mr No Sleep. Doubled by chip
             )
 
 
-        // missing bonuses:  guild, pantheon shrine
 
 
         let stamp_multi = 2.5 // lab and pristine liqorice rolle
@@ -115,11 +120,11 @@ class StampPlanner {
                     if (stamp_state.lvl > 0) {
                         let mat_cost = this.getMaterialCost(stampData, stamp_state.maxlvl)
 
-                        cell.innerHTML += `<br>${formatIdleonNumbers(mat_cost)} ${stampData.itemReq[0].name}`
+                        cell.innerHTML += `<br>${formatIdleonNumbers(mat_cost)} ${stampData.itemReq[0].name} (${formatPercent(mat_cost / this.carry_caps[stampData.itemReq[0].category])} of carry cap)`
 
                         let max_reach = this.getMaxReachableLevel(stampData, stamp_state.maxlvl)
 
-                        cell.innerHTML += `<br>${max_reach}`
+                        cell.innerHTML += `<br>${max_reach.max_level}(${formatIdleonNumbers(max_reach.cost_to_cap)})`
                     }
                 }
             }
@@ -127,9 +132,9 @@ class StampPlanner {
     }
 
 
-    getMaterialCost(stampData, max_level) {
+    getMaterialCost(stampData, max_level, gilded = true, daily_reduction = 0.9) {
         let tier = Math.round(max_level / stampData.reqItemMultiplicationLevel) - 1
-        let mat_cost = Math.max(1, stampData.baseMatCost * Math.pow(stampData.powMatBase, Math.pow(tier, 0.8)) * this.base_stamp_cost_multiplier)
+        let mat_cost = Math.max(1, stampData.baseMatCost * Math.pow(stampData.powMatBase, Math.pow(tier, 0.8)) * this.base_stamp_cost_multiplier * (1 - 0.95 * gilded) * (1 - daily_reduction))
 
         return mat_cost
     }
@@ -138,11 +143,13 @@ class StampPlanner {
     getMaxReachableLevel(stampData, max_level) {
         let mat_cost = this.getMaterialCost(stampData, max_level)
         let cap = this.carry_caps[stampData.itemReq[0].category]
+        let cost_to_cap = 0
         while (mat_cost < cap) {
             max_level += stampData.reqItemMultiplicationLevel
             mat_cost = this.getMaterialCost(stampData, max_level)
+            cost_to_cap += mat_cost
         }
-
-        return max_level
+        cost_to_cap -= mat_cost
+        return { max_level: max_level, cost_to_cap: Math.max(0, cost_to_cap) }
     }
 }

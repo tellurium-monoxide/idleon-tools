@@ -24,6 +24,7 @@ function indexOfLastMin(a) {
     return lowest;
 }
 
+const formatPercent = (fraction) => `${(fraction * 100).toFixed(2)}%`;
 
 
 number_notations = ["", "k", "M", "B", "T", "Q", "QQ", "QQQ", "e24", "e27"]
