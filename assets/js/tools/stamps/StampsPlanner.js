@@ -87,7 +87,7 @@ class StampPlanner {
 
         let stamp_multi = 2.5 // lab and pristine liqorice rolle
 
-        let max_talent_level = 350
+        let max_talent_level = 361
         let beginner_talent_extra_bags = 2 * max_talent_level / (100 + max_talent_level)
 
         this.carry_caps = {
