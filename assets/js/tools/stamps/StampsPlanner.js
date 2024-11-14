@@ -19,7 +19,20 @@ class StampPlanner {
             "skill": process_stamp_save_data(1),
             "misc": process_stamp_save_data(2),
         }
-        // console.log(stamp_lvls)
+
+        let chestOrder = save_data["ChestOrder"]
+        let chestQuantity = save_data["ChestQuantity"]
+
+        this.chestState = {}
+
+        for (let i = 0; i < chestOrder.length; i++) {
+            let itemName = chestOrder[i]
+            let itemQtt = chestQuantity[i]
+            this.chestState[itemName] = this.chestState[itemName] ?? 0
+            this.chestState[itemName] += itemQtt
+        }
+
+        // console.log(this.chestState)
 
         // get stamp cost reduction bonuses
 
@@ -129,7 +142,11 @@ class StampPlanner {
                     if (stampState.lvl > 0) {
                         let mat_cost = this.getMaterialCost(stampData, stampState.max_lvl)
 
-                        cell.innerHTML += `<br>${formatIdleonNumbers(mat_cost)} ${stampData.itemReq[0].name} (${formatPercent(mat_cost / this.carry_caps[stampData.itemReq[0].category])} of carry cap)`
+                        let mat_avail = this.chestState[stampData.itemReq[0].rawName] ?? 0
+                        cell.innerHTML += `<br>Material cost for next upgrade with max reduction:`
+                        cell.innerHTML += `<br>${formatIdleonNumbers(mat_cost)} ${stampData.itemReq[0].name}`
+                        cell.innerHTML += ` (${formatPercent(mat_cost / this.carry_caps[stampData.itemReq[0].category])} of carry cap)`
+                        cell.innerHTML += `<br>${mat_avail >= mat_cost ? "Can" : "Cannot"} afford (${formatIdleonNumbers(mat_avail)} in chest)`
 
                         let max_reach = this.getMaxReachableLevel(stampData, stampState.max_lvl)
 
@@ -180,14 +197,22 @@ class StampPlanner {
                 td1.appendChild(img)
 
                 let cost = this.getMaterialCost(upgrade.stampData, upgrade.stampState.max_lvl, upgrade.setup.gilded, upgrade.setup.daily)
+                let mat_avail = this.chestState[upgrade.stampData.itemReq[0].rawName] ?? 0
+
                 td2.appendChild(document.createTextNode(`${upgrade.stampData.displayName}`))
                 td2.appendChild(document.createElement('br'))
                 td2.appendChild(document.createTextNode(`${upgrade.stampState.max_lvl}->${upgrade.stampState.max_lvl + upgrade.stampData.reqItemMultiplicationLevel}`))
                 td2.appendChild(document.createElement('br'))
                 td2.appendChild(document.createTextNode(`${formatIdleonNumbers(cost)} ${upgrade.stampData.itemReq[0].name}`))
                 td2.appendChild(document.createElement('br'))
-                td2.appendChild(document.createTextNode(`${formatPercent(cost / this.carry_caps[upgrade.stampData.itemReq[0].category])}`))
+                td2.appendChild(document.createTextNode(`${formatPercent(cost / this.carry_caps[upgrade.stampData.itemReq[0].category])} of cap`))
+                td2.appendChild(document.createElement('br'))
+                td2.appendChild(document.createTextNode(`${mat_avail >= cost ? "Can" : "Cannot"} afford (${formatIdleonNumbers(mat_avail)} in chest)`))
 
+                if (mat_avail >= cost) {
+                    td1.classList.add("available")
+                    td2.classList.add("available")
+                }
 
                 tr.appendChild(td1)
                 tr.appendChild(td2)
