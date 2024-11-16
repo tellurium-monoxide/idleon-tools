@@ -75,7 +75,7 @@ class StampPlanner {
 
         let shrine_pantheon_lvl = JSON.parse(save_data["Shrine"])[4][3]
 
-        let shrine_bonus = (0.1 + 0.02 * shrine_pantheon_lvl) * 1.3
+        let shrine_bonus = (0.1 + 0.02 * (shrine_pantheon_lvl - 1)) * 1.3
 
 
         let guild_rucksack_lvl = JSON.parse(save_data["Guild"])[0][2]
@@ -85,15 +85,18 @@ class StampPlanner {
         let base_cap = 30000 // base carry cap of max bag
             * 80 // inventory slots
             * 3.5 // Gem Shop Carry Capacity
-            * 1.05 // Bribe	Bottomless Bags
-            * 2.77 // Prayer Ruck Sack
-            * (1 + 0.3 * 50 / (60 + 50)) //Star Talent Telekinetic Storage
+            * (1 + 1.77 + 0.05) // Prayer Ruck Sack + Bribe	Bottomless Bags
+            * (1 + 0.3 * 50 / (60 + 50) + guild_bonus) //Star Talent Telekinetic Storage + Guild Rucksack
             * (1 + shrine_bonus) // Shrine Pantheon
-            * (1 + guild_bonus) // Guild Rucksack
             * (1
                 + this.stamp_states["misc"][1].lvl * 0.01 // Stamp Mason Jar
-                + (0.1 + 0.5 + 0.3) * 2 * Math.pow(1.1, Math.ceil((summoning_lvl + 1) / 20)) // Star signs: Pack Mule, The OG Skiller, Mr No Sleep. Doubled by chip
+                + (0.1 + 0.05 + 0.3) * 2 * Math.pow(1.1, Math.ceil((summoning_lvl + 1) / 20)) // Star signs: Pack Mule, The OG Skiller, Mr No Sleep. Doubled by chip
             )
+
+        console.log(shrine_bonus)
+        console.log(this.stamp_states["misc"][1].lvl * 0.01)
+        console.log((0.1 + 0.5 + 0.3) * 2 * Math.pow(1.1, Math.ceil((summoning_lvl + 1) / 20)))
+
 
 
 
@@ -102,7 +105,7 @@ class StampPlanner {
 
         let max_talent_level = 361
         let beginner_talent_extra_bags = 2 * max_talent_level / (100 + max_talent_level)
-
+        console.log(this.stamp_states["skill"][20].lvl * 0.01 * stamp_multi)
         this.carry_caps = {
             "Material": base_cap * (1 + this.stamp_states["skill"][7].lvl * 0.01 * stamp_multi) * (1 + beginner_talent_extra_bags),
             "Food": base_cap,
