@@ -256,7 +256,12 @@ class StampPlanner {
     getMinSetupForUpgrade(stampData, max_lvl) {
         let cap = this.carry_caps[stampData.itemReq[0].category]
 
+        let item = stampData.itemReq[0].name
 
+        if (DATA_LIMITED_ITEMS.includes(item)) {
+            return { gilded: true, daily: 3 }
+
+        }
 
         let setups = [
             { gilded: false, daily: 0 },

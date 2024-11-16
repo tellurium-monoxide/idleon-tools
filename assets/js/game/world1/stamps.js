@@ -125,3 +125,16 @@ const DATA_STAMPS = {
         "22": { "displayName": "Atomic_Stamp", "rawName": "StampC23", "func": "decay", "x1": 20, "x2": 80, "reqItemMultiplicationLevel": 8, "baseMatCost": 2500, "baseCoinCost": 25000000, "powCoinBase": 1.52, "powMatBase": 5, "skillIndex": 0, "effect": "+{%_Lower_Atom_Upgrade_Costs", "placeholderEffect": "{}%_lower_Atom_upgrade_costs", "stat": "AtomCost", "itemReq": [{ "name": "Bamboo", "rawName": "SpiA3", category: "Material" }] }
     }
 };
+
+
+const DATA_LIMITED_ITEMS = [
+    "Royal_Suggma_Urn",
+    "Grass_Leaf",
+    "Twisty_Leaf",
+    "Golden_Nomwich",
+    "Redox_Salts",
+    "Cue_Tape",
+    "Stacked_Rice_Cake",
+    "Glass_Shard",
+
+]
