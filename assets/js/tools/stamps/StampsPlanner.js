@@ -179,7 +179,7 @@ class StampPlanner {
         for (let [catName, catUpgrades] of Object.entries(possible_upgrades)) {
 
             let tab = document.getElementById(`tab-stamps-${catName}`)
-
+            tab.replaceChildren();
             let tbl = document.createElement('tbl');
             tab.classList.add("stamp-upgrade-table")
             tab.appendChild(tbl)
