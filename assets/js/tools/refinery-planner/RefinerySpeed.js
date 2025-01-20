@@ -103,7 +103,9 @@ class RefinerySpeed {
         this.fillSpeedInputForm()
 
     }
-
+    computeArcadeBonus(lvl) {
+        return 0.3 * Math.min(lvl, 100) / (100 + Math.min(lvl, 100)) * (1 + ((lvl > 100) ? 1 : 0))
+    }
     computeRefinerySpeed() {
         // calc total speed mult
         let talent_family_guy = TALENTS["Divine_Knight"]["THE_FAMILY_GUY"]
@@ -119,7 +121,7 @@ class RefinerySpeed {
             { name: 'Stamps', value: this.stamp_refinery_level / 100, max: 1 },
             { name: 'Shinies', value: shinyRefineryBonus, max: 1.2 },
             { name: 'Const_mastery', value: Math.floor(this.total_building_levels / 10) / 100, max: 3.67 },
-            { name: 'Arcade', value: 0.3 * this.arcade_refinery_lvl / (100 + this.arcade_refinery_lvl), max: 0.15 },
+            { name: 'Arcade', value: this.computeArcadeBonus(this.arcade_refinery_lvl), max: 0.3 },
             // { name: 'Vote', value: 0 }, // not taken into account as not very useful for the long term planning
         ]
 
