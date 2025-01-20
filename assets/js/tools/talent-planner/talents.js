@@ -1253,6 +1253,131 @@ const TALENTS = {
             "skillIndex": 149
         }
     },
+    "Death_Bringer": {
+        "WRAITH_FORM": {
+            "name": "WRAITH_FORM",
+            "description": "Spawn_a_knight_disciple_who_generates_shockwaves_for_{_sec.",
+            "x1": 10, "x2": 0.15, "funcX": "bigBase",
+            "y1": null, "y2": null, "funcY": "txt",
+            "lvlUpText": "+0.15_sec_duration",
+            "skillIndex": 195, "K": 1.2, "D": 1.4, "s": 1.2, "cooldown": 40, "castTime": 1, "manaCost": 15, "inputReq": 0, "AFKrange": 230, "AFKtype": "line",
+            "AFKactivity": 0
+        },
+        "GRIMOIRE": {
+            "name": "GRIMOIRE",
+            "description": "Your_daggerang_is_now_+{%_larger_in_size,_and_hits_up_to_}_more_mobs.",
+            "x1": 100, "x2": 2, "funcX": "bigBase",
+            "y1": 2, "y2": 25, "funcY": "intervalAdd",
+            "lvlUpText": "+{%_Size_&_+}_Mobs",
+            "skillIndex": 196
+        },
+        "SENTINEL_AXES": {
+            "name": "SENTINEL_AXES",
+            "description": "While_active_if_all_mobs_on_screen_are_dead,_instantly_revive_all._Also_+{%_crit_dmg",
+            "x1": 200, "x2": 300, "funcX": "decay",
+            "y1": null, "y2": null, "funcY": "txt",
+            "lvlUpText": "+{%_crit_dmg",
+            "skillIndex": 197, "K": 1.2, "D": 1.2, "s": 1, "cooldown": 40, "castTime": 0.5, "manaCost": 15, "inputReq": 0, "AFKrange": 150, "AFKtype": "buff",
+            "AFKactivity": 0
+        },
+        "GRAVEYARD_SHIFT": {
+            "name": "GRAVEYARD_SHIFT",
+            "description": "+1%_active_EXP_and_Drop_Rate_per_mob_kill_shown_above_Orb._Orb_lasts_for_{_sec",
+            "x1": 30, "x2": 0.4, "funcX": "bigBase",
+            "y1": null, "y2": null, "funcY": "txt",
+            "lvlUpText": "+0.4_sec_Duration",
+            "skillIndex": 198, "K": 1, "D": 1, "s": 1, "cooldown": 150, "castTime": 0.5, "manaCost": 15, "inputReq": 0, "AFKrange": 150, "AFKtype": "buff",
+            "AFKactivity": 0
+        },
+        "DETONATION": {
+            "name": "DETONATION",
+            "description": "Every_basic_attack_with_a_spear_has_a_{%_chance_of_sending_out_a_shockwave.",
+            "x1": 100, "x2": 100, "funcX": "decay",
+            "y1": null, "y2": null, "funcY": "txt",
+            "lvlUpText": "+{%_shockwave_chance",
+            "skillIndex": 199
+        },
+        "MARAUDER_STYLE": {
+            "name": "MARAUDER_STYLE",
+            "description": "+{_Weapon_Power_for_every_10_Gaming_Lvs_of_this_character.",
+            "x1": 7, "x2": 100, "funcX": "decay",
+            "y1": null, "y2": null, "funcY": "txt",
+            "lvlUpText": "+{_Wep_Power_per_10_Lv",
+            "skillIndex": 200
+        },
+        "BULWARK_STYLE": {
+            "name": "BULWARK_STYLE",
+            "description": "+{%_Kill_per_Kill_per_1000_STR._Each_kill_is_worth_more_kills!",
+            "x1": 40, "x2": 100, "funcX": "decay",
+            "y1": null, "y2": null, "funcY": "txt",
+            "lvlUpText": "+{%_Kill_Per_Kill_Per_1000",
+            "skillIndex": 201
+        },
+        "FAMINE_O'FISH": {
+            "name": "FAMINE_O'FISH",
+            "description": "STR_has_a_{%_larger_impact_on_Skill_Efficiency._Also,_+}_STR.",
+            "x1": 60, "x2": 80, "funcX": "decay",
+            "y1": 1, "y2": 2, "funcY": "intervalAdd",
+            "lvlUpText": "+{%_impact_&_}_STR",
+            "skillIndex": 202
+        },
+        "BUILT_DIFFERENT": {
+            "name": "BUILT_DIFFERENT",
+            "description": "+{%_STR,_and_+}_Max_Talent_Lv_for_'Fist_of_Rage'",
+            "x1": 15, "x2": 100, "funcX": "decay",
+            "y1": 1, "y2": 0, "funcY": "add",
+            "lvlUpText": "+{%_STR_&_+}_Max_LV",
+            "skillIndex": 203
+        },
+        "RIBBON_WINNING": {
+            "name": "RIBBON_WINNING",
+            "description": "+{%_larger_Family_Bonuses_than_what_is_displayed_from_bonuses_given_by_this_player",
+            "x1": 40, "x2": 100, "funcX": "decay",
+            "y1": null, "y2": null, "funcY": "txt",
+            "lvlUpText": "+{%_Bonus",
+            "skillIndex": 204
+        },
+        "MASS_IRRIGATION": {
+            "name": "MASS_IRRIGATION",
+            "description": "+{%_Chance_to_get_Gaming_AFK_progress_when_claiming_AFK_gains,_but_not_from_candy.",
+            "x1": 40, "x2": 100, "funcX": "decay",
+            "y1": null, "y2": null, "funcY": "txt",
+            "lvlUpText": "+{%_chance",
+            "skillIndex": 205
+        },
+        "AGRICULTURAL_'PRECIATION": {
+            "name": "AGRICULTURAL_'PRECIATION",
+            "description": "+{%_Gaming_EXP_gain_for_all_characters!",
+            "x1": 60, "x2": 100, "funcX": "decay",
+            "y1": null, "y2": null, "funcY": "txt",
+            "lvlUpText": "+{%_Gaming_EXP",
+            "skillIndex": 206
+        },
+        "DANK_RANKS": {
+            "name": "DANK_RANKS",
+            "description": "+{%_Bits_gained_per_Gaming_LV,_no_matter_which_character_you're_on!",
+            "x1": 20, "x2": 100, "funcX": "decay",
+            "y1": null, "y2": null, "funcY": "txt",
+            "lvlUpText": "+{%_bits_per_gaming_lv",
+            "skillIndex": 207
+        },
+        "WRAITH_OVERLORD": {
+            "name": "WRAITH_OVERLORD",
+            "description": "+{%_printer_output_for_every_POW_10_kills_ever_done_with_the_rememberance_orb.",
+            "x1": 5, "x2": 150, "funcX": "decay",
+            "y1": null, "y2": null, "funcY": "txt",
+            "lvlUpText": "+{%_printer_output",
+            "skillIndex": 208
+        },
+        "APOCALYPSE_WOW": {
+            "name": "APOCALYPSE_WOW",
+            "description": "+{_Lv_for_all_talents_higher_than_Lv_1._This_bonus_goes_up_every_20_lvs",
+            "x1": 1, "x2": 20, "funcX": "intervalAdd",
+            "y1": null, "y2": null, "funcY": "txt",
+            "lvlUpText": "+1_all_LVs_every_20_LVs",
+            "skillIndex": 209
+        }
+    },
     "Calm_Basics": {
         "HEALTH_BOOSTER": {
             "name": "HEALTH_BOOSTER",

@@ -62,6 +62,10 @@ class AccountBookingStatus {
         // cooking
         let meal_data = JSON.parse(save_data["Meals"])
         this.meal_lvl_fortune_cookies = meal_data[0][34]
+        let meal_ribbons = (save_data["Ribbon"])
+        this.ribbon_tier_fortune_cookies = meal_ribbons[34 + 28]
+        console.log("ribbon")
+        console.log(this.ribbon_tier_fortune_cookies)
 
         // breeding
         let breeding_info = JSON.parse(save_data["Breeding"])
@@ -180,7 +184,8 @@ class AccountBookingStatus {
             + 0.16 * this.lab_black_diamond_rhinestone_active * this.lab_jewel_effect
             + 0.01 * (this.shiny_lvl_red_mush + this.shiny_lvl_sheepie)
 
-
+        let ribbon_mults = { 10: 2.35 }
+        this.ribbon_mult_fortune_cookies = ribbon_mults[this.ribbon_tier_fortune_cookies]
         // cooking
 
 
@@ -224,7 +229,7 @@ class AccountBookingStatus {
 
 
         this.lib_checkout_speed = 4 * 3600
-            / (1 + 0.04 * this.meal_lvl_fortune_cookies * this.meal_efficiency)
+            / (1 + 0.04 * this.meal_lvl_fortune_cookies * this.meal_efficiency * this.ribbon_mult_fortune_cookies)
             / (1 + this.atom_oxygen * 0.02)
             / (1
                 + 0.05 * (this.building_library_lvl - 1)
@@ -234,6 +239,7 @@ class AccountBookingStatus {
                 + this.superbit_library_checkouts * this.gaming_lvl * 0.01
                 + 0.3 * this.achiev_checkout_takeout
             )
+
         // console.log(0.04 * this.meal_lvl_fortune_cookies * this.meal_efficiency)
         // console.log(this.atom_oxygen * 0.02)
         // console.log(0.05 * (this.building_library_lvl - 1))
