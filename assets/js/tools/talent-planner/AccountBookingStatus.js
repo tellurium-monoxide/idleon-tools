@@ -184,7 +184,28 @@ class AccountBookingStatus {
             + 0.16 * this.lab_black_diamond_rhinestone_active * this.lab_jewel_effect
             + 0.01 * (this.shiny_lvl_red_mush + this.shiny_lvl_sheepie)
 
-        let ribbon_mults = { 10: 2.35 }
+        let ribbon_mults = {
+            1: 1.05,
+            2: 1.14,
+            3: 1.19,
+            4: 1.28,
+            5: 1.46,
+            6: 1.61,
+            7: 1.66,
+            8: 1.82,
+            9: 1.87,
+            10: 2.35,
+            11: 2.4,
+            12: 2.62,
+            13: 2.67,
+            14: 2.89,
+            15: 3.39,
+            16: 3.68,
+            17: 3.73,
+            18: 4.01,
+            19: 4.06,
+            20: 5,
+        }
         this.ribbon_mult_fortune_cookies = ribbon_mults[this.ribbon_tier_fortune_cookies]
         // cooking
 
