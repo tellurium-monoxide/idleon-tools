@@ -97,7 +97,7 @@ function createKitchenTable() {
   document.getElementById("kitchen_levels").innerHTML = content;
 }
 
-const meal_max_lvl = 90;
+const meal_max_lvl = 110;
 const meal_count = 67;
 const meal_info =
   [
