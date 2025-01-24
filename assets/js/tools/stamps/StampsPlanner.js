@@ -130,6 +130,11 @@ class StampPlanner {
             "g1d3": [],
         }
 
+        let max_stamps = 0
+        let unlocked_stamps = 0
+        let max_total_level = 0
+        let current_total_level = 0
+
 
         for (let [catName, catStamps] of Object.entries(this.stamp_states)) {
             for (let [stampId, stampState] of Object.entries(catStamps)) {
@@ -139,30 +144,43 @@ class StampPlanner {
 
 
                     let cell = document.getElementById(stampData.rawName)
+                    let infos = ""
+                    infos += `Lvl :${stampState.lvl}/${stampState.max_lvl}\n`
 
-                    cell.innerHTML = `lvl ${stampState.lvl}(${stampState.max_lvl})`
+                    current_total_level += stampState.lvl
 
                     if (stampState.lvl > 0) {
+
+                        unlocked_stamps += 1
                         let mat_cost = this.getMaterialCost(stampData, stampState.max_lvl)
 
                         let mat_avail = this.chestState[stampData.itemReq[0].rawName] ?? 0
-                        cell.innerHTML += `<br>Material cost for next upgrade with max reduction:`
-                        cell.innerHTML += `<br>${formatIdleonNumbers(mat_cost)} ${stampData.itemReq[0].name}`
-                        cell.innerHTML += ` (${formatPercent(mat_cost / this.carry_caps[stampData.itemReq[0].category])} of carry cap)`
-                        cell.innerHTML += `<br>${mat_avail >= mat_cost ? "Can" : "Cannot"} afford (${formatIdleonNumbers(mat_avail)} in chest)`
+                        // cell.innerHTML += `<br>Material cost for next upgrade with max reduction:`
+                        // cell.innerHTML += `<br>${formatIdleonNumbers(mat_cost)} ${stampData.itemReq[0].name}`
+                        // cell.innerHTML += ` (${formatPercent(mat_cost / this.carry_caps[stampData.itemReq[0].category])} of carry cap)`
+                        // cell.innerHTML += `<br>${mat_avail >= mat_cost ? "Can" : "Cannot"} afford (${formatIdleonNumbers(mat_avail)} in chest)`
 
                         let max_reach = this.getMaxReachableLevel(stampData, stampState.max_lvl)
+                        max_total_level += max_reach.max_lvl
 
-                        cell.innerHTML += `<br>${max_reach.max_lvl}(${formatIdleonNumbers(max_reach.cost_to_cap)})`
+                        infos += `Max reachable : ${max_reach.max_lvl}\n`
 
                         if (max_reach.max_lvl == stampState.max_lvl) {
                             cell.classList.add("complete")
+                            max_stamps += 1
                         } else {
+                            infos += `Total cost : ${formatIdleonNumbers(max_reach.cost_to_cap)} ${stampData.itemReq[0].name}\n`
+                            let mat_avail = this.chestState[stampData.itemReq[0].rawName] ?? 0
+                            infos += `Mats available : ${formatIdleonNumbers(mat_avail)} (${formatPercent(mat_avail / max_reach.cost_to_cap)})\n`
+
+                            if (mat_avail > max_reach.cost_to_cap) {
+                                cell.classList.add("affordable")
+                            }
                             let setup = this.getMinSetupForUpgrade(stampData, stampState.max_lvl)
                             if (setup) {
-                                cell.innerHTML += `<br>Needs for next upgrade:`
-                                cell.innerHTML += `<br>Gilded: ${setup.gilded ? "yes" : "no"}`
-                                cell.innerHTML += `<br>Daily: ${setup.daily}`
+                                // cell.innerHTML += `<br>Needs for next upgrade:`
+                                // cell.innerHTML += `<br>Gilded: ${setup.gilded ? "yes" : "no"}`
+                                // cell.innerHTML += `<br>Daily: ${setup.daily}`
 
                                 let tag = `g${setup.gilded ? "1" : "0"}d${setup.daily}`
                                 if (stampState.max_lvl == stampState.lvl) {
@@ -170,10 +188,24 @@ class StampPlanner {
                                 }
                             }
                         }
+                    } else {
+                        cell.classList.add("locked")
+                        infos = "Not unlocked"
                     }
+
+                    cell.title = infos
                 }
             }
         }
+
+
+        let general = document.getElementById("general")
+        let general_info = ""
+        general_info += `Maxed stamps: ${max_stamps}/${unlocked_stamps}<br>`
+        general_info += `Current total level: ${current_total_level}<br>`
+        general_info += `Max total level: ${max_total_level}<br>`
+
+        general.innerHTML = general_info
 
         console.log(possible_upgrades)
         for (let [catName, catUpgrades] of Object.entries(possible_upgrades)) {
@@ -217,6 +249,11 @@ class StampPlanner {
                     td2.classList.add("available")
                 }
 
+                if (upgrade.stampData.itemReq[0].category == "Equipment") {
+                    td1.classList.add("equip")
+                    td2.classList.add("equip")
+                }
+
                 tr.appendChild(td1)
                 tr.appendChild(td2)
 
@@ -241,13 +278,16 @@ class StampPlanner {
 
 
     getMaxReachableLevel(stampData, max_lvl) {
+        let setup = this.getMinSetupForUpgrade(stampData, max_lvl)
         let mat_cost = this.getMaterialCost(stampData, max_lvl)
         let cap = this.carry_caps[stampData.itemReq[0].category]
-        let cost_to_cap = mat_cost
-        while (mat_cost < cap) {
+        let cost_to_cap = 0
+        while (setup) {
+
+            cost_to_cap += setup.cost
             max_lvl += stampData.reqItemMultiplicationLevel
-            mat_cost = this.getMaterialCost(stampData, max_lvl)
-            cost_to_cap += mat_cost
+            setup = this.getMinSetupForUpgrade(stampData, max_lvl)
+            // mat_cost = this.getMaterialCost(stampData, max_lvl)
         }
         // cost_to_cap -= mat_cost
         return { max_lvl: max_lvl, cost_to_cap: Math.max(0, cost_to_cap) }
@@ -259,22 +299,21 @@ class StampPlanner {
         let item = stampData.itemReq[0].name
 
         if (DATA_LIMITED_ITEMS.includes(item)) {
-            return { gilded: true, daily: 3 }
+            let cost = this.getMaterialCost(stampData, max_lvl)
+            if (cost < cap) {
+                return { gilded: true, daily: 3, cost: cost }
+            }
+            return null
 
         }
 
-        let setups = [
-            { gilded: false, daily: 0 },
-            { gilded: true, daily: 0 },
-            { gilded: true, daily: 1 },
-            { gilded: true, daily: 2 },
-            { gilded: true, daily: 3 },
-        ]
+
 
         for (let setup of setups) {
             let cost = this.getMaterialCost(stampData, max_lvl, setup.gilded, setup.daily)
 
             if (cost < cap) {
+                setup.cost = cost
                 return setup
             }
         }
@@ -284,3 +323,11 @@ class StampPlanner {
 
     }
 }
+
+const setups = [
+    { gilded: false, daily: 0 },
+    { gilded: true, daily: 0 },
+    { gilded: true, daily: 1 },
+    { gilded: true, daily: 2 },
+    { gilded: true, daily: 3 },
+]

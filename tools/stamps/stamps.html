@@ -16,7 +16,10 @@ custom_js:
 
 <div class="main">
     This tool will compute maximum achievable stamp levels given your current carry capacity and stamp cost reduction. It is meant for endgamers wanting to maximize all stamps, so some "easy" bonus are considered active by default. This includes mostly bonuses that can be maxed: stamp efficiency from sneaking, base capacity bags, gem shop...
+    <p>Don't forget to use your vman for monster materials (and use highest matty pouch on your vman in priority, herculean matty pouch at this time). Some forgettable bonus are: star signs (3 of them give carry cap),...</p>
     <h1>Stamps</h1>
+    <div id="general"></div>
+    <div>Hover a stamp to see current level and max reachable levels. Green background means the stamp cannot be upgraded anymore because of carry capacity limit. Blue background means that you have enough materials in storage to upgrade to max. Total cost is based on the strategy proposed at the bottom of this page.</div>
     {% include stamp_table.html%}
     <h1>Upgrade plan</h1>
     {% include stamp_upgrade_tables.html%}
