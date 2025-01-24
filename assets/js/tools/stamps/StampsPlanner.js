@@ -173,7 +173,7 @@ class StampPlanner {
                             let mat_avail = this.chestState[stampData.itemReq[0].rawName] ?? 0
                             infos += `Mats available : ${formatIdleonNumbers(mat_avail)} (${formatPercent(mat_avail / max_reach.cost_to_cap)})\n`
 
-                            if (mat_avail > max_reach.cost_to_cap) {
+                            if (mat_avail > max_reach.cost_to_cap || stampData.itemReq[0].category == "Equipment") {
                                 cell.classList.add("affordable")
                             }
                             let setup = this.getMinSetupForUpgrade(stampData, stampState.max_lvl)
