@@ -549,7 +549,7 @@ class CookingData {
         document.getElementById(`summon_cooking_mult`).innerText = (this.summon_cooking_bonus.toFixed(3))
         // general
         // classes
-        this.blood_marrow_bonus = (this.voidwalker_blood_marrow_lvl * 2.1 / 100) / (this.voidwalker_blood_marrow_lvl + 220);
+        this.blood_marrow_bonus = Math.floor(1000 * (this.voidwalker_blood_marrow_lvl * 0.021) / (this.voidwalker_blood_marrow_lvl + 220)) / 1000;
 
         this.apocalypse_active = this.voidwalker_eclipse_lvl >= 125 ? 1 : 0;
         this.apocalypse_bonus = Math.pow(1.1, this.apocalypse_active * this.blood_berserker_super_chow_count)
@@ -729,7 +729,7 @@ class CookingData {
 
         const global_meal_speed_bonuses = ([
             ["base", 10],
-            ["correction", 1 / 75], // correction because my cooking speed appears to be exactly 75 times higher than it should
+            ["correction", 1 / 50], // correction because my cooking speed appears to be exactly 50 times higher than it should
             ["blood_marrow", Math.pow(1 + this.blood_marrow_bonus, total_meal_levels)],
             ["crop_depot", (this.crop_depot_bonus)],
             ["apocalypse", (this.apocalypse_bonus)],
@@ -785,8 +785,6 @@ class CookingData {
             console.log(`kitchen info:`)
             console.log(kitchen_speeds)
             console.log(`cooking speed: ${total_cooking_speed.toExponential(2)}`)
-            console.log(40 * this.meal_efficiency * this.meal_levels[63])
-            console.log(Math.ceil((this.farming_lvl + 1) / 50))
         }
         return total_cooking_speed
     }
