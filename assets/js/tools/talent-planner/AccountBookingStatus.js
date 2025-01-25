@@ -185,6 +185,7 @@ class AccountBookingStatus {
             + 0.01 * (this.shiny_lvl_red_mush + this.shiny_lvl_sheepie)
 
         let ribbon_mults = {
+            0: 1,
             1: 1.05,
             2: 1.14,
             3: 1.19,

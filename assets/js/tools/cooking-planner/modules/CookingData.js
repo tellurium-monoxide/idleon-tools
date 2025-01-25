@@ -91,6 +91,10 @@ class CookingData {
         this.meal_levels = meal_data[0].map(Number).slice(0, meal_count)
         this.meal_quantities = meal_data[2].map(Number).slice(0, meal_count)
 
+
+        let data_ribbons = (save_data["Ribbon"])
+        this.meal_ribbons = data_ribbons.slice(28, 28 + meal_count)
+
         this.kitchen_stats = []
         let kitchen_data = JSON.parse(save_data["Cooking"])
         for (let i = 0; i < 10; i++) {
@@ -293,6 +297,7 @@ class CookingData {
         for (let i = 0; i < meal_count; i++) {
             this.meal_levels[i] = Number(document.getElementById(`meal${i}_level`).value)
             this.meal_quantities[i] = Number(document.getElementById(`meal${i}_qtt`).value)
+            this.meal_ribbons[i] = Number(document.getElementById(`meal${i}_ribbon_tier`).value)
         }
         this.kitchen_stats = Array(10).fill(0)
         for (let i = 0; i < 10; i++) {
@@ -450,7 +455,7 @@ class CookingData {
         // world 5
         // sailing
         // gaming
-        this.MAS_mealing_bonus = this.MSA_mealing_unlocked * 0.1 * this.total_waves / 10
+        this.MSA_mealing_bonus = this.MSA_mealing_unlocked * 0.1 * this.total_waves / 10
 
         // world 6
         // farming
@@ -535,6 +540,7 @@ class CookingData {
         for (let i = 0; i < meal_count; i++) {
             document.getElementById(`meal${i}_level`).setValue(this.meal_levels[i])
             document.getElementById(`meal${i}_qtt`).value = (this.meal_quantities[i].toExponential(2))
+            document.getElementById(`meal${i}_ribbon_tier`).setValue(this.meal_ribbons[i])
         }
 
         for (let i = 0; i < 10; i++) {
@@ -630,15 +636,15 @@ class CookingData {
 
 
         const cooking_speed_meals_bonus = this.meal_efficiency * (
-            this.meal_levels[1] * 0.05 //egg
-            + this.meal_levels[12] * 0.12 //corndog
-            + this.meal_levels[43] * 0.2 //soda
-            + this.meal_levels[52] * 0.3 // cherry
+            this.meal_levels[1] * RIBBON_MULTIPLIERS[this.meal_ribbons[1]] * 0.05 //egg
+            + this.meal_levels[12] * RIBBON_MULTIPLIERS[this.meal_ribbons[12]] * 0.12 //corndog
+            + this.meal_levels[43] * RIBBON_MULTIPLIERS[this.meal_ribbons[43]] * 0.2 //soda
+            + this.meal_levels[52] * RIBBON_MULTIPLIERS[this.meal_ribbons[52]] * 0.3 // cherry
         )
 
         const marshmallow_meal_bonus = 0.4
             * this.meal_efficiency
-            * this.meal_levels[63]
+            * this.meal_levels[63] * RIBBON_MULTIPLIERS[this.meal_ribbons[63]]
             * Math.ceil((this.farming_lvl + 1) / 50)
 
 
@@ -651,7 +657,7 @@ class CookingData {
             ["marshmallow", (1 + marshmallow_meal_bonus)],
             ["diamond_chef", (Math.pow(1 + this.diamond_chef_bonus, diamond_plate_meals))],
             ["void_plate_chef", (Math.pow(1 + 0.01 * this.void_plate_chef_lvl, void_plate_meals))],
-            ["MSA", (1 + this.MAS_mealing_bonus)],
+            ["MSA", (1 + this.MSA_mealing_bonus)],
             ["triangulon", (1 + triangulon_bonus)],
             ["arcade", (1 + this.arcade_cooking_bonus)],
             ["vial_turtle", (1 + this.vial_turtle_bonus)],
@@ -671,7 +677,7 @@ class CookingData {
 
         let total_cooking_speed = 0
 
-        const cabbage_bonus = this.meal_efficiency * this.meal_levels[13] * 0.05
+        const cabbage_bonus = 0.05 * this.meal_efficiency * this.meal_levels[13] * RIBBON_MULTIPLIERS[this.meal_ribbons[13]]
 
         let kitchen_speeds = []
         for (let i = 0; i < 10; i++) {

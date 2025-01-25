@@ -54,6 +54,7 @@ function createMealTable() {
   content += "<th>Meal</th>"
   content += "<th>Current LVL</th>"
   content += "<th>Amount owned</th>"
+  content += "<th>Ribbon tier</th>"
   content += "</tr>"
   content += "<tr>"
   for (let i = 0; i < meal_count; i++) {
@@ -67,6 +68,7 @@ function createMealTable() {
     content += `<td>${mdata.name}</td>`
     content += `<td><input type="number" id="meal${i}_level"/></td>`
     content += `<td><input type="text" id="meal${i}_qtt"/></td>`
+    content += `<td><input type="number" id="meal${i}_ribbon_tier" min="0" max="20" value="0"/></td>`
   }
   content += "</tr>"
   document.getElementById("meal_levels").innerHTML = content;
@@ -99,6 +101,29 @@ function createKitchenTable() {
 
 const meal_max_lvl = 110;
 const meal_count = 67;
+const RIBBON_MULTIPLIERS = {
+  0: 1,
+  1: 1.05,
+  2: 1.14,
+  3: 1.19,
+  4: 1.28,
+  5: 1.46,
+  6: 1.61,
+  7: 1.66,
+  8: 1.82,
+  9: 1.87,
+  10: 2.35,
+  11: 2.4,
+  12: 2.62,
+  13: 2.67,
+  14: 2.89,
+  15: 3.39,
+  16: 3.68,
+  17: 3.73,
+  18: 4.01,
+  19: 4.06,
+  20: 5,
+}
 const meal_info =
   [
     { "img": "https://idleon.wiki/wiki/images/b/b9/Turkey_a_la_Thank.png", "name": "Turkey a la Thank", "cookReq": 10 },
