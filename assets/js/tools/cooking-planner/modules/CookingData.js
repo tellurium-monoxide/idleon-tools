@@ -146,6 +146,16 @@ class CookingData {
         let superbits = gaming_info[12]
         this.MSA_mealing_unlocked = (superbits.includes("m"))
 
+        // hole
+        let hole_data = JSON.parse(save_data["Holes"])
+        console.log(hole_data)
+
+        this.hole_majik_monument = hole_data[4][0] // +0.25 per lvl to bravery bonus mult
+        this.hole_engineer_redstone_seasoning = hole_data[13][18]
+        this.hole_redstone_qtt = hole_data[9][2]
+        this.bravery_cooking_spd_lvl = hole_data[15][2] // +0.1 to mult per lvl
+        this.hole_lamp_w4stuff = hole_data[21][4] // +0.25 per lvl
+
         // world 6
         // farming
         let farming_crop_data = JSON.parse(save_data["FarmCrop"])
@@ -163,6 +173,8 @@ class CookingData {
         this.summon_battle_mushP = (summoning_data[1].includes("mushP"))
         this.summon_battle_troll = (summoning_data[1].includes("w6b3"))
         // console.log(summoning_data[1])
+        //TODO endless summoning
+        //TODO grimoire gives crop scientist bonus
 
         // general
 
@@ -332,6 +344,14 @@ class CookingData {
         this.artifact_winz_lantern_lvl = Number(document.getElementById(`artifact_winz_lantern_lvl`).value)
         // gaming
         this.MSA_mealing_unlocked = document.getElementById(`MSA_mealing_unlocked`).checked
+
+        // hole
+        this.hole_majik_monument = Number(document.getElementById(`hole_majik_monument`).value)
+        this.hole_engineer_redstone_seasoning = document.getElementById(`hole_engineer_redstone_seasoning`).checked
+        this.hole_redstone_qtt = Number(document.getElementById(`hole_redstone_qtt`).value)
+        this.bravery_cooking_spd_lvl = Number(document.getElementById(`bravery_cooking_spd_lvl`).value)
+        this.hole_lamp_w4stuff = Number(document.getElementById(`hole_lamp_w4stuff`).value)
+
         // world 6
         // farming
         this.farming_lvl = Number(document.getElementById(`farming_lvl`).value)
@@ -457,6 +477,13 @@ class CookingData {
         // gaming
         this.MSA_mealing_bonus = this.MSA_mealing_unlocked * 0.1 * this.total_waves / 10
 
+        // hole
+        this.monument_bonus = (1 + this.hole_majik_monument * 0.25) * this.bravery_cooking_spd_lvl * 0.1
+        let log_redstone = Math.floor(Math.log10(Math.max(this.hole_redstone_qtt, 1)))
+        this.bucket_bonus = Math.pow(1 + 0.3 * this.hole_engineer_redstone_seasoning, log_redstone)
+        this.lamp_bonus = this.hole_lamp_w4stuff * 0.25
+
+
         // world 6
         // farming
         this.crop_depot_bonus = Math.pow(1.1, this.crop_acquired) * this.depot_studies_phd_bonus
@@ -577,6 +604,14 @@ class CookingData {
         document.getElementById(`artifact_winz_lantern_lvl`).setValue(this.artifact_winz_lantern_lvl)
         // gaming
         document.getElementById(`MSA_mealing_unlocked`).checked = this.MSA_mealing_unlocked
+
+        // hole
+        document.getElementById(`hole_majik_monument`).setValue(this.hole_majik_monument)
+        document.getElementById(`hole_engineer_redstone_seasoning`).checked = this.hole_engineer_redstone_seasoning
+        document.getElementById(`hole_redstone_qtt`).setValue(this.hole_redstone_qtt)
+        document.getElementById(`bravery_cooking_spd_lvl`).setValue(this.bravery_cooking_spd_lvl)
+        document.getElementById(`hole_lamp_w4stuff`).setValue(this.hole_lamp_w4stuff)
+
         // world 6
         // farming
         document.getElementById(`farming_lvl`).setValue(this.farming_lvl)
@@ -648,7 +683,6 @@ class CookingData {
             * this.meal_levels[63] * RIBBON_MULTIPLIERS[this.meal_ribbons[63]]
             * Math.ceil((this.farming_lvl + 1) / 50)
 
-
         const global_meal_speed_bonuses = ([
             ["base", 10],
             ["correction", 1 / 75], // correction because my cooking speed appears to be exactly 75 times higher than it should
@@ -667,6 +701,9 @@ class CookingData {
             ["meals", (1 + cooking_speed_meals_bonus)],
             ["star_sign", (1 + this.star_sign_cooking_bonus)],
             ["summoning", (this.summon_cooking_bonus)],
+            ["monument", (1 + this.monument_bonus)],
+            ["bucket", Math.max(1, this.bucket_bonus)],
+            ["lamp", (1 + this.lamp_bonus)],
             ["card_ceramic", (1 + this.card_ceramic_spirit_level * 0.05)],
             ["vial_firefly", (1 + this.vial_firefly_bonus)],
             ["amethyst_rhinestone", (this.lab_amethyst_rhinestone_mult)],

@@ -1,11 +1,18 @@
 <div id="tabs-world5-features" class="ui-tabs ui-widget ui-corner-all ui-widget-content ui-tabs-collapsible jquerytabs">
     <ul class="ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header">
-        <li class="ui-tabs-tab"><a href="#tab-world5-sailing" class="ui-tabs-anchor">
+        <li class="ui-tabs-tab">
+            <a href="#tab-world5-sailing" class="ui-tabs-anchor">
                 <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/b/ba/Sailing_Skill_Icon.png" />Sailing
             </a>
         </li>
-        <li class="ui-tabs-tab"><a href="#tab-world5-gaming" class="ui-tabs-anchor">
+        <li class="ui-tabs-tab">
+            <a href="#tab-world5-gaming" class="ui-tabs-anchor">
                 <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/3/3d/Gaming_Skill_Icon.png" />Gaming
+            </a>
+        </li>
+        <li class="ui-tabs-tab">
+            <a href="#tab-world5-hole" class="ui-tabs-anchor">
+                <img class="collapsible_icon" src="https://idleon.wiki/wiki/images/3/3d/Gaming_Skill_Icon.png" />Hole
             </a>
         </li>
     </ul>
@@ -22,6 +29,24 @@
 
         <label for="MSA_mealing_unlocked">MSA mealing unlocked?</label>
         <input type="checkbox" id="MSA_mealing_unlocked" />
+
+    </div>
+    <div id="tab-world5-hole" class="ui-tabs-panel ui-corner-bottom ui-widget-content">
+
+        <label for="hole_majik_monument">hole_majik_monument lvl from 0 to 4</label>
+        <input type="number" id="hole_majik_monument" min="0" max="4" />
+
+        <label for="hole_engineer_redstone_seasoning">Enginner redstone_seasoning unlocked?</label>
+        <input type="checkbox" id="hole_engineer_redstone_seasoning" />
+
+        <label for="hole_redstone_qtt">Redstone quantity from well (x1.3 per power of 10, floored so only counts every x10)</label>
+        <input type="number" id="hole_redstone_qtt" min="0" />
+
+        <label for="bravery_cooking_spd_lvl">bravery_cooking_spd_lvl</label>
+        <input type="number" id="bravery_cooking_spd_lvl" min="0" />
+
+        <label for="hole_lamp_w4stuff">Lamp W4 stuff level</label>
+        <input type="number" id="hole_lamp_w4stuff" min="0" />
 
     </div>
 </div>
