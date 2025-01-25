@@ -193,7 +193,7 @@ class CookingData {
         this.blood_berserker_super_chow_count = 0
         this.blood_berserker_overflowing_ladles_lvl = 0
         for (let i = 0; i < 10; i++) {
-            if (save_data[`CharacterClass_${i}`] == 10) {
+            if ([10, 14].includes(save_data[`CharacterClass_${i}`])) {
                 // console.log(`char ${i} is blood berserker`)
 
 
@@ -495,7 +495,8 @@ class CookingData {
 
         // achieve
         // arcade
-        this.arcade_cooking_bonus = (this.arcade_cooking_bonus_lvl * 0.4) / (this.arcade_cooking_bonus_lvl + 100)
+        let true_lvl = Math.max(this.arcade_cooking_bonus_lvl, 100)
+        this.arcade_cooking_bonus = (true_lvl * 0.4) / (true_lvl + 100) * (1 + ((this.arcade_cooking_bonus_lvl == 101) ? 1 : 0))
 
         this.computeMealCookingReq()
 
