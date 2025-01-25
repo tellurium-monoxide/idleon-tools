@@ -230,6 +230,10 @@ class CookingData {
             }
         }
 
+        // grimoire on DB
+        const grimoire_data = save_data["Grimoire"]
+        this.grimoire_crop_research_lvl = grimoire_data[22]
+
         // cards
         let card0 = JSON.parse(save_data["Cards0"])
         let card_troll1 = card0["Boss4A"] //req: 2/6/10/32/918 
@@ -379,6 +383,7 @@ class CookingData {
         this.voidwalker_eclipse_lvl = Number(document.getElementById(`voidwalker_eclipse_lvl`).value)
         this.blood_berserker_super_chow_count = Number(document.getElementById(`blood_berserker_super_chow_count`).value)
         this.blood_berserker_overflowing_ladles_lvl = Number(document.getElementById(`blood_berserker_overflowing_ladles_lvl`).value)
+        this.grimoire_crop_research_lvl = Number(document.getElementById(`grimoire_crop_research_lvl`).value)
         // cards
         this.card_troll1_level = Number(document.getElementById(`card_troll1_level`).value)
         this.card_ceramic_spirit_level = Number(document.getElementById(`card_ceramic_spirit_level`).value)
@@ -492,7 +497,7 @@ class CookingData {
 
         // world 6
         // farming
-        this.crop_depot_bonus = Math.pow(1.1, this.crop_acquired) * this.depot_studies_phd_bonus
+        this.crop_depot_bonus = Math.pow(1.1, this.crop_acquired) * this.depot_studies_phd_bonus * (1 + this.grimoire_crop_research_lvl * 0.01)
 
 
         // sneaking
@@ -669,6 +674,7 @@ class CookingData {
         document.getElementById(`voidwalker_eclipse_lvl`).setValue(this.voidwalker_eclipse_lvl)
         document.getElementById(`blood_berserker_super_chow_count`).setValue(this.blood_berserker_super_chow_count)
         document.getElementById(`blood_berserker_overflowing_ladles_lvl`).setValue(this.blood_berserker_overflowing_ladles_lvl)
+        document.getElementById(`grimoire_crop_research_lvl`).setValue(this.grimoire_crop_research_lvl)
         // cards
         document.getElementById(`card_troll1_level`).setValue(this.card_troll1_level)
         document.getElementById(`card_ceramic_spirit_level`).setValue(this.card_ceramic_spirit_level)
