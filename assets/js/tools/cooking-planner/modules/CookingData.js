@@ -76,6 +76,8 @@ class CookingData {
         // equinox
         const dreams = save_data["Dream"]
         this.dream_food_lust_level = dreams[11]
+        const OptLacc = save_data["OptLacc"]
+        this.starting_equinox_food_lust = OptLacc[167] // TODO verify this. could also be 242. 193 on IT, but maybe customized
 
         const WeeklyBoss = JSON.parse(save_data["WeeklyBoss"])
         const clouds = Object.keys(WeeklyBoss).filter(key => key.startsWith('d_')).reduce((obj, key) => {
@@ -295,6 +297,7 @@ class CookingData {
         this.total_waves = Number(document.getElementById(`total_waves`).value)
         //equinox
         this.dream_food_lust_level = Number(document.getElementById(`dream_food_lust_level`).value)
+        this.starting_equinox_food_lust = Number(document.getElementById(`starting_equinox_food_lust`).value)
         this.equinox_cloud_34 = document.getElementById(`equinox_cloud_34`).checked
 
         // world 4
@@ -443,7 +446,7 @@ class CookingData {
         this.food_lust_max_count = this.dream_food_lust_level
         this.food_lust_cost_multiplier = 0.8 - this.equinox_cloud_34 * 0.22
         if (!this.equinox_event_count) {
-            this.equinox_event_count = 0
+            this.equinox_event_count = this.starting_equinox_food_lust
         }
 
         // world 4
@@ -556,6 +559,7 @@ class CookingData {
         document.getElementById(`total_waves`).setValue(this.total_waves)
         // equinox
         document.getElementById(`dream_food_lust_level`).setValue(this.dream_food_lust_level)
+        document.getElementById(`starting_equinox_food_lust`).setValue(this.starting_equinox_food_lust)
         document.getElementById(`equinox_cloud_34`).checked = this.equinox_cloud_34
 
         // world 4
