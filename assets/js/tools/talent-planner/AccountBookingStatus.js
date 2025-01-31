@@ -352,7 +352,7 @@ class AccountBookingStatus {
 
 
         // add char tab
-        let img = `<img src=${CLASS_ICONS[player.class_name]} class="collapsible_icon" />`
+        let img = `<img src=${GET_CLASS_ICON(player.class_name)} class="collapsible_icon" />`
         let li = `<li><a href='#tab_char${playerId}'>${img}${player.name}</a> </li>`
 
         let subtabs_def = `<div id=tabs-subclass-char${playerId} class="jquerytabs"><ul></ul></div>`
@@ -367,7 +367,7 @@ class AccountBookingStatus {
 
 
         for (let talent_page of player.subclasses) {
-            let img = `<img src=${CLASS_ICONS[talent_page]} class="collapsible_icon" />`
+            let img = `<img src=${GET_CLASS_ICON(talent_page)} class="collapsible_icon" />`
             let nav = `<li><a href='#tab-char${playerId}-class-${talent_page}'>${img}${talent_page}</a> </li>`
             let content = ""
             content += `<div id="tab-char${playerId}-class-${talent_page}">`
