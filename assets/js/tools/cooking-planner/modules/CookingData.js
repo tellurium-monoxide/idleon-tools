@@ -176,9 +176,8 @@ class CookingData {
         this.summon_battle_troll = (summoning_data[1].includes("w6b3"))
         console.log(save_data["OptLacc"])
 
-        this.endless_summoning_wins = save_data["OptLacc"][319] // maybe 158, 304, 319 TODO validate this
+        this.endless_summoning_wins = save_data["OptLacc"][319]
 
-        //TODO grimoire gives crop scientist bonus
 
         // general
 
@@ -502,50 +501,42 @@ class CookingData {
 
         // sneaking
         // summoning
-        this.summon_bonus_mult = (1 + 0.3 * this.pristine_crystal_comb_obtained)
+
+        // endless
+        let temp_meal_mult = 0
+        let temp_summon_mult = 0
+        for (let i = 1; i < this.endless_summoning_wins; i++) {
+            if ((i % 40) == 6) {
+                temp_meal_mult += 0.07
+            }
+            if ((i % 40) == 29) {
+                temp_meal_mult += 0.09
+            }
+            if ((i % 40) == 16) {
+                temp_summon_mult += 0.03
+            }
+            if ((i % 40) == 0) {
+                temp_summon_mult += 0.03
+            }
+        }
+
+        this.summon_bonus_mult_with_endless = (1 + 0.3 * this.pristine_crystal_comb_obtained)
             * (1
                 + 0.25 * this.artifact_winz_lantern_lvl
                 + 0.01 * this.merit_world6_summoning_bonus_lvl
                 + 0.01 * this.achiev_spectre_stars
                 + 0.01 * this.achiev_regalis_my_beloved
+                + (temp_summon_mult)
             )
 
+        this.meal_efficiency *= (1 + temp_meal_mult * this.summon_bonus_mult_with_endless)
 
-        console.log(this.summon_bonus_mult)
-
-        // TODO: fix summonin multipliers
-
-        let temp_meal_mult = 1
-        let temp_summon_mult = 1
-        for (let i = 1; i < this.endless_summoning_wins; i++) {
-            if ((i % 40) == 6) {
-                temp_meal_mult *= 1.06
-            }
-            if ((i % 40) == 29) {
-                temp_meal_mult *= 1.09
-            }
-            if ((i % 40) == 16) {
-                temp_summon_mult *= 1.03
-            }
-            if ((i % 40) == 0) {
-                temp_summon_mult *= 1.03
-            }
-        }
-        this.summon_meal_mult = 1 + (temp_meal_mult - 1) * this.summon_bonus_mult
-        this.meal_efficiency *= this.summon_meal_mult
-        this.summon_bonus_mult += temp_summon_mult - 1
-
-        console.log("summon meal bonus")
-        console.log(this.summon_meal_mult)
-        console.log(this.summon_bonus_mult)
 
         this.summon_cooking_bonus = 1
-            + this.summon_battle_mushP * 1.75
-            * this.summon_battle_troll * 5.2
-            * this.summon_bonus_mult
+            + (this.summon_battle_mushP * 1.75 * this.summon_battle_troll * 5.2)
+            * this.summon_bonus_mult_with_endless
 
 
-        console.log(this.summon_cooking_bonus)
         document.getElementById(`summon_cooking_mult`).innerText = (this.summon_cooking_bonus.toFixed(3))
         // general
         // classes
