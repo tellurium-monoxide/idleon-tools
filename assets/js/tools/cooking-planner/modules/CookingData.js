@@ -417,7 +417,7 @@ class CookingData {
         // TODO: pure opal navette seems to apply to itself... unsure about that, but it at least applies visually in lab
         this.lab_jewel_effect = 1
             + 0.5 * this.lab_spelunkerobol_active
-            + 0.1 * this.lab_pure_opal_navette_active * (1 + 0.5 * this.lab_spelunkerobol_active)
+            + 0.1 * this.lab_pure_opal_navette_active //* (1 + 0.5 * this.lab_spelunkerobol_active)
 
 
         // TODO : take active bonus effect into account. actually doesn't seem to apply in game, or is not shown
@@ -479,13 +479,13 @@ class CookingData {
         this.emerald_pyramite_bonus = this.lab_emerald_pyramite
             * 0.01
             * (this.lab_jewel_effect)
-            * (kitchen_total_levels / 25)
+            * Math.floor(kitchen_total_levels / 25)
 
         this.depot_studies_phd_bonus = (1 + this.lab_depot_studies_phd * (0.3 + 0.1 * this.lab_pure_opal_rhombol_active * this.lab_jewel_effect))
         // world 5
         // sailing
         // gaming
-        this.MSA_mealing_bonus = this.MSA_mealing_unlocked * 0.1 * this.total_waves / 10
+        this.MSA_mealing_bonus = this.MSA_mealing_unlocked * 0.1 * Math.floor(this.total_waves / 10)
 
         // hole
         this.monument_bonus = (1 + this.hole_majik_monument * 0.25) * this.bravery_cooking_spd_lvl * 0.1
@@ -707,11 +707,19 @@ class CookingData {
 
 
         const cooking_speed_meals_bonus = this.meal_efficiency * (
-            this.meal_levels[1] * RIBBON_MULTIPLIERS[this.meal_ribbons[1]] * 0.05 //egg
-            + this.meal_levels[12] * RIBBON_MULTIPLIERS[this.meal_ribbons[12]] * 0.12 //corndog
-            + this.meal_levels[43] * RIBBON_MULTIPLIERS[this.meal_ribbons[43]] * 0.2 //soda
+            this.meal_levels[1] * RIBBON_MULTIPLIERS[this.meal_ribbons[1]] * 0.05 // egg
+            + this.meal_levels[12] * RIBBON_MULTIPLIERS[this.meal_ribbons[12]] * 0.12 // corndog
+            + this.meal_levels[43] * RIBBON_MULTIPLIERS[this.meal_ribbons[43]] * 0.2 // soda
             + this.meal_levels[52] * RIBBON_MULTIPLIERS[this.meal_ribbons[52]] * 0.3 // cherry
         )
+        let meal_bonuses = {
+            "meal_efficiency": this.meal_efficiency,
+            "egg": this.meal_efficiency * this.meal_levels[1] * RIBBON_MULTIPLIERS[this.meal_ribbons[1]] * 0.05,
+            "corndog": this.meal_efficiency * this.meal_levels[12] * RIBBON_MULTIPLIERS[this.meal_ribbons[12]] * 0.12,
+            "soda": this.meal_efficiency * this.meal_levels[43] * RIBBON_MULTIPLIERS[this.meal_ribbons[43]] * 0.2,
+            "cherry": this.meal_efficiency * this.meal_levels[52] * RIBBON_MULTIPLIERS[this.meal_ribbons[52]] * 0.3,
+
+        }
 
         const marshmallow_meal_bonus = 0.4
             * this.meal_efficiency
@@ -720,29 +728,43 @@ class CookingData {
 
         const global_meal_speed_bonuses = ([
             ["base", 10],
-            ["correction", 1 / 50], // correction because my cooking speed appears to be exactly 50 times higher than it should
-            ["blood_marrow", Math.pow(1 + this.blood_marrow_bonus, total_meal_levels)],
-            ["crop_depot", (this.crop_depot_bonus)],
-            ["apocalypse", (this.apocalypse_bonus)],
-            ["marshmallow", (1 + marshmallow_meal_bonus)],
-            ["diamond_chef", (Math.pow(1 + this.diamond_chef_bonus, diamond_plate_meals))],
-            ["void_plate_chef", (Math.pow(1 + 0.01 * this.void_plate_chef_lvl, void_plate_meals))],
+            ["correction", 1 / 78.3], // correction because my cooking speed appears to be that much times higher than it should
+            /* OK */["blood_marrow", Math.pow(1 + this.blood_marrow_bonus, total_meal_levels)],
+            /* OK */["crop_depot", (this.crop_depot_bonus)],
+            /* OK */["apocalypse", (this.apocalypse_bonus), { "super_chows": this.blood_berserker_super_chow_count }],
+            /* OK */["marshmallow", (1 + marshmallow_meal_bonus), {
+                "base bonus": 0.4 * this.meal_efficiency * this.meal_levels[63] * RIBBON_MULTIPLIERS[this.meal_ribbons[63]],
+                "mult from farming lvl": Math.ceil((this.farming_lvl + 1) / 50),
+            }],
+            /* OK */[
+                "diamond_chef",
+                (Math.pow(1 + this.diamond_chef_bonus, diamond_plate_meals)),
+                { "diamond chef bonus": this.diamond_chef_bonus, "meal>10": diamond_plate_meals }
+            ],
+            /* OK */[
+                "void_plate_chef",
+                (Math.pow(1 + 0.01 * this.void_plate_chef_lvl, void_plate_meals)),
+                { "void plate chef bonus": 0.01 * this.void_plate_chef_lvl, "meal>30": void_plate_meals }
+            ],
             ["MSA", (1 + this.MSA_mealing_bonus)],
-            ["triangulon", (1 + triangulon_bonus)],
-            ["arcade", (1 + this.arcade_cooking_bonus)],
-            ["vial_turtle", (1 + this.vial_turtle_bonus)],
-            ["vial_other", (1 + this.vial_cooking_bonus)],
-            ["stamp_and_emerald_pyramite", (1 + this.stamp_cooked_meal_bonus + this.emerald_pyramite_bonus)],
-            ["meals", (1 + cooking_speed_meals_bonus)],
-            ["star_sign", (1 + this.star_sign_cooking_bonus)],
-            ["summoning", (this.summon_cooking_bonus)],
-            ["monument", (1 + this.monument_bonus)],
-            ["bucket", Math.max(1, this.bucket_bonus)],
-            ["lamp", (1 + this.lamp_bonus)],
-            ["card_ceramic", (1 + this.card_ceramic_spirit_level * 0.05)],
-            ["vial_firefly", (1 + this.vial_firefly_bonus)],
-            ["amethyst_rhinestone", (this.lab_amethyst_rhinestone_mult)],
-            ["trollcard+achievs", (1 + this.card_troll1_level * 0.06 + this.achiev_cabbage_patch * 0.1 + this.achiev_pretzel_bleu * 0.2)]
+            /* OK */["triangulon", (1 + triangulon_bonus)],
+            /* OK */["arcade", (1 + this.arcade_cooking_bonus)],
+            /* OK */["vial_turtle", (1 + this.vial_turtle_bonus)],
+            /* OK */["vials: sand shark and dreadlo", (1 + this.vial_cooking_bonus)],
+            /* OK */["stamp_and_emerald_pyramite", (1 + this.stamp_cooked_meal_bonus + this.emerald_pyramite_bonus), {
+                "stamp": this.stamp_cooked_meal_bonus,
+                "emerald_pyrite": this.emerald_pyramite_bonus,
+            }],
+            /* OK */["meals", (1 + cooking_speed_meals_bonus), meal_bonuses],
+            /* OK */["star_sign", (1 + this.star_sign_cooking_bonus), Math.pow(1.1, Math.ceil((this.summoning_lvl + 1) / 20))],
+            /* OK */["summoning", (this.summon_cooking_bonus)],
+            /* OK */["monument", (1 + this.monument_bonus)],
+            /* OK */["bucket", Math.max(1, this.bucket_bonus)],
+            /* OK */["lamp", (1 + this.lamp_bonus)],
+            /* OK */["card_ceramic", (1 + this.card_ceramic_spirit_level * 0.05)],
+            /* OK */["vial_firefly", (1 + this.vial_firefly_bonus)],
+            /* OK */["amethyst_rhinestone", (this.lab_amethyst_rhinestone_mult)],
+            /* OK */["trollcard+achievs", (1 + Math.min(this.card_troll1_level * 0.06 + this.achiev_cabbage_patch * 0.1 + this.achiev_pretzel_bleu * 0.2, 1))]
         ])
 
         // const global_meal_speed_mult = global_meal_speed_bonuses.values().reduce((res, val) => { return res * val }, 1) // use for map or object but not yet avail in firefox
@@ -766,6 +788,8 @@ class CookingData {
                 "speed": kitchen_speed,
                 "baseSpeed": (1 + kitchen.speedLv / 10),
                 "cabbageBonus": (1 + cabbage_bonus * Math.floor(kitchen_total_lvl / 10)),
+                "kitchen_total_lvl": kitchen_total_lvl,
+                "kitchen_stats": kitchen,
             })
         }
 
@@ -773,6 +797,7 @@ class CookingData {
             console.log(`debug info for cooking speed calc:`)
             console.log(`global mults:`)
             console.log(global_meal_speed_bonuses)
+            console.log("cabbage", cabbage_bonus)
             console.log(`kitchen info:`)
             console.log(kitchen_speeds)
             console.log(`cooking speed: ${total_cooking_speed.toExponential(2)}`)
