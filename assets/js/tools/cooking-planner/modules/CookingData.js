@@ -77,7 +77,7 @@ class CookingData {
         const dreams = save_data["Dream"]
         this.dream_food_lust_level = dreams[11]
         const OptLacc = save_data["OptLacc"]
-        this.starting_equinox_food_lust = OptLacc[167] // TODO verify this. could also be 242. 193 on IT, but maybe customized
+        this.starting_equinox_food_lust = OptLacc[193] // TODO verify this. could also be 242. 193 on IT, but maybe customized
 
         const WeeklyBoss = JSON.parse(save_data["WeeklyBoss"])
         const clouds = Object.keys(WeeklyBoss).filter(key => key.startsWith('d_')).reduce((obj, key) => {
@@ -414,6 +414,8 @@ class CookingData {
     initCalculatedBonus() {
 
 
+
+
         // this needs to be computed first as lab affects nearly everything
         // TODO: pure opal navette seems to apply to itself... unsure about that, but it at least applies visually in lab
         this.lab_jewel_effect = 1
@@ -452,6 +454,7 @@ class CookingData {
         // worship
         // equinox
         this.food_lust_max_count = this.dream_food_lust_level
+        this.starting_equinox_food_lust = Math.min(this.starting_equinox_food_lust, this.food_lust_max_count)
         this.food_lust_cost_multiplier = 0.8 - this.equinox_cloud_34 * 0.22
         if (!this.equinox_event_count) {
             this.equinox_event_count = this.starting_equinox_food_lust
