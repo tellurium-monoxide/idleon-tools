@@ -314,6 +314,7 @@ class CookingData {
 
         this.meal_levels = Array(meal_count).fill(0)
         this.meal_quantities = Array(meal_count).fill(0)
+        this.meal_ribbons = Array(meal_count).fill(0)
         for (let i = 0; i < meal_count; i++) {
             this.meal_levels[i] = Number(document.getElementById(`meal${i}_level`).value)
             this.meal_quantities[i] = Number(document.getElementById(`meal${i}_qtt`).value)
