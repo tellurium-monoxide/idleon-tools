@@ -100,6 +100,7 @@ function createKitchenTable() {
 }
 
 const meal_max_lvl = 110;
+const MEAL_MAX_LVL = 110;
 const meal_count = 67;
 const MEAL_COUNT = 67;
 const RIBBON_MULTIPLIERS = {

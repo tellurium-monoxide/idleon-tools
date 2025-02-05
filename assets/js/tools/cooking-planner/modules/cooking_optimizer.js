@@ -17,6 +17,9 @@ function computeMealOptimalOrder(cooking_data) {
 
         // best_meal = cooking_data.meal_costs.reduce((acc, currentVal, currentId) => (currentId < meal_count && currentVal < acc.val) ? { "val": currentVal, "id": currentId } : acc, { "val": Infinity, "id": 0 }).id;
         const [best_meal, cooking_req] = cooking_data.getClosestMealUpgrade()
+        const [best_mealT, cooking_reqT, upgradesT] = cooking_data.getClosestMealToThreshold()
+        // const mdataT = meal_info[best_mealT];
+        // console.log(mdataT.name)
 
 
         const new_lvl = cooking_data.meal_levels[best_meal] + 1
@@ -80,9 +83,9 @@ function addMealUpgradeDisplay(cooking_data, meal_id, new_meal_lvl, ladles, cumu
         NMLBclass = "NMLB"
     }
     let lvlclass = ""
-    if (new_meal_lvl == 90) {
+    if (new_meal_lvl == MEAL_MAX_LVL) {
         lvlclass = "completed_meal"
-    } else if (new_meal_lvl % 3 == 0) {
+    } else if (((MEAL_MAX_LVL - new_meal_lvl) % cooking_data.NMLB_count) == 0) {
         lvlclass = "multiple_of_3"
     }
     content = `<tr class=${trclass}>`

@@ -830,6 +830,32 @@ class CookingData {
         return [closest_meal, cook_req]
     }
 
+    getClosestMealToThreshold() {
+        // threshold is when meal is missing a multiple of NMLB days to max lvl
+        // In this case, a whole number a nmlb days is needed to get it to max level
+        // we want to get hard meals to these thresholds asap
+        let closest_meal = 0
+        let cookreq = Infinity
+        let upgrades = []
+        for (let i = 0; i < MEAL_COUNT; i++) {
+            let lvl = this.meal_levels[i]
+            let lvl_goal = lvl
+            let cookreq_loc = 0
+            let upgrades_loc = []
+            while ((((MEAL_MAX_LVL - lvl_goal) % this.NMLB_count) > 0)) {
+                cookreq_loc += this.getMealCost(lvl_goal)
+                lvl_goal += 1
+                upgrades_loc.push([i, lvl_goal])
+            }
+
+            if (cookreq_loc < cookreq) {
+                cookreq = cookreq_loc
+                closest_meal = i
+                upgrades = upgrades_loc
+            }
+        }
+        return [closest_meal, cookreq, upgrades]
+    }
 
 
     getMealCost(current_lvl,) {
