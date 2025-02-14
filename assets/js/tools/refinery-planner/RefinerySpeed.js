@@ -115,7 +115,7 @@ class RefinerySpeed {
         this.bonusBreakdown = [
             { name: 'Base', value: 1, max: 1 },
             { name: 'Vials', value: this.vial_level_red_malt * 0.02 * (1 + 0.02 * this.max_level_vials), max: 0.6188 },
-            { name: 'Salt_lick', value: this.salt_lick_refinery_speed * 0.02, max: 0.2 },
+            { name: 'Salt_lick', value: this.salt_lick_refinery_speed * 0.02, max: 2 },
             { name: 'Family', value: family_refinery_bonus, max: 0.7 },
             { name: 'Sigils', value: 0.1 * this.sigil_pipe_gauge_level * (1 + this.artifact_chilled_yarn_lvl), max: 1.5 },
             { name: 'Stamps', value: this.stamp_refinery_level / 100, max: 1 },
