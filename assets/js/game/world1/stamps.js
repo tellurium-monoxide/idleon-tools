@@ -128,13 +128,18 @@ const DATA_STAMPS = {
 
 
 const DATA_LIMITED_ITEMS = [
+    // bars because they are a pain to craft
+    "Copper_Bar",
+    "Gold_Bar",
+    "Platinum_Bar",
+    "Dementia_Bar",
+    // rare drops
     "Glass_Shard",
     "Royal_Suggma_Urn",
     "Stacked_Rice_Cake",
-    // "Grass_Leaf",
-    // "Twisty_Leaf",
     "Golden_Nomwich",
+    // refinery
     "Redox_Salts",
+    // shop items
     "Cue_Tape",
-
 ]

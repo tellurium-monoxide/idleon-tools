@@ -82,7 +82,7 @@ class StampPlanner {
         console.log(guild_rucksack_lvl)
         let guild_bonus = 0.7 * guild_rucksack_lvl / (50 + guild_rucksack_lvl)
 
-        let base_cap = 30000 // base carry cap of max bag
+        let base_cap = (30000 + 750) // base carry cap of max bag + vault bonus
             * 80 // inventory slots
             * 3.5 // Gem Shop Carry Capacity
             * (1 + 1.77 + 0.05) // Prayer Ruck Sack + Bribe	Bottomless Bags
