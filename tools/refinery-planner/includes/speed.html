@@ -1,18 +1,17 @@
-Combustion cycle: <span type="text" id="speed_combustion"></span><br>
-Synthesis cycle: <span type="text" id="speed_synthesis"></span>
+Disclaimer: Lab 3x multiplier is always considered active.<br>
+Combustion cycle time: <span type="text" id="speed_combustion"></span><br>
+Synthesis cycle time: <span type="text" id="speed_synthesis"></span>
 <table class="refinery_speed">
     <tr>
         <th>Source</th>
         <th>Inputs</th>
         <th>Total boost</th>
         <th>Max boost</th>
-        <th>Completion</th>
 
     </tr>
     <tr id="Base">
         <td>Base</td>
         <td class="speed_inputs"></td>
-        <td></td>
         <td></td>
         <td></td>
     </tr>
@@ -32,7 +31,6 @@ Synthesis cycle: <span type="text" id="speed_synthesis"></span>
         </td>
         <td></td>
         <td></td>
-        <td></td>
     </tr>
     <tr id="Salt_lick">
         <td>Salt lick</td>
@@ -44,7 +42,6 @@ Synthesis cycle: <span type="text" id="speed_synthesis"></span>
                 </tr>
             </table>
         </td>
-        <td></td>
         <td></td>
         <td></td>
     </tr>
@@ -64,7 +61,6 @@ Synthesis cycle: <span type="text" id="speed_synthesis"></span>
         </td>
         <td></td>
         <td></td>
-        <td></td>
     </tr>
     <tr id="Sigils">
         <td>Sigils</td>
@@ -82,19 +78,17 @@ Synthesis cycle: <span type="text" id="speed_synthesis"></span>
         </td>
         <td></td>
         <td></td>
-        <td></td>
     </tr>
     <tr id="Stamps">
         <td>Stamps</td>
         <td class="speed_inputs">
             <table class="speed_input_table">
                 <tr>
-                    <td>Refinery stamp level</td>
+                    <td>Refinery stamp level (/∞)</td>
                     <td><input type="number" id="refinery_speed_stamp_level" min="0"></td>
                 </tr>
             </table>
         </td>
-        <td></td>
         <td></td>
         <td></td>
     </tr>
@@ -118,7 +112,6 @@ Synthesis cycle: <span type="text" id="speed_synthesis"></span>
         </td>
         <td></td>
         <td></td>
-        <td></td>
     </tr>
     <tr id="Const_mastery">
         <td>Construction mastery</td>
@@ -130,7 +123,6 @@ Synthesis cycle: <span type="text" id="speed_synthesis"></span>
                 </tr>
             </table>
         </td>
-        <td></td>
         <td></td>
         <td></td>
     </tr>
@@ -146,7 +138,6 @@ Synthesis cycle: <span type="text" id="speed_synthesis"></span>
         </td>
         <td></td>
         <td></td>
-        <td></td>
     </tr>
     <tr id="Total">
         <td>Total</td>
@@ -154,7 +145,6 @@ Synthesis cycle: <span type="text" id="speed_synthesis"></span>
             <button onclick="button_calc_from_save()">Calc from save</button>
             <button onclick="button_calc_from_inputs()">Calc from inputs</button>
         </td>
-        <td></td>
         <td></td>
         <td></td>
     </tr>

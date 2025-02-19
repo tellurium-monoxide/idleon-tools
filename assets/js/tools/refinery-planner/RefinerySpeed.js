@@ -118,7 +118,7 @@ class RefinerySpeed {
             { name: 'Salt_lick', value: this.salt_lick_refinery_speed * 0.02, max: 2 },
             { name: 'Family', value: family_refinery_bonus, max: 0.7 },
             { name: 'Sigils', value: 0.1 * this.sigil_pipe_gauge_level * (1 + this.artifact_chilled_yarn_lvl), max: 1.5 },
-            { name: 'Stamps', value: this.stamp_refinery_level / 100, max: 1 },
+            { name: 'Stamps', value: this.stamp_refinery_level / 100, max: this.stamp_refinery_level / 100 },
             { name: 'Shinies', value: shinyRefineryBonus, max: 1.2 },
             { name: 'Const_mastery', value: Math.floor(this.total_building_levels / 10) / 100, max: 3.67 },
             { name: 'Arcade', value: this.computeArcadeBonus(this.arcade_refinery_lvl), max: 0.3 },
@@ -147,14 +147,14 @@ class RefinerySpeed {
         for (let bonus of this.bonusBreakdown) {
             document.getElementById(bonus.name).children[2].innerHTML = "+" + formatPercent(bonus.value)
             document.getElementById(bonus.name).children[3].innerHTML = formatPercent(bonus.max)
-            document.getElementById(bonus.name).children[4].innerHTML = formatPercent(bonus.completion)
+            // document.getElementById(bonus.name).children[4].innerHTML = formatPercent(bonus.completion)
         }
 
         let sum = this.bonusBreakdown.reduce((a, b) => { return (a + b.value) }, 0)
         let sum_max = this.bonusBreakdown.reduce((a, b) => { return (a + b.max) }, 0)
         document.getElementById("Total").children[2].innerHTML = "+" + formatPercent(sum)
         document.getElementById("Total").children[3].innerHTML = formatPercent(sum_max)
-        document.getElementById("Total").children[4].innerHTML = formatPercent(sum / sum_max)
+        // document.getElementById("Total").children[4].innerHTML = formatPercent(sum / sum_max)
 
         document.getElementById("refinery_speed_max_lvl_vials").setValue(this.max_level_vials)
         document.getElementById("refinery_speed_red_malt_vial").setValue(this.vial_level_red_malt)
