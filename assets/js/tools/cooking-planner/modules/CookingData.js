@@ -181,6 +181,11 @@ class CookingData {
 
         // general
 
+        // vault
+        let vault_data = save_data["UpgVault"]
+        this.vault_kitchen_dreammare = vault_data[54]
+        this.vault_mastery_2 = vault_data[61]
+
         // p2w
         if (save_data.hasOwnProperty("BundlesReceived")) {
             let bundle_info = JSON.parse(save_data["BundlesReceived"])
@@ -375,6 +380,9 @@ class CookingData {
         this.endless_summoning_wins = Number(document.getElementById(`endless_summoning_wins`).value)
 
         // general
+        // vault
+        this.vault_kitchen_dreammare = Number(document.getElementById(`vault_kitchen_dreammare`).value)
+        this.vault_mastery_2 = Number(document.getElementById(`vault_mastery_2`).value)
         // p2w
         this.p2w_pack_sacred_methods = document.getElementById(`p2w_pack_sacred_methods`).checked
 
@@ -543,6 +551,8 @@ class CookingData {
 
         document.getElementById(`summon_cooking_mult`).innerText = (this.summon_cooking_bonus.toFixed(3))
         // general
+        // vault
+        this.vault_multi = 1 + (this.vault_kitchen_dreammare * 0.06 * (1 + 0.01 * this.vault_mastery_2))
         // classes
         this.blood_marrow_bonus = Math.floor(1000 * (this.voidwalker_blood_marrow_lvl * 0.021) / (this.voidwalker_blood_marrow_lvl + 220)) / 1000;
 
@@ -663,6 +673,11 @@ class CookingData {
         document.getElementById(`endless_summoning_wins`).setValue(this.endless_summoning_wins)
 
         // general
+        // vault 
+        document.getElementById(`vault_kitchen_dreammare`).setValue(this.vault_kitchen_dreammare)
+        document.getElementById(`vault_mastery_2`).setValue(this.vault_mastery_2)
+
+        // p2w
         document.getElementById(`p2w_pack_sacred_methods`).checked = this.p2w_pack_sacred_methods
         // classes
         document.getElementById(`voidwalker_blood_marrow_lvl`).setValue(this.voidwalker_blood_marrow_lvl)
@@ -736,6 +751,7 @@ class CookingData {
             /* OK */["blood_marrow", Math.pow(1 + this.blood_marrow_bonus, total_meal_levels)],
             /* OK */["crop_depot", (this.crop_depot_bonus)],
             /* OK */["apocalypse", (this.apocalypse_bonus), { "super_chows": this.blood_berserker_super_chow_count }],
+            /* OK */["vault", (this.vault_multi)],
             /* OK */["marshmallow", (1 + marshmallow_meal_bonus), {
                 "base bonus": 0.4 * this.meal_efficiency * this.meal_levels[63] * RIBBON_MULTIPLIERS[this.meal_ribbons[63]],
                 "mult from farming lvl": Math.ceil((this.farming_lvl + 1) / 50),

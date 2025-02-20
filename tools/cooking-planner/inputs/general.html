@@ -1,33 +1,44 @@
 <div id="tabs-general-features" class="jquerytabs">
     <ul>
         <li>
+            <a href="#tab-general-vault">
+                <img class="collapsible_icon" src="{{ site.baseurl }}/assets/images/game/VaultBut.png" /> Vault
+            </a>
+        </li>
+        <li>
             <a href="#tab-general-p2w">
-                <img class="collapsible_icon" src="{{ site.baseurl }}/assets/images/game/Gem.png" />P2W
+                <img class="collapsible_icon" src="{{ site.baseurl }}/assets/images/game/Gem.png" /> P2W
             </a>
         </li>
         <li>
             <a href="#tab-general-classes">
-                <img class="collapsible_icon" src="{{ site.baseurl }}/assets/images/game/Beginner_Class_Icon.png" />Classes
+                <img class="collapsible_icon" src="{{ site.baseurl }}/assets/images/game/Beginner_Class_Icon.png" /> Classes
             </a>
         </li>
         <li>
             <a href="#tab-general-cards">
-                <img class="collapsible_icon" src="{{ site.baseurl }}/assets/images/game/cards/Blunder_Hills_Cardset.png" />Cards
+                <img class="collapsible_icon" src="{{ site.baseurl }}/assets/images/game/cards/Blunder_Hills_Cardset.png" /> Cards
             </a>
         </li>
         <li>
             <a href="#tab-general-merit-shop">
-                <img class="collapsible_icon" src="{{ site.baseurl }}/assets/images/game/Spirit_Sungmin.gif" />Merit Shop
+                <img class="collapsible_icon" src="{{ site.baseurl }}/assets/images/game/Spirit_Sungmin.gif" /> Merit Shop
             </a>
         </li>
         <li>
             <a href="#tab-general-achievements">
-                <img class="collapsible_icon" src="{{ site.baseurl }}/assets/images/game/Mainpage_Achievements.png" />Achievements
+                <img class="collapsible_icon" src="{{ site.baseurl }}/assets/images/game/Mainpage_Achievements.png" /> Achievements
             </a>
         </li>
 
     </ul>
+    <div id="tab-general-vault">
+        <label for="vault_kitchen_dreammare">Kitchen Dream-mare upgrade (/500)</label>
+        <input type="number" id="vault_kitchen_dreammare" min="0" max="500" />
+        <label for="vault_mastery_2">Vault Mastery II upgrade (/50)</label>
+        <input type="number" id="vault_mastery_2" min="0" max="50" />
 
+    </div>
     <div id="tab-general-p2w">
         <label for="p2w_pack_sacred_methods">Sacred Method Pack (+2 NMLB per day)</label>
         <input type="checkbox" id="p2w_pack_sacred_methods" />
