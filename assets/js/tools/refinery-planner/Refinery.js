@@ -66,13 +66,13 @@ class Refinery {
     let powerPerCycle = this.getPowerPerCycle(rank)
     let powerToRankUp = this.getPowerToRankUp(rank)
 
-    let cyclesPerRank = Math.ceil(powerToRankUp / powerPerCycle)
+    let cyclesPerRank = Math.floor(powerToRankUp / powerPerCycle)
     let nextBreakpoint = cyclesPerRank
     while (nextBreakpoint == cyclesPerRank) {
       rank += 1
       powerPerCycle = this.getPowerPerCycle(rank)
       powerToRankUp = this.getPowerToRankUp(rank)
-      nextBreakpoint = Math.ceil(powerToRankUp / powerPerCycle)
+      nextBreakpoint = Math.floor(powerToRankUp / powerPerCycle)
     }
     return {
       rank: rank,
@@ -168,7 +168,7 @@ class Refinery {
         let cc = this.getPowerPerCycle(rank)
         let pp = this.getPowerToRankUp(rank)
         prepared += pp
-        cycles += Math.ceil(pp / cc)
+        cycles += Math.floor(pp / cc)
         rank++
       }
 
@@ -207,14 +207,14 @@ class Refinery {
       let cc = this.getPowerPerCycle(rank)
       let pp = this.getPowerToRankUp(rank)
 
-      let cycles_per_rank = Math.ceil(pp / cc)
+      let cycles_per_rank = Math.floor(pp / cc)
       let init_bp = cycles_per_rank
       while (goal < cycles_per_rank) {
         cycles += cycles_per_rank
         rank++
         cc = this.getPowerPerCycle(rank)
         pp = this.getPowerToRankUp(rank)
-        cycles_per_rank = Math.ceil(pp / cc)
+        cycles_per_rank = Math.floor(pp / cc)
 
 
       }
