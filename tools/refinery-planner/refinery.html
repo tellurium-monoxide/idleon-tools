@@ -1,11 +1,9 @@
 ---
-layout: tool
+layout: default
 title: Refinery Planner
 nav_id: nav_refinery
 icon_url: "assets/images/site/refinery.png"
 permalink: /refinery-planner/
-custom_css:
-- tools/refinery-planner/styles.css
 custom_js:
 - tools/talent-planner/talents.js
 - game/classes.js
@@ -13,10 +11,43 @@ custom_js:
 - game/world3/refinery.js
 - tools/refinery-planner/RefinerySpeed.js
 - tools/refinery-planner/Refinery.js
-- tools/refinery-planner/main.js
-on_ready_js: tools/refinery-planner/on_ready.js
 ---
+<script>
 
+    function run_local_tool(raw_data) {
+
+        save_data = JSON.parse(raw_data)
+
+        localStorage.setItem("IEsaveData", raw_data);
+
+        let refinery = new Refinery(save_data)
+        refinery.processRefineryRanks()
+
+        refinery.showRefinery()
+        refinery.showResources()
+        refinery.createCalculatorTimeToMakeAmounts()
+        refinery.createCalculatorBreakPoint()
+
+        document.refinery = refinery
+
+    }
+
+
+    function button_calc_from_save(event) {
+        if (document.refinery) {
+            document.refinery.refinerySpeed.parseSaveData()
+            document.refinery.processRefineryRanks()
+
+        }
+
+    }
+    function button_calc_from_inputs(event) {
+        if (document.refinery) {
+            document.refinery.refinerySpeed.readFromSpeedInputForm()
+            document.refinery.processRefineryRanks()
+        }
+    }
+</script>
 <div class="main">
     <h1>Refinery Planner</h1>
     <h2>Refinery levels</h2>
@@ -40,3 +71,63 @@ on_ready_js: tools/refinery-planner/on_ready.js
     <div id="resources" class="resources"></div>
 
 </div>
+<style>
+    td {
+        vertical-align: middle;
+    }
+
+    td.progress {
+        text-align: center;
+        white-space: pre;
+    }
+
+    table.costs {
+        margin-left: 0;
+    }
+
+    table.costs td {
+        white-space: pre;
+    }
+
+    table.calculator {
+        margin-left: 0;
+        border: solid 1px;
+    }
+
+    td.enough {
+        color: blue;
+    }
+
+    td.not_enough_but_storage {
+        color: yellow;
+    }
+
+    td.not_enough {
+        color: red;
+    }
+
+    .resources {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    table.refinery_speed {
+        border-collapse: collapse;
+    }
+
+    table.refinery_speed,
+    table.refinery_speed td {
+        border: solid 1px;
+    }
+
+    table.speed_input_table {
+        text-align: left;
+        margin-right: 0;
+        border-collapse: collapse;
+        border: 0px;
+    }
+
+    table.speed_input_table td {
+        border: 0px;
+    }
+</style>

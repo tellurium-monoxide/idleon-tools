@@ -1,12 +1,16 @@
 function lookIntoLocalStorage() {
     const raw_data = localStorage.getItem("IEsaveData");
 
-    if (document.querySelector("#raw_data")) {
-        if (raw_data) {
-            console.log("Found save data in local storage")
+    if (raw_data) {
+        console.log("Found save data in local storage")
+        if (document.querySelector("#raw_data")) {
 
             document.querySelector("#raw_data").value = raw_data
-            run_local_tool(raw_data)
+            try {
+                run_local_tool(raw_data)
+            } catch (e) {
+
+            }
         }
     }
 
@@ -26,7 +30,6 @@ async function onSubmit() {
     } else if (tryToParse(input_data) && "serverVars" in tryToParse(input_data)) {
         console.log("found IT data")
         save_data = JSON.parse(input_data)["data"]
-        run_local_tool(save_data)
     } else {
         console.log("assuming character name")
         let name = input_data.toLowerCase()

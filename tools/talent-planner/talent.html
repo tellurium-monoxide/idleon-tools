@@ -1,11 +1,9 @@
 ---
-layout: tool
+layout: default
 title: Talent planner
 nav_id: nav_book
 icon_url: "assets/images/site/talents.png"
 permalink: /talent-book-planner/
-custom_css:
-- tools/talent-planner/styles.css
 custom_js:
 - game/classes.js
 - tools/talent-planner/talents.js
@@ -14,9 +12,31 @@ custom_js:
 - tools/talent-planner/talent_tiers.js
 - tools/talent-planner/talent_tiers_utils.js
 - tools/talent-planner/AccountBookingStatus.js
-- tools/talent-planner/main.js
-on_ready_js: tools/talent-planner/on_ready.js
 ---
+<script>
+
+    function onReady() {
+        displayTiers();
+
+    }
+
+
+    function run_local_tool(raw_data) {
+
+        save_data = JSON.parse(raw_data)
+
+        localStorage.setItem("IEsaveData", raw_data);
+
+        let booking_status = new AccountBookingStatus()
+        booking_status.initFromSaveData(save_data)
+        // cooking_data.fillDocumentInputForm()
+
+        // computeMealOptimalOrder(cooking_data)
+
+    }
+
+
+</script>
 <div class="main">
     <h1>Talent book planner</h1>
     <p>
@@ -430,3 +450,58 @@ on_ready_js: tools/talent-planner/on_ready.js
 
     </div>
 </div>
+
+<style>
+    label {
+        display: block;
+        font:
+            1rem 'Fira Sans',
+            sans-serif;
+    }
+
+    button.link {
+        background: none;
+        border: none;
+        color: blue;
+        cursor: pointer;
+    }
+
+    table.tiered_talents {
+        border: 1px solid;
+    }
+
+    table.tiered_talents td {
+        padding: 0 15px;
+    }
+
+    img.collapsible_icon {
+        vertical-align: middle;
+        height: 40px;
+    }
+
+    img.collapsible_icon_world {
+        vertical-align: middle;
+    }
+
+    .talent_display {
+        text-align: center;
+        border: 1px solid;
+        margin: 5px;
+    }
+
+    .talent_display.completed {
+        background-color: rgba(6, 119, 6, 0.482);
+    }
+
+    .talent_display.notier {
+        background-color: rgba(252, 214, 2, 0.747);
+    }
+
+    .talent_display.unbookable {
+        background-color: rgba(114, 114, 114, 0.798);
+    }
+
+    .talent_display.not_leveled {
+        background-color: rgba(238, 17, 17, 0.366);
+    }
+</style>

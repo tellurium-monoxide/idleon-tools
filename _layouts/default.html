@@ -10,7 +10,7 @@
     <link rel="icon" href="{{ site.baseurl }}/{{ page.icon_url }}">
     {% endif %}
 
-    <link href=" {{ site.baseurl }}/assets/css/topnav.css" rel="stylesheet">
+    <link href="{{ site.baseurl }}/assets/css/topnav.css" rel="stylesheet">
     <link href="{{ site.baseurl }}/assets/css/titles.css" rel="stylesheet">
     <link href="{{ site.baseurl }}/assets/css/tables.css" rel="stylesheet">
 
@@ -49,7 +49,11 @@
             for (const inputSpinnerElement of inputSpinnerElements) {
                 new InputSpinner(inputSpinnerElement)
             }
-            lookIntoLocalStorage();
+            try {
+                lookIntoLocalStorage();
+            } catch (e) {
+                // console.debug(e);
+            }
         });
     </script>
 </head>
@@ -58,10 +62,10 @@
     <div class="container">
         <ul class="navbar">
             <li id="nav_home" {% if page.nav_id=="nav_home" %}class="active" {% endif %}>
-                <a href="{{ site.baseurl }}/">Home</a>
+                <a href="{{ site.baseurl }}/">Home<div class="overlay"></div></a>
             </li>
             <li id="nav_cook" {% if page.nav_id=="nav_cook" %}class="active" {% endif %}>
-                <a href="{{ site.baseurl }}/cooking-planner/">Cooking Planner</a>
+                <a href="{{ site.baseurl }}/cooking-planner/">Cooking Planner<div class="overlay"></div></a>
             </li>
             <li id="nav_book" {% if page.nav_id=="nav_book" %}class="active" {% endif %}>
                 <a href="{{ site.baseurl }}/talent-book-planner/">Talent Planner</a>
@@ -82,7 +86,19 @@
                 </a>
             </li>
         </ul>
+        <ul class="topbar2">
+            <li class="not_a"> <label for="input_save_data">Enter your IE save data here:</label></li>
+            <li class="not_a"> <input type="text" id="raw_data" name="input_save_data" title="Tip: Your last entered save data is saved in your browser local storage for the next time you access the page." /></li>
+            <li class="not_a"> <button id="enter_save_data" onclick="onSubmit()">Submit</button></li>
+            <li class="not_a"> <button id="clear_save_data" onclick="onClear()">Clear</button></li>
+            <li class="not_a"> <button id="input_from_clipboard" onclick="onInputFromClip()">Submit from clipboard</button></li>
+            <li class="not_a"> <button id="copy_save_data" onclick="onCopySave()">Copy</button></li>
 
+            <li style="float:right">
+                <a class="ie" href="https://www.idleonefficiency.com/raw-data" target="_blank"><img src="{{ site.baseurl }}/assets/images/navbar/idleon-efficiency.svg" height="21" width="171"></a>
+            </li>
+            <li style="float:right" class="not_a"> <label for="input_save_data">Get your save data here:</label></li>
+        </ul>
         {{ content }}
     </div>
 

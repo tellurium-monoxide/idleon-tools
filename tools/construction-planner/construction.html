@@ -1,17 +1,27 @@
 ---
-layout: tool
+layout: default
 title: Construction Planner
 nav_id: nav_cons
 icon_url: "https://idleon.wiki/wiki/images/8/87/Cooking_Skill_Icon.png"
 permalink: /construction-planner/
-custom_css:
-- tools/construction-planner/styles.css
 custom_js:
 - tools/construction-planner/buildings.js
 - tools/construction-planner/ConstructionState.js
-- tools/construction-planner/main.js
-on_ready_js: tools/construction-planner/on_ready.js
 ---
+<script>
+
+    function run_local_tool(raw_data) {
+
+        save_data = JSON.parse(raw_data)
+
+        localStorage.setItem("IEsaveData", raw_data);
+
+        let construction_state = new ConstructionState()
+        construction_state.initFromSaveData(save_data)
+        construction_state.showBuildings()
+
+    }
+</script>
 <div class="main">
     <h1>Construction Planner</h1>
     <h2> How to use? </h2>

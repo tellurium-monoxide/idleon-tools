@@ -1,5 +1,0 @@
-
-function onReady() {
-    displayTiers();
-
-}
