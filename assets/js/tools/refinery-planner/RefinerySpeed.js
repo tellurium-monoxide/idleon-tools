@@ -68,6 +68,9 @@ class RefinerySpeed {
 
 
         // general
+        // vault
+        let vault_data = save_data["UpgVault"]
+        this.vault_vial_overtune = vault_data[42]
         // classes
         let player_names = save_data[`playerNames`]
         let players = Array.from({ length: player_names.length }, () => ({}));
@@ -114,14 +117,14 @@ class RefinerySpeed {
         let family_refinery_bonus = 0.5 * this.highest_dk_level / (150 + this.highest_dk_level) * (1 + family_guy_bonus)
         this.bonusBreakdown = [
             { name: 'Base', value: 1, max: 1 },
-            { name: 'Vials', value: this.vial_level_red_malt * 0.02 * (1 + 0.02 * this.max_level_vials), max: 0.6188 },
+            { name: 'Vials', value: this.vial_level_red_malt * 0.02 * (1 + 0.02 * this.max_level_vials + 0.1 * this.vault_vial_overtune), max: 13 * 0.02 * (1 + 0.02 * 69 + 0.1 * 3) },
             { name: 'Salt_lick', value: this.salt_lick_refinery_speed * 0.02, max: 2 },
             { name: 'Family', value: family_refinery_bonus, max: 0.7 },
             { name: 'Sigils', value: 0.1 * this.sigil_pipe_gauge_level * (1 + this.artifact_chilled_yarn_lvl), max: 1.5 },
             { name: 'Stamps', value: this.stamp_refinery_level / 100, max: this.stamp_refinery_level / 100 },
             { name: 'Shinies', value: shinyRefineryBonus, max: 1.2 },
             { name: 'Const_mastery', value: Math.floor(this.total_building_levels / 10) / 100, max: 3.67 },
-            { name: 'Arcade', value: this.computeArcadeBonus(this.arcade_refinery_lvl), max: 0.3 },
+            { name: 'Arcade', value: this.computeArcadeBonus(this.arcade_refinery_lvl), max: this.computeArcadeBonus(101) },
             // { name: 'Vote', value: 0 }, // not taken into account as not very useful for the long term planning
         ]
 
@@ -169,6 +172,7 @@ class RefinerySpeed {
         document.getElementById("refinery_speed_shiny_demon_genie_lvl").setValue(this.shiny_lvl_Demon_Genie)
         document.getElementById("refinery_speed_building_lvls").setValue(this.total_building_levels)
         document.getElementById("refinery_speed_arcade_lvl").setValue(this.arcade_refinery_lvl)
+        document.getElementById("refinery_speed_vault_vial_overtune").setValue(this.vault_vial_overtune)
 
     }
 
@@ -186,6 +190,7 @@ class RefinerySpeed {
         this.shiny_lvl_Demon_Genie = Number(document.getElementById("refinery_speed_shiny_demon_genie_lvl").value)
         this.total_building_levels = Number(document.getElementById("refinery_speed_building_lvls").value)
         this.arcade_refinery_lvl = Number(document.getElementById("refinery_speed_arcade_lvl").value)
+        this.vault_vial_overtune = Number(document.getElementById("refinery_speed_vault_vial_overtune").value)
 
         // console.log(this.artifact_chilled_yarn_lvl)
         // console.log(this.sigil_pipe_gauge_level)

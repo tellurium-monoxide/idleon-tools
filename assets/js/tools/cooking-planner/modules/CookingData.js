@@ -183,6 +183,7 @@ class CookingData {
 
         // vault
         let vault_data = save_data["UpgVault"]
+        this.vault_vial_overtune = vault_data[42]
         this.vault_kitchen_dreammare = vault_data[54]
         this.vault_mastery_2 = vault_data[61]
 
@@ -383,6 +384,7 @@ class CookingData {
         // vault
         this.vault_kitchen_dreammare = Number(document.getElementById(`vault_kitchen_dreammare`).value)
         this.vault_mastery_2 = Number(document.getElementById(`vault_mastery_2`).value)
+        this.vault_vial_overtune = Number(document.getElementById(`vault_vial_overtune`).value)
         // p2w
         this.p2w_pack_sacred_methods = document.getElementById(`p2w_pack_sacred_methods`).checked
 
@@ -448,7 +450,7 @@ class CookingData {
 
 
         // TODO : lab active bonus should impact this
-        this.vial_effect = (1 + this.lab_vial_doubling) * (1 + 0.02 * this.max_level_vials)
+        this.vial_effect = (1 + this.lab_vial_doubling) * (1 + 0.02 * this.max_level_vials + 0.1 * this.vault_vial_overtune)
 
         this.vial_turtle_bonus = this.vial_level_turtle * 0.04 * this.vial_effect
         this.vial_firefly_bonus = this.vial_level_firefly * 0.05 * this.vial_effect
@@ -674,6 +676,7 @@ class CookingData {
 
         // general
         // vault 
+        document.getElementById(`vault_vial_overtune`).setValue(this.vault_vial_overtune)
         document.getElementById(`vault_kitchen_dreammare`).setValue(this.vault_kitchen_dreammare)
         document.getElementById(`vault_mastery_2`).setValue(this.vault_mastery_2)
 
@@ -747,7 +750,7 @@ class CookingData {
 
         const global_meal_speed_bonuses = ([
             ["base", 10],
-            ["correction", 1 / 78.3], // correction because my cooking speed appears to be that much times higher than it should
+            ["correction", 1 / 80], // correction because my cooking speed appears to be that much times higher than it should
             /* OK */["blood_marrow", Math.pow(1 + this.blood_marrow_bonus, total_meal_levels)],
             /* OK */["crop_depot", (this.crop_depot_bonus)],
             /* OK */["apocalypse", (this.apocalypse_bonus), { "super_chows": this.blood_berserker_super_chow_count }],
