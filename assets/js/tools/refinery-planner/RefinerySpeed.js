@@ -29,26 +29,26 @@ class RefinerySpeed {
         this.vial_level_red_malt = vial_levels[25]
 
         // sigils
-        let sigil_info = JSON.parse(save_data["CauldronP2W"])
+        let sigil_info = (save_data["CauldronP2W"])
         let sigil_pipe_gauge_time = sigil_info[4][2 * (11 - 1)]
         this.sigil_pipe_gauge_level = ((sigil_pipe_gauge_time >= 700)
             + (sigil_pipe_gauge_time >= 12000)
             + (sigil_pipe_gauge_time >= 320000))
 
         // arcade
-        let arcade_levels = JSON.parse(save_data["ArcadeUpg"])
+        let arcade_levels = (save_data["ArcadeUpg"])
         this.arcade_refinery_lvl = arcade_levels[25]
         // world 3
         // construction
-        let building_data = JSON.parse(save_data["Tower"])
+        let building_data = (save_data["Tower"])
         let building_current_levels = building_data.slice(0, 27)
         this.total_building_levels = building_current_levels.reduce((a, b) => (a + b))
 
-        let salt_lick_data = JSON.parse(save_data["SaltLick"])
+        let salt_lick_data = (save_data["SaltLick"])
         this.salt_lick_refinery_speed = salt_lick_data[2]
         // world 4
         // breeding
-        let breeding_info = JSON.parse(save_data["Breeding"])
+        let breeding_info = (save_data["Breeding"])
         // console.log(breeding_info)
         let shiny_time_bored_bean = breeding_info[22][3]
         let shiny_time_whale = breeding_info[23][9]
@@ -63,7 +63,7 @@ class RefinerySpeed {
 
         // world 5
         // sailing
-        let sailing_info = JSON.parse(save_data["Sailing"])
+        let sailing_info = (save_data["Sailing"])
         this.artifact_chilled_yarn_lvl = sailing_info[3][16]
 
 
@@ -82,8 +82,8 @@ class RefinerySpeed {
             players[i]["subclasses"] = getClassList(CLASSES[save_data[`CharacterClass_${i}`]])
 
 
-            players[i]["skill_max_levels"] = JSON.parse(save_data[`SM_${i}`]); // SM for max; SL and SLpre for currents
-            players[i]["skill_current_levels"] = JSON.parse(save_data[`SL_${i}`]); // SM for max; SL and SLpre for currents
+            players[i]["skill_max_levels"] = (save_data[`SM_${i}`]); // SM for max; SL and SLpre for currents
+            players[i]["skill_current_levels"] = (save_data[`SL_${i}`]); // SM for max; SL and SLpre for currents
             players[i]["level"] = save_data[`Lv0_${i}`][0];
 
             let talent_family_guy = TALENTS["Divine_Knight"]["THE_FAMILY_GUY"]

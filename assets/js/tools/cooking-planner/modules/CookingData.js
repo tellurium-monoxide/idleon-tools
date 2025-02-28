@@ -70,7 +70,7 @@ class CookingData {
         let atom_data = save_data["Atoms"]
         this.void_plate_chef_lvl = atom_data[8]
         // worship
-        let totem_info = JSON.parse(save_data["TotemInfo"])
+        let totem_info = (save_data["TotemInfo"])
         this.total_waves = totem_info[0].reduce((a, b) => a + b)
 
         // equinox
@@ -79,7 +79,7 @@ class CookingData {
         const OptLacc = save_data["OptLacc"]
         this.starting_equinox_food_lust = OptLacc[193] // TODO verify this. could also be 242. 193 on IT, but maybe customized
 
-        const WeeklyBoss = JSON.parse(save_data["WeeklyBoss"])
+        const WeeklyBoss = (save_data["WeeklyBoss"])
         const clouds = Object.keys(WeeklyBoss).filter(key => key.startsWith('d_')).reduce((obj, key) => {
             obj[key.substring(2)] = WeeklyBoss[key];
             return obj;
@@ -88,7 +88,7 @@ class CookingData {
         this.equinox_cloud_34 = (clouds[33] == -1)
         // world 4
         // cooking
-        let meal_data = JSON.parse(save_data["Meals"])
+        let meal_data = (save_data["Meals"])
 
         this.meal_levels = meal_data[0].map(Number).slice(0, meal_count)
         this.meal_quantities = meal_data[2].map(Number).slice(0, meal_count)
@@ -98,7 +98,7 @@ class CookingData {
         this.meal_ribbons = data_ribbons.slice(28, 28 + meal_count)
 
         this.kitchen_stats = []
-        let kitchen_data = JSON.parse(save_data["Cooking"])
+        let kitchen_data = (save_data["Cooking"])
         for (let i = 0; i < 10; i++) {
             this.kitchen_stats.push({
                 "isRichelin": kitchen_data[i][0] == 2,
@@ -109,14 +109,14 @@ class CookingData {
         }
 
         // breeding
-        let breeding_info = JSON.parse(save_data["Breeding"])
+        let breeding_info = (save_data["Breeding"])
         let shiny_time_red_mush = breeding_info[22][4]
         let shiny_time_sheepie = breeding_info[24][0]
         this.shiny_lvl_red_mush = getShinyLevel(shiny_time_red_mush)
         this.shiny_lvl_sheepie = getShinyLevel(shiny_time_sheepie)
 
         // lab
-        let lab_info = JSON.parse(save_data["Lab"])
+        let lab_info = (save_data["Lab"])
         // console.log(lab_info)
         let lab_jewels_info = Object.fromEntries(LAB_JEWELS.map(function (jewel_name, index) { return [jewel_name, lab_info[14][index]] }))
         // console.log(lab_jewels_info)
@@ -139,7 +139,7 @@ class CookingData {
 
         // world 5
         // sailing
-        let sailing_info = JSON.parse(save_data["Sailing"])
+        let sailing_info = (save_data["Sailing"])
         this.artifact_triangulon_lvl = sailing_info[3][13]
         this.artifact_winz_lantern_lvl = sailing_info[3][32]
 
@@ -149,7 +149,7 @@ class CookingData {
         this.MSA_mealing_unlocked = (superbits.includes("m"))
 
         // hole
-        let hole_data = JSON.parse(save_data["Holes"])
+        let hole_data = (save_data["Holes"])
         console.log(hole_data)
 
         this.hole_majik_monument = hole_data[4][0] // +0.25 per lvl to bravery bonus mult
@@ -160,18 +160,18 @@ class CookingData {
 
         // world 6
         // farming
-        let farming_crop_data = JSON.parse(save_data["FarmCrop"])
+        let farming_crop_data = (save_data["FarmCrop"])
         this.crop_acquired = Object.keys(farming_crop_data).length
         this.farming_lvl = save_data["Lv0_0"][16]
 
         // sneaking
-        let sneaking_data = JSON.parse(save_data["Ninja"])
+        let sneaking_data = (save_data["Ninja"])
         this.pristine_crystal_comb_obtained = sneaking_data[107][8]
         this.pristine_liquorice_rolle_obtained = sneaking_data[107][17]
 
         // summoning
         this.summoning_lvl = save_data["Lv0_0"][18]
-        let summoning_data = JSON.parse(save_data["Summon"])
+        let summoning_data = (save_data["Summon"])
         this.summon_battle_mushP = (summoning_data[1].includes("mushP"))
         this.summon_battle_troll = (summoning_data[1].includes("w6b3"))
         console.log(save_data["OptLacc"])
@@ -189,7 +189,7 @@ class CookingData {
 
         // p2w
         if (save_data.hasOwnProperty("BundlesReceived")) {
-            let bundle_info = JSON.parse(save_data["BundlesReceived"])
+            let bundle_info = (save_data["BundlesReceived"])
             this.p2w_pack_sacred_methods = bundle_info.hasOwnProperty("bun_s")
         } else {
             this.p2w_pack_sacred_methods = false
@@ -201,7 +201,7 @@ class CookingData {
         for (let i = 0; i < 10; i++) {
             if (save_data[`CharacterClass_${i}`] == 4) {
                 // console.log(`char ${i} is void walker`);
-                let skill_max_levels = JSON.parse(save_data[`SM_${i}`]); // SM for max; SL and SLpre for currents
+                let skill_max_levels = (save_data[`SM_${i}`]); // SM for max; SL and SLpre for currents
 
                 this.voidwalker_blood_marrow_lvl = Math.max(skill_max_levels[59], this.voidwalker_blood_marrow_lvl);
                 this.voidwalker_eclipse_lvl = Math.max(skill_max_levels[49], this.voidwalker_eclipse_lvl);
@@ -218,11 +218,11 @@ class CookingData {
                 // console.log(`char ${i} is blood berserker`)
 
 
-                let skill_max_levels = JSON.parse(save_data[`SM_${i}`]) // SM for max; SL and SLpre for currents
+                let skill_max_levels = (save_data[`SM_${i}`]) // SM for max; SL and SLpre for currents
 
                 this.blood_berserker_overflowing_ladles_lvl = Math.max(skill_max_levels[148], this.blood_berserker_overflowing_ladles_lvl)
                 this.blood_berserker_super_chow_count = 0
-                let KLA = JSON.parse(save_data[`KLA_${i}`])
+                let KLA = (save_data[`KLA_${i}`])
                 let KillCounts = Array(300).fill(0)
                 for (let k = 0; k < KLA.length; k++) {
                     KillCounts[k] = KILL_REQ[k] - KLA[k][0]
@@ -240,7 +240,7 @@ class CookingData {
         this.grimoire_crop_research_lvl = grimoire_data[22]
 
         // cards
-        let card0 = JSON.parse(save_data["Cards0"])
+        let card0 = (save_data["Cards0"])
         let card_troll1 = card0["Boss4A"] //req: 2/6/10/32/918 
         let card_ceramic_spirit = card0["w6c1"] //req: 400/1200/2000/6400/183600
         this.card_troll1_level = getCardLevel("Boss4A", card_troll1)
@@ -252,11 +252,11 @@ class CookingData {
         this.star_sign_chip_doubler_active = 0
 
         // merit shop
-        let merit_levels = JSON.parse(save_data["TaskZZ2"])
+        let merit_levels = (save_data["TaskZZ2"])
         this.merit_world6_summoning_bonus_lvl = merit_levels[5][4]
 
         // achieve
-        let achieve_data = JSON.parse(save_data["AchieveReg"])
+        let achieve_data = (save_data["AchieveReg"])
         this.achiev_cabbage_patch = - achieve_data[224]
         this.achiev_pretzel_bleu = -achieve_data[225]
         this.achiev_best_plate = -achieve_data[233]
@@ -264,7 +264,7 @@ class CookingData {
         this.achiev_regalis_my_beloved = -achieve_data[373]
 
         // arcade
-        let arcade_levels = JSON.parse(save_data["ArcadeUpg"])
+        let arcade_levels = (save_data["ArcadeUpg"])
         this.arcade_cooking_bonus_lvl = arcade_levels[28]
 
         // storage

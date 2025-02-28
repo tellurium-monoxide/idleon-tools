@@ -2,25 +2,25 @@
 layout: default
 title: Construction Planner
 nav_id: nav_cons
-icon_url: "https://idleon.wiki/wiki/images/8/87/Cooking_Skill_Icon.png"
+icon_url: ""
 permalink: /construction-planner/
-custom_js:
-- tools/construction-planner/buildings.js
-- tools/construction-planner/ConstructionState.js
 ---
-<script>
 
-    function run_local_tool(raw_data) {
+<script type="module">
 
-        save_data = JSON.parse(raw_data)
+    import { Account } from "{{site.baseurl}}/assets/js/game/Account.js";
 
-        localStorage.setItem("IEsaveData", raw_data);
+    // function run_local_tool(save_data) {
+    document.addEventListener("run_tool", (e) => {
+        let save_data = e.detail
 
-        let construction_state = new ConstructionState()
-        construction_state.initFromSaveData(save_data)
-        construction_state.showBuildings()
+        let account = new Account(save_data)
 
-    }
+        let content = account.world3.construction.getBuildingDisplay()
+        document.getElementById("results").innerHTML = content;
+    }, false);
+    // }
+
 </script>
 <div class="main">
     <h1>Construction Planner</h1>

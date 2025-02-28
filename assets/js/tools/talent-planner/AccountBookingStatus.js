@@ -18,8 +18,8 @@ class AccountBookingStatus {
             this.players[i]["subclasses"] = getClassList(CLASSES[save_data[`CharacterClass_${i}`]])
 
 
-            this.players[i]["skill_max_levels"] = JSON.parse(save_data[`SM_${i}`]); // SM for max; SL and SLpre for currents
-            this.players[i]["skill_current_levels"] = JSON.parse(save_data[`SL_${i}`]); // SM for max; SL and SLpre for currents
+            this.players[i]["skill_max_levels"] = (save_data[`SM_${i}`]); // SM for max; SL and SLpre for currents
+            this.players[i]["skill_current_levels"] = (save_data[`SL_${i}`]); // SM for max; SL and SLpre for currents
 
         }
 
@@ -48,19 +48,19 @@ class AccountBookingStatus {
 
 
         // world 3
-        let building_data = JSON.parse(save_data["Tower"])
+        let building_data = (save_data["Tower"])
         this.building_library_lvl = building_data[1]
 
         let atom_data = save_data["Atoms"]
         this.atom_oxygen = atom_data[7]
 
-        let salt_lick_data = JSON.parse(save_data["SaltLick"])
+        let salt_lick_data = (save_data["SaltLick"])
         this.salt_lick_spontaneity_salts = salt_lick_data[4] //TODO
 
 
         // world 4
         // cooking
-        let meal_data = JSON.parse(save_data["Meals"])
+        let meal_data = (save_data["Meals"])
         this.meal_lvl_fortune_cookies = meal_data[0][34]
         let meal_ribbons = (save_data["Ribbon"])
         this.ribbon_tier_fortune_cookies = meal_ribbons[34 + 28]
@@ -68,14 +68,14 @@ class AccountBookingStatus {
         console.log(this.ribbon_tier_fortune_cookies)
 
         // breeding
-        let breeding_info = JSON.parse(save_data["Breeding"])
+        let breeding_info = (save_data["Breeding"])
         let shiny_time_red_mush = breeding_info[22][4]
         let shiny_time_sheepie = breeding_info[24][0]
         this.shiny_lvl_red_mush = getShinyLevel(shiny_time_red_mush)
         this.shiny_lvl_sheepie = getShinyLevel(shiny_time_sheepie)
 
         // lab
-        let lab_info = JSON.parse(save_data["Lab"])
+        let lab_info = (save_data["Lab"])
         let lab_jewels_info = Object.fromEntries(LAB_JEWELS.map(function (jewel_name, index) { return [jewel_name, lab_info[14][index]] }))
 
 
@@ -89,7 +89,7 @@ class AccountBookingStatus {
 
         // world 5
         // sailing
-        let sailing_info = JSON.parse(save_data["Sailing"])
+        let sailing_info = (save_data["Sailing"])
         this.artifact_fury_relic_lvl = sailing_info[3][21]
         this.artifact_winz_lantern_lvl = sailing_info[3][32]
 
@@ -101,23 +101,23 @@ class AccountBookingStatus {
 
         // world 6
         // sneaking
-        let sneaking_data = JSON.parse(save_data["Ninja"])
+        let sneaking_data = (save_data["Ninja"])
         this.pristine_crystal_comb_obtained = sneaking_data[107][8]
 
         // summoning
-        let summoning_data = JSON.parse(save_data["Summon"])
+        let summoning_data = (save_data["Summon"])
         console.log(summoning_data)
         this.summon_battle_cyan14 = (summoning_data[1].includes("w6d3"))
 
         // general
 
         // merit shop
-        let merit_levels = JSON.parse(save_data["TaskZZ2"])
+        let merit_levels = (save_data["TaskZZ2"])
         this.merit_world3_max_book_lvl = merit_levels[2][2]
         this.merit_world6_summoning_bonus_lvl = merit_levels[5][4]
 
         // achieve
-        let achieve_data = JSON.parse(save_data["AchieveReg"])
+        let achieve_data = (save_data["AchieveReg"])
         this.achiev_checkout_takeout = - achieve_data[145]
         this.achiev_spectre_stars = - achieve_data[379]
         this.achiev_regalis_my_beloved = - achieve_data[373]
@@ -543,9 +543,9 @@ class AccountBookingStatus {
                 for (let upgrade of tiered_talents[tier]) {
                     content += `<tr>`
                     // content += `<td>${(upgrade.talent)}</td>`
-                    content += `<td>${FormatWords(upgrade.talent)}</td>`
+                    content += `<td>${formatName(upgrade.talent)}</td>`
                     content += `<td>${upgrade.charname} (n°${upgrade.char + 1})</td>`
-                    content += `<td>${FormatWords(upgrade.class)}</td>`
+                    content += `<td>${formatName(upgrade.class)}</td>`
                     content += `<td>${upgrade.purpose}</td>`
                     content += `<td>${upgrade.level}/${this.max_book_level}</td>`
                     content += `</tr>`
@@ -582,18 +582,6 @@ class AccountBookingStatus {
 
 
 
-function FormatWords(name) {
-    let words = name.split(/[_ ]/)
-    let result = ""
-    for (let word of words) {
-        result += capitalizeFirstLetter(word.toLowerCase()) + " "
-    }
-    return result.slice(0, -1);
-}
-
-function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-}
 
 function getTimeForShinyLevel(goal) {
     return Math.floor((1 + Math.pow(goal, 1.6)) * Math.pow(1.7, goal));

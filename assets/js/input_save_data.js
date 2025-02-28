@@ -1,4 +1,7 @@
-function lookIntoLocalStorage() {
+
+
+
+async function lookIntoLocalStorage() {
     const raw_data = localStorage.getItem("IEsaveData");
 
     if (raw_data) {
@@ -6,11 +9,9 @@ function lookIntoLocalStorage() {
         if (document.querySelector("#raw_data")) {
 
             document.querySelector("#raw_data").value = raw_data
-            try {
-                run_local_tool(raw_data)
-            } catch (e) {
 
-            }
+            await onSubmit();
+
         }
     }
 
@@ -19,13 +20,22 @@ function lookIntoLocalStorage() {
 
 async function onSubmit() {
 
-    input_data = document.querySelector("#raw_data").value
+    let input_data = document.querySelector("#raw_data").value
 
     let raw_data = ""
     if (tryToParse(input_data) && "Meals" in tryToParse(input_data)) {
         console.log("found raw IE data")
+
+        localStorage.setItem("IEsaveData", input_data);
+
         raw_data = input_data
-        run_local_tool(raw_data)
+        let save_data = parse_save_data_two_levels(raw_data)
+        console.log("save_data")
+        console.log(save_data)
+
+        const event = new CustomEvent("run_tool", { detail: save_data });
+        document.dispatchEvent(event);
+        // run_local_tool(save_data)
 
     } else if (tryToParse(input_data) && "serverVars" in tryToParse(input_data)) {
         console.log("found IT data")
@@ -42,10 +52,11 @@ async function onSubmit() {
                 cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
             });
             if (res.ok) {
-                const save_data = await res.json();
-                const raw_data = JSON.stringify(save_data);
+                const save_data_ = await res.json();
+                const raw_data = JSON.stringify(save_data_);
                 // console.log(save_data);
-                run_local_tool(raw_data)
+                let save_data = parse_save_data_two_levels(raw_data)
+                run_local_tool(save_data)
             }
             return undefined;
         }
@@ -62,15 +73,42 @@ async function onInputFromClip() {
 
     clipText = await navigator.clipboard.readText()
     document.querySelector("#raw_data").value = clipText;
-    run_local_tool(clipText);
-    // navigator.clipboard
-    //     .readText()
-    //     .then((clipText) => {
-    //         document.querySelector("#raw_data").value = clipText;
-    //         run_local_tool(clipText);
-    //     });
+    await onSubmit();
 }
 async function onCopySave() {
     input_data = document.querySelector("#raw_data").value
     await navigator.clipboard.writeText(input_data);
 }
+
+
+// because the save data contains items that are not recognized as js objects with a single parse
+const parse_save_data_two_levels = str => {
+    try {
+        let parsed = JSON.parse(str);
+        for ([key, value] of Object.entries(parsed)) {
+            let parsed2 = tryToParse(value)
+            if (parsed2) {
+                parsed[key] = parsed2
+            }
+        }
+        return parsed;
+    } catch (e) {
+        return null;
+    }
+};
+
+
+const tryToParse = str => {
+    try {
+        return JSON.parse(str);
+    } catch (e) {
+        return null;
+    }
+};
+const parseIfNeeded = str => {
+    try {
+        return JSON.parse(str);
+    } catch (e) {
+        return str;
+    }
+};

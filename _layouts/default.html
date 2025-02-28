@@ -27,7 +27,9 @@
     {% endif %}
     {% include icons.html %}
     <script>
-        $(document).ready(function () {
+        jQuery(async function () {
+
+
             // $(".navbar li").removeClass("active");
             // $("#{{ page.nav_id }}").addClass("active");
 
@@ -42,7 +44,7 @@
             try {
                 onReady();
             } catch (e) {
-                // console.debug(e);
+                console.debug(e);
             }
 
             const inputSpinnerElements = document.querySelectorAll("input[type='number']")
@@ -50,9 +52,9 @@
                 new InputSpinner(inputSpinnerElement)
             }
             try {
-                lookIntoLocalStorage();
+                await lookIntoLocalStorage();
             } catch (e) {
-                // console.debug(e);
+                console.debug(e);
             }
         });
     </script>

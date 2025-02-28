@@ -1,20 +1,17 @@
 
 
-const tryToParse = str => {
-    try {
-        return JSON.parse(str);
-    } catch (e) {
-        return null;
-    }
-};
-const parseIfNeeded = str => {
-    try {
-        return JSON.parse(str);
-    } catch (e) {
-        return str;
-    }
-};
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
 
+function formatName(name) {
+    let words = name.split(/[_ ]/)
+    let result = ""
+    for (let word of words) {
+        result += capitalizeFirstLetter(word.toLowerCase()) + " "
+    }
+    return result.slice(0, -1);
+}
 
 function indexOfLastMin(a) {
     let lowest = 0;
@@ -24,10 +21,12 @@ function indexOfLastMin(a) {
     return lowest;
 }
 
-const formatPercent = (fraction) => `${(fraction * 100).toFixed(2)}%`;
+function formatPercent(fraction) {
+    return `${(fraction * 100).toFixed(2)}%`
+};
 
 
-number_notations = ["", "k", "M", "B", "T", "Q", "QQ", "QQQ", "e24", "e27"]
+const number_notations = ["", "k", "M", "B", "T", "Q", "QQ", "QQQ", "e24", "e27"]
 function formatIdleonNumbers(value) {
     if (value < 1000000) {
         return value.toFixed(0).padStart(6, " ")

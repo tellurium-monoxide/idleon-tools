@@ -13,12 +13,9 @@ custom_js:
 - tools/refinery-planner/Refinery.js
 ---
 <script>
+    document.addEventListener("run_tool", (e) => {
+        let save_data = e.detail
 
-    function run_local_tool(raw_data) {
-
-        save_data = JSON.parse(raw_data)
-
-        localStorage.setItem("IEsaveData", raw_data);
 
         let refinery = new Refinery(save_data)
         refinery.processRefineryRanks()
@@ -29,8 +26,7 @@ custom_js:
         refinery.createCalculatorBreakPoint()
 
         document.refinery = refinery
-
-    }
+    }, false);
 
 
     function button_calc_from_save(event) {

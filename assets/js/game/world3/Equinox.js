@@ -1,5 +1,6 @@
 import { BaseFeature } from "../BaseFeature.js";
-export class Stamps extends BaseFeature {
+
+export class Equinox extends BaseFeature {
 
     constructor(account) {
         super(account);

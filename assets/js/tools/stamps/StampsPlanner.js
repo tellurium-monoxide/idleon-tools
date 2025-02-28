@@ -52,7 +52,7 @@ class StampPlanner {
 
         let vial_total_bonus = (vial_bonus_blue_flav + vial_bonus_venison_malt)
         // sigils
-        let sigil_info = JSON.parse(save_data["CauldronP2W"])
+        let sigil_info = (save_data["CauldronP2W"])
         let sigil_enveloppe_pile_time = sigil_info[4][2 * (7 - 1)]
         let sigil_enveloppe_pile_reduction = ((sigil_enveloppe_pile_time >= 60) * 0.12
             + (sigil_enveloppe_pile_time >= 2500) * 0.13
@@ -61,7 +61,7 @@ class StampPlanner {
 
         // world 5
         // sailing
-        let sailing_info = JSON.parse(save_data["Sailing"])
+        let sailing_info = (save_data["Sailing"])
         let artifact_chilled_yarn_lvl = sailing_info[3][16]
 
         let sigil_stamp_cost_red = sigil_enveloppe_pile_reduction * (1 + artifact_chilled_yarn_lvl)
@@ -73,12 +73,12 @@ class StampPlanner {
 
         let summoning_lvl = save_data["Lv0_0"][18]
 
-        let shrine_pantheon_lvl = JSON.parse(save_data["Shrine"])[4][3]
+        let shrine_pantheon_lvl = (save_data["Shrine"])[4][3]
 
         let shrine_bonus = (0.1 + 0.02 * (shrine_pantheon_lvl - 1)) * 1.3
 
 
-        let guild_rucksack_lvl = JSON.parse(save_data["Guild"])[0][2]
+        let guild_rucksack_lvl = (save_data["Guild"])[0][2]
         console.log(guild_rucksack_lvl)
         let guild_bonus = 0.7 * guild_rucksack_lvl / (50 + guild_rucksack_lvl)
 

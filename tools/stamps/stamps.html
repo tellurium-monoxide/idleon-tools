@@ -7,25 +7,21 @@ permalink: /stamps-planner/
 custom_js:
 - tools/talent-planner/talents.js
 - game/classes.js
-- game/world1/stamps.js
+- game/world1/stamps_data.js
 - tools/stamps/StampsPlanner.js
-- tools/stamps/main.js
 ---
 <script>
     function onReady() {
 
         make_stamp_tables()
     }
-    function run_local_tool(raw_data) {
 
-        save_data = JSON.parse(raw_data)
-
-        localStorage.setItem("IEsaveData", raw_data);
-
+    document.addEventListener("run_tool", (e) => {
+        let save_data = e.detail
 
         let stamp_planner = new StampPlanner(save_data)
+    }, false);
 
-    }
 
 
     function make_stamp_tables() {

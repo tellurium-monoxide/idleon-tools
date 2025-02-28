@@ -21,22 +21,19 @@ custom_js:
 
     }
 
+    document.addEventListener("run_tool", (e) => {
+        let save_data = e.detail
 
 
-
-    function run_local_tool(raw_data) {
-
-        save_data = JSON.parse(raw_data)
-
-        localStorage.setItem("IEsaveData", raw_data);
 
         let cooking_data = new CookingData()
         cooking_data.initFromSaveData(save_data)
         cooking_data.fillDocumentInputForm()
 
         computeMealOptimalOrder(cooking_data)
+    }, false);
 
-    }
+
 
 
     function computeFromInputForm() {

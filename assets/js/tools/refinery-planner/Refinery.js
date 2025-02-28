@@ -3,7 +3,7 @@ class Refinery {
     this.save_data = save_data
 
     this.refinerySpeed = new RefinerySpeed(save_data)
-    this.refinery_data = JSON.parse(save_data["Refinery"])
+    this.refinery_data = (save_data["Refinery"])
 
     this.calculators = []
   }
