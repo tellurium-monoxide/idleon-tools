@@ -37,11 +37,9 @@ async function onSubmit() {
         document.dispatchEvent(event);
         // run_local_tool(save_data)
 
-    } else if (tryToParse(input_data) && "serverVars" in tryToParse(input_data)) {
-        console.log("found IT data")
-        save_data = JSON.parse(input_data)["data"]
+
     } else {
-        console.log("assuming character name")
+        console.log("Assuming character name")
         let name = input_data.toLowerCase()
         const cdn_location = 'https://cdn.idleonefficiency.com'
         const full_link = `${cdn_location}/profiles/${input_data}.json`

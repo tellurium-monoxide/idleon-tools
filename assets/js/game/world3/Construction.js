@@ -4,18 +4,20 @@ export class Construction extends BaseFeature {
 
     constructor(account) {
         super(account);
-        console.log(this.account)
         let building_data = this.account.save_data["Tower"]
 
-        console.log(building_data)
 
         let building_current_levels = building_data.slice(0, 27)
         let building_built_levels = building_data.slice(27, 54)
         let building_current_build_progress = building_data.slice(66, 93)
 
-        // console.log("max possible building levels:", BUILDING_DATA.reduce((a, b) => (a + b.max_level), 0))
+
 
         this.buildings = {}
+
+        this.building_total_levels_max = BUILDING_DATA.reduce((a, b) => (a + b.max_level), 0)
+        this.building_total_levels = building_current_levels.reduce((a, b) => (a + b), 0)
+        // console.log(this.building_total_levels, "/", this.building_total_levels_max)
 
         for (let id = 0; id < 27; id++) {
             let building = BUILDING_DATA[id]
@@ -34,6 +36,10 @@ export class Construction extends BaseFeature {
             return 0
         }
 
+    }
+
+    getTotalBuildingLevels() {
+        return this.building_total_levels
     }
 
 

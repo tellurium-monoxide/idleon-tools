@@ -19,7 +19,6 @@ const CLASSES = {
     25: "Beast_Master",
     36: "Bubonic_Conjuror",
     4: "Voidwalker",
-
 }
 
 const SUBCLASSES = {

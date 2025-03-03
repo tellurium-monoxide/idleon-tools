@@ -16,8 +16,14 @@ permalink: /construction-planner/
 
         let account = new Account(save_data)
 
+        account.test()
         let content = account.world3.construction.getBuildingDisplay()
         document.getElementById("results").innerHTML = content;
+
+
+        let account_display = account.getTabDisplay()
+        document.getElementById("test").appendChild(account_display);
+        $(".jquery-tab").tabs();
     }, false);
     // }
 
@@ -27,5 +33,7 @@ permalink: /construction-planner/
     <h2> How to use? </h2>
     <h2> Results </h2>
     <div id="results">
+    </div>
+    <div id="test">
     </div>
 </div>
