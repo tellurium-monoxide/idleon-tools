@@ -29,6 +29,12 @@ export class Battles extends BaseFeature {
         console.log(this.getBonusByStat("Library_Max"))
     }
 
+    getTotalWins() {
+        let wins = this.battles_won.reduce((a, b) => (a + b), 0)
+
+        return (wins + this.account.options.get(319))
+
+    }
 
     getBonusByStat(stat_name) {
         let statIndex = this.findStatIndex(stat_name)
@@ -40,9 +46,9 @@ export class Battles extends BaseFeature {
                 accBonus += bonus[1]
             }
         }
-        // TODO: infinite battles
-        let infinite_battles_won = this.account.options.get(319)
-        for (let i = 0; i < infinite_battles_won; i++) {
+
+        let endless_battles_won = this.account.options.get(319)
+        for (let i = 0; i < endless_battles_won; i++) {
             let bonus = DATA_ENDLESS[i % 40]
             if (bonus[0] == statIndex) {
                 accBonus += bonus[1]
@@ -50,7 +56,7 @@ export class Battles extends BaseFeature {
         }
 
         // get winner bonus factors
-        const charmBonus = 0.3 // TODO from sneaking
+        const charmBonus = this.account.world6.sneaking.charms.getBonusByName("CRYSTAL_COMB")
         const artifactBonus = this.account.world5.artifacts.getBonusByName("THE_WINZ_LANTERN")
         const meritBonus = this.account.general.merits.getMeritLevel(6, 5) / 100
         const achiev1 = this.account.general.achievements.getAchievByName("Spectre_Stars") / 100

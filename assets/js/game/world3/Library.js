@@ -9,8 +9,8 @@ export class Library extends BaseFeature {
 
     test() {
 
-        console.log(this.getMinBookLevel())
-        console.log(this.getMaxBookLevel())
+        console.log("min", this.getMinBookLevel())
+        console.log("max", this.getMaxBookLevel())
     }
 
     getMinBookLevel() {
@@ -26,39 +26,41 @@ export class Library extends BaseFeature {
         max += this.account.world3.salt_lick.getBonusByName("Spontaneity_Salts")
         max += this.account.world5.artifacts.getBonusByName("FURY_RELIC")
         max += this.account.world3.atoms.getLevelByName("Oxygen") > 0 ? 10 : 0
+        max += Math.round(this.account.world6.summoning.battles.getBonusByStat("LIBRARY_MAX"))
 
-        // sommon guardian battle cyan 14, summon effect winzlantern, merit w6
 
 
-        // + Math.round(10.5 * this.summon_battle_cyan14 * this.summon_bonus_mult)
+
         return max
     }
 
 
-    getLibrarySpeed() {
-        let speed = 4 * 3600
-            / (1 + this.account.world3.atoms.getyByName("Oxygen"))
-        //stamp
-        // bubbles ignore...
-        // vial chonker
-        // buiding lvl
-        // atom oxy
-        // meal fortune cookie (and meal eff) and ribbons
-        // lab ?
-        // gaming: superbit, gaming lvl
-        // pristine comb
-        // achievs
+    getTimeToNextCheckout(current_books = 0) {
 
-        // this.lib_checkout_speed = 4 * 3600
-        //     / (1 + 0.04 * this.meal_lvl_fortune_cookies * this.meal_efficiency * this.ribbon_mult_fortune_cookies)
-        //     / (1 + this.atom_oxygen * 0.02)
-        //     / (1
-        //         + 0.05 * (this.building_library_lvl - 1)
+        let base_time = 4 * 3600
+        let mult1 = 1 // (1 + 0.04 * this.meal_lvl_fortune_cookies * this.meal_efficiency * this.ribbon_mult_fortune_cookies)
+        let mult2 = (1 + this.account.world3.atoms.getBonusByName("Oxygen"))
+        let mult3 = 1
+            + 0.05 * (this.account.world3.construction.getBuildingLevel("Library") - 1)
+            + this.account.world2.alchemy.vials.getBonusByName("CHONKER_CHUG")
+            + this.account.general.achievements.getAchievByName("Checkout_Takeout") ? 0.3 : 0
         //         + this.bubble_ignore_overdues_bonus
-        //         + this.vial_chonker_chug_bonus
         //         + this.stamp_biblio_bonus
         //         + this.superbit_library_checkouts * this.gaming_lvl * 0.01
-        //         + 0.3 * this.achiev_checkout_takeout
-        //     )
+
+        // stamp
+        // bubbles 
+        // meal fortune cookie (and meal eff) and ribbons
+        // gaming: superbit, gaming lvl
+        let time = base_time * mult1 * mult2 * mult3
+        return Math.round(time * (1 + 0.1 * Math.pow(current_books, 1.4)));
+
+    }
+    getTimeToCheckout(goal, current_books = 0) {
+        let time = 0
+        for (let books = current_books; books < goal; books++) {
+            time += this.getTimeToNextCheckout(books)
+        }
+        return time
     }
 }

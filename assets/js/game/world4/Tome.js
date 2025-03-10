@@ -210,7 +210,7 @@ export const DATA_TOME = [
     ["Total_Crops_Discovered", [120, 2, 350]],
     ["Total_Golden_Food_Beanstacks", [28, 2, 400]],
     ["Total_Summoning_Upgrades_LV", [10000, 0, 200]],
-    ["Total_Career_Summoning_Wins", [160, 0, 500]],
+    ["Total_Career_Summoning_Wins", [160, 0, 500], (account) => { return account.world6.summoning.battles.getTotalWins() }],
     ["Ninja_Floors_Unlocked", [12, 2, 250]],
     ["Familiars_Owned_in_Summoning", [600, 0, 150]],
     ["Jade_Emporium_Upgrades_Purchased", [38, 2, 500]],
