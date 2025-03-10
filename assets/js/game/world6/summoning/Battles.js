@@ -7,8 +7,6 @@ export class Battles extends BaseFeature {
         super(account);
 
         let summoning_data = account.save_data["Summon"]
-        console.log(summoning_data)
-
 
         this.battles_won = Array(DATA_SUMMON_BATTLES.length).fill(false)
 

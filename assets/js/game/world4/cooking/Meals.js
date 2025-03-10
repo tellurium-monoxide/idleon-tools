@@ -18,7 +18,7 @@ export class Meals extends BaseFeature {
             this.map_name_to_index[meal[0].toUpperCase()] = ind
         }
 
-        console.log(this.map_name_to_index)
+
 
 
 
