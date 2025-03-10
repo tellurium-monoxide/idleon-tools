@@ -94,7 +94,7 @@ export class Tome extends BaseFeature {
 
         let head = document.createElement("tr")
         display.appendChild(head)
-        let titles = ["Name", "Quantity", "Score", "Percent to max", "Max", "True Max", "Percent to True max"]
+        let titles = ["Objective", "Quantity", "Score", "Percent to max", "Max", "True Max", "Percent to True max"]
         for (let title of titles) {
             head.appendChild(document.createElement("th")).innerText = title
         }
@@ -106,26 +106,14 @@ export class Tome extends BaseFeature {
             let max = coefs[2]
             let true_max = Math.ceil(this.calcTrueMaxPercent(coefs) * max)
 
-            let row = document.createElement("tr")
-            display.appendChild(row)
-            let name_cell = document.createElement("td")
-            name_cell.innerText = `${name}`
-            row.appendChild(name_cell)
+            let row = display.appendChild(document.createElement("tr"))
 
-            let qtt_cell = document.createElement("td")
-            qtt_cell.innerText = `${formatIdleonNumbers(qtt)}`
-            row.appendChild(qtt_cell)
-
-            let score_cell = document.createElement("td")
-            score_cell.innerText = `${score}`
-            row.appendChild(score_cell)
-
+            row.appendChild(document.createElement("td")).innerText = `${name}`
+            row.appendChild(document.createElement("td")).innerText = `${formatIdleonNumbers(qtt)}`
+            row.appendChild(document.createElement("td")).innerText = `${score}`
             row.appendChild(document.createElement("td")).innerText = `${formatPercent(score / max)}`
-
             row.appendChild(document.createElement("td")).innerText = `${max}`
-
             row.appendChild(document.createElement("td")).innerText = `${true_max}`
-
             row.appendChild(document.createElement("td")).innerText = `${formatPercent(score / true_max)}`
 
         }
@@ -150,7 +138,7 @@ export const DATA_TOME = [
     ["Most_Money_held_in_Storage", [25, 1, 300], (account) => { return account.options.get(198) }],
     ["Most_Spore_Caps_held_in_Inventory_at_once", [9, 1, 200], (account) => { return account.options.get(208) }],
     ["Trophies_Found", [21, 2, 660]],
-    ["Account_Skills_LV", [15000, 0, 750]],
+    ["Account_Skills_LV", [15000, 0, 750], (account) => { return account.characters.reduceOnChars((acc, char) => (acc + char.skill_levels.getTotalSkillLevels()), 0) }],
     ["Best_Spiketrap_Surprise_round", [13, 2, 100], (account) => { return account.options.get(201) }],
     ["Total_AFK_Hours_claimed", [2000000, 0, 350]],
     ["DPS_Record_on_Shimmer_Island", [20, 1, 350], (account) => { return account.options.get(172) }],
@@ -180,16 +168,16 @@ export const DATA_TOME = [
     ["Total_Digits_of_all_Deathnote_Kills", [700, 0, 600]],
     ["Equinox_Clouds_Completed", [31, 2, 750]],
     ["Total_Refinery_Rank", [120, 0, 450], (account) => { return account.world3.refinery.getTotalRanks() }],
-    ["Total_Atom_Upgrade_LV", [150, 0, 400]],
+    ["Total_Atom_Upgrade_LV", [150, 0, 400], (account) => { return account.world3.atoms.getTotalLevels() }],
     ["Total_Construct_Buildings_LV", [3000, 0, 600], (account) => { return account.world3.construction.getTotalBuildingLevels() }],
     ["Most_Tottoise_in_Storage", [7, 1, 150]],
     ["Most_Greenstacks_in_Storage", [150, 0, 600], (account) => { return account.options.get(224) }],
     ["Rift_Levels_Completed", [49, 2, 500]],
     ["Highest_Power_Pet", [8, 1, 150]],
     ["Fastest_Time_reaching_Round_100_Arena_(in_Seconds)", [50, 3, 180], (account) => { return 1000 - account.options.get(220) }],
-    ["Total_Kitchen_Upgrade_LV", [8000, 0, 200]],
+    ["Total_Kitchen_Upgrade_LV", [8000, 0, 200], (account) => { return account.world4.cooking.kitchens.getTotalLevels() }],
     ["Total_Shiny_Pet_LV", [750, 0, 250], (account) => { return account.world4.breeding.shiny_pets.getTotalShinyLevels() }],
-    ["Total_Cooking_Meals_LV", [5400, 0, 750]],
+    ["Total_Cooking_Meals_LV", [5400, 0, 750], (account) => { return account.world4.cooking.meals.getTotalLevels() }],
     ["Total_Pet_Breedability_LV", [500, 2, 200]],
     ["Total_Lab_Chips_Owned", [100, 0, 150]],
     ["Total_Colosseum_Score", [10, 1, 200]],

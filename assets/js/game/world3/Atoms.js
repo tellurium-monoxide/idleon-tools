@@ -34,6 +34,9 @@ export class Atoms extends BaseFeature {
         throw new Error(`${name} is not a valid atom name`)
     }
 
+    getTotalLevels() {
+        return this.atom_levels.reduce((a, b) => (a + b), 0)
+    }
     getDisplay() {
         // TODO
     }

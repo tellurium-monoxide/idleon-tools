@@ -9,21 +9,3 @@ function getShinyLevel(time) {
     }
     return lvl;
 }
-
-
-// not used anymore
-// const DAYS_FOR_SHINY_LEVELS = [
-//   3, // for lvl 1
-//   11, // for lvl 2
-//   11, // for lvl 3 //TODO
-//   11, // for lvl 4 //TODO
-//   85, // for lvl 5
-//   200, // for lvl 6
-//   448, // for lvl 7
-//   964, // for lvl 8
-//   2020, // for lvl 9
-//   4110, // for lvl 10
-
-
-
-// ]

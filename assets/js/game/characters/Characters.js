@@ -55,4 +55,12 @@ export class Characters extends BaseFeature {
         return total
     }
 
+    reduceOnChars(func, start = 0) {
+        let acc = start
+        for (let i = 0; i < this.char_count; i++) {
+            acc = func(acc, this[i])
+        }
+        return acc
+    }
+
 }

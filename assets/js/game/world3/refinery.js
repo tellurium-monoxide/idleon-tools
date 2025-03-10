@@ -97,7 +97,7 @@ export class Refinery extends BaseFeature {
             { name: 'Family', value: 0.5 * highestDK.class_level / (150 + highestDK.class_level) * (1 + talent_family_bonus / 100), max: 0.7 },
             { name: 'Sigils', value: this.account.world2.alchemy.sigils.getBonusByName("Pipe_Gauge") / 100, max: 1.5 },
             // { name: 'Stamps', value: 0, max: 0 },
-            { name: 'Shinies', value: this.account.world4.breeding.shiny_pets.getShinyLevelByBonus("Refinery_Speed") * 0.02, max: 1.2 },
+            { name: 'Shinies', value: this.account.world4.breeding.shiny_pets.getLevelByEffect("Refinery_Speed") * 0.02, max: 1.2 },
             { name: 'Const_mastery', value: this.account.world3.construction.getTotalBuildingLevels() / 10 / 100, max: 3.67 },
             { name: 'Arcade', value: this.account.world2.arcade.getBonusByStat("Refinery_Speed"), max: 0.3 },
             // { name: 'Vote', value: 0 }, // not taken into account as not very useful for the long term planning

@@ -1,13 +1,14 @@
 import { BaseFeature } from "../BaseFeature.js";
 
 import { Talents } from "./Talents.js";
-
+import { SkillLevels } from "./SkillLevels.js";
 export class Character extends BaseFeature {
     char_name;
     char_index;
     class_name;
     class_level;
     talents;
+    skill_levels;
     constructor(account, char_index) {
         super(account);
 
@@ -38,12 +39,14 @@ export class Character extends BaseFeature {
         this.class_name = DATA_CLASSES[this.props["CharacterClass"]]
         delete this.props["CharacterClass"]
 
+        this.class_level = this.props["Lv0"][0]
+
+        // init these last because they may delete props
         this.talents = new Talents(account, this.char_index, this.class_name, this.props)
         this.child_features.push(this.talents)
 
-        this.class_level = this.props["Lv0"][0]
-        this.skill_levels = this.props["Lv0"].slice(1, 19)
-        delete this.props["Lv0"]
+        this.skill_levels = new SkillLevels(account, this.char_index, this.props)
+        this.child_features.push(this.skill_levels)
     }
 
     test(collapsed = true) {

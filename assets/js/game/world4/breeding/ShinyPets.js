@@ -16,7 +16,7 @@ export class ShinyPets extends BaseFeature {
             for (let [indPet, pet] of worldXpets.entries()) {
                 let [name, passiveIndex, bonus] = pet
                 let time = Number(breeding_times[indWorld][indPet])
-                let level = this.getShinyLevel(time)
+                let level = this.calcShinyLevel(time)
                 this.shiny_levels[name] = level
                 this.map_name_to_indexes[name] = [indWorld, indPet]
             }
@@ -27,8 +27,48 @@ export class ShinyPets extends BaseFeature {
     }
 
     test() {
-        console.log(this.getShinyLevelByName("Green_Mushroom"))
-        console.log(this.getShinyLevelByBonus("Faster_Shiny_Pet_Lv_Up"))
+        console.log(this.getLevelByName("Green_Mushroom"))
+        console.log(this.getLevelByEffect("Faster_Shiny_Pet_Lv_Up"))
+    }
+    getLevelByName(name) {
+        let lvl = this.shiny_levels[name]
+        if (lvl) {
+            return lvl
+        } else {
+            throw new Error(`${name} is not a valid pet name`);
+        }
+    }
+    getLevelByEffect(bonus_name) {
+        let lvls = 0
+        for (let category of DATA_SHINY_PETS) {
+            for (let pet of category) {
+                if (pet[2].includes(bonus_name)) {
+                    lvls += this.shiny_levels[pet[0]]
+                }
+            }
+        }
+        return lvls
+
+    }
+
+    calcTimeForShinyLevel(goal) {
+        return Math.floor((1 + Math.pow(goal, 1.6)) * Math.pow(1.7, goal));
+    }
+
+    calcShinyLevel(time) {
+        let lvl = 1;
+        while (this.calcTimeForShinyLevel(lvl) < time) {
+            lvl += 1;
+        }
+        return lvl;
+    }
+
+    getTotalShinyLevels() {
+        let total = 0
+        for (let [name, lvl] of Object.entries(this.shiny_levels)) {
+            total += lvl
+        }
+        return total
     }
     getDisplay() {
         let display = document.createElement("table")
@@ -75,46 +115,6 @@ export class ShinyPets extends BaseFeature {
         }
 
         return display
-    }
-    getShinyLevelByName(name) {
-        let lvl = this.shiny_levels[name]
-        if (lvl) {
-            return lvl
-        } else {
-            throw new Error(`${name} is not a valid pet name`);
-        }
-    }
-    getShinyLevelByBonus(bonus_name) {
-        let lvls = 0
-        for (let category of DATA_SHINY_PETS) {
-            for (let pet of category) {
-                if (pet[2].includes(bonus_name)) {
-                    lvls += this.shiny_levels[pet[0]]
-                }
-            }
-        }
-        return lvls
-
-    }
-
-    getTimeForShinyLevel(goal) {
-        return Math.floor((1 + Math.pow(goal, 1.6)) * Math.pow(1.7, goal));
-    }
-
-    getShinyLevel(time) {
-        let lvl = 1;
-        while (this.getTimeForShinyLevel(lvl) < time) {
-            lvl += 1;
-        }
-        return lvl;
-    }
-
-    getTotalShinyLevels() {
-        let total = 0
-        for (let [name, lvl] of Object.entries(this.shiny_levels)) {
-            total += lvl
-        }
-        return total
     }
 
 }
