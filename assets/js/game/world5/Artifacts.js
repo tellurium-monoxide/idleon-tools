@@ -37,6 +37,14 @@ export class Artifacts extends BaseFeature {
         }
     }
 
+    getTotal() {
+        let total = 0
+        for (let lvl of this.arti_levels) {
+            total += lvl
+        }
+        return total
+    }
+
     getDisplay() {
         let display = document.createElement("table")
         for (let [name, ind] of Object.entries(this.map_name_to_ind)) {

@@ -12,7 +12,7 @@ export class Tome extends BaseFeature {
 
     }
 
-    initScores() {
+    twoStepInit() {
         for (let [ind, obj] of DATA_TOME.entries()) {
             let [name, coefs, getter] = obj
             let qtt = 0
@@ -48,17 +48,32 @@ export class Tome extends BaseFeature {
 
         return 0
     }
+    calcTrueMaxPercent(coefs) {
+        let [x1, x2, x3] = coefs
+        if (x2 == 0) {
+            return Math.pow((1.7), 0.7);
+        } else if (x2 == 1) {
+            return (1.2)
+        } else if (x2 == 2) {
+            return 1;
+        } else if (x2 == 3) {
+
+            return Math.pow((1.2 * (6 * (x1))) / (7 * (x1)), 5);
+
+        }
+
+        return 0
+    }
 
     getTotalScore() {
         return this.scores.reduce((a, b) => a + b, 0)
     }
 
     getDisplay() {
-        this.initScores()
         let display = document.createElement("table")
         let head = document.createElement("tr")
         display.appendChild(head)
-        let titles = ["Name", "Quantity", "Score", "Percent to max", "Max"]
+        let titles = ["Name", "Quantity", "Score", "Percent to max", "Max", "True Max"]
         for (let title of titles) {
             let elem = document.createElement("th")
             elem.innerText = title
@@ -88,9 +103,14 @@ export class Tome extends BaseFeature {
             let percent_cell = document.createElement("td")
             percent_cell.innerText = `${formatPercent(this.score_percents[ind])}`
             row.appendChild(percent_cell)
+
             let max_cell = document.createElement("td")
             max_cell.innerText = `${max}`
             row.appendChild(max_cell)
+
+            let true_max_cell = document.createElement("td")
+            true_max_cell.innerText = `${Math.ceil(this.calcTrueMaxPercent(coefs) * max)}`
+            row.appendChild(true_max_cell)
 
         }
 
@@ -139,20 +159,20 @@ export const DATA_TOME = [
     ["Largest_Spore_Cap_Printer_Sample", [9, 1, 300], (account) => { return account.options.get(213) }],
     ["Largest_Goldfish_Printer_Sample", [9, 1, 300], (account) => { return account.options.get(214) }],
     ["Largest_Fly_Printer_Sample", [9, 1, 300], (account) => { return account.options.get(215) }],
-    ["Best_Non_Duplicate_Goblin_Gorefest_Wave_", [120, 0, 200], (account) => { return account.options.get(209) }],
+    ["Best_Non_Duplicate_Goblin_Gorefest_Wave", [120, 0, 200], (account) => { return account.options.get(209) }],
     ["Total_Best_Wave_in_Worship", [1000, 0, 300]],
     ["Total_Digits_of_all_Deathnote_Kills", [700, 0, 600]],
     ["Equinox_Clouds_Completed", [31, 2, 750]],
     ["Total_Refinery_Rank", [120, 0, 450]],
     ["Total_Atom_Upgrade_LV", [150, 0, 400]],
     ["Total_Construct_Buildings_LV", [3000, 0, 600]],
-    ["Most_Tottoise_in_Storage_", [7, 1, 150]],
-    ["Most_Greenstacks_in_Storage_", [150, 0, 600], (account) => { return account.options.get(224) }],
+    ["Most_Tottoise_in_Storage", [7, 1, 150]],
+    ["Most_Greenstacks_in_Storage", [150, 0, 600], (account) => { return account.options.get(224) }],
     ["Rift_Levels_Completed", [49, 2, 500]],
     ["Highest_Power_Pet", [8, 1, 150]],
     ["Fastest_Time_reaching_Round_100_Arena_(in_Seconds)", [50, 3, 180], (account) => { return 1000 - account.options.get(220) }],
     ["Total_Kitchen_Upgrade_LV", [8000, 0, 200]],
-    ["Total_Shiny_Pet_LV", [750, 0, 250]],
+    ["Total_Shiny_Pet_LV", [750, 0, 250], (account) => { return account.world4.breeding.shiny_pets.getTotalShinyLevels() }],
     ["Total_Cooking_Meals_LV", [5400, 0, 750]],
     ["Total_Pet_Breedability_LV", [500, 2, 200]],
     ["Total_Lab_Chips_Owned", [100, 0, 150]],
@@ -163,7 +183,7 @@ export const DATA_TOME = [
     ["Total_Boat_Upgrade_LV", [10000, 0, 200]],
     ["God_Rank_in_Divinity", [10, 0, 200]],
     ["Total_Gaming_Plants_Evolved", [100000, 0, 200]],
-    ["Total_Artifacts_Found_", [132, 2, 800]],
+    ["Total_Artifacts_Found", [132, 2, 800], (account) => { return account.world5.artifacts.getTotal() }],
     ["Gold_Bar_Sailing_Treasure_Owned", [14, 1, 200]],
     ["Highest_Captain_LV", [25, 0, 150]],
     ["Highest_Immortal_Snail_LV", [25, 2, 150], (account) => { return Math.max(account.options.get(210), 0) }],
@@ -172,9 +192,9 @@ export const DATA_TOME = [
     ["Most_Gaming_Bits_Owned", [45, 1, 250]],
     ["Highest_Crop_OG", [6, 1, 200], (account) => { return Math.pow(2, account.options.get(219)) }],
     ["Total_Crops_Discovered", [120, 2, 350]],
-    ["Total_Golden_Food_Beanstacks_", [28, 2, 400]],
+    ["Total_Golden_Food_Beanstacks", [28, 2, 400]],
     ["Total_Summoning_Upgrades_LV", [10000, 0, 200]],
-    ["Total_Career_Summoning_Wins_", [160, 0, 500]],
+    ["Total_Career_Summoning_Wins", [160, 0, 500]],
     ["Ninja_Floors_Unlocked", [12, 2, 250]],
     ["Familiars_Owned_in_Summoning", [600, 0, 150]],
     ["Jade_Emporium_Upgrades_Purchased", [38, 2, 500]],

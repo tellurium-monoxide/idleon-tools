@@ -28,6 +28,7 @@ export class ShinyPets extends BaseFeature {
 
     test() {
         console.log(this.getShinyLevelByName("Green_Mushroom"))
+        console.log(this.getShinyLevelByBonus("Faster_Shiny_Pet_Lv_Up"))
     }
     getDisplay() {
         let display = document.createElement("table")
@@ -84,7 +85,16 @@ export class ShinyPets extends BaseFeature {
         }
     }
     getShinyLevelByBonus(bonus_name) {
-        // TODO
+        let lvls = 0
+        for (let category of DATA_SHINY_PETS) {
+            for (let pet of category) {
+                if (pet[2].includes(bonus_name)) {
+                    lvls += this.shiny_levels[pet[0]]
+                }
+            }
+        }
+        return lvls
+
     }
 
     getTimeForShinyLevel(goal) {
@@ -97,6 +107,14 @@ export class ShinyPets extends BaseFeature {
             lvl += 1;
         }
         return lvl;
+    }
+
+    getTotalShinyLevels() {
+        let total = 0
+        for (let [name, lvl] of Object.entries(this.shiny_levels)) {
+            total += lvl
+        }
+        return total
     }
 
 }

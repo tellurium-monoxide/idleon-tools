@@ -10,9 +10,14 @@ export class BaseFeature {
     }
 
 
+    twoStepInit() {
+        for (let [ind, child] of this.child_features.entries()) {
+            child.twoStepInit()
+        }
+    }
 
     // can be overridden in subclasses
-    // just do your tests, then call super.test() to test all child_features
+    // just do your tests, then call super.test(collapsed) to test all child_features
     test(collapsed = true) {
 
         // console.log(`Testing ${this.constructor.name}`)

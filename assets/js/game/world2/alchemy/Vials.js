@@ -33,11 +33,11 @@ export class Vials extends BaseFeature {
         // TODO
         // takes from vault, lab, rift and max level vials
 
-        let vault_vial_bonus = this.account.general.vault.getBonusByName("Vial_Overtune")
-        return (1 + (0.02 * this.max_level_vials)) * (2)
+        let vault_vial_bonus = this.account.general.vault.getBonusByName("Vial_Overtune") / 100
+        return (1 + (0.02 * this.max_level_vials) + vault_vial_bonus) * (2)
     }
-    getVialBonusByName(name) {
-        let vial = this.vial_data[name]
+    getBonusByName(name) {
+        let vial = this.vial_data[name.toUpperCase()]
         let vial_multi = this.getVialBonusMultiplier()
         return vial_multi * calcGrowingValue(vial.grow, vial.level)
     }

@@ -34,7 +34,7 @@ export class Sigils extends BaseFeature {
 
 
     getBonusByName(name) {
-        let ind = this.sigil_map_name_to_id[name]
+        let ind = this.sigil_map_name_to_id[name.toUpperCase()]
         if (ind) {
             let level = this.sigil_levels[ind]
             let base = (level > 0) ? DATA_SIGILS[ind][2][level - 1] : 0

@@ -51,6 +51,9 @@ export class Account extends BaseFeature {
         this.child_features.push(this.general)
         this.child_features.push(this.characters)
         this.child_features.push(this.options)
+
+        // must be at the end (or at least after all child features are added)
+        super.twoStepInit()
     }
 
     test(collapsed = true) {
