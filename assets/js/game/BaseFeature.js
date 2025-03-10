@@ -9,14 +9,22 @@ export class BaseFeature {
         this.account = account;
     }
 
+
+
     // can be overridden in subclasses
     // just do your tests, then call super.test() to test all child_features
-    test() {
+    test(collapsed = true) {
 
         // console.log(`Testing ${this.constructor.name}`)
         for (let [ind, child] of this.child_features.entries()) {
-            console.log(`Testing ${child.getFeatureName()}`)
+            // console.log()
+            if (collapsed) {
+                console.groupCollapsed(`Testing ${child.getFeatureName()}`)
+            } else {
+                console.group(`Testing ${child.getFeatureName()}`)
+            }
             child.test()
+            console.groupEnd()
         }
 
     }
@@ -32,11 +40,32 @@ export class BaseFeature {
             return this.getDisplay()
         } else {
             let display = document.createElement("div")
-            display.classList.add("jquery-tab")
 
+            let tab = document.createElement("div")
+            tab.classList.add("jquery-tab")
+
+            display.appendChild(tab)
+
+            // if this feature has a main display, show it in a tab
             let header = document.createElement("ul")
-            display.appendChild(header)
+            tab.appendChild(header)
+            let head_display = this.getDisplay()
+            if (head_display) {
+                let li = document.createElement("li")
+                let a = document.createElement("a")
+                a.href = `#tab_${this.getFeatureName()}_main`
+                a.innerHTML = `${this.getFeatureName()}`
+                li.appendChild(a)
+                header.appendChild(li)
 
+                let tab_content = document.createElement("div")
+                tab_content.id = `tab_${this.getFeatureName()}_main`
+
+                tab_content.appendChild(head_display)
+
+                tab.appendChild(tab_content)
+            }
+            // show child features
             for (let [ind, child] of this.child_features.entries()) {
                 let li = document.createElement("li")
                 let a = document.createElement("a")
@@ -45,15 +74,17 @@ export class BaseFeature {
                 li.appendChild(a)
                 header.appendChild(li)
 
-                let tab = document.createElement("div")
-                tab.id = `tab_${child.getFeatureName()}`
+                let tab_content = document.createElement("div")
+                tab_content.id = `tab_${child.getFeatureName()}`
                 let content = child.getTabDisplay()
                 if (content) {
 
-                    tab.appendChild(content)
+                    tab_content.appendChild(content)
                 }
-                display.appendChild(tab)
+                tab.appendChild(tab_content)
             }
+
+
 
             return display
         }

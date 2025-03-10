@@ -30,7 +30,6 @@ async function onSubmit() {
 
         raw_data = input_data
         let save_data = parse_save_data_two_levels(raw_data)
-        console.log("save_data")
         console.log(save_data)
 
         const event = new CustomEvent("run_tool", { detail: save_data });

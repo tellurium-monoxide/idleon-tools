@@ -8,7 +8,7 @@ export class Vault extends BaseFeature {
         let vault_data = account.save_data["UpgVault"]
 
 
-        console.log(vault_data)
+        // console.log(vault_data)
 
         this.vault_levels = []
         this.map_name_to_ind = {}

@@ -9,6 +9,7 @@ import { World6 } from "./world6/World6.js";
 import { General } from "./general/General.js";
 
 import { Characters } from "./characters/Characters.js";
+import { AccountOptions } from "./AccountOptions.js";
 
 export class Account extends BaseFeature {
     save_data;
@@ -20,6 +21,7 @@ export class Account extends BaseFeature {
     world6;
     general;
     characters;
+    options;
 
     constructor(save_data) {
         super()
@@ -38,6 +40,8 @@ export class Account extends BaseFeature {
         this.general = new General(this);
         this.characters = new Characters(this);
 
+        this.options = new AccountOptions(this);
+
         this.child_features.push(this.world1)
         this.child_features.push(this.world2)
         this.child_features.push(this.world3)
@@ -46,9 +50,18 @@ export class Account extends BaseFeature {
         this.child_features.push(this.world6)
         this.child_features.push(this.general)
         this.child_features.push(this.characters)
+        this.child_features.push(this.options)
     }
 
-
+    test(collapsed = true) {
+        if (collapsed) {
+            console.groupCollapsed(`Testing Account`)
+        } else {
+            console.group(`Testing Account`)
+        }
+        super.test(collapsed)
+        console.groupEnd()
+    }
 
 
     setModifiedFromSaveData() {
@@ -60,10 +73,12 @@ export class Account extends BaseFeature {
     saveToLocalStorage() {
         function replacer(key, value) {
             if (key == "account") return undefined;
+            if (key == "child_features") return undefined;
             else return value;
         }
         let account_serialized = JSON.stringify(this, replacer)
         console.log(account_serialized)
+        console.log(JSON.parse(account_serialized))
         localStorage.setItem("Account", account_serialized);
     }
 }

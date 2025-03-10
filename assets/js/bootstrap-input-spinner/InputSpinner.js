@@ -72,6 +72,7 @@ class InputSpinner {
             groupClass: "", // css class of the resulting input-group
             buttonsClass: "btn-outline-secondary",
             buttonsWidth: "2.5rem",
+            inputSize: 20,
             textAlign: "center", // alignment of the entered number
             autoDelay: 500, // ms threshold before auto value change
             autoInterval: 50, // speed of auto value change, set to `undefined` to disable auto-change
@@ -82,7 +83,7 @@ class InputSpinner {
             template: // the template of the input
                 '<div class="input-group ${groupClass}" title="Min: ${min}\nMax: ${max}">' +
                 '<button style="min-width: ${buttonsWidth}" class="btn btn-decrement ${buttonsClass} btn-minus" type="button" >${decrementButton}</button>' +
-                '<input type="text" inputmode="decimal" style="text-align: ${textAlign}" class="form-control form-control-text-input"/>' +
+                '<input type="text" inputmode="decimal" size=${inputSize} style="text-align: ${textAlign}" class="form-control form-control-text-input"/>' +
                 '<button style="min-width: ${buttonsWidth}" class="btn btn-increment ${buttonsClass} btn-plus" type="button">${incrementButton}</button>' +
                 '</div>'
         }
@@ -92,6 +93,7 @@ class InputSpinner {
         const html = this.props.template
             .replace(/\${groupClass}/g, this.props.groupClass)
             .replace(/\${buttonsWidth}/g, this.props.buttonsWidth)
+            .replace(/\${inputSize}/g, this.props.inputSize)
             .replace(/\${buttonsClass}/g, this.props.buttonsClass)
             .replace(/\${decrementButton}/g, this.props.decrementButton)
             .replace(/\${incrementButton}/g, this.props.incrementButton)

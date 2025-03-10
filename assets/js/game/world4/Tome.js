@@ -1,0 +1,188 @@
+import { BaseFeature } from "../BaseFeature.js";
+
+export class Tome extends BaseFeature {
+    quantities = [];
+    scores = [];
+    score_percents = []
+    map_to_ind = {};
+    constructor(account) {
+        super(account);
+
+
+
+    }
+
+    initScores() {
+        for (let [ind, obj] of DATA_TOME.entries()) {
+            let [name, coefs, getter] = obj
+            let qtt = 0
+            if (getter) {
+                qtt = getter(this.account)
+            }
+            let score_percent = this.calcScorePercent(coefs, qtt)
+            this.quantities.push(qtt)
+            this.score_percents.push(score_percent)
+            this.scores.push(Math.ceil(score_percent * coefs[2]))
+
+            this.map_to_ind[name] = ind
+
+        }
+
+    }
+
+    calcScorePercent(coefs, qtt) {
+        let [x1, x2, x3] = coefs
+        if (x2 == 0) {
+            return Math.pow((1.7 * qtt) / (qtt + x1), 0.7);
+        } else if (x2 == 1) {
+            return (2.4 * lavaLog(qtt) / (2 * lavaLog(qtt) + x1))
+        } else if (x2 == 2) {
+            return Math.min(1, qtt / x1);
+        } else if (x2 == 3) {
+            if (qtt > (5 * x1)) {
+                return 0;
+            } else {
+                return Math.pow((1.2 * (6 * (x1) - qtt)) / (7 * (x1) - qtt), 5);
+            }
+        }
+
+        return 0
+    }
+
+    getTotalScore() {
+        return this.scores.reduce((a, b) => a + b, 0)
+    }
+
+    getDisplay() {
+        this.initScores()
+        let display = document.createElement("table")
+        let head = document.createElement("tr")
+        display.appendChild(head)
+        let titles = ["Name", "Quantity", "Score", "Percent to max", "Max"]
+        for (let title of titles) {
+            let elem = document.createElement("th")
+            elem.innerText = title
+            head.appendChild(elem)
+        }
+
+        for (let [ind, tome_obj] of DATA_TOME.entries()) {
+            let [name, coefs, getter] = tome_obj
+            let qtt = this.quantities[ind]
+            let score = this.scores[ind]
+            let max = coefs[2]
+
+            let row = document.createElement("tr")
+            display.appendChild(row)
+            let name_cell = document.createElement("td")
+            name_cell.innerText = `${name}`
+            row.appendChild(name_cell)
+
+            let qtt_cell = document.createElement("td")
+            qtt_cell.innerText = `${formatIdleonNumbers(qtt)}`
+            row.appendChild(qtt_cell)
+
+            let score_cell = document.createElement("td")
+            score_cell.innerText = `${score}`
+            row.appendChild(score_cell)
+
+            let percent_cell = document.createElement("td")
+            percent_cell.innerText = `${formatPercent(this.score_percents[ind])}`
+            row.appendChild(percent_cell)
+            let max_cell = document.createElement("td")
+            max_cell.innerText = `${max}`
+            row.appendChild(max_cell)
+
+        }
+
+        return display
+
+    }
+
+
+}
+// values are: name, coefs, getter
+// for coefs, we have parameter, type, max score I think
+export const DATA_TOME = [
+    ["Stamp_Total_LV", [10000, 0, 800]],
+    ["Statue_Total_LV", [2300, 0, 350]],
+    ["Cards_Total_LV", [1344, 2, 350]],
+    ["Total_Talent_Max_LV", [12000, 0, 400]],
+    ["Unique_Quests_Completed", [323, 2, 300]],
+    ["Account_LV", [5500, 0, 900], (account) => { return account.characters.getTotalClassLevels() }],
+    ["Total_Tasks_Completed", [470, 2, 470]],
+    ["Total_Achievements_Completed", [266, 2, 750], (account) => { return account.general.achievements.getTotalAchievements() }],
+    ["Most_Money_held_in_Storage", [25, 1, 300], (account) => { return account.options.get(198) }],
+    ["Most_Spore_Caps_held_in_Inventory_at_once", [9, 1, 200], (account) => { return account.options.get(208) }],
+    ["Trophies_Found", [21, 2, 660]],
+    ["Account_Skills_LV", [15000, 0, 750]],
+    ["Best_Spiketrap_Surprise_round", [13, 2, 100], (account) => { return account.options.get(201) }],
+    ["Total_AFK_Hours_claimed", [2000000, 0, 350]],
+    ["DPS_Record_on_Shimmer_Island", [20, 1, 350], (account) => { return account.options.get(172) }],
+    ["Star_Talent_Points_Owned", [2500, 0, 200]],
+    ["Average_kills_for_a_Crystal_Spawn", [30, 3, 350], (account) => { return account.options.get(202) }],
+    ["Dungeon_Rank", [30, 0, 250]],
+    ["Highest_Drop_Rarity_Multi", [40, 0, 350], (account) => { return account.options.get(200) }],
+    ["Constellations_Completed", [49, 2, 300]],
+    ["Most_DMG_Dealt_to_Gravestone_in_a_Weekly_Battle", [300000, 0, 200], (account) => { return account.options.get(203) }],
+    ["Unique_Obols_Found", [107, 2, 250]],
+    ["Total_Bubble_LV", [200000, 0, 1000]],
+    ["Total_Vial_LV", [962, 2, 500]],
+    ["Total_Sigil_LV", [72, 2, 250]],
+    ["Jackpots_Hit_in_Arcade", [1, 0, 50], (account) => { return account.options.get(199) }],
+    ["Post_Office_PO_Boxes_Earned", [20000, 0, 300]],
+    ["Highest_Killroy_Score_on_a_Warrior", [3000, 0, 200], (account) => { return account.options.get(204) }],
+    ["Highest_Killroy_Score_on_an_Archer", [3000, 0, 200], (account) => { return account.options.get(205) }],
+    ["Highest_Killroy_Score_on_a_Mage", [3000, 0, 200], (account) => { return account.options.get(206) }],
+    ["Fastest_Time_to_kill_Chaotic_Efaunt_(in_Seconds)", [10, 3, 200], (account) => { return 1000 - account.options.get(207) }],
+    ["Largest_Oak_Log_Printer_Sample", [9, 1, 400], (account) => { return account.options.get(211) }],
+    ["Largest_Copper_Ore_Printer_Sample", [9, 1, 400], (account) => { return account.options.get(212) }],
+    ["Largest_Spore_Cap_Printer_Sample", [9, 1, 300], (account) => { return account.options.get(213) }],
+    ["Largest_Goldfish_Printer_Sample", [9, 1, 300], (account) => { return account.options.get(214) }],
+    ["Largest_Fly_Printer_Sample", [9, 1, 300], (account) => { return account.options.get(215) }],
+    ["Best_Non_Duplicate_Goblin_Gorefest_Wave_", [120, 0, 200], (account) => { return account.options.get(209) }],
+    ["Total_Best_Wave_in_Worship", [1000, 0, 300]],
+    ["Total_Digits_of_all_Deathnote_Kills", [700, 0, 600]],
+    ["Equinox_Clouds_Completed", [31, 2, 750]],
+    ["Total_Refinery_Rank", [120, 0, 450]],
+    ["Total_Atom_Upgrade_LV", [150, 0, 400]],
+    ["Total_Construct_Buildings_LV", [3000, 0, 600]],
+    ["Most_Tottoise_in_Storage_", [7, 1, 150]],
+    ["Most_Greenstacks_in_Storage_", [150, 0, 600], (account) => { return account.options.get(224) }],
+    ["Rift_Levels_Completed", [49, 2, 500]],
+    ["Highest_Power_Pet", [8, 1, 150]],
+    ["Fastest_Time_reaching_Round_100_Arena_(in_Seconds)", [50, 3, 180], (account) => { return 1000 - account.options.get(220) }],
+    ["Total_Kitchen_Upgrade_LV", [8000, 0, 200]],
+    ["Total_Shiny_Pet_LV", [750, 0, 250]],
+    ["Total_Cooking_Meals_LV", [5400, 0, 750]],
+    ["Total_Pet_Breedability_LV", [500, 2, 200]],
+    ["Total_Lab_Chips_Owned", [100, 0, 150]],
+    ["Total_Colosseum_Score", [10, 1, 200]],
+    ["Most_Giants_Killed_in_a_Single_Week", [25, 0, 250], (account) => { return account.options.get(217) }],
+    ["Total_Onyx_Statues", [28, 2, 450]],
+    ["Fastest_Time_to_Kill_200_Tremor_Wurms_(in_Seconds)", [30, 3, 150], (account) => { return 1000 - account.options.get(218) }],
+    ["Total_Boat_Upgrade_LV", [10000, 0, 200]],
+    ["God_Rank_in_Divinity", [10, 0, 200]],
+    ["Total_Gaming_Plants_Evolved", [100000, 0, 200]],
+    ["Total_Artifacts_Found_", [132, 2, 800]],
+    ["Gold_Bar_Sailing_Treasure_Owned", [14, 1, 200]],
+    ["Highest_Captain_LV", [25, 0, 150]],
+    ["Highest_Immortal_Snail_LV", [25, 2, 150], (account) => { return Math.max(account.options.get(210), 0) }],
+    ["Best_Gold_Nugget", [9, 1, 200]],
+    ["Items_Found", [1590, 2, 1000]],
+    ["Most_Gaming_Bits_Owned", [45, 1, 250]],
+    ["Highest_Crop_OG", [6, 1, 200], (account) => { return Math.pow(2, account.options.get(219)) }],
+    ["Total_Crops_Discovered", [120, 2, 350]],
+    ["Total_Golden_Food_Beanstacks_", [28, 2, 400]],
+    ["Total_Summoning_Upgrades_LV", [10000, 0, 200]],
+    ["Total_Career_Summoning_Wins_", [160, 0, 500]],
+    ["Ninja_Floors_Unlocked", [12, 2, 250]],
+    ["Familiars_Owned_in_Summoning", [600, 0, 150]],
+    ["Jade_Emporium_Upgrades_Purchased", [38, 2, 500]],
+    ["Total_Minigame_Highscore", [450, 2, 100]],
+    ["Total_Prayer_Upgrade_LV", [673, 2, 200]],
+    ["Total_Land_Rank", [5000, 0, 200]],
+    ["Largest_Magic_Bean_Trade", [1000, 0, 200], (account) => { return account.options.get(221) }],
+    ["Most_Balls_earned_from_LBoFaF", [1000, 0, 150], (account) => { return account.options.get(222) }],
+    ["Total_Arcade_Gold_Ball_Shop_Upgrade_LV", [3800, 2, 300], (account) => { return account.world2.arcade.getTotalGoldBallsLevels() }],
+    ["Vault_Upgrade_bonus_LV", [500, 2, 500], (account) => { return account.general.vault.getBonusByName("Teh_TOM") }]
+]

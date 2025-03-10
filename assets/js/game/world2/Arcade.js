@@ -8,20 +8,20 @@ export class Arcade extends BaseFeature {
 
         this.arcade_levels = (account.save_data["ArcadeUpg"])
 
-
     }
 
     test() {
 
         console.log(this.getBonusByIndex(18))
         console.log(this.getBonusByStat("Cash_from_Mobs"))
+        console.log(this.getBonusByStat("Refinery_Speed"))
 
     }
 
     getBonusByIndex(index) {
         let bonus = DATA_ARCADE[index]
         let level = this.arcade_levels[index]
-        let value = calcGrowingValue(bonus[1], Math.max(level, 100))
+        let value = calcGrowingValue(bonus[1], Math.min(level, 100))
 
         return value * ((level == 101) ? 2 : 1)
     }
@@ -36,6 +36,14 @@ export class Arcade extends BaseFeature {
         }
         return value
 
+    }
+
+    getTotalGoldBallsLevels() {
+        let total = 0
+        for (let [ind, lvl] of this.arcade_levels.entries()) {
+            total += lvl
+        }
+        return total
     }
 
     getDisplay() {

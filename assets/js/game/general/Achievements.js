@@ -23,6 +23,18 @@ export class Achievements extends BaseFeature {
     }
 
 
+    getTotalAchievements() {
+        let count = 0
+        for (let [name, achiev] of Object.entries(this.achiev_data)) {
+            if (achiev.obtained) {
+                count++
+            }
+
+        }
+        return count
+    }
+
+
 
     convertFromIT(IT_achiev_data) {
         let letterToWorld = { "A": 1, "B": 2, "C": 3, "D": 4, "E": 5, "F": 6 }

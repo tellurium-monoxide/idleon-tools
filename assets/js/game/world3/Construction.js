@@ -16,30 +16,37 @@ export class Construction extends BaseFeature {
         this.buildings = {}
 
         this.building_total_levels_max = BUILDING_DATA.reduce((a, b) => (a + b.max_level), 0)
-        this.building_total_levels = building_current_levels.reduce((a, b) => (a + b), 0)
-        // console.log(this.building_total_levels, "/", this.building_total_levels_max)
 
-        for (let id = 0; id < 27; id++) {
-            let building = BUILDING_DATA[id]
-            building.current_level = building_current_levels[id]
-            building.level_built = building_built_levels[id]
-            building.build_progress = building_current_build_progress[id]
+        this.building_levels = {}
+        this.building_levels_built = {}
+        this.building_progress = {}
+        for (let ind = 0; ind < 27; ind++) {
+            let building = BUILDING_DATA[ind]
+            this.building_levels[building.name] = building_current_levels[ind]
+            this.building_levels_built[building.name] = building_built_levels[ind]
+            this.building_progress[building.name] = building_current_build_progress[ind]
+            building.current_level = building_current_levels[ind]
+            building.level_built = building_built_levels[ind]
+            building.build_progress = building_current_build_progress[ind]
             this.buildings[building.name] = building
         }
     }
 
+    test() {
+        console.log(this.getTotalBuildingLevels(), "/", this.building_total_levels_max)
+    }
+
     getBuildingLevel(name) {
         try {
-            return this.buildings[name].current_level
+            return this.building_levels[name]
         } catch (e) {
-            console.error(e)
-            return 0
+            throw new Error(`Wrong building name ${name}`)
         }
 
     }
 
     getTotalBuildingLevels() {
-        return this.building_total_levels
+        return Object.entries(this.building_levels).reduce((sum, cur) => (sum + cur[1]), 0)
     }
 
 

@@ -41,23 +41,34 @@ export class Vials extends BaseFeature {
         let vial_multi = this.getVialBonusMultiplier()
         return vial_multi * calcGrowingValue(vial.grow, vial.level)
     }
+    getDisplay() {
+        let display = document.createElement("table")
+        for (let [name, vial] of Object.entries(this.vial_data)) {
+            let row = document.createElement("tr")
+            display.appendChild(row)
+            let name_cell = document.createElement("td")
+            name_cell.innerText = `${name}`
+            row.appendChild(name_cell)
 
-    convertFromIT(IT_data) {
-        console.log(IT_data)
-
-        let data = {}
-        for (let ind in IT_data) {
-            let { name, mainItem, stat, x1, x2, func } = IT_data[ind]
-
-            let grow = { "type": func, x1, x2 }
-
-            data[name] = { "id": Number(ind), grow }
-
+            let input_cell = document.createElement("td")
+            row.appendChild(input_cell)
+            let input_base = document.createElement("input")
+            input_base.type = "number"
+            input_base.min = 0
+            input_base.max = 13
+            input_base.value = vial.level
+            input_cell.appendChild(input_base)
+            new InputSpinner(input_base)
+            input_base.addEventListener("input", (event) => {
+                console.log("change", name, vial.level, "to", Number(input_base.value))
+                vial.level = Number(input_base.value)
+                this.account.setModifiedFromSaveData()
+            });
         }
 
-        console.log(data)
-        console.log(JSON.stringify(data))
+        return display
     }
+
 }
 
 

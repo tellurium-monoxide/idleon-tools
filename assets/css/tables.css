@@ -40,3 +40,11 @@ table.sticky_header thead th {
     /* Don't forget this, required for the stickiness */
     box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
 }
+
+table.outlined {
+    border-collapse: collapse;
+}
+
+table.outlined td {
+    border: 1px solid;
+}

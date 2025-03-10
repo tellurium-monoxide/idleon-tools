@@ -18,7 +18,12 @@ function calcGrowingValue(grow, level) {
         return val
     }
 }
-
+function lavaLog(val) {
+    return Math.log(Math.max(val, 1)) / 2.30259;
+}
+function lavaLog2(val) {
+    return Math.log(Math.max(val, 1)) / Math.log(2);
+}
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }

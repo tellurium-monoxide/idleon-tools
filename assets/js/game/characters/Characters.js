@@ -3,10 +3,11 @@ import { BaseFeature } from "../BaseFeature.js";
 import { Character } from "./Character.js";
 
 export class Characters extends BaseFeature {
-
+    char_count;
     constructor(account) {
         super(account);
-        for (let i = 0; i < 10; i++) {
+        this.char_count = account.save_data[`playerNames`].length
+        for (let i = 0; i < this.char_count; i++) {
             this[i] = new Character(account, i)
             this.child_features.push(this[i])
         }
@@ -14,21 +15,44 @@ export class Characters extends BaseFeature {
 
     }
 
+    test(collapsed = true) {
+        console.log(this.getCharactersByClass("Divine_Knight"))
+        console.log(this.getHighestCharacterByClass("Divine_Knight"))
+        super.test(collapsed)
+    }
+
 
     getCharactersByClass(class_name) {
-        // TODO
         let list = []
-        for (let i = 0; i < 10; i++) {
-            if (false) {
+        for (let i = 0; i < this.char_count; i++) {
+            if (this[i].class_name == class_name) {
                 list.push(this[i])
             }
         }
         return list
     }
+    getHighestCharacterByClass(class_name) {
+
+        let char = this.getCharactersByClass(class_name)[0]
+        for (let i = 0; i < this.char_count; i++) {
+            if (this[i].class_name == class_name && this[i].class_level > char.class_level) {
+                char = this[i]
+            }
+        }
+        return char
+    }
 
 
     getCharacterByIndex(i) {
         return this[i]
+    }
+
+    getTotalClassLevels() {
+        let total = 0
+        for (let i = 0; i < this.char_count; i++) {
+            total += this[i].class_level
+        }
+        return total
     }
 
 }
