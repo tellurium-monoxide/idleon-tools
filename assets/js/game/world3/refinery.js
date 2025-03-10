@@ -115,6 +115,15 @@ export class Refinery extends BaseFeature {
     getTimePerCycle(category) {
         return DATA_CYCLE_BASE_TIMES[category] / this.getRefinerySpeed()
     }
+
+    getTotalRanks() {
+        let tot = 0
+        for (let salt_index = 0; salt_index < 6; salt_index++) {
+            let salt = this.salts[salt_index]
+            tot += salt.rank
+        }
+        return tot
+    }
 }
 
 const DATA_SALTS = [

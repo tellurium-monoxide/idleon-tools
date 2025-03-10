@@ -9,7 +9,7 @@ export class Vials extends BaseFeature {
 
 
         this.vial_data = DATA_VIALS
-        this.max_level_vials = 0
+
         for (let name in this.vial_data) {
             let id = this.vial_data[name].id
             this.vial_data[name].level = vial_levels[id]
@@ -28,13 +28,30 @@ export class Vials extends BaseFeature {
         console.log("vial multiplier:", this.getVialBonusMultiplier())
     }
 
+    getTotalLevels() {
+        let tot = 0
+        for (let name in this.vial_data) {
 
+            tot += this.vial_data[name].level
+
+        }
+        return tot
+    }
+    getMaxLevelVials() {
+        let max_level_vials = 0
+        for (let name in this.vial_data) {
+            if (this.vial_data[name].level >= 13) {
+                max_level_vials++
+            }
+        }
+        return max_level_vials
+    }
     getVialBonusMultiplier() {
         // TODO
         // takes from vault, lab, rift and max level vials
 
         let vault_vial_bonus = this.account.general.vault.getBonusByName("Vial_Overtune") / 100
-        return (1 + (0.02 * this.max_level_vials) + vault_vial_bonus) * (2)
+        return (1 + (0.02 * this.getMaxLevelVials()) + vault_vial_bonus) * (2)
     }
     getBonusByName(name) {
         let vial = this.vial_data[name.toUpperCase()]

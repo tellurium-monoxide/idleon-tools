@@ -48,3 +48,7 @@ table.outlined {
 table.outlined td {
     border: 1px solid;
 }
+
+table.outlined th {
+    border: 1px solid;
+}

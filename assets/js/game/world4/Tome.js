@@ -68,16 +68,35 @@ export class Tome extends BaseFeature {
     getTotalScore() {
         return this.scores.reduce((a, b) => a + b, 0)
     }
+    getTotalMaxScore() {
+        return DATA_TOME.reduce((a, b) => a + b[1][2], 0)
+    }
+    getTotalTrueMaxScore() {
+        return DATA_TOME.reduce((a, b) => a + Math.ceil(this.calcTrueMaxPercent(b[1]) * b[1][2]), 0)
+    }
 
     getDisplay() {
         let display = document.createElement("table")
+        display.classList.add("outlined")
+        let totals = document.createElement("tr")
+        display.appendChild(totals)
+        let total_score = this.getTotalScore()
+        let total_max_score = this.getTotalMaxScore()
+        let total_true_max_score = this.getTotalTrueMaxScore()
+        totals.appendChild(document.createElement("td")).innerText = "Totals"
+        totals.appendChild(document.createElement("td"))
+        totals.appendChild(document.createElement("td")).innerText = `${total_score}`
+        totals.appendChild(document.createElement("td")).innerText = `${formatPercent(total_score / total_max_score)}`
+        totals.appendChild(document.createElement("td")).innerText = `${total_max_score}`
+        totals.appendChild(document.createElement("td")).innerText = `${total_true_max_score}`
+        totals.appendChild(document.createElement("td")).innerText = `${formatPercent(total_score / total_true_max_score)}`
+
+
         let head = document.createElement("tr")
         display.appendChild(head)
-        let titles = ["Name", "Quantity", "Score", "Percent to max", "Max", "True Max"]
+        let titles = ["Name", "Quantity", "Score", "Percent to max", "Max", "True Max", "Percent to True max"]
         for (let title of titles) {
-            let elem = document.createElement("th")
-            elem.innerText = title
-            head.appendChild(elem)
+            head.appendChild(document.createElement("th")).innerText = title
         }
 
         for (let [ind, tome_obj] of DATA_TOME.entries()) {
@@ -85,6 +104,7 @@ export class Tome extends BaseFeature {
             let qtt = this.quantities[ind]
             let score = this.scores[ind]
             let max = coefs[2]
+            let true_max = Math.ceil(this.calcTrueMaxPercent(coefs) * max)
 
             let row = document.createElement("tr")
             display.appendChild(row)
@@ -100,17 +120,13 @@ export class Tome extends BaseFeature {
             score_cell.innerText = `${score}`
             row.appendChild(score_cell)
 
-            let percent_cell = document.createElement("td")
-            percent_cell.innerText = `${formatPercent(this.score_percents[ind])}`
-            row.appendChild(percent_cell)
+            row.appendChild(document.createElement("td")).innerText = `${formatPercent(score / max)}`
 
-            let max_cell = document.createElement("td")
-            max_cell.innerText = `${max}`
-            row.appendChild(max_cell)
+            row.appendChild(document.createElement("td")).innerText = `${max}`
 
-            let true_max_cell = document.createElement("td")
-            true_max_cell.innerText = `${Math.ceil(this.calcTrueMaxPercent(coefs) * max)}`
-            row.appendChild(true_max_cell)
+            row.appendChild(document.createElement("td")).innerText = `${true_max}`
+
+            row.appendChild(document.createElement("td")).innerText = `${formatPercent(score / true_max)}`
 
         }
 
@@ -139,15 +155,15 @@ export const DATA_TOME = [
     ["Total_AFK_Hours_claimed", [2000000, 0, 350]],
     ["DPS_Record_on_Shimmer_Island", [20, 1, 350], (account) => { return account.options.get(172) }],
     ["Star_Talent_Points_Owned", [2500, 0, 200]],
-    ["Average_kills_for_a_Crystal_Spawn", [30, 3, 350], (account) => { return account.options.get(202) }],
+    ["Average_kills_for_a_Crystal_Spawn", [30, 3, 350], (account) => { return 1 / account.options.get(202) }],
     ["Dungeon_Rank", [30, 0, 250]],
     ["Highest_Drop_Rarity_Multi", [40, 0, 350], (account) => { return account.options.get(200) }],
     ["Constellations_Completed", [49, 2, 300]],
     ["Most_DMG_Dealt_to_Gravestone_in_a_Weekly_Battle", [300000, 0, 200], (account) => { return account.options.get(203) }],
     ["Unique_Obols_Found", [107, 2, 250]],
     ["Total_Bubble_LV", [200000, 0, 1000]],
-    ["Total_Vial_LV", [962, 2, 500]],
-    ["Total_Sigil_LV", [72, 2, 250]],
+    ["Total_Vial_LV", [962, 2, 500], (account) => { return account.world2.alchemy.vials.getTotalLevels() }],
+    ["Total_Sigil_LV", [72, 2, 250], (account) => { return account.world2.alchemy.sigils.getTotalLevels() }],
     ["Jackpots_Hit_in_Arcade", [1, 0, 50], (account) => { return account.options.get(199) }],
     ["Post_Office_PO_Boxes_Earned", [20000, 0, 300]],
     ["Highest_Killroy_Score_on_a_Warrior", [3000, 0, 200], (account) => { return account.options.get(204) }],
@@ -163,9 +179,9 @@ export const DATA_TOME = [
     ["Total_Best_Wave_in_Worship", [1000, 0, 300]],
     ["Total_Digits_of_all_Deathnote_Kills", [700, 0, 600]],
     ["Equinox_Clouds_Completed", [31, 2, 750]],
-    ["Total_Refinery_Rank", [120, 0, 450]],
+    ["Total_Refinery_Rank", [120, 0, 450], (account) => { return account.world3.refinery.getTotalRanks() }],
     ["Total_Atom_Upgrade_LV", [150, 0, 400]],
-    ["Total_Construct_Buildings_LV", [3000, 0, 600]],
+    ["Total_Construct_Buildings_LV", [3000, 0, 600], (account) => { return account.world3.construction.getTotalBuildingLevels() }],
     ["Most_Tottoise_in_Storage", [7, 1, 150]],
     ["Most_Greenstacks_in_Storage", [150, 0, 600], (account) => { return account.options.get(224) }],
     ["Rift_Levels_Completed", [49, 2, 500]],

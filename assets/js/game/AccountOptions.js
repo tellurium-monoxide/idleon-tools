@@ -17,6 +17,9 @@ export class AccountOptions extends BaseFeature {
     get(index) {
         return this.options_values[index]
     }
+    set(index, value) {
+        this.options_values[index] = value
+    }
 }
 
 

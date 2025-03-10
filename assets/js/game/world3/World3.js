@@ -4,26 +4,32 @@ import { Construction } from "./Construction.js";
 import { Equinox } from "./Equinox.js";
 import { SaltLick } from "./SaltLick.js";
 import { Refinery } from "./refinery.js";
+import { Library } from "./Library.js";
+import { Atoms } from "./Atoms.js";
 export class World3 extends BaseFeature {
 
     construction;
+    salt_lick;
+    refinery;
+    library;
+    atoms;
+
     equinox;
     printer;
-    salt_lick;
     death_note;
-    atoms;
-    refinery;
     constructor(account) {
         super(account);
         this.construction = new Construction(account);
-        this.equinox = new Equinox(account);
         this.salt_lick = new SaltLick(account);
         this.refinery = new Refinery(account);
+        this.library = new Library(account);
+        this.atoms = new Atoms(account);
 
         this.child_features.push(this.construction)
-        this.child_features.push(this.equinox)
         this.child_features.push(this.salt_lick)
         this.child_features.push(this.refinery)
+        this.child_features.push(this.library)
+        this.child_features.push(this.atoms)
     }
 
 

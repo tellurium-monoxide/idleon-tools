@@ -46,6 +46,9 @@ export class Sigils extends BaseFeature {
         }
 
     }
+    getTotalLevels() {
+        return this.sigil_levels.reduce((a, b) => { return a + b }, 0)
+    }
     getDisplay() {
         let display = document.createElement("table")
         for (let [name, ind] of Object.entries(this.sigil_map_name_to_id)) {

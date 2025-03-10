@@ -17,35 +17,6 @@ export class Talents extends BaseFeature {
         delete char_props["SL"];
         delete char_props["SLpre"];
         delete char_props["SM"];
-
-
-        // let data = {}
-
-        // for (let [subclass, talents] of Object.entries(OLD_DATA_TALENTS)) {
-        //     let subdata = []
-        //     for (let [name, talent] of Object.entries(talents)) {
-        //         let { x1, x2, funcX, y1, y2, funcY, skillIndex } = talent
-
-        //         subdata.push([name, skillIndex, [{ "type": funcX, x1, x2 }, { "type": funcY, "x1": y1, "x2": y2 }]])
-
-        //     }
-        //     data[subclass] = subdata
-        // }
-        // for (let [subclass, talents] of Object.entries(data)) {
-
-        //     for (let [ind, talent] of talents.entries()) {
-        //         if (talent[2][0].type == "add") {
-        //             delete talent[2][0].x2
-        //         }
-        //         if (talent[2][1].type == "_") {
-        //             talent[2].pop()
-        //         } else if (talent[2][1].type == "txt") {
-        //             talent[2].pop()
-        //         }
-
-        //     }
-        // }
-        // console.log(JSON.stringify(data))
     }
 
     test() {
