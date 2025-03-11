@@ -149,7 +149,7 @@ export const DATA_TOME = [
     ["Constellations_Completed", [49, 2, 300]],
     ["Most_DMG_Dealt_to_Gravestone_in_a_Weekly_Battle", [300000, 0, 200], (account) => { return account.options.get(203) }],
     ["Unique_Obols_Found", [107, 2, 250]],
-    ["Total_Bubble_LV", [200000, 0, 1000]],
+    ["Total_Bubble_LV", [200000, 0, 1000], (account) => { return account.world2.alchemy.cauldrons.getTotalLevels() }],
     ["Total_Vial_LV", [962, 2, 500], (account) => { return account.world2.alchemy.vials.getTotalLevels() }],
     ["Total_Sigil_LV", [72, 2, 250], (account) => { return account.world2.alchemy.sigils.getTotalLevels() }],
     ["Jackpots_Hit_in_Arcade", [1, 0, 50], (account) => { return account.options.get(199) }],

@@ -8,7 +8,6 @@ export class Cauldrons extends BaseFeature {
         super(account);
 
         let cauldron_data = account.save_data["CauldronInfo"].slice(0, 4)
-        console.log(cauldron_data)
 
         this.power = new CauldronTemplate(account, "POWER", cauldron_data[0])
         this.quicc = new CauldronTemplate(account, "QUICC", cauldron_data[1])
@@ -20,6 +19,23 @@ export class Cauldrons extends BaseFeature {
         this.child_features.push(this.highiq)
         this.child_features.push(this.kazam)
 
+    }
+
+    test() {
+        // console.log("total bubble levels", this.getTotalLevels())
+    }
+
+    getBonusByName(name) {
+        try { return this.power.getBonusByName(name) } catch { }
+        try { return this.quicc.getBonusByName(name) } catch { }
+        try { return this.highiq.getBonusByName(name) } catch { }
+        try { return this.kazam.getBonusByName(name) } catch { }
+
+        throw new Error(`${name} is not a valid bubble name`)
+    }
+
+    getTotalLevels() {
+        return (this.power.getTotalLevels() + this.quicc.getTotalLevels() + this.highiq.getTotalLevels() + this.kazam.getTotalLevels())
     }
 
 

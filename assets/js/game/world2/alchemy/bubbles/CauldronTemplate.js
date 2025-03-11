@@ -17,17 +17,35 @@ export class CauldronTemplate extends BaseFeature {
         }
     }
 
+    getBonusByName(name) {
+        if (name in this.map_name_to_index) {
+            let ind = this.map_name_to_index[name]
+            let bubble = DATA_CAULDRONS[this.cauldron_name][ind]
+            let lvl = this.bubble_levels[lvl]
+            let [name, grow, items] = bubble
+            let value = calcGrowingValue(grow, lvl)
+            return value
+        }
+        throw new Error(`${name} is not a valid bubble in cauldron ${this.cauldron_name}`)
+    }
+
+    getTotalLevels() {
+        return (this.bubble_levels.reduce((a, b) => a + b, 0))
+    }
+
     getDisplay() {
         let table = document.createElement("table")
         table.classList.add("outlined")
         let row = table.appendChild(document.createElement("tr"))
         row.appendChild(document.createElement("th")).innerText = "Bubble"
         row.appendChild(document.createElement("th")).innerText = "Lvl"
+        row.appendChild(document.createElement("th")).innerText = "Completion"
         for (let [ind, bubble] of DATA_CAULDRONS[this.cauldron_name].entries()) {
             let [name, grow, itemReq] = bubble
 
             let lvl = this.bubble_levels[ind]
-
+            let value = calcGrowingValue(grow, lvl)
+            let max_value = calcGrowingValueMax(grow)
 
             row = table.appendChild(document.createElement("tr"))
 
@@ -44,6 +62,9 @@ export class CauldronTemplate extends BaseFeature {
                 this.bubble_levels[ind] = Number(input_level.value)
                 this.account.setModifiedFromSaveData()
             });
+
+
+            row.appendChild(document.createElement("td")).innerText = formatPercent(value / max_value)
 
         }
 

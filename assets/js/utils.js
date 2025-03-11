@@ -1,10 +1,17 @@
 
 
 function calcGrowingValue(grow, level) {
+    if (grow.max) {
+        level = Math.min(grow.max, level)
+    }
     if (grow.type == "decay") {
         return (grow.x1 * level / (level + grow.x2))
+    } else if (grow.type == "decayMulti") {
+        return (1 + (level * grow.x1) / (level + grow.x2))
     } else if (grow.type == "add") {
         return (grow.x1 * level)
+    } else if (grow.type == "bigBase") {
+        return (grow.x1 + grow.x2 * level)
     } else if (grow.type == "vaultCost") {
         return ((level + (grow.x1 + level) * Math.pow(grow.x2, level)))
     } else if (grow.type == "vaultSpecial") {
@@ -16,6 +23,34 @@ function calcGrowingValue(grow, level) {
             val *= 1 + pair[1] * Math.floor(level / pair[0])
         }
         return val
+    } else {
+        throw new Error(`calcGrowingValue not defined for type ${grow.type}`)
+    }
+}
+function calcGrowingValueMax(grow) {
+    if (grow.max) {
+        return calcGrowingValue(grow, grow.max)
+    } else if (grow.type == "decay") {
+        return (grow.x1)
+    } else if (grow.type == "decayMulti") {
+        return (1 + (grow.x1))
+    } else if (grow.type == "add") {
+        return (Infinity)
+    } else if (grow.type == "bigBase") {
+        return (Infinity)
+    } else if (grow.type == "vaultCost") {
+        return ((level + (grow.x1 + level) * Math.pow(grow.x2, level)))
+    } else if (grow.type == "vaultSpecial") {
+        let val = level * grow.x1
+        for (let [id, pair] of grow.addThresholds.entries()) {
+            val += pair[1] * Math.max(0, level - pair[0])
+        }
+        for (let [id, pair] of grow.multiThresholds.entries()) {
+            val *= 1 + pair[1] * Math.floor(level / pair[0])
+        }
+        return val
+    } else {
+        throw new Error(`calcGrowingValueMax not defined for type ${grow.type}`)
     }
 }
 function lavaLog(val) {
