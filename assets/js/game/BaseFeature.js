@@ -28,7 +28,7 @@ export class BaseFeature {
             } else {
                 console.group(`Testing ${child.getFeatureName()}`)
             }
-            child.test()
+            child.test(collapsed)
             console.groupEnd()
         }
 

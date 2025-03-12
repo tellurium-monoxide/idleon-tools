@@ -25,13 +25,13 @@ export class Cauldrons extends BaseFeature {
         // console.log("total bubble levels", this.getTotalLevels())
     }
 
-    getBonusByName(name) {
-        try { return this.power.getBonusByName(name) } catch { }
-        try { return this.quicc.getBonusByName(name) } catch { }
-        try { return this.highiq.getBonusByName(name) } catch { }
-        try { return this.kazam.getBonusByName(name) } catch { }
+    getBonusByName(bubble_name) {
+        try { return this.power.getBonusByName(bubble_name) } catch { }
+        try { return this.quicc.getBonusByName(bubble_name) } catch { }
+        try { return this.highiq.getBonusByName(bubble_name) } catch { }
+        try { return this.kazam.getBonusByName(bubble_name) } catch (e) { console.error(e) }
 
-        throw new Error(`${name} is not a valid bubble name`)
+        throw new Error(`${bubble_name} is not a valid bubble name`)
     }
 
     getTotalLevels() {

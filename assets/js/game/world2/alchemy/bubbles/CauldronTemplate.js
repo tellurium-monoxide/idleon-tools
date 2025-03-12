@@ -17,16 +17,20 @@ export class CauldronTemplate extends BaseFeature {
         }
     }
 
-    getBonusByName(name) {
-        if (name in this.map_name_to_index) {
-            let ind = this.map_name_to_index[name]
-            let bubble = DATA_CAULDRONS[this.cauldron_name][ind]
-            let lvl = this.bubble_levels[lvl]
-            let [name, grow, items] = bubble
-            let value = calcGrowingValue(grow, lvl)
-            return value
+    getBonusByName(bubble_name) {
+        if (bubble_name in this.map_name_to_index) {
+            let ind = this.map_name_to_index[bubble_name]
+            return this.getBonusByIndex(ind)
         }
-        throw new Error(`${name} is not a valid bubble in cauldron ${this.cauldron_name}`)
+        throw new Error(`${bubble_name} is not a valid bubble in cauldron ${this.cauldron_name}`)
+    }
+
+    getBonusByIndex(index) {
+        let bubble = DATA_CAULDRONS[this.cauldron_name][index]
+        let lvl = this.bubble_levels[index]
+        let grow = bubble[1]
+        let value = calcGrowingValue(grow, lvl)
+        return value
     }
 
     getTotalLevels() {

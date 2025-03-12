@@ -92,7 +92,7 @@ export class Refinery extends BaseFeature {
         let talent_family_bonus = highestDK.talents.getTalentBonusByName("THE_FAMILY_GUY")
         let bonusBreakdown = [
             { name: 'Base', value: 1, max: 1 },
-            { name: 'Vials', value: this.account.world2.alchemy.vials.getBonusByName("Red_Malt") / 100, max: 13 * 0.02 * (1 + 0.02 * 69 + 0.3) },
+            { name: 'Vials', value: this.account.world2.alchemy.vials.getBonusByName("Red_Malt"), max: 13 * 0.02 * (1 + 0.02 * 69 + 0.3) },
             { name: 'Salt_lick', value: this.account.world3.salt_lick.getBonusByName("Explosive_Salts") / 100, max: 2 },
             { name: 'Family', value: 0.5 * highestDK.class_level / (150 + highestDK.class_level) * (1 + talent_family_bonus / 100), max: 0.7 },
             { name: 'Sigils', value: this.account.world2.alchemy.sigils.getBonusByName("Pipe_Gauge") / 100, max: 1.5 },
