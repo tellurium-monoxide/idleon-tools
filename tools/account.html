@@ -1,0 +1,31 @@
+---
+layout: default
+title: IdleOn Account
+nav_id: nav_account
+permalink: /account/
+icon_url: "assets/images/site/main.png"
+---
+<div class="main">
+    <div id="account"></div>
+</div>
+
+<script type="module">
+
+    import { Account } from "{{site.baseurl}}/assets/js/game/Account.js";
+
+    // function run_local_tool(save_data) {
+    document.addEventListener("run_tool", (e) => {
+        let save_data = e.detail
+
+        let account = new Account(save_data)
+
+        account.test(false)
+
+
+        let account_display = account.getTabDisplay()
+        document.getElementById("account").appendChild(account_display);
+        $(".jquery-tab").tabs();
+    }, false);
+    // }
+
+</script>
