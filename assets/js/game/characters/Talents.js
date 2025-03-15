@@ -69,15 +69,14 @@ export class Talents extends BaseFeature {
             let talent_table = document.createElement("table")
             talent_table.classList.add("outlined")
             tab_content.appendChild(talent_table)
-            let row = document.createElement("tr")
-            talent_table.appendChild(row)
+            let row = talent_table.appendChild(document.createElement("tr"))
+
             for (let [ind, talent] of DATA_TALENTS[subclass].entries()) {
                 if (ind % 5 == 0) {
-                    row = document.createElement("tr")
-                    talent_table.appendChild(row)
+                    row = talent_table.appendChild(document.createElement("tr"))
                 }
-                let elem = document.createElement("td")
-                row.appendChild(elem)
+                let elem = row.appendChild(document.createElement("td"))
+
 
                 let [name, pi, _] = talent
                 let cur_lvl = this.talent_levels[pi]

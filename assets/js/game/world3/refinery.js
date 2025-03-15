@@ -90,17 +90,19 @@ export class Refinery extends BaseFeature {
 
         let highestDK = this.account.characters.getHighestCharacterByClass("Divine_Knight")
         let talent_family_bonus = highestDK.talents.getTalentBonusByName("THE_FAMILY_GUY")
+
+        let stamp_bonus = this.account.world1.stamps.getBonusByName("REFINERY_STAMP")
         let bonusBreakdown = [
             { name: 'Base', value: 1, max: 1 },
             { name: 'Vials', value: this.account.world2.alchemy.vials.getBonusByName("Red_Malt"), max: 13 * 0.02 * (1 + 0.02 * 69 + 0.3) },
             { name: 'Salt_lick', value: this.account.world3.salt_lick.getBonusByName("Explosive_Salts") / 100, max: 2 },
             { name: 'Family', value: 0.5 * highestDK.class_level / (150 + highestDK.class_level) * (1 + talent_family_bonus / 100), max: 0.7 },
             { name: 'Sigils', value: this.account.world2.alchemy.sigils.getBonusByName("Pipe_Gauge") / 100, max: 1.5 },
-            // { name: 'Stamps', value: 0, max: 0 },
+            { name: 'Stamps', value: stamp_bonus, max: stamp_bonus },
             { name: 'Shinies', value: this.account.world4.breeding.shiny_pets.getLevelByEffect("Refinery_Speed") * 0.02, max: 1.2 },
-            { name: 'Const_mastery', value: this.account.world3.construction.getTotalBuildingLevels() / 10 / 100, max: 3.67 },
+            { name: 'Const_mastery', value: this.account.world3.construction.getTotalBuildingLevels() / 10 / 100, max: 3.67 }, // TODO check unlock in rift
             { name: 'Arcade', value: this.account.world2.arcade.getBonusByStat("Refinery_Speed"), max: 0.3 },
-            // { name: 'Vote', value: 0 }, // not taken into account as not very useful for the long term planning
+            // { name: 'Vote', value: 0, max: 0 }, // TODO if possible
         ]
         let speed = bonusBreakdown.reduce((a, b) => { return (a + b.value) }, 0)
 

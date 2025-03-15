@@ -28,7 +28,6 @@ export class World3 extends BaseFeature {
         this.child_features.push(this.construction)
         this.child_features.push(this.salt_lick)
         this.child_features.push(this.refinery)
-        this.child_features.push(this.library)
         this.child_features.push(this.atoms)
     }
 

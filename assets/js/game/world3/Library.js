@@ -44,9 +44,8 @@ export class Library extends BaseFeature {
             + this.account.world2.alchemy.vials.getBonusByName("CHONKER_CHUG")
             + (this.account.general.achievements.getAchievByName("Checkout_Takeout") ? 0.3 : 0)
             + this.account.world2.alchemy.cauldrons.getBonusByName("IGNORE_OVERDUES")
-            + 0.56
+            + this.account.world1.stamps.getBonusByName("BIBLIO_STAMP")
             + 2.78
-        //         + this.stamp_biblio_bonus
         //         + this.superbit_library_checkouts * this.gaming_lvl * 0.01
 
         let time = base_time / (mult1 * mult2 * mult3)

@@ -23,7 +23,7 @@ icon_url: "assets/images/site/main.png"
 
 
         let account_display = account.getTabDisplay()
-        document.getElementById("account").appendChild(account_display);
+        document.getElementById("account").replaceChildren(account_display);
         $(".jquery-tab").tabs();
     }, false);
     // }

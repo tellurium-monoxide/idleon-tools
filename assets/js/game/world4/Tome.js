@@ -7,12 +7,9 @@ export class Tome extends BaseFeature {
     map_to_ind = {};
     constructor(account) {
         super(account);
-
-
-
     }
 
-    twoStepInit() {
+    calcScores() {
         for (let [ind, obj] of DATA_TOME.entries()) {
             let [name, coefs, getter] = obj
             let qtt = 0
@@ -76,6 +73,9 @@ export class Tome extends BaseFeature {
     }
 
     getDisplay() {
+        this.calcScores()
+
+
         let display = document.createElement("table")
         display.classList.add("outlined")
         let totals = document.createElement("tr")
@@ -127,7 +127,7 @@ export class Tome extends BaseFeature {
 // values are: name, coefs, getter
 // for coefs, we have parameter, type, max score I think
 export const DATA_TOME = [
-    ["Stamp_Total_LV", [10000, 0, 800]],
+    ["Stamp_Total_LV", [10000, 0, 800], (account) => { return account.world1.stamps.getTotalLevels() }],
     ["Statue_Total_LV", [2300, 0, 350]],
     ["Cards_Total_LV", [1344, 2, 350]],
     ["Total_Talent_Max_LV", [12000, 0, 400]],

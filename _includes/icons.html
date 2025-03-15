@@ -1,6 +1,9 @@
 ---
 ---
 <script>
+  const GET_IMAGE_PATH = (path) => {
+    return `{{ site.baseurl }}/assets/images/${path}`
+  }
   const SALT_ICONS = {
     "Redox_Salts": "{{ site.baseurl }}/assets/images/refinery/36px-Redox_Salts.png",
     "Explosive_Salts": "{{site.baseurl}}/assets/images/refinery/36px-Explosive_Salts.png",
