@@ -10,6 +10,9 @@ export class Tome extends BaseFeature {
     }
 
     calcScores() {
+        this.quantities = []
+        this.score_percents = []
+        this.scores = []
         for (let [ind, obj] of DATA_TOME.entries()) {
             let [name, coefs, getter] = obj
             let qtt = 0
@@ -63,6 +66,7 @@ export class Tome extends BaseFeature {
     }
 
     getTotalScore() {
+        this.calcScores()
         return this.scores.reduce((a, b) => a + b, 0)
     }
     getTotalMaxScore() {

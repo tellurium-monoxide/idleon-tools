@@ -62,11 +62,11 @@ export class Engineer extends BaseFeature {
             input_base.type = "checkbox"
             input_base.checked = this.unlocks[ind]
 
-            // input_base.addEventListener("input", (event) => {
-            //     console.log("change vault upgrade", name, this.vault_levels[ind], "to", Number(input_base.value))
-            //     this.vault_levels[ind] = Number(input_base.value)
-            //     this.account.setModifiedFromSaveData()
-            // });
+            input_base.addEventListener("input", (event) => {
+                console.log("change schematic", sch[0], this.unlocks[ind], "to", input_base.checked)
+                this.unlocks[ind] = input_base.checked
+                this.account.setModifiedFromSaveData()
+            });
         }
 
         return display
