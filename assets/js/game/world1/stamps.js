@@ -94,8 +94,8 @@ export class Stamps extends BaseFeature {
                 let elem = row.appendChild(document.createElement("td"))
                 let local_table = elem.appendChild(document.createElement("table"))
                 let local_row = local_table.appendChild(document.createElement("tr"))
-                // local_row.innerHTML = name
-                local_row.innerHTML = `<img src="${GET_STAMP_ICON(name)}" style="height:72px;width:72px;" />`
+                local_row.innerHTML = name
+                // local_row.innerHTML = `<img src="${GET_STAMP_ICON(name)}" style="height:72px;width:72px;" />`
                 local_row.title = name
 
                 local_row = local_table.appendChild(document.createElement("tr"))
