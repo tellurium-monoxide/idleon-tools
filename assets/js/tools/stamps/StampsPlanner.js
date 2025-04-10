@@ -82,8 +82,9 @@ class StampPlanner {
         console.log(guild_rucksack_lvl)
         let guild_bonus = 0.7 * guild_rucksack_lvl / (50 + guild_rucksack_lvl)
 
+        let inventory_slots = 96
         let base_cap = (30000 + 750) // base carry cap of max bag + vault bonus
-            * 80 // inventory slots
+            * inventory_slots // inventory slots
             * 3.5 // Gem Shop Carry Capacity
             * (1 + 1.77 + 0.05) // Prayer Ruck Sack + Bribe	Bottomless Bags
             * (1 + 0.3 * 50 / (60 + 50) + guild_bonus) //Star Talent Telekinetic Storage + Guild Rucksack
@@ -115,8 +116,8 @@ class StampPlanner {
             "Catching": base_cap * (1 + this.stamp_states["skill"][22].lvl * 0.01 * stamp_multi),
             "Trapping": base_cap,
             "Worship": base_cap,
-            "Equipment": 100, // by holding down with craft from inventory, you can reach more than inventory slots. I could reach more than 105, I leave this at 100 until further testing
-            "Quest": 80 * 1000000,
+            "Equipment": inventory_slots * 1.2, // by holding down with craft from inventory, you can reach more than inventory slots. I could reach more than 105 with 80 slots. I use a smaller factor until further testing
+            "Quest": inventory_slots * 1000000,
         }
 
 
