@@ -116,7 +116,7 @@ class StampPlanner {
             "Catching": base_cap * (1 + this.stamp_states["skill"][22].lvl * 0.01 * stamp_multi),
             "Trapping": base_cap,
             "Worship": base_cap,
-            "Equipment": inventory_slots * 1.2, // by holding down with craft from inventory, you can reach more than inventory slots. I could reach more than 105 with 80 slots. I use a smaller factor until further testing
+            "Equipment": 151, // by holding down with craft from inventory, you can reach more than inventory slots. I could reach more than 105 with 80 slots. I use a smaller factor until further testing
             "Quest": inventory_slots * 1000000,
         }
 
