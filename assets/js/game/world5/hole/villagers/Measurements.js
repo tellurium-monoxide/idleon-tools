@@ -1,6 +1,5 @@
 import { BaseFeature } from "../../../BaseFeature.js";
 
-import { holesInfo } from "../../../website-data.js";
 export class Measurements extends BaseFeature {
 
 
