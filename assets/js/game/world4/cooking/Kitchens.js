@@ -8,6 +8,7 @@ export class Kitchens extends BaseFeature {
         super(account);
 
         let kitchen_data = account.save_data["Cooking"]
+        delete account.save_data_pruned["Cooking"]
 
         this.kitchen_stats = []
         for (let i = 0; i < kitchen_data.length; i++) {

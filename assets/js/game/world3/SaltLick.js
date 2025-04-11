@@ -6,6 +6,7 @@ export class SaltLick extends BaseFeature {
         super(account);
 
         let salt_lick_data = account.save_data["SaltLick"]
+        delete account.save_data_pruned["SaltLick"]
 
 
         this.data = DATA_SALT_LICK

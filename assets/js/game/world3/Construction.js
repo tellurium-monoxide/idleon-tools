@@ -5,6 +5,7 @@ export class Construction extends BaseFeature {
     constructor(account) {
         super(account);
         let building_data = this.account.save_data["Tower"]
+        delete account.save_data_pruned["Tower"]
 
 
         let building_current_levels = building_data.slice(0, 27)

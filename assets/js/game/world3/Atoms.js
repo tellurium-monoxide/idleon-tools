@@ -6,6 +6,7 @@ export class Atoms extends BaseFeature {
         super(account);
 
         let atom_data = account.save_data["Atoms"]
+        delete account.save_data_pruned["Atoms"]
 
         this.atom_levels = []
         this.map_name_to_index = {}

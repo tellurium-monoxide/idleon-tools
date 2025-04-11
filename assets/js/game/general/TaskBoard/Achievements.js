@@ -6,6 +6,7 @@ export class Achievements extends BaseFeature {
         super(account);
 
         let achieve_data = account.save_data["AchieveReg"]
+        delete account.save_data_pruned["AchieveReg"]
         // console.log(achieve_data)
         this.achiev_data = DATA_ACHIEVEMENTS
         for (let name in this.achiev_data) {

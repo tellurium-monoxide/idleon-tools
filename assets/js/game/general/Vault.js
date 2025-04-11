@@ -6,6 +6,7 @@ export class Vault extends BaseFeature {
         super(account);
 
         let vault_data = account.save_data["UpgVault"]
+        delete account.save_data_pruned["UpgVault"]
 
 
         // console.log(vault_data)
@@ -14,9 +15,7 @@ export class Vault extends BaseFeature {
         this.map_name_to_ind = {}
 
 
-        this.vault_data = DATA_VAULT
 
-        let data = Array(100)
         for (let [ind, upg] of DATA_VAULT.entries()) {
             this.vault_levels.push(vault_data[ind])
             this.map_name_to_ind[upg[0]] = ind

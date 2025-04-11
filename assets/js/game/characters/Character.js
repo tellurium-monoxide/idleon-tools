@@ -22,6 +22,7 @@ export class Character extends BaseFeature {
             if (prop_name.endsWith(`_${this.char_index}`)) {
                 let base_name = prop_name.replace(`_${this.char_index}`, "")
                 this.props[base_name] = prop
+                delete account.save_data_pruned[prop_name]
             }
         }
         // delete useless props

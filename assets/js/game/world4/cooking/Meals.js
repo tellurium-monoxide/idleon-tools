@@ -7,6 +7,8 @@ export class Meals extends BaseFeature {
         super(account);
         let meal_data = account.save_data["Meals"]
         let data_ribbons = account.save_data["Ribbon"]
+        delete account.save_data_pruned["Meals"]
+        delete account.save_data_pruned["Ribbon"]
 
         let meal_count = DATA_MEALS.length
         this.meal_levels = meal_data[0].map(Number).slice(0, meal_count)

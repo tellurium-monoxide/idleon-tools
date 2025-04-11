@@ -176,7 +176,7 @@ export const DATA_TOME = [
     ["Total_Construct_Buildings_LV", [3000, 0, 600], (account) => { return account.world3.construction.getTotalBuildingLevels() }],
     ["Most_Tottoise_in_Storage", [7, 1, 150]],
     ["Most_Greenstacks_in_Storage", [150, 0, 600], (account) => { return account.options.get(224) }],
-    ["Rift_Levels_Completed", [49, 2, 500]],
+    ["Rift_Levels_Completed", [49, 2, 500], (account) => { return account.world4.rift.getLevel() }],
     ["Highest_Power_Pet", [8, 1, 150]],
     ["Fastest_Time_reaching_Round_100_Arena_(in_Seconds)", [50, 3, 180], (account) => { return 1000 - account.options.get(220) }],
     ["Total_Kitchen_Upgrade_LV", [8000, 0, 200], (account) => { return account.world4.cooking.kitchens.getTotalLevels() }],
@@ -212,5 +212,22 @@ export const DATA_TOME = [
     ["Largest_Magic_Bean_Trade", [1000, 0, 200], (account) => { return account.options.get(221) }],
     ["Most_Balls_earned_from_LBoFaF", [1000, 0, 150], (account) => { return account.options.get(222) }],
     ["Total_Arcade_Gold_Ball_Shop_Upgrade_LV", [3800, 2, 300], (account) => { return account.world2.arcade.getTotalGoldBallsLevels() }],
-    ["Vault_Upgrade_bonus_LV", [500, 2, 500], (account) => { return account.general.vault.getBonusByName("Teh_TOM") }]
+    ["Vault_Upgrade_bonus_LV", [500, 2, 500], (account) => { return account.general.vault.getBonusByName("Teh_TOM") }],
+    ["Total_Gambit_Time", [3600, 0, 400]],
+    ["Total_Digits_of_all_Cavern_Resources", [500, 0, 750]],
+    ["Total_LV_of_Cavern_Villagers", [200, 0, 350]],
+    ["Megafeathers_Earned_from_Orion", [12, 0, 100], (account) => { return account.options.get(262) }],
+    ["Megafish_Earned_from_Poppy", [12, 0, 100], (account) => { return account.options.get(279) }],
+    ["Best_Bravery_Monument_Round", [50, 0, 250], (account) => { return account.world5.hole.getExtraCalc(73) }],
+    ["Best_Justice_Monument_Round", [200, 0, 250], (account) => { return account.world5.hole.getExtraCalc(74) }],
+    ["Best_Wisdom_Monument_Round", [18, 0, 250], (account) => { return account.world5.hole.getExtraCalc(75) }],
+    ["Best_Deathbringer_Max_Damage_in_Wraith_Mode", [9, 1, 400], (account) => { return account.options.get(356) }],
+    ["Best_Dawg_Den_score", [7, 1, 250], (account) => { return account.world5.hole.getExtraCalc(8) }],
+    ["Total_Resource_Layers_Destroyed", [150, 0, 350]],
+    ["Total_Opals_Found", [500, 0, 400], (account) => { return account.world5.hole.caverns.getTotalOpals() }],
+    ["Best_Pure_Memory_Round_Reached", [13, 2, 50], (account) => { return Math.round(account.options.get(353) + 1) }],
+
+
 ]
+
+

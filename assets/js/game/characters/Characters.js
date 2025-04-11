@@ -11,6 +11,7 @@ export class Characters extends BaseFeature {
             this[i] = new Character(account, i)
             this.child_features.push(this[i])
         }
+        delete account.save_data_pruned["playerNames"]
 
 
     }

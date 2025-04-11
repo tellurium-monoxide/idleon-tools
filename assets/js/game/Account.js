@@ -29,6 +29,13 @@ export class Account extends BaseFeature {
         this.modified = false
 
         this.save_data = save_data
+        // pruned save data to easily find what I have not parsed yet
+        this.save_data_pruned = JSON.parse(JSON.stringify(save_data))
+        // delete some useless props
+        let props = ["BGsel", "BGunlocked", "ShopStock", "FlagP", "FlagU", "CloudsaveTimer", "CYWorldTeleports", "SteamAchieve", "PostOfficeInfo0", "PostOfficeInfo1", "PostOfficeInfo2", "FamValWorldSelected", "CYAnvilTabsOwned", "CYCharSlotsMTX"]
+        for (let prop of props) {
+            delete this.save_data_pruned[prop]
+        }
 
         this.world1 = new World1(this);
         this.world2 = new World2(this);
@@ -52,6 +59,7 @@ export class Account extends BaseFeature {
         this.child_features.push(this.characters)
         this.child_features.push(this.options)
 
+        console.log(this.save_data_pruned)
         // must be at the end (or at least after all child features are added)
         super.twoStepInit()
     }

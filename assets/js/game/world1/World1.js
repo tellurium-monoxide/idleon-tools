@@ -16,9 +16,11 @@ export class World1 extends BaseFeature {
         this.stamps = new Stamps(account);
         this.bribes = new Bribes(account);
         this.statues = new Statues(account);
+        this.companions = new Companions(account);
 
         this.child_features.push(this.stamps)
         this.child_features.push(this.bribes)
         this.child_features.push(this.statues)
+        this.child_features.push(this.companions)
     }
 }

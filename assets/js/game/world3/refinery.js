@@ -6,6 +6,7 @@ export class Refinery extends BaseFeature {
         super(account);
 
         let refinery_data = account.save_data["Refinery"]
+        delete account.save_data_pruned["Refinery"]
 
         this.salts = Array(6).fill().map((_, i) => ({}));
         this.resources = []

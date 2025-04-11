@@ -5,6 +5,7 @@ export class Merits extends BaseFeature {
     constructor(account) {
         super(account);
         let merit_levels = account.save_data["TaskZZ2"]
+        delete account.save_data_pruned["TaskZZ2"]
 
         this.merit_levels = []
 

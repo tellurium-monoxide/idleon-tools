@@ -7,6 +7,8 @@ export class Stamps extends BaseFeature {
 
         let stamp_lvls = account.save_data["StampLv"]
         let stamp_maxlvls = account.save_data["StampLvM"]
+        delete account.save_data_pruned["StampLv"]
+        delete account.save_data_pruned["StampLvM"]
 
 
 
