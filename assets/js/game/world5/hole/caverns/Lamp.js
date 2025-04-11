@@ -1,6 +1,6 @@
 import { BaseFeature } from "../../../BaseFeature.js";
 
-export class C1 extends BaseFeature {
+export class Lamp extends BaseFeature {
 
 
     constructor(account) {
