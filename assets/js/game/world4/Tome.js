@@ -168,7 +168,7 @@ export const DATA_TOME = [
     ["Largest_Goldfish_Printer_Sample", [9, 1, 300], (account) => { return account.options.get(214) }],
     ["Largest_Fly_Printer_Sample", [9, 1, 300], (account) => { return account.options.get(215) }],
     ["Best_Non_Duplicate_Goblin_Gorefest_Wave", [120, 0, 200], (account) => { return account.options.get(209) }],
-    ["Total_Best_Wave_in_Worship", [1000, 0, 300]],
+    ["Total_Best_Wave_in_Worship", [1000, 0, 300], (account) => { return account.world3.worship.getTotalTDWaves() }],
     ["Total_Digits_of_all_Deathnote_Kills", [700, 0, 600]],
     ["Equinox_Clouds_Completed", [31, 2, 750]],
     ["Total_Refinery_Rank", [120, 0, 450], (account) => { return account.world3.refinery.getTotalRanks() }],

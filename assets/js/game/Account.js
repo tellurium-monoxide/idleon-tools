@@ -32,7 +32,7 @@ export class Account extends BaseFeature {
         // pruned save data to easily find what I have not parsed yet
         this.save_data_pruned = JSON.parse(JSON.stringify(save_data))
         // delete some useless props
-        let props = ["BGsel", "BGunlocked", "ShopStock", "FlagP", "FlagU", "CloudsaveTimer", "CYWorldTeleports", "SteamAchieve", "PostOfficeInfo0", "PostOfficeInfo1", "PostOfficeInfo2", "FamValWorldSelected", "CYAnvilTabsOwned", "CYCharSlotsMTX"]
+        let props = ["BGsel", "BGunlocked", "ShopStock", "FlagP", "FlagU", "CloudsaveTimer", "CYWorldTeleports", "SteamAchieve", "PostOfficeInfo0", "PostOfficeInfo1", "PostOfficeInfo2", "FamValWorldSelected", "CYAnvilTabsOwned", "CYCharSlotsMTX", "HintStatus"]
         for (let prop of props) {
             delete this.save_data_pruned[prop]
         }
