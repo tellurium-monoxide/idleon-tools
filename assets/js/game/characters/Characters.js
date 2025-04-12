@@ -64,4 +64,16 @@ export class Characters extends BaseFeature {
         return acc
     }
 
+    // for tome
+    getTotalUniqueTalentMaxLvl() {
+
+        let data = {}
+        for (let i = 0; i < this.char_count; i++) {
+            this[i].talents.fillUniqueTalentMaxLvl(data)
+        }
+
+        return Object.values(data).reduce((acc, v) => (acc + v), 0)
+
+    }
+
 }

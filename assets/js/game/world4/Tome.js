@@ -134,7 +134,7 @@ export const DATA_TOME = [
     ["Stamp_Total_LV", [10000, 0, 800], (account) => { return account.world1.stamps.getTotalLevels() }],
     ["Statue_Total_LV", [2300, 0, 350]],
     ["Cards_Total_LV", [1344, 2, 350]],
-    ["Total_Talent_Max_LV", [12000, 0, 400]],
+    ["Total_Talent_Max_LV", [12000, 0, 400], (account) => { return account.characters.getTotalUniqueTalentMaxLvl() }],
     ["Unique_Quests_Completed", [323, 2, 300]],
     ["Account_LV", [5500, 0, 900], (account) => { return account.characters.getTotalClassLevels() }],
     ["Total_Tasks_Completed", [470, 2, 470], (account) => { return account.general.taskboard.tasks.getTotal() }],
