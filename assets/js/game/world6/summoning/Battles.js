@@ -56,9 +56,9 @@ export class Battles extends BaseFeature {
         // get winner bonus factors
         const charmBonus = this.account.world6.sneaking.charms.getBonusByName("CRYSTAL_COMB")
         const artifactBonus = this.account.world5.artifacts.getBonusByName("THE_WINZ_LANTERN")
-        const meritBonus = this.account.general.merits.getMeritLevel(6, 5) / 100
-        const achiev1 = this.account.general.achievements.getAchievByName("Spectre_Stars") / 100
-        const achiev2 = this.account.general.achievements.getAchievByName("Regalis_My_Beloved") / 100
+        const meritBonus = this.account.general.taskboard.merits.getMeritLevel(6, 5) / 100
+        const achiev1 = this.account.general.taskboard.achievements.getAchievByName("Spectre_Stars") / 100
+        const achiev2 = this.account.general.taskboard.achievements.getAchievByName("Regalis_My_Beloved") / 100
         // multiply by winner bonus multi
         if (["+{_STAMP_LV/DAY", "+{%_BALLOT_BONUS", "+{_EQUINOX_MAX_LV", "<X_WINNER_BONUSES"].includes(true_name)) {
 

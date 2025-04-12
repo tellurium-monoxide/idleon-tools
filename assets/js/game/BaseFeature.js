@@ -74,13 +74,14 @@ export class BaseFeature {
             for (let [ind, child] of this.child_features.entries()) {
                 let li = document.createElement("li")
                 let a = document.createElement("a")
-                a.href = `#tab_${child.getFeatureName()}`
+                let ref = `tab_${this.constructor.name}_${child.getFeatureName()}`
+                a.href = `#${ref}`
                 a.innerHTML = `${child.getFeatureName()}`
                 li.appendChild(a)
                 header.appendChild(li)
 
                 let tab_content = document.createElement("div")
-                tab_content.id = `tab_${child.getFeatureName()}`
+                tab_content.id = ref
                 let content = child.getTabDisplay()
                 if (content) {
 
