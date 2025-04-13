@@ -1,4 +1,4 @@
-import { BaseFeature } from "../../../BaseFeature.js";
+import { BaseFeature } from "../../../../BaseFeature.js";
 
 export class Temple extends BaseFeature {
 
