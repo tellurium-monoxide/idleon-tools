@@ -36,6 +36,7 @@ export class Stamps extends BaseFeature {
     }
 
     getBonusByName(name) {
+        // TODO vault Stamp_Bonanza
         if (name in this.map_name_to_indexes) {
             let [ind1, ind2] = this.map_name_to_indexes[name]
             let lvl = this.stamp_lvls[ind1][ind2]
