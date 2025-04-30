@@ -2,6 +2,8 @@ import { BaseFeature } from "../BaseFeature.js";
 
 import { Talents } from "./Talents.js";
 import { SkillLevels } from "./SkillLevels.js";
+
+import { CarryCap } from "./CarryCap.js";
 export class Character extends BaseFeature {
     char_name;
     char_index;
@@ -48,6 +50,9 @@ export class Character extends BaseFeature {
 
         this.skill_levels = new SkillLevels(account, this.char_index, this.props)
         this.child_features.push(this.skill_levels)
+
+        this.carry_cap = new CarryCap(account, this.char_index, this.props)
+        this.child_features.push(this.carry_cap)
     }
 
     test(collapsed = true) {
@@ -105,6 +110,7 @@ const DATA_CLASSES = {
     22: "Siege_Breaker",
     34: "Elemental_Sorcerer",
     12: "Divine_Knight",
+    29: "Windwalker",
     25: "Beast_Master",
     36: "Bubonic_Conjuror",
     4: "Voidwalker",
@@ -120,6 +126,7 @@ const DATA_SUBCLASSES = {
     "Warrior": "Rage_Basics",
 
     "Siege_Breaker": "Bowman",
+    "Windwalker": "Beast_Master",
     "Beast_Master": "Hunter",
 
     "Bowman": "Archer",

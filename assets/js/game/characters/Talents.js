@@ -416,6 +416,23 @@ const DATA_TALENTS = {
         ["CURVITURE_OF_THE_PAW", 373, [{ "type": "decayMulti", "x1": 1.2, "x2": 100 }]],
         ["SYMBOLS_OF_BEYOND_~G", 374, [{ "type": "intervalAdd", "x1": 1, "x2": 20 }]]
     ],
+    "Windwalker": [
+        ["TEMPEST_FORM", 315, [{ "type": "bigBase", "x1": 75, "x2": 1.25 }, { "type": "intervalAdd", "x1": 4, "x2": 30 }]],
+        ["COMPASS", 361, [{ "type": "intervalAdd", "x1": 6, "x2": 20 }, { "type": "bigBase", "x1": 75, "x2": 1.5 }]],
+        ["SPIRIT_BALLISTA", 362, [{ "type": "intervalAdd", "x1": 7, "x2": 17 }, { "type": "bigBase", "x1": 30, "x2": 1 }]],
+        ["ETERNAL_HUNT", 363, [{ "type": "intervalAdd", "x1": 15, "x2": 13 }, { "type": "bigBase", "x1": 50, "x2": 1 }]],
+        ["SOME_COMMANDMENTS", 364, [{ "type": "decay", "x1": 120, "x2": 40 }]],
+        ["WINDBORNE", 365, [{ "type": "decay", "x1": 8, "x2": 100 }]],
+        ["ELEMENTAL_MAYHEM", 366, [{ "type": "decay", "x1": 40, "x2": 100 }]],
+        ["PUMPIN'POWER", 367, [{ "type": "decay", "x1": 60, "x2": 80 }, { "type": "intervalAdd", "x1": 1, "x2": 2 }]],
+        ["UNREAL_AGILITY", 368, [{ "type": "decay", "x1": 15, "x2": 100 }, { "type": "add", "x1": 1, "x2": 0 }]],
+        ["SHINY_MEDALLIONS", 144, [{ "type": "decay", "x1": 40, "x2": 100 }]],
+        ["PRICE_RECESSION", 370, [{ "type": "intervalAdd", "x1": 5, "x2": 17 }, { "type": "decay", "x1": 30, "x2": 100 }]],
+        ["SNEAKY_SKILLING", 371, [{ "type": "decay", "x1": 100, "x2": 80 }]],
+        ["GENERATIONAL_GEMSTONES", 372, [{ "type": "decay", "x1": 100, "x2": 100 }]],
+        ["DUSTWALKER", 373, [{ "type": "decayMulti", "x1": 1.2, "x2": 100 }]],
+        ["SLAYER_ABOMINATOR", 374, [{ "type": "intervalAdd", "x1": 1, "x2": 20 }]]
+    ],
     "Savvy_Basics": [
         ["HEALTH_BOOSTER", 0, [{ "type": "add", "x1": 1 }]],
         ["MANA_BOOSTER", 1, [{ "type": "add", "x1": 1 }]],
