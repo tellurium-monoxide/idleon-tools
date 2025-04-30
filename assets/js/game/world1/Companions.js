@@ -47,4 +47,5 @@ const DATA_COMPANIONS = [
     "COOL_BIRD",
     "AXOLOTL",
     "MALLAY",
+    "REINDEER",
 ]

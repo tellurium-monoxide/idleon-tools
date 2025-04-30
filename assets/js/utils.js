@@ -10,6 +10,8 @@ function calcGrowingValue(grow, level) {
         return (1 + (level * grow.x1) / (level + grow.x2))
     } else if (grow.type == "add") {
         return (grow.x1 * level)
+    } else if (grow.type == "intervalAdd") {
+        return (grow.x1 * Math.floor(level / grow.x2))
     } else if (grow.type == "bigBase") {
         return (grow.x1 + grow.x2 * level)
     } else if (grow.type == "vaultCost") {
