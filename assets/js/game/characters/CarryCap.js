@@ -1,14 +1,13 @@
-import { BaseFeature } from "../BaseFeature.js";
+import { BaseCharFeature } from "./BaseCharFeature.js";
 
 
 
-export class CarryCap extends BaseFeature {
+export class CarryCap extends BaseCharFeature {
 
 
 
-    constructor(account, char_index, char_props) {
-        super(account);
-        this.char_index = char_index
+    constructor(account, character) {
+        super(account, character);
 
         // this.skill_levels = char_props["Lv0"].slice(1, 19)
         // delete char_props["Lv0"]
@@ -17,7 +16,7 @@ export class CarryCap extends BaseFeature {
 
         for (const [cat, gamecat] of Object.entries(DATA_ITEM_CATEGORIES)) {
 
-            let basecap = char_props["MaxCarryCap"][gamecat] ?? 0
+            let basecap = character.props["MaxCarryCap"][gamecat] ?? 0
 
             let tier = DATA_CARRY_CAP.findIndex((v, i) => (v == basecap))
 
@@ -26,13 +25,13 @@ export class CarryCap extends BaseFeature {
 
         }
 
-        delete char_props["MaxCarryCap"]
+        delete character.props["MaxCarryCap"]
 
-        this.inv_slots = 0
-        for (const [bag, slots] of Object.entries(char_props["InvBagsUsed"])) {
+        this.inv_slots = 16 + 5 + 8 + 3 // base + autoloot pack + eternal hunter pack + event shop ?
+        for (const [bag, slots] of Object.entries(character.props["InvBagsUsed"])) {
             this.inv_slots += Number(slots)
         }
-        delete char_props["InvBagsUsed"]
+        delete character.props["InvBagsUsed"]
     }
 
     test() {
@@ -60,7 +59,17 @@ export class CarryCap extends BaseFeature {
                 + this.account.world1.stamps.getBonusByName("MASON_JAR_STAMP") // Stamp Mason Jar
                 + (0.1 + 0.05 + 0.3) * 2 * Math.pow(1.1, Math.ceil((121 + 1) / 20)) // Star signs: Pack Mule, The OG Skiller, Mr No Sleep. Doubled by chip
             )
-
+        if (category == "Material") {
+            base_cap *= (1 + this.account.world1.stamps.getBonusByName("MATTY_BAG_STAMP"))
+        } else if (category == "Chopping") {
+            base_cap *= (1 + this.account.world1.stamps.getBonusByName("CHOPPIN'_BAG_STAMP"))
+        } else if (category == "Mining") {
+            base_cap *= (1 + this.account.world1.stamps.getBonusByName("LIL'_MINING_BAGGY_STAMP"))
+        } else if (category == "Fishing") {
+            base_cap *= (1 + this.account.world1.stamps.getBonusByName("BAG_O_HEADS_STAMP"))
+        } else if (category == "Catching") {
+            base_cap *= (1 + this.account.world1.stamps.getBonusByName("BUGSACK_STAMP"))
+        }
         return base_cap
     }
 
@@ -105,7 +114,9 @@ export class CarryCap extends BaseFeature {
             }
 
             td = row.appendChild(document.createElement("td"))
-            td.innerText = this.getCapacity(cat)
+            td.innerText = formatIdleonNumbers(this.getCapacity(cat))
+            td = row.appendChild(document.createElement("td"))
+            td.innerText = formatIdleonNumbers(this.getTotalCapacity(cat))
         }
         return display
     }

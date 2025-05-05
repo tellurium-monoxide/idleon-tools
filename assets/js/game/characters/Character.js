@@ -6,23 +6,23 @@ import { SkillLevels } from "./SkillLevels.js";
 import { CarryCap } from "./CarryCap.js";
 export class Character extends BaseFeature {
     char_name;
-    char_index;
+    index;
     class_name;
     class_level;
     talents;
     skill_levels;
-    constructor(account, char_index) {
+    constructor(account, index) {
         super(account);
 
         let char_names = account.save_data[`playerNames`]
-        this.char_index = char_index
-        this.char_name = char_names[char_index]
+        this.index = index
+        this.char_name = char_names[index]
         this.props = {}
 
         for (let [prop_name, prop] of Object.entries(account.save_data)) {
 
-            if (prop_name.endsWith(`_${this.char_index}`)) {
-                let base_name = prop_name.replace(`_${this.char_index}`, "")
+            if (prop_name.endsWith(`_${this.index}`)) {
+                let base_name = prop_name.replace(`_${this.index}`, "")
                 this.props[base_name] = prop
                 delete account.save_data_pruned[prop_name]
             }
@@ -45,18 +45,18 @@ export class Character extends BaseFeature {
         this.class_level = this.props["Lv0"][0]
 
         // init these last because they may delete props
-        this.talents = new Talents(account, this.char_index, this.class_name, this.props)
+        this.talents = new Talents(account, this.index, this.class_name, this.props)
         this.child_features.push(this.talents)
 
-        this.skill_levels = new SkillLevels(account, this.char_index, this.props)
+        this.skill_levels = new SkillLevels(account, this.index, this.props)
         this.child_features.push(this.skill_levels)
 
-        this.carry_cap = new CarryCap(account, this.char_index, this.props)
+        this.carry_cap = new CarryCap(account, this)
         this.child_features.push(this.carry_cap)
     }
 
     test(collapsed = true) {
-        console.log("Char number:", this.char_index)
+        console.log("Char index:", this.index)
         console.log(this.props)
         super.test(collapsed)
     }
