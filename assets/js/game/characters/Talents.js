@@ -1,22 +1,22 @@
-import { BaseFeature } from "../BaseFeature.js";
+import { BaseCharFeature } from "./BaseCharFeature.js";
 
 
 import { getClassList } from "./Character.js";
 
 // this class describes the talents of a single character, each character will have one
-export class Talents extends BaseFeature {
+export class Talents extends BaseCharFeature {
 
-    constructor(account, char_index, class_name, char_props) {
-        super(account);
-        this.char_index = char_index
-        this.class_name = class_name
-        this.talent_levels = char_props["SL"]
+    constructor(account, character) {
+        super(account, character);
+
+        this.class_name = character.class_name
+        this.talent_levels = character.props["SL"]
         // this.talent_preset_levels = char_props["SLpre"] // maybe not useful
-        this.talent_max_levels = char_props["SM"]
+        this.talent_max_levels = character.props["SM"]
 
-        delete char_props["SL"];
-        delete char_props["SLpre"];
-        delete char_props["SM"];
+        delete character.props["SL"];
+        delete character.props["SLpre"];
+        delete character.props["SM"];
 
         this.talent_pages = getClassList(this.class_name)
 

@@ -1,17 +1,16 @@
-import { BaseFeature } from "../BaseFeature.js";
+import { BaseCharFeature } from "./BaseCharFeature.js";
 
 
 
-export class SkillLevels extends BaseFeature {
+export class SkillLevels extends BaseCharFeature {
 
 
 
-    constructor(account, char_index, char_props) {
-        super(account);
-        this.char_index = char_index
+    constructor(account, character) {
+        super(account, character);
 
-        this.skill_levels = char_props["Lv0"].slice(1, 19)
-        delete char_props["Lv0"]
+        this.skill_levels = character.props["Lv0"].slice(1, 19)
+        delete character.props["Lv0"]
     }
 
 
@@ -46,7 +45,7 @@ export class SkillLevels extends BaseFeature {
             input.value = level
             new InputSpinner(input)
             input.addEventListener("input", (event) => {
-                console.log("change char", this.char_index, "skill level", skill, this.skill_levels[ind], "to", Number(input.value))
+                console.log("change char", this.character.index, "skill level", skill, this.skill_levels[ind], "to", Number(input.value))
                 this.skill_levels[ind] = Number(input.value)
                 this.account.setModifiedFromSaveData()
             });

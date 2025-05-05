@@ -45,10 +45,10 @@ export class Character extends BaseFeature {
         this.class_level = this.props["Lv0"][0]
 
         // init these last because they may delete props
-        this.talents = new Talents(account, this.index, this.class_name, this.props)
+        this.talents = new Talents(account, this)
         this.child_features.push(this.talents)
 
-        this.skill_levels = new SkillLevels(account, this.index, this.props)
+        this.skill_levels = new SkillLevels(account, this)
         this.child_features.push(this.skill_levels)
 
         this.carry_cap = new CarryCap(account, this)
