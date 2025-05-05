@@ -64,12 +64,8 @@ export class Account extends BaseFeature {
         super.twoStepInit()
     }
 
-    test(collapsed = true) {
-        if (collapsed) {
-            console.groupCollapsed(`Testing Account`)
-        } else {
-            console.group(`Testing Account`)
-        }
+    test(collapsed = 1) {
+        console.group(`Testing Account`)
         super.test(collapsed)
         console.groupEnd()
     }
