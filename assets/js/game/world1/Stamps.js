@@ -58,7 +58,9 @@ export class Stamps extends BaseFeature {
             let grow = DATA_STAMPS[ind1][ind2][2]
             let mult = 1
             if (ind1 < 2) {
-                mult *= 2.25 // TODO stamp multi with pristine and lab
+                mult *= 2 + 0.25 * this.account.world6.sneaking.charms.has("LIQORICE_ROLLE")
+                // TODO lab stamp multi
+
             }
 
             if (this.exalted_stamps[ind1][ind2]) {
@@ -67,6 +69,8 @@ export class Stamps extends BaseFeature {
                     exalt_multi += 0.2
                 }
                 exalt_multi += this.account.world3.atoms.getBonusByName("ALUMINIUM")
+
+                // TODO compass bonus
                 mult *= exalt_multi
             }
             return mult * calcGrowingValue(grow, lvl)
