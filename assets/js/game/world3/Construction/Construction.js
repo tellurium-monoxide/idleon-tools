@@ -1,9 +1,17 @@
-import { BaseFeature } from "../BaseFeature.js";
+import { BaseFeature } from "../../BaseFeature.js";
+
+import { Shrines } from "./Shrines.js";
 
 export class Construction extends BaseFeature {
 
     constructor(account) {
         super(account);
+
+        this.shrines = new Shrines(account)
+        this.child_features.push(this.shrines)
+
+
+
         let building_data = this.account.save_data["Tower"]
         delete account.save_data_pruned["Tower"]
 
@@ -33,8 +41,9 @@ export class Construction extends BaseFeature {
         }
     }
 
-    test() {
+    test(collapsed = true) {
         console.log(this.getTotalBuildingLevels(), "/", this.building_total_levels_max)
+        super.test(collapsed)
     }
 
     getBuildingLevel(name) {

@@ -40,9 +40,9 @@ export class CarryCap extends BaseCharFeature {
     }
 
     getInvSlots() {
-        slots = 16
-        slots += this.account.general.P2W.bundles.has("Auto-Loot_Pack") * 5
-        slots += this.account.general.P2W.bundles.has("Eternal_Hunter_Pack") * 8
+        let slots = 16
+        slots += this.account.general.p2w.bundles.has("Auto-Loot_Pack") * 5
+        slots += this.account.general.p2w.bundles.has("Eternal_Hunter_Pack") * 8
 
         slots += 3 // TODO event shop
         slots += this.inv_slots

@@ -1,6 +1,6 @@
 import { BaseFeature } from "../BaseFeature.js";
 
-import { Construction } from "./Construction.js";
+import { Construction } from "./Construction/Construction.js";
 import { Equinox } from "./Equinox.js";
 import { SaltLick } from "./SaltLick.js";
 import { Refinery } from "./refinery.js";

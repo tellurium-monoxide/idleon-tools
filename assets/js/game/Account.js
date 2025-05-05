@@ -85,6 +85,7 @@ export class Account extends BaseFeature {
         function replacer(key, value) {
             if (key == "account") return undefined;
             if (key == "child_features") return undefined;
+            if (key == "character") return undefined;
             else return value;
         }
         let account_serialized = JSON.stringify(this, replacer)
