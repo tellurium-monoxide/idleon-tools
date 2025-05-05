@@ -87,16 +87,15 @@ export class Construction extends BaseFeature {
     }
 
 
-    getBuildingDisplay() {
+    getDisplay() {
+        let display = document.createElement("table")
+        let row = display.appendChild(document.createElement("tr"))
+        row.appendChild(document.createElement("th")).innerText = "Name"
+        row.appendChild(document.createElement("th")).innerText = "Level"
+        row.appendChild(document.createElement("th")).innerText = "Cost"
+        row.appendChild(document.createElement("th")).innerText = "Progress"
+        row.appendChild(document.createElement("th")).innerText = "Cost to max"
 
-        let content = "<table>"
-        content += "<tr>"
-        content += `<th>Name</th>`
-        content += `<th>level</th>`
-        content += `<th>Cost</th>`
-        content += `<th>Progress</th>`
-        content += `<th>Cost to max</th>`
-        content += "</tr>"
 
         for (let building_index = 0; building_index < 27; building_index++) {
             const building_data = BUILDING_DATA[building_index]
@@ -105,7 +104,6 @@ export class Construction extends BaseFeature {
             const current_prog = this.buildings[building_data.name].build_progress
             const cost_to_next = this.getBuildCost(building_data, current_lvl)
             const cost_to_max = this.getBuildCostToMax(building_data, current_lvl)
-
             let progress = 0
             if (current_lvl_built != current_lvl) {
                 progress = 1
@@ -113,26 +111,39 @@ export class Construction extends BaseFeature {
                 progress = current_prog / cost_to_next
             }
 
-            content += "<tr>"
-            content += `<td>${formatName(building_data.name)}</td>`
-            content += `<td>${current_lvl}</td>`
+
+            let row = display.appendChild(document.createElement("tr"))
+
+            let td = row.appendChild(document.createElement("td")).innerText = formatName(building_data.name)
+
+
+
+            td = row.appendChild(document.createElement("td"))
+
+            let input_base = td.appendChild(document.createElement("input"))
+            input_base.type = "number"
+            input_base.min = 0
+            input_base.max = building_data.max_level
+            input_base.value = current_lvl
+
+            new InputSpinner(input_base)
+            input_base.addEventListener("input", (event) => {
+                console.log("change", building_data.name, "level from", this.buildings[building_data.name].current_level, "to", Number(input_base.value))
+                this.buildings[building_data.name].current_level = Number(input_base.value)
+                this.account.setModifiedFromSaveData()
+            });
 
             if (current_lvl < building_data.max_level) {
-                content += `<td>${formatIdleonNumbers(cost_to_next)}</td>`
-                content += `<td>${formatPercent(progress)}</td>`
-                content += `<td>${formatIdleonNumbers(cost_to_max)}</td>`
-            } else {
-                content += `<td></td>`
-                content += `<td></td>`
-                content += `<td></td>`
+                row.appendChild(document.createElement("td")).innerText = formatIdleonNumbers(cost_to_next)
+                row.appendChild(document.createElement("td")).innerText = formatPercent(progress)
+                row.appendChild(document.createElement("td")).innerText = formatIdleonNumbers(cost_to_max)
+
             }
-            content += "</tr>"
+
         }
 
-        content += "</table>"
+        return display
 
-        return content
-        // document.getElementById("results").innerHTML = content;
 
 
     }
