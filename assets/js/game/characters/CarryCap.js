@@ -27,7 +27,7 @@ export class CarryCap extends BaseCharFeature {
 
         delete character.props["MaxCarryCap"]
 
-        this.inv_slots = 16 + 5 + 8 + 3 // base + autoloot pack + eternal hunter pack + event shop ?
+        this.inv_slots = 0
         for (const [bag, slots] of Object.entries(character.props["InvBagsUsed"])) {
             this.inv_slots += Number(slots)
         }
@@ -36,7 +36,17 @@ export class CarryCap extends BaseCharFeature {
 
     test() {
         console.log(this.pouch_tiers)
-        console.log(this.inv_slots)
+        console.log(this.getInvSlots())
+    }
+
+    getInvSlots() {
+        slots = 16
+        slots += this.account.general.P2W.bundles.has("Auto-Loot_Pack") * 5
+        slots += this.account.general.P2W.bundles.has("Eternal_Hunter_Pack") * 8
+
+        slots += 3 // TODO event shop
+        slots += this.inv_slots
+        return slots
     }
 
 
@@ -74,7 +84,7 @@ export class CarryCap extends BaseCharFeature {
     }
 
     getTotalCapacity(category) {
-        return this.inv_slots * this.getCapacity(category)
+        return this.getInvSlots() * this.getCapacity(category)
 
     }
 
