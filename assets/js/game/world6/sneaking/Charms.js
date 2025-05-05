@@ -20,7 +20,14 @@ export class Charms extends BaseFeature {
         }
 
     }
+    has(name) {
+        let ind = this.map_name_to_index[name]
+        if (ind) {
+            return this.charms_obtained[ind]
+        }
 
+        throw new Error(`${name} is not a valid charm name`)
+    }
 
     getBonusByName(name) {
         let ind = this.map_name_to_index[name]
@@ -75,6 +82,11 @@ const DATA_PRISTINE_CHARMS = [
     ["GUMM_STICK", 0.5],
     ["LOLLY_FLOWER", 0.25],
     ["GUMBALL_NECKLACE", 0.4],
-    ["LIQORICE_ROLLE", 0.25]
+    ["LIQORICE_ROLLE", 0.25],
+    ["GLIMMERCHAIN", 0.3],
+    ["TWINKLE_TAFFY", 0.3],
+    ["JELLYPICK", 0.2],
+    ["CANDY_CACHE", 0.4],
+    ["MYSTERY_FIZZ", 0.3],
 ]
 
