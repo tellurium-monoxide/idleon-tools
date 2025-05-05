@@ -62,10 +62,11 @@ export class Stamps extends BaseFeature {
             }
 
             if (this.exalted_stamps[ind1][ind2]) {
-                let exalt_multi = 2 // TODO exalt bonus from atoms and pristine
+                let exalt_multi = 2
                 if (this.account.world6.sneaking.charms.has("JELLYPICK")) {
                     exalt_multi += 0.2
                 }
+                exalt_multi += this.account.world3.atoms.getBonusByName("ALUMINIUM")
                 mult *= exalt_multi
             }
             return mult * calcGrowingValue(grow, lvl)
