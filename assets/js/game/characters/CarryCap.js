@@ -60,17 +60,22 @@ export class CarryCap extends BaseCharFeature {
 
         let pouch_tier = this.pouch_tiers[category]
 
+        let summoning_lvl = this.character.skill_levels.getLevel("SUMMONING")
+        // TODO gigafrog companion
         let base_cap = DATA_CARRY_CAP[pouch_tier] + this.account.general.vault.getBonusByName("Carry_Capacity")
         base_cap *= 3.5 // Gem Shop Carry Capacity
             * (1 + 1.77 + 0.05) // Prayer Ruck Sack + Bribe	Bottomless Bags
-            * (1 + 0.3 * 50 / (60 + 50) + 0) //Star Talent Telekinetic Storage + Guild Rucksack
-            * (1 + 0) // Shrine Pantheon
+            * (1 + this.character.talents.getTalentBonusByName("TELEKINETIC_STORAGE") + 0) //Star Talent Telekinetic Storage + Guild Rucksack
+            * (1 + this.account.world3.construction.shrines.getBonusByName("PANTHEON_SHRINE"))
             * (1
                 + this.account.world1.stamps.getBonusByName("MASON_JAR_STAMP") // Stamp Mason Jar
-                + (0.1 + 0.05 + 0.3) * 2 * Math.pow(1.1, Math.ceil((121 + 1) / 20)) // Star signs: Pack Mule, The OG Skiller, Mr No Sleep. Doubled by chip
+                + (0.1 + 0.05 + 0.3) * 2 * Math.pow(1.1, Math.ceil((summoning_lvl + 1) / 20)) // Star signs: Pack Mule, The OG Skiller, Mr No Sleep. Doubled by chip
             )
         if (category == "Material") {
-            base_cap *= (1 + this.account.world1.stamps.getBonusByName("MATTY_BAG_STAMP"))
+            base_cap *= (1
+                + this.account.world1.stamps.getBonusByName("MATTY_BAG_STAMP")
+                + this.character.talents.getTalentBonusByName("EXTRA_BAGS")
+            )
         } else if (category == "Chopping") {
             base_cap *= (1 + this.account.world1.stamps.getBonusByName("CHOPPIN'_BAG_STAMP"))
         } else if (category == "Mining") {

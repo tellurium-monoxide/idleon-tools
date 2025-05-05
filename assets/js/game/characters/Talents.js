@@ -46,8 +46,8 @@ export class Talents extends BaseCharFeature {
 
     getTalentBonusByName(talent_name) {
 
-        for (let [ind, subclass] of this.talent_pages.entries()) {
-            for (let [ind, talent_data] of DATA_TALENTS[subclass].entries()) {
+        for (let [subclass, talents] of Object.entries(DATA_TALENTS)) {
+            for (let talent_data of talents) {
 
                 if (talent_data[0] == talent_name) {
                     let [name, pi, [grow1, grow2]] = talent_data
@@ -126,6 +126,7 @@ export class Talents extends BaseCharFeature {
     }
 
 }
+// TODO : convert from percent
 const DATA_TALENTS = {
     "Beginner": [
         ["HEALTH_BOOSTER", 0, [{ "type": "add", "x1": 1 }]],
@@ -141,7 +142,7 @@ const DATA_TALENTS = {
         ["HAPPY_DUDE", 75, [{ "type": "add", "x1": 1 }]],
         ["KNUCKLEBUSTER", 76, [{ "type": "decay", "x1": 30, "x2": 50 }]],
         ["FEATHER_FLIGHT", 77, [{ "type": "decay", "x1": 20, "x2": 50 }]],
-        ["EXTRA_BAGS", 78, [{ "type": "decay", "x1": 200, "x2": 100 }]],
+        ["EXTRA_BAGS", 78, [{ "type": "decay", "x1": 2, "x2": 100 }]],
         ["SLEEPIN'_ON_THE_JOB", 79, [{ "type": "decay", "x1": 21, "x2": 50 }]]
     ],
     "Journeyman": [
@@ -551,19 +552,19 @@ const DATA_TALENTS = {
         ["GOBLET_OF_HEMOGLOBIN", 627, [{ "type": "decay", "x1": 6, "x2": 66 }]]
     ],
     "SPECIAL_TALENT_2": [
-        ["JUST_EXP", 632, [{ "type": "decay", "x1": 10, "x2": 50 }]],
-        ["FROTHY_MALK", 631, [{ "type": "decay", "x1": 50, "x2": 50 }]],
+        ["JUST_EXP", 632, [{ "type": "decay", "x1": 0.1, "x2": 50 }]],
+        ["FROTHY_MALK", 631, [{ "type": "decay", "x1": 0.5, "x2": 50 }]],
         ["CONVERT_BETTER,_DARNIT!", 630, [{ "type": "decayMulti", "x1": 1.7, "x2": 100 }]],
-        ["PULSATION", 629, [{ "type": "decay", "x1": 75, "x2": 60 }]],
-        ["CARDIOVASCULAR!", 628, [{ "type": "decay", "x1": 60, "x2": 60 }]],
-        ["MILKYWAY_CANDIES", 633, [{ "type": "decay", "x1": 200, "x2": 100 }]],
-        ["TELEKINETIC_STORAGE", 634, [{ "type": "decay", "x1": 30, "x2": 60 }]],
-        ["PRINTER_SAMPLING", 635, [{ "type": "bigBase", "x1": 10, "x2": 0.075 }]],
+        ["PULSATION", 629, [{ "type": "decay", "x1": 0.75, "x2": 60 }]],
+        ["CARDIOVASCULAR!", 628, [{ "type": "decay", "x1": 0.6, "x2": 60 }]],
+        ["MILKYWAY_CANDIES", 633, [{ "type": "decay", "x1": 2, "x2": 100 }]],
+        ["TELEKINETIC_STORAGE", 634, [{ "type": "decay", "x1": 0.3, "x2": 60 }]],
+        ["PRINTER_SAMPLING", 635, [{ "type": "bigBase", "x1": 0.1, "x2": 0.075 }]],
         ["SUPERSOURCE", 636, [{ "type": "decay", "x1": 250, "x2": 100 }]],
-        ["ACTION_FRENZY", 637, [{ "type": "decay", "x1": 60, "x2": 100 }]],
-        ["DUNGEONIC_DAMAGE", 638, [{ "type": "decay", "x1": 15, "x2": 100 }]],
-        ["SHRINE_ARCHITECT", 639, [{ "type": "decay", "x1": 50, "x2": 50 }]],
-        ["MEGA_CRIT", 640, [{ "type": "decay", "x1": 20, "x2": 100 }]]
+        ["ACTION_FRENZY", 637, [{ "type": "decay", "x1": 0.6, "x2": 100 }]],
+        ["DUNGEONIC_DAMAGE", 638, [{ "type": "decay", "x1": 0.15, "x2": 100 }]],
+        ["SHRINE_ARCHITECT", 639, [{ "type": "decay", "x1": 0.5, "x2": 50 }]],
+        ["MEGA_CRIT", 640, [{ "type": "decay", "x1": 0.2, "x2": 100 }]]
     ],
     "SPECIAL_TALENT_3": [
         ["TIPTOE_QUICKNESS", 641, [{ "type": "decay", "x1": 25, "x2": 100 }]],

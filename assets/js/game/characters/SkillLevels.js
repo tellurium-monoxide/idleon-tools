@@ -13,14 +13,18 @@ export class SkillLevels extends BaseCharFeature {
         delete character.props["Lv0"]
     }
 
+    test() {
+        console.log(this.getLevel("SUMMONING"))
+    }
 
-    getLevel(name) {
-        let ind = DATA_SKILLS.findIndex(name.toUpperCase())
+
+    getLevel(skill_name) {
+        let ind = DATA_SKILLS.findIndex((e) => (e == skill_name.toUpperCase()))
         if (ind > 0) {
             return this.skill_levels[ind]
         }
         else {
-            throw new Error(`${name} is not a valid skill name`)
+            throw new Error(`${skill_name} is not a valid skill name`)
         }
     }
     getTotalSkillLevels() {
