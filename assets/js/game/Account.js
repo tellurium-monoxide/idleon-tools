@@ -49,11 +49,11 @@ export class Account extends BaseFeature {
 
         this.options = new AccountOptions(this);
 
-        this.child_features.push(this.world5)
         this.child_features.push(this.world1)
         this.child_features.push(this.world2)
         this.child_features.push(this.world3)
         this.child_features.push(this.world4)
+        this.child_features.push(this.world5)
         this.child_features.push(this.world6)
         this.child_features.push(this.general)
         this.child_features.push(this.characters)
