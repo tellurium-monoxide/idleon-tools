@@ -17,6 +17,31 @@ export class Companions extends BaseFeature {
     has(name) {
         return this.companions[this.map_name_to_index[name]]
     }
+    getDisplay() {
+        let display = document.createElement("table")
+        for (let [ind, companion] of Object.entries(DATA_COMPANIONS)) {
+
+            let row = display.appendChild(document.createElement("tr"))
+
+            let name_cell = row.appendChild(document.createElement("td"))
+            name_cell.innerText = companion
+
+
+            let input_cell = row.appendChild(document.createElement("td"))
+
+            let input_base = input_cell.appendChild(document.createElement("input"))
+            input_base.type = "checkbox"
+            input_base.checked = this.companions[ind]
+
+            input_base.addEventListener("input", (event) => {
+                console.log("change companion", companion, "from", this.companions[ind], "to", (input_base.checked))
+                this.companions[ind] = (input_base.checked)
+                this.account.setModifiedFromSaveData()
+            });
+        }
+
+        return display
+    }
 }
 
 const DATA_COMPANIONS = [
