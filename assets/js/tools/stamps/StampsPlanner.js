@@ -1,24 +1,18 @@
-class StampPlanner {
+import { Account } from "../../game/Account.js"
+import { DATA_ITEM_CATEGORIES } from "../../game/characters/CarryCap.js"
+import { DATA_STAMPS, DATA_LIMITED_ITEMS } from "../../game/world1/Stamps.js"
+
+export class StampPlanner {
     constructor(save_data) {
+
+
+        this.account = new Account(save_data)
+
         this.save_data = save_data
 
         let stamp_lvls = save_data["StampLv"]
         let stamp_maxlvls = save_data["StampLvM"]
 
-        let process_stamp_save_data = (cat) => {
-            let result = {}
-            Object.entries(stamp_lvls[cat]).map((entry, i) => {
-                let [key, val] = entry
-                result[key] = { "lvl": val, "max_lvl": stamp_maxlvls[cat][key] }
-            })
-            return result;
-        }
-
-        this.stamp_states = {
-            "combat": process_stamp_save_data(0),
-            "skill": process_stamp_save_data(1),
-            "misc": process_stamp_save_data(2),
-        }
 
         let chestOrder = save_data["ChestOrder"]
         let chestQuantity = save_data["ChestQuantity"]
@@ -32,92 +26,11 @@ class StampPlanner {
             this.chestState[itemName] += itemQtt
         }
 
-        // console.log(this.chestState)
 
-        // get stamp cost reduction bonuses
-
-        // world 2
-        // alchemy
-        let vial_info = save_data["CauldronInfo"][4]
-        let vial_levels = []
-        for (let i = 0; i < vial_info.length; i++) {
-            vial_levels.push(vial_info[i])
-        }
-
-        let max_level_vials = [...vial_levels].filter(x => x >= 13).length
-        let vial_level_blue_flav = vial_levels[19]
-        let vial_bonus_blue_flav = 0.3 * vial_level_blue_flav / (7 + vial_level_blue_flav) * (1 + 0.02 * max_level_vials) * 2
-        let vial_level_venison_malt = vial_levels[59]
-        let vial_bonus_venison_malt = 0.02 * vial_level_venison_malt * (1 + 0.02 * max_level_vials) * 2
-
-        let vial_total_bonus = (vial_bonus_blue_flav + vial_bonus_venison_malt)
-        // sigils
-        let sigil_info = (save_data["CauldronP2W"])
-        let sigil_enveloppe_pile_time = sigil_info[4][2 * (7 - 1)]
-        let sigil_enveloppe_pile_reduction = ((sigil_enveloppe_pile_time >= 60) * 0.12
-            + (sigil_enveloppe_pile_time >= 2500) * 0.13
-            + (sigil_enveloppe_pile_time >= 160000) * 0.15)
-
-
-        // world 5
-        // sailing
-        let sailing_info = (save_data["Sailing"])
-        let artifact_chilled_yarn_lvl = sailing_info[3][16]
-
-        let sigil_stamp_cost_red = sigil_enveloppe_pile_reduction * (1 + artifact_chilled_yarn_lvl)
-
-        this.base_stamp_cost_multiplier = 1 / (1 + sigil_stamp_cost_red) * Math.max(0.1, 1 - vial_total_bonus)
-
-
-
-
-        let summoning_lvl = save_data["Lv0_0"][18]
-
-        let shrine_pantheon_lvl = (save_data["Shrine"])[4][3]
-
-        let shrine_bonus = (0.1 + 0.02 * (shrine_pantheon_lvl - 1)) * 1.3
-
-
-        let guild_rucksack_lvl = (save_data["Guild"])[0][2]
-        console.log(guild_rucksack_lvl)
-        let guild_bonus = 0.7 * guild_rucksack_lvl / (50 + guild_rucksack_lvl)
-
-        let inventory_slots = 96
-        let base_cap = (30000 + 750) // base carry cap of max bag + vault bonus
-            * inventory_slots // inventory slots
-            * 3.5 // Gem Shop Carry Capacity
-            * (1 + 1.77 + 0.05) // Prayer Ruck Sack + Bribe	Bottomless Bags
-            * (1 + 0.3 * 50 / (60 + 50) + guild_bonus) //Star Talent Telekinetic Storage + Guild Rucksack
-            * (1 + shrine_bonus) // Shrine Pantheon
-            * (1
-                + this.stamp_states["misc"][1].lvl * 0.01 // Stamp Mason Jar
-                + (0.1 + 0.05 + 0.3) * 2 * Math.pow(1.1, Math.ceil((summoning_lvl + 1) / 20)) // Star signs: Pack Mule, The OG Skiller, Mr No Sleep. Doubled by chip
-            )
-
-        console.log(shrine_bonus)
-        console.log(this.stamp_states["misc"][1].lvl * 0.01)
-        console.log((0.1 + 0.5 + 0.3) * 2 * Math.pow(1.1, Math.ceil((summoning_lvl + 1) / 20)))
-
-
-
-
-
-        let stamp_multi = 2.5 // lab and pristine liqorice rolle
-
-        let max_talent_level = 361
-        let beginner_talent_extra_bags = 2 * max_talent_level / (100 + max_talent_level)
-        console.log(this.stamp_states["skill"][20].lvl * 0.01 * stamp_multi)
-        this.carry_caps = {
-            "Material": base_cap * (1 + this.stamp_states["skill"][7].lvl * 0.01 * stamp_multi) * (1 + beginner_talent_extra_bags),
-            "Food": base_cap,
-            "Chopping": base_cap * (1 + this.stamp_states["skill"][5].lvl * 0.01 * stamp_multi),
-            "Mining": base_cap * (1 + this.stamp_states["skill"][3].lvl * 0.01 * stamp_multi),
-            "Fishing": base_cap * (1 + this.stamp_states["skill"][20].lvl * 0.01 * stamp_multi),
-            "Catching": base_cap * (1 + this.stamp_states["skill"][22].lvl * 0.01 * stamp_multi),
-            "Trapping": base_cap,
-            "Worship": base_cap,
-            "Equipment": 151, // by holding down with craft from inventory, you can reach more than inventory slots. I could reach more than 105 with 80 slots. I use a smaller factor until further testing
-            "Quest": inventory_slots * 1000000,
+        this.carry_caps = {}
+        for (let [cat, _] of Object.entries(DATA_ITEM_CATEGORIES)) {
+            console.log(cat)
+            this.carry_caps[cat] = this.account.characters.reduceOnChars((v, char) => { return Math.max(v, char.carry_cap.getTotalCapacity(cat)) }, 0)
         }
 
 
@@ -137,55 +50,56 @@ class StampPlanner {
         let current_total_level = 0
 
 
-        for (let [catName, catStamps] of Object.entries(this.stamp_states)) {
-            for (let [stampId, stampState] of Object.entries(catStamps)) {
+        for (let [catId, catStamps] of DATA_STAMPS.entries()) {
+            for (let [stampId, stampData] of catStamps.entries()) {
                 // let cell_id = `stamp_${catName}_${stampId}`
-                let stampData = DATA_STAMPS[catName][stampId]
+                let name = stampData[0]
+                let lvl = this.account.world1.stamps.getLevelByName(name)
+                let max_lvl = this.account.world1.stamps.getMaxLevelByName(name)
                 if (stampData) {
 
-
-                    let cell = document.getElementById(stampData.rawName)
+                    let cell = document.getElementById(name)
                     let infos = ""
-                    infos += `Lvl :${stampState.lvl}/${stampState.max_lvl}\n`
+                    infos += `Lvl :${lvl}/${max_lvl}\n`
 
-                    current_total_level += stampState.lvl
+                    current_total_level += lvl
 
-                    if (stampState.lvl > 0) {
+                    if (lvl > 0) {
 
                         unlocked_stamps += 1
-                        let mat_cost = this.getMaterialCost(stampData, stampState.max_lvl)
+                        let mat_cost = this.account.world1.stamps.getMaterialCost(name)
 
-                        let mat_avail = this.chestState[stampData.itemReq[0].rawName] ?? 0
+                        let mat_avail = this.chestState[stampData[5][0]] ?? 0
                         // cell.innerHTML += `<br>Material cost for next upgrade with max reduction:`
                         // cell.innerHTML += `<br>${formatIdleonNumbers(mat_cost)} ${stampData.itemReq[0].name}`
                         // cell.innerHTML += ` (${formatPercent(mat_cost / this.carry_caps[stampData.itemReq[0].category])} of carry cap)`
                         // cell.innerHTML += `<br>${mat_avail >= mat_cost ? "Can" : "Cannot"} afford (${formatIdleonNumbers(mat_avail)} in chest)`
 
-                        let max_reach = this.getMaxReachableLevel(stampData, stampState.max_lvl)
+                        let max_reach = this.getMaxReachableLevel(stampData, max_lvl)
                         max_total_level += max_reach.max_lvl
 
                         infos += `Max reachable : ${max_reach.max_lvl}\n`
 
-                        if (max_reach.max_lvl == stampState.max_lvl) {
+                        if (max_reach.max_lvl == max_lvl) {
                             cell.classList.add("complete")
                             max_stamps += 1
                         } else {
-                            infos += `Total cost : ${formatIdleonNumbers(max_reach.cost_to_cap)} ${stampData.itemReq[0].name}\n`
-                            let mat_avail = this.chestState[stampData.itemReq[0].rawName] ?? 0
+                            infos += `Total cost : ${formatIdleonNumbers(max_reach.cost_to_cap)} ${stampData[5][0]}\n`
+                            let mat_avail = this.chestState[stampData[5][0]] ?? 0
                             infos += `Mats available : ${formatIdleonNumbers(mat_avail)} (${formatPercent(mat_avail / max_reach.cost_to_cap)})\n`
 
-                            if (mat_avail > max_reach.cost_to_cap || stampData.itemReq[0].category == "Equipment") {
+                            if (mat_avail > max_reach.cost_to_cap || stampData[5][1] == "Equipment") {
                                 cell.classList.add("affordable")
                             }
-                            let setup = this.getMinSetupForUpgrade(stampData, stampState.max_lvl)
+                            let setup = this.getMinSetupForUpgrade(stampData, max_lvl)
                             if (setup) {
                                 // cell.innerHTML += `<br>Needs for next upgrade:`
                                 // cell.innerHTML += `<br>Gilded: ${setup.gilded ? "yes" : "no"}`
                                 // cell.innerHTML += `<br>Daily: ${setup.daily}`
 
                                 let tag = `g${setup.gilded ? "1" : "0"}d${setup.daily}`
-                                if (stampState.max_lvl == stampState.lvl) {
-                                    possible_upgrades[tag].push({ stampData: stampData, stampState: stampState, setup: setup })
+                                if (max_lvl == lvl) {
+                                    possible_upgrades[tag].push({ stampData, lvl, max_lvl, setup })
                                 }
                             }
                         }
@@ -224,24 +138,22 @@ class StampPlanner {
             for (let upgrade of catUpgrades) {
                 i++
 
+                let td1 = tr.appendChild(document.createElement('td'))
+                let td2 = tr.appendChild(document.createElement('td'))
 
-                let td1 = document.createElement('td');
-                let td2 = document.createElement('td');
+                let img = td1.appendChild(document.createElement('img'))
+                img.src = `${GET_STAMP_ICON(upgrade.stampData[0])}`
 
-                let img = document.createElement('img');
-                img.src = `${GET_STAMP_ICON(upgrade.stampData.displayName)}`
-                td1.appendChild(img)
+                let cost = this.account.world1.stamps.getMaterialCost(upgrade.stampData[0], upgrade.max_lvl, upgrade.setup.gilded, upgrade.setup.daily)
+                let mat_avail = this.chestState[upgrade.stampData[5][0]] ?? 0
 
-                let cost = this.getMaterialCost(upgrade.stampData, upgrade.stampState.max_lvl, upgrade.setup.gilded, upgrade.setup.daily)
-                let mat_avail = this.chestState[upgrade.stampData.itemReq[0].rawName] ?? 0
-
-                td2.appendChild(document.createTextNode(`${upgrade.stampData.displayName}`))
+                td2.appendChild(document.createTextNode(`${upgrade.stampData[0]}`))
                 td2.appendChild(document.createElement('br'))
-                td2.appendChild(document.createTextNode(`${upgrade.stampState.max_lvl}->${upgrade.stampState.max_lvl + upgrade.stampData.reqItemMultiplicationLevel}`))
+                td2.appendChild(document.createTextNode(`${upgrade.max_lvl}->${upgrade.max_lvl + upgrade.stampData[3].lvstep}`))
                 td2.appendChild(document.createElement('br'))
-                td2.appendChild(document.createTextNode(`${formatIdleonNumbers(cost)} ${upgrade.stampData.itemReq[0].name}`))
+                td2.appendChild(document.createTextNode(`${formatIdleonNumbers(cost)} ${upgrade.stampData[5][0]}`))
                 td2.appendChild(document.createElement('br'))
-                td2.appendChild(document.createTextNode(`${formatPercent(cost / this.carry_caps[upgrade.stampData.itemReq[0].category])} of cap`))
+                td2.appendChild(document.createTextNode(`${formatPercent(cost / this.carry_caps[upgrade.stampData[5][1]])} of cap`))
                 td2.appendChild(document.createElement('br'))
                 td2.appendChild(document.createTextNode(`${mat_avail >= cost ? "Can" : "Cannot"} afford (${formatIdleonNumbers(mat_avail)} in chest)`))
 
@@ -250,13 +162,10 @@ class StampPlanner {
                     td2.classList.add("available")
                 }
 
-                if (upgrade.stampData.itemReq[0].category == "Equipment") {
+                if (upgrade.stampData[5][1] == "Equipment") {
                     td1.classList.add("equip")
                     td2.classList.add("equip")
                 }
-
-                tr.appendChild(td1)
-                tr.appendChild(td2)
 
 
                 if (i % 4 == 0) {
@@ -270,23 +179,19 @@ class StampPlanner {
     }
 
 
-    getMaterialCost(stampData, max_lvl, gilded = true, daily_reduction = 3) {
-        let tier = Math.round(max_lvl / stampData.reqItemMultiplicationLevel) - 1
-        let mat_cost = Math.max(1, stampData.baseMatCost * Math.pow(stampData.powMatBase, Math.pow(tier, 0.8)) * this.base_stamp_cost_multiplier * (1 - 0.95 * gilded) * Math.max(0.1, 1 - 0.3 * daily_reduction))
-
-        return mat_cost
-    }
 
 
     getMaxReachableLevel(stampData, max_lvl) {
+        let name = stampData[0]
         let setup = this.getMinSetupForUpgrade(stampData, max_lvl)
-        let mat_cost = this.getMaterialCost(stampData, max_lvl)
-        let cap = this.carry_caps[stampData.itemReq[0].category]
+        let mat_cost = this.account.world1.stamps.getMaterialCost(name, max_lvl)
+        let cap = this.carry_caps[stampData[5][1]]
+        console.log(name, cap)
         let cost_to_cap = 0
         while (setup) {
 
             cost_to_cap += setup.cost
-            max_lvl += stampData.reqItemMultiplicationLevel
+            max_lvl += stampData[3].lvstep
             setup = this.getMinSetupForUpgrade(stampData, max_lvl)
             // mat_cost = this.getMaterialCost(stampData, max_lvl)
         }
@@ -295,12 +200,13 @@ class StampPlanner {
     }
 
     getMinSetupForUpgrade(stampData, max_lvl) {
-        let cap = this.carry_caps[stampData.itemReq[0].category]
+        let cap = this.carry_caps[stampData[5][1]]
+        let name = stampData[0]
 
-        let item = stampData.itemReq[0].name
+        let item = stampData[5][0]
 
         if (DATA_LIMITED_ITEMS.includes(item)) {
-            let cost = this.getMaterialCost(stampData, max_lvl)
+            let cost = this.account.world1.stamps.getMaterialCost(name, max_lvl)
             if (cost < cap) {
                 return { gilded: true, daily: 3, cost: cost }
             }
@@ -311,7 +217,7 @@ class StampPlanner {
 
 
         for (let setup of setups) {
-            let cost = this.getMaterialCost(stampData, max_lvl, setup.gilded, setup.daily)
+            let cost = this.account.world1.stamps.getMaterialCost(name, max_lvl, setup.gilded, setup.daily)
 
             if (cost < cap) {
                 setup.cost = cost

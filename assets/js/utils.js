@@ -25,6 +25,10 @@ function calcGrowingValue(grow, level) {
             val *= 1 + pair[1] * Math.floor(level / pair[0])
         }
         return val
+    } else if (grow.type == "stampMat") {
+
+        let tier = Math.round(level / grow.lvstep) - 1
+        return Math.max(1, grow.x1 * Math.pow(grow.x2, Math.pow(tier, 0.8)))
     } else {
         throw new Error(`calcGrowingValue not defined for type ${grow.type}`)
     }

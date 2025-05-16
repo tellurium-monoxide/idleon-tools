@@ -46,10 +46,26 @@ export class Stamps extends BaseFeature {
     }
 
     test() {
-
         console.log("REFINERY_STAMP", this.getBonusByName("REFINERY_STAMP"))
+        console.log("exalt", this.getExaltMulti())
     }
 
+    getLevelByName(name) {
+        if (name in this.map_name_to_indexes) {
+            let [ind1, ind2] = this.map_name_to_indexes[name]
+            let lvl = this.stamp_lvls[ind1][ind2]
+            return lvl
+        }
+        throw new Error(`${name} is not a valid stamp`)
+    }
+    getMaxLevelByName(name) {
+        if (name in this.map_name_to_indexes) {
+            let [ind1, ind2] = this.map_name_to_indexes[name]
+            let lvl = this.stamp_maxlvls[ind1][ind2]
+            return lvl
+        }
+        throw new Error(`${name} is not a valid stamp`)
+    }
     getBonusByName(name) {
         // TODO vault Stamp_Bonanza
         if (name in this.map_name_to_indexes) {
@@ -58,20 +74,12 @@ export class Stamps extends BaseFeature {
             let grow = DATA_STAMPS[ind1][ind2][2]
             let mult = 1
             if (ind1 < 2) {
-                mult *= 2 + 0.25 * this.account.world6.sneaking.charms.has("LIQORICE_ROLLE")
-                // TODO lab stamp multi
-
+                mult *= 2 // TODO lab stamp multi
+                mult *= (1 + 0.25 * this.account.world6.sneaking.charms.has("LIQORICE_ROLLE"))
             }
 
             if (this.exalted_stamps[ind1][ind2]) {
-                let exalt_multi = 2
-                if (this.account.world6.sneaking.charms.has("JELLYPICK")) {
-                    exalt_multi += 0.2
-                }
-                exalt_multi += this.account.world3.atoms.getBonusByName("ALUMINIUM")
-
-                // TODO compass bonus
-                mult *= exalt_multi
+                mult *= this.getExaltMulti()
             }
             return mult * calcGrowingValue(grow, lvl)
 
@@ -80,6 +88,42 @@ export class Stamps extends BaseFeature {
         throw new Error(`${name} is not a valid stamp`)
 
     }
+
+    getExaltMulti() {
+        let exalt_multi = 2
+        if (this.account.world6.sneaking.charms.has("JELLYPICK")) {
+            exalt_multi += 0.2
+        }
+        exalt_multi += this.account.world3.atoms.getBonusByName("ALUMINIUM")
+        // TODO compass bonus
+        return exalt_multi
+    }
+
+    getMaterialCost(name, at_max_lvl = null, gilded = true, days = 3) {
+        if (name in this.map_name_to_indexes) {
+            let [ind1, ind2] = this.map_name_to_indexes[name]
+            let growMat = DATA_STAMPS[ind1][ind2][3]
+
+            let max_level = at_max_lvl ?? this.stamp_maxlvls[ind1][ind2]
+
+            let base_cost = calcGrowingValue(growMat, max_level)
+
+            let mat_cost = Math.max(1, base_cost * this.getMaterialCostMulti() * (1 - 0.95 * gilded) * Math.max(0.1, 1 - 0.3 * days))
+
+            return mat_cost
+        }
+
+        throw new Error(`${name} is not a valid stamp`)
+    }
+
+    getMaterialCostMulti() {
+        let multi = 1
+        multi /= Math.max(0.1, 1 - (this.account.world2.alchemy.vials.getBonusByName("BLUE_FLAV") + this.account.world2.alchemy.vials.getBonusByName("VENISON_MALT")))
+        multi /= this.account.world2.alchemy.sigils.getBonusByName("ENVELOPE_PILE")
+
+        return multi
+    }
+
     getTotalLevels() {
         return this.stamp_lvls.reduce((a, b) => a + b.reduce((a, b) => a + b, 0), 0)
     }
@@ -309,7 +353,7 @@ export const DATA_STAMPS = [
     ]
 ]
 
-const DATA_LIMITED_ITEMS = [
+export const DATA_LIMITED_ITEMS = [
     // bars because they are a pain to craft
     "Copper_Bar",
     "Gold_Bar",

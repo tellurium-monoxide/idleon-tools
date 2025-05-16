@@ -56,7 +56,10 @@ export class CarryCap extends BaseCharFeature {
             return 1000000
         }
         if (category == "Equipment") {
-            return 1
+            // By holding down with craft from inventory, you can reach more than inventory slots.
+            // I could reach more than 105 with 80 slots.
+            // I will use a smaller factor until further testing
+            return 1.2
         }
 
         let bonus_list = new BonusList();
@@ -203,7 +206,7 @@ const DATA_POUCHES = [
     "HERCULEAN"
 ]
 
-const DATA_ITEM_CATEGORIES = {
+export const DATA_ITEM_CATEGORIES = {
     "Material": "bCraft",
     "Food": "Foods",
     "Chopping": "Chopping",
