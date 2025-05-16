@@ -36,7 +36,8 @@ export class CarryCap extends BaseCharFeature {
 
     test() {
         console.log(this.pouch_tiers)
-        console.log(this.getInvSlots())
+        // console.log(this.getInvSlots())
+        console.log(this.getCapacity("Material", true))
     }
 
     getInvSlots() {
@@ -50,7 +51,7 @@ export class CarryCap extends BaseCharFeature {
     }
 
 
-    getCapacity(category) {
+    getCapacity(category, print_recap = false) {
         if (category == "Quest") {
             return 1000000
         }
@@ -58,9 +59,36 @@ export class CarryCap extends BaseCharFeature {
             return 1
         }
 
+        let bonus_list = new BonusList();
+
         let pouch_tier = this.pouch_tiers[category]
 
         let summoning_lvl = this.character.skill_levels.getLevel("SUMMONING")
+
+        bonus_list.addMultiplicativeGroup("base", true)
+        bonus_list.addBonus("base", "pouch", DATA_CARRY_CAP[pouch_tier])
+        bonus_list.addBonus("base", "vault", this.account.general.vault.getBonusByName("Carry_Capacity"))
+
+        bonus_list.addMultiplicativeGroup("gemshop")
+        bonus_list.addBonus("gemshop", "bonus", 2.5)
+
+        // TODO check prayers and add zerg negative
+        bonus_list.addMultiplicativeGroup("pray_rucksack")
+        bonus_list.addBonus("pray_rucksack", "pray_rucksack", 1.77)
+
+        bonus_list.addMultiplicativeGroup("bribe")
+        bonus_list.addBonus("bribe", "bribe", 0.05)
+
+        bonus_list.addMultiplicativeGroup("startalent_guild")
+        bonus_list.addBonus("startalent_guild", "telekinetic_storage", this.character.talents.getTalentBonusByName("TELEKINETIC_STORAGE"))
+        bonus_list.addBonus("startalent_guild", "guild", this.account.general.guild.getBonusByName("RUCKSACK"))
+
+        bonus_list.addMultiplicativeGroup("shrine")
+        bonus_list.addBonus("shrine", "pantheon", this.account.world3.construction.shrines.getBonusByName("PANTHEON_SHRINE"))
+
+        bonus_list.addMultiplicativeGroup("stamp_starsigns")
+        bonus_list.addBonus("stamp_starsigns", "mason_jar", this.account.world1.stamps.getBonusByName("MASON_JAR_STAMP"))
+        bonus_list.addBonus("stamp_starsigns", "starsigns", (0.1 + 0.05 + 0.3) * 2 * Math.pow(1.1, Math.ceil((summoning_lvl + 1) / 20)))
         // TODO gigafrog companion
         let base_cap = DATA_CARRY_CAP[pouch_tier] + this.account.general.vault.getBonusByName("Carry_Capacity")
         base_cap *= 3.5 // Gem Shop Carry Capacity
@@ -72,20 +100,27 @@ export class CarryCap extends BaseCharFeature {
                 + (0.1 + 0.05 + 0.3) * 2 * Math.pow(1.1, Math.ceil((summoning_lvl + 1) / 20)) // Star signs: Pack Mule, The OG Skiller, Mr No Sleep. Doubled by chip
             )
         if (category == "Material") {
-            base_cap *= (1
-                + this.account.world1.stamps.getBonusByName("MATTY_BAG_STAMP")
-                + this.character.talents.getTalentBonusByName("EXTRA_BAGS")
-            )
+            bonus_list.addMultiplicativeGroup("Material")
+            bonus_list.addBonus("Material", "MATTY_BAG_STAMP", this.account.world1.stamps.getBonusByName("MATTY_BAG_STAMP"))
+            bonus_list.addBonus("Material", "EXTRA_BAGS", this.character.talents.getTalentBonusByName("EXTRA_BAGS"))
         } else if (category == "Chopping") {
-            base_cap *= (1 + this.account.world1.stamps.getBonusByName("CHOPPIN'_BAG_STAMP"))
+            bonus_list.addMultiplicativeGroup("Chopping")
+            bonus_list.addBonus("Chopping", "stamp", this.account.world1.stamps.getBonusByName("CHOPPIN'_BAG_STAMP"))
         } else if (category == "Mining") {
-            base_cap *= (1 + this.account.world1.stamps.getBonusByName("LIL'_MINING_BAGGY_STAMP"))
+            bonus_list.addMultiplicativeGroup("Mining")
+            bonus_list.addBonus("Mining", "stamp", this.account.world1.stamps.getBonusByName("LIL'_MINING_BAGGY_STAMP"))
         } else if (category == "Fishing") {
-            base_cap *= (1 + this.account.world1.stamps.getBonusByName("BAG_O_HEADS_STAMP"))
+            bonus_list.addMultiplicativeGroup("Fishing")
+            bonus_list.addBonus("Fishing", "stamp", this.account.world1.stamps.getBonusByName("BAG_O_HEADS_STAMP"))
         } else if (category == "Catching") {
-            base_cap *= (1 + this.account.world1.stamps.getBonusByName("BUGSACK_STAMP"))
+            bonus_list.addMultiplicativeGroup("Catching")
+            bonus_list.addBonus("Catching", "stamp", this.account.world1.stamps.getBonusByName("BUGSACK_STAMP"))
+
         }
-        return base_cap
+        if (print_recap) {
+            bonus_list.log()
+        }
+        return bonus_list.getBonus()
     }
 
     getTotalCapacity(category) {

@@ -159,3 +159,52 @@ const formatTime = (time_in_seconds) => {
         return `${milliseconds.toFixed(2)}ms`
     }
 }
+
+
+class BonusList {
+    bonusMap;
+
+    constructor() {
+        this.bonusMap = {}
+    }
+
+    addMultiplicativeGroup(mult_group, flat = false) {
+        this.bonusMap[mult_group] = {}
+        if (!flat) {
+            this.bonusMap[mult_group]["base"] = 1
+        }
+    }
+
+    addBonus(mult_group, bonus_name, bonus_value) {
+        this.bonusMap[mult_group][bonus_name] = bonus_value
+    }
+
+
+    getBonus() {
+        let bonus = 1
+        for (const [group, list] of Object.entries(this.bonusMap)) {
+            let group_bonus = 0
+            for (const [name, val] of Object.entries(list)) {
+                group_bonus += val
+            }
+            bonus *= group_bonus
+        }
+        return bonus
+    }
+
+    log() {
+        let bonus = 1
+        for (const [group, list] of Object.entries(this.bonusMap)) {
+            let group_bonus = 0
+            console.group(group)
+            for (const [name, val] of Object.entries(list)) {
+                group_bonus += val
+                console.log(name.padEnd(15), val)
+            }
+            bonus *= group_bonus
+
+            console.groupEnd()
+        }
+        console.log("total".padEnd(15), bonus)
+    }
+}

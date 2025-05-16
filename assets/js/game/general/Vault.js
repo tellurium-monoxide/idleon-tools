@@ -12,13 +12,13 @@ export class Vault extends BaseFeature {
         // console.log(vault_data)
 
         this.vault_levels = []
-        this.map_name_to_ind = {}
+        this.map_name_to_index = {}
 
 
 
         for (let [ind, upg] of DATA_VAULT.entries()) {
             this.vault_levels.push(vault_data[ind])
-            this.map_name_to_ind[upg[0]] = ind
+            this.map_name_to_index[upg[0]] = ind
         }
 
 
@@ -37,8 +37,8 @@ export class Vault extends BaseFeature {
     }
 
     getBonusByName(name) {
-        let upg = DATA_VAULT[this.map_name_to_ind[name]]
-        let level = this.vault_levels[this.map_name_to_ind[name]]
+        let upg = DATA_VAULT[this.map_name_to_index[name]]
+        let level = this.vault_levels[this.map_name_to_index[name]]
 
         let [n, grow, max, mastery] = upg
         let mastery_mult = this.getMasteryMultiplier(mastery)
@@ -61,25 +61,23 @@ export class Vault extends BaseFeature {
 
     getDisplay() {
         let display = document.createElement("table")
-        for (let [name, ind] of Object.entries(this.map_name_to_ind)) {
+        for (let [name, ind] of Object.entries(this.map_name_to_index)) {
 
             let level = this.vault_levels[ind]
             let upg = DATA_VAULT[ind]
             let [n, grow, max, mastery] = upg
-            let row = document.createElement("tr")
-            display.appendChild(row)
-            let name_cell = document.createElement("td")
+            let row = display.appendChild(document.createElement("tr"))
+            let name_cell = row.appendChild(document.createElement("td"))
             name_cell.innerText = `${name}`
-            row.appendChild(name_cell)
 
-            let input_cell = document.createElement("td")
-            row.appendChild(input_cell)
-            let input_base = document.createElement("input")
+            let input_cell = row.appendChild(document.createElement("td"))
+
+            let input_base = input_cell.appendChild(document.createElement("input"))
             input_base.type = "number"
             input_base.min = 0
             input_base.max = max
             input_base.value = level
-            input_cell.appendChild(input_base)
+
             new InputSpinner(input_base)
             input_base.addEventListener("input", (event) => {
                 console.log("change vault upgrade", name, this.vault_levels[ind], "to", Number(input_base.value))

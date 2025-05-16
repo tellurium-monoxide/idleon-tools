@@ -41,6 +41,7 @@ export class Talents extends BaseCharFeature {
 
     test() {
         console.log(this.getTalentBonusByName("HEALTH_BOOSTER"))
+        console.log(this.getTalentBonusByName("EXTRA_BAGS"))
     }
 
 
@@ -417,7 +418,7 @@ const DATA_TALENTS = {
         ["CURVITURE_OF_THE_PAW", 373, [{ "type": "decayMulti", "x1": 1.2, "x2": 100 }]],
         ["SYMBOLS_OF_BEYOND_~G", 374, [{ "type": "intervalAdd", "x1": 1, "x2": 20 }]]
     ],
-    "Windwalker": [
+    "Wind_Walker": [
         ["TEMPEST_FORM", 315, [{ "type": "bigBase", "x1": 75, "x2": 1.25 }, { "type": "intervalAdd", "x1": 4, "x2": 30 }]],
         ["COMPASS", 361, [{ "type": "intervalAdd", "x1": 6, "x2": 20 }, { "type": "bigBase", "x1": 75, "x2": 1.5 }]],
         ["SPIRIT_BALLISTA", 362, [{ "type": "intervalAdd", "x1": 7, "x2": 17 }, { "type": "bigBase", "x1": 30, "x2": 1 }]],

@@ -17,18 +17,18 @@ export class BaseFeature {
     }
 
     // can be overridden in subclasses
-    // just do your tests, then call super.test(collapsed) to test all child_features
-    test(collapsed = 1) {
+    // just do your tests, then call super.test(expand) to test all child_features
+    test(expand = 1) {
 
         // console.log(`Testing ${this.constructor.name}`)
         for (let [ind, child] of this.child_features.entries()) {
             // console.log()
-            if (collapsed > 0) {
-                console.groupCollapsed(`Testing ${child.getFeatureName()}`)
-            } else {
+            if (expand > 0) {
                 console.group(`Testing ${child.getFeatureName()}`)
+            } else {
+                console.groupCollapsed(`Testing ${child.getFeatureName()}`)
             }
-            child.test(collapsed - 1)
+            child.test(expand - 1)
             console.groupEnd()
         }
 

@@ -105,15 +105,34 @@ export function getClassList(main_class) {
 
 // TODO missing classes
 const DATA_CLASSES = {
-    14: "Death_Bringer",
-    10: "Blood_Berserker",
-    22: "Siege_Breaker",
-    34: "Elemental_Sorcerer",
-    12: "Divine_Knight",
-    29: "Windwalker",
-    25: "Beast_Master",
-    36: "Bubonic_Conjuror",
+    1: "Beginner",
+    2: "Journeyman",
+    3: "Maestro",
     4: "Voidwalker",
+    5: "Infinilyte",
+
+    6: "Rage_Basics",
+    7: "Warrior",
+    8: "Barbarian",
+    9: "Squire",
+    10: "Blood_Berserker",
+    12: "Divine_Knight",
+    14: "Death_Bringer",
+
+    18: "Calm_Basics",
+    19: "Archer",
+    20: "Bowman",
+    21: "Hunter",
+    22: "Siege_Breaker",
+    25: "Beast_Master",
+    29: "Wind_Walker",
+
+    30: "Savvy_Basics",
+    31: "Mage",
+    32: "Wizard",
+    33: "Shaman",
+    34: "Elemental_Sorcerer",
+    36: "Bubonic_Conjuror",
 }
 
 const DATA_SUBCLASSES = {
@@ -126,7 +145,7 @@ const DATA_SUBCLASSES = {
     "Warrior": "Rage_Basics",
 
     "Siege_Breaker": "Bowman",
-    "Windwalker": "Beast_Master",
+    "Wind_Walker": "Beast_Master",
     "Beast_Master": "Hunter",
 
     "Bowman": "Archer",

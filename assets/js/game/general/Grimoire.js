@@ -31,6 +31,36 @@ export class Grimoire extends BaseFeature {
     getLevelByName(name) {
         return this.grimoire_levels[this.map_name_to_index[name]]
     }
+
+    getDisplay() {
+        let display = document.createElement("table")
+        for (let [name, ind] of Object.entries(this.map_name_to_index)) {
+
+            let level = this.grimoire_levels[ind]
+            let upg = DATA_GRIMOIRE[ind]
+            let [n, max] = upg
+            let row = display.appendChild(document.createElement("tr"))
+            let name_cell = row.appendChild(document.createElement("td"))
+            name_cell.innerText = name
+
+            let input_cell = row.appendChild(document.createElement("td"))
+
+            let input_base = input_cell.appendChild(document.createElement("input"))
+            input_base.type = "number"
+            input_base.min = 0
+            input_base.max = max
+            input_base.value = level
+
+            new InputSpinner(input_base)
+            input_base.addEventListener("input", (event) => {
+                console.log("change grimoire upgrade", name, this.grimoire_levels[ind], "to", Number(input_base.value))
+                this.grimoire_levels[ind] = Number(input_base.value)
+                this.account.setModifiedFromSaveData()
+            });
+        }
+
+        return display
+    }
 }
 // schema is
 // name, maxlvl, [cost calc?], bone, unlockReq
