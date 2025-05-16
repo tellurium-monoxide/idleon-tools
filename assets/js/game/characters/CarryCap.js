@@ -77,7 +77,7 @@ export class CarryCap extends BaseCharFeature {
         bonus_list.addBonus("pray_rucksack", "pray_rucksack", 1.77)
 
         bonus_list.addMultiplicativeGroup("bribe")
-        bonus_list.addBonus("bribe", "bribe", 0.05)
+        bonus_list.addBonus("bribe", "bribe", 0.05 * this.account.world1.bribes.has("BOTTOMLESS_BAGS"))
 
         bonus_list.addMultiplicativeGroup("startalent_guild")
         bonus_list.addBonus("startalent_guild", "telekinetic_storage", this.character.talents.getTalentBonusByName("TELEKINETIC_STORAGE"))
