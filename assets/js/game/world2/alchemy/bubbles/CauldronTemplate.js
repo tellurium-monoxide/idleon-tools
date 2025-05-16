@@ -68,7 +68,7 @@ export class CauldronTemplate extends BaseFeature {
             });
 
 
-            row.appendChild(document.createElement("td")).innerText = formatPercent(value / max_value)
+            row.appendChild(document.createElement("td")).innerText = (max_value == Infinity) ? "" : formatPercent(value / max_value)
 
         }
 
