@@ -25,23 +25,12 @@ export class Talents extends BaseCharFeature {
         this.talent_pages.push("SPECIAL_TALENT_3")
         this.talent_pages.push("SPECIAL_TALENT_4")
 
-        // let data = {}
-        // for (let [cat, list] of Object.entries(STARTALENTS)) {
-        //     let subdata = []
-        //     for (let [nam, tal] of Object.entries(list)) {
-        //         let { name, x1, x2, funcX, skillIndex } = tal
-        //         subdata.push([name, skillIndex, [{ type: funcX, x1, x2 }]])
-        //     }
-        //     data[cat] = subdata
-
-
-        // }
-        // console.log(JSON.stringify(data))
     }
 
     test() {
         console.log(this.getTalentBonusByName("HEALTH_BOOSTER"))
         console.log(this.getTalentBonusByName("EXTRA_BAGS"))
+        console.log(this.getAdditionalTalentLevels())
     }
 
 
@@ -53,6 +42,10 @@ export class Talents extends BaseCharFeature {
                 if (talent_data[0] == talent_name) {
                     let [name, pi, [grow1, grow2]] = talent_data
                     let cur_lvl = this.talent_levels[pi] || 0 // TODO: take additional levels into account
+
+                    if (cur_lvl > 0 && !(DATA_TALENT_NO_ADDITIONNAL_LVLS.includes(talent_name)) && !(subclass.startsWith("SPECIAL_TALENT"))) {
+                        cur_lvl += this.getAdditionalTalentLevels()
+                    }
                     let val = calcGrowingValue(grow1, cur_lvl)
                     return val
                 } else {
@@ -61,6 +54,24 @@ export class Talents extends BaseCharFeature {
         }
         // if talent not found in all subclasses
         throw new Error(`${talent_name} is invalid for class ${this.class_name}`)
+
+    }
+
+    getAdditionalTalentLevels() {
+        let lvl = 0
+        lvl += 25 * this.account.world1.companions.has("RIFT_SLUG")
+        lvl += 1 * this.account.general.taskboard.achievements.has("Maroon_Warship")
+        lvl += this.getTalentBonusByName("SYMBOLS_OF_BEYOND_~R")
+        lvl += this.getTalentBonusByName("SYMBOLS_OF_BEYOND_~G")
+        lvl += this.getTalentBonusByName("SYMBOLS_OF_BEYOND_~P")
+
+        // TODO
+        // ES family
+        // arctis 
+        // equinox
+        // sneak mastery
+
+        return lvl
 
     }
     // for tome
@@ -589,3 +600,8 @@ const DATA_TALENTS = {
     ]
 }
 
+export const DATA_TALENT_NO_ADDITIONNAL_LVLS = [
+    "SYMBOLS_OF_BEYOND_~R",
+    "SYMBOLS_OF_BEYOND_~G",
+    "SYMBOLS_OF_BEYOND_~P",
+]

@@ -22,6 +22,9 @@ export class Achievements extends BaseFeature {
     getAchievByName(name) {
         return this.achiev_data[name].obtained
     }
+    has(name) {
+        return this.achiev_data[name].obtained
+    }
 
 
     getTotalAchievements() {
