@@ -132,7 +132,7 @@ export class Tome extends BaseFeature {
 // for coefs, we have parameter, type, max score I think
 export const DATA_TOME = [
     ["Stamp_Total_LV", [10000, 0, 800], (account) => { return account.world1.stamps.getTotalLevels() }],
-    ["Statue_Total_LV", [2300, 0, 350]],
+    ["Statue_Total_LV", [2300, 0, 350], (account) => { return account.world1.statues.getTotalLevels() }],
     ["Cards_Total_LV", [1344, 2, 350]],
     ["Total_Talent_Max_LV", [12000, 0, 400], (account) => { return account.characters.getTotalUniqueTalentMaxLvl() }],
     ["Unique_Quests_Completed", [323, 2, 300]],
@@ -186,7 +186,7 @@ export const DATA_TOME = [
     ["Total_Lab_Chips_Owned", [100, 0, 150]],
     ["Total_Colosseum_Score", [10, 1, 200]],
     ["Most_Giants_Killed_in_a_Single_Week", [25, 0, 250], (account) => { return account.options.get(217) }],
-    ["Total_Onyx_Statues", [28, 2, 450]],
+    ["Total_Onyx_Statues", [28, 2, 450], (account) => { return account.world1.statues.getTotalOnyx() }],
     ["Fastest_Time_to_Kill_200_Tremor_Wurms_(in_Seconds)", [30, 3, 150], (account) => { return 1000 - account.options.get(218) }],
     ["Total_Boat_Upgrade_LV", [10000, 0, 200]],
     ["God_Rank_in_Divinity", [10, 0, 200]],
