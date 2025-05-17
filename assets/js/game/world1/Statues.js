@@ -8,7 +8,6 @@ export class Statues extends BaseFeature {
         let statue_states = account.save_data["StuG"]
         delete account.save_data_pruned["StuG"]
 
-        console.log(statue_data)
 
         this.statues = []
         this.map_name_to_index = {}

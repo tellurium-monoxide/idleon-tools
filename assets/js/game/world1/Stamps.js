@@ -95,7 +95,7 @@ export class Stamps extends BaseFeature {
             exalt_multi += 0.2
         }
         exalt_multi += this.account.world3.atoms.getBonusByName("ALUMINIUM")
-        // TODO compass bonus
+        exalt_multi += this.account.general.compass.getLevelByName("ABOMINATION_SLAYER_XVII") * 0.01
         return exalt_multi
     }
 
