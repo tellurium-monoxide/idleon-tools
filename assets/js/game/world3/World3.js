@@ -26,12 +26,14 @@ export class World3 extends BaseFeature {
         this.library = new Library(account);
         this.atoms = new Atoms(account);
         this.worship = new Worship(account);
+        this.equinox = new Equinox(account);
 
         this.child_features.push(this.construction)
         this.child_features.push(this.salt_lick)
         this.child_features.push(this.refinery)
         this.child_features.push(this.atoms)
         this.child_features.push(this.worship)
+        this.child_features.push(this.equinox)
     }
 
 

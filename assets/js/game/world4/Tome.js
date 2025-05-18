@@ -170,7 +170,7 @@ export const DATA_TOME = [
     ["Best_Non_Duplicate_Goblin_Gorefest_Wave", [120, 0, 200], (account) => { return account.options.get(209) }],
     ["Total_Best_Wave_in_Worship", [1000, 0, 300], (account) => { return account.world3.worship.getTotalTDWaves() }],
     ["Total_Digits_of_all_Deathnote_Kills", [700, 0, 600]],
-    ["Equinox_Clouds_Completed", [31, 2, 750]],
+    ["Equinox_Clouds_Completed", [31, 2, 750], (account) => { return account.world3.equinox.getTotalClouds() }],
     ["Total_Refinery_Rank", [120, 0, 450], (account) => { return account.world3.refinery.getTotalRanks() }],
     ["Total_Atom_Upgrade_LV", [150, 0, 400], (account) => { return account.world3.atoms.getTotalLevels() }],
     ["Total_Construct_Buildings_LV", [3000, 0, 600], (account) => { return account.world3.construction.getTotalBuildingLevels() }],

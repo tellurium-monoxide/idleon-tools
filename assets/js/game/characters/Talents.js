@@ -65,10 +65,11 @@ export class Talents extends BaseCharFeature {
         lvl += this.getTalentBonusByName("SYMBOLS_OF_BEYOND_~G")
         lvl += this.getTalentBonusByName("SYMBOLS_OF_BEYOND_~P")
 
+        lvl += this.account.world3.equinox.getLevel("EQUINOX_SYMBOLS")
+
         // TODO
         // ES family
-        // arctis 
-        // equinox
+        // arctis
         // sneak mastery
 
         return lvl
