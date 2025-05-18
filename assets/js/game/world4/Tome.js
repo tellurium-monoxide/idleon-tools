@@ -157,7 +157,7 @@ export const DATA_TOME = [
     ["Total_Vial_LV", [962, 2, 500], (account) => { return account.world2.alchemy.vials.getTotalLevels() }],
     ["Total_Sigil_LV", [72, 2, 250], (account) => { return account.world2.alchemy.sigils.getTotalLevels() }],
     ["Jackpots_Hit_in_Arcade", [1, 0, 50], (account) => { return account.options.get(199) }],
-    ["Post_Office_PO_Boxes_Earned", [20000, 0, 300]],
+    ["Post_Office_PO_Boxes_Earned", [20000, 0, 300], (account) => { return account.general.currencies.get("PO_Box") }],
     ["Highest_Killroy_Score_on_a_Warrior", [3000, 0, 200], (account) => { return account.options.get(204) }],
     ["Highest_Killroy_Score_on_an_Archer", [3000, 0, 200], (account) => { return account.options.get(205) }],
     ["Highest_Killroy_Score_on_a_Mage", [3000, 0, 200], (account) => { return account.options.get(206) }],
